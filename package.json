@@ -1,0 +1,57 @@
+{
+  "name": "grow-up",
+  "private": "true",
+  "engines": {
+    "node": ">=16 <17",
+    "npm": ">=8 <9"
+  },
+  "scripts": {
+    "move:deploy": "mv backend/build . && mv backend/node_modules build && mv frontend/build/* build/public",
+    "lint:editorconfig": "editorconfig-checker",
+    "lint:fs": "ls-lint",
+    "lint:shared:js": "cd shared && npm run lint:js",
+    "lint:shared": "cd shared && npm run lint",
+    "lint:backend": "cd backend && npm run lint",
+    "lint:frontend:css": "cd frontend && npm run lint:css",
+    "lint:frontend:js": "cd frontend && npm run lint:js",
+    "lint:frontend": "cd frontend && npm run lint",
+    "lint:js": "npm run lint:shared:js && npm run lint:backend && npm run lint:frontend:js",
+    "lint:css": "npm run lint:frontend:css",
+    "lint": "npm run lint:editorconfig && npm run lint:fs && npm run lint:shared && npm run lint:backend && npm run lint:frontend",
+    "install:shared": "cd shared && npm install --production=false",
+    "install:frontend": "cd frontend && npm install --production=false",
+    "install:backend": "cd backend && npm install --production=false",
+    "install:all": "npm install && npm run install:shared && npm run build:shared && npm run install:frontend && npm run install:backend",
+    "build:shared": "cd shared && npm run build",
+    "build:frontend": "cd frontend && npm run build",
+    "build:backend": "cd backend && npm run build",
+    "build": "npm run build:frontend && npm run build:backend",
+    "start:frontend": "cd frontend && npm run start",
+    "start:backend": "cd backend && npm run start:dev",
+    "start:dev": "concurrently -k -p \"{name}\" -n \"FRONTEND,BACKEND\" -c \"green,blue\" \"npm:start:frontend\" \"npm:start:backend\"",
+    "start": "cd build && npm run start",
+    "prepare": "husky install",
+    "heroku-prebuild": "npm run install:all",
+    "heroku-postbuild": "npm run build && npm run move:deploy"
+  },
+  "devDependencies": {
+    "@ls-lint/ls-lint": "1.10.0",
+    "@typescript-eslint/eslint-plugin": "5.10.1",
+    "@typescript-eslint/parser": "5.10.1",
+    "concurrently": "6.2.0",
+    "editorconfig-checker": "4.0.2",
+    "eslint": "8.8.0",
+    "husky": "7.0.1",
+    "lint-staged": "11.1.0",
+    "stylelint": "14.3.0",
+    "stylelint-config-recommended": "6.0.0",
+    "typescript": "4.5.5"
+  },
+  "lint-staged": {
+    "*": "npm run lint:editorconfig && npm run lint:fs",
+    "backend/**/*.{ts,tsx}": "npm run lint:backend",
+    "frontend/**/*.{ts,tsx}": "npm run lint:frontend:js",
+    "frontend/**/*.scss": "npm run lint:css",
+    "shared/**/*.{ts,tsx}": "npm run lint:shared"
+  }
+}
