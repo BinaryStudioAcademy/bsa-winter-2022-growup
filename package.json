@@ -53,5 +53,8 @@
     "frontend/**/*.{ts,tsx}": "npm run lint:frontend:js",
     "frontend/**/*.scss": "npm run lint:css",
     "shared/**/*.{ts,tsx}": "npm run lint:shared"
+  },
+  "dependencies": {
+    "yup": "0.32.11"
   }
 }
