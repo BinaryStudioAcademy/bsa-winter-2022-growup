@@ -2,7 +2,7 @@ enum AppRoute {
   ROOT = '/',
   LOGIN = '/login',
   SIGN_UP = '/signup',
-  WORKSPACES = '/workspaces',
+  ORKS = '/ork',
   PAGES = '/pages',
   SETTINGS_PROFILE = '/settings/profile',
 }

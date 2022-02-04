@@ -5,8 +5,7 @@ import Login from 'components/login/login';
 import SignUp from 'components/sign-up/sign-up';
 import { Link, Route, Routes } from 'components/common/common';
 import logo from 'assets/img/logo.svg';
-import Workspaces from 'components/workspaces/workspaces';
-import Pages from 'components/pages/pages';
+import Ork from 'components/okrs/okrs';
 import Profile from 'components/profile/profile';
 
 const App: React.FC = () => {
@@ -27,7 +26,7 @@ const App: React.FC = () => {
               <Link to={AppRoute.SIGN_UP}>Sign up</Link>
             </li>
             <li>
-              <Link to={AppRoute.WORKSPACES}>Workspaces</Link>
+              <Link to={AppRoute.ORKS}>Ork</Link>
             </li>
             <li>
               <Link to={AppRoute.PAGES}>Pages</Link>
@@ -44,8 +43,7 @@ const App: React.FC = () => {
             <Route path={AppRoute.ROOT} element={Counter} />
             <Route path={AppRoute.LOGIN} element={Login} />
             <Route path={AppRoute.SIGN_UP} element={SignUp} />
-            <Route path={AppRoute.WORKSPACES} element={Workspaces} />
-            <Route path={AppRoute.PAGES} element={Pages} />
+            <Route path={AppRoute.ORKS} element={Ork} />
             <Route path={AppRoute.SETTINGS_PROFILE} element={Profile} />
           </Routes>
           <p>
