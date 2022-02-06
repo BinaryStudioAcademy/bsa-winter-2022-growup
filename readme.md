@@ -27,7 +27,7 @@ Normal flow is to create new branch for each task or group of linked tasks. Name
 
 `<prefix>/<problem-name>`
 
-Allowed prefixes: `new/`, `patch/`, `fix/`.  
+Allowed prefixes: `new/`, `patch/`, `fix/`.
 Problem name it's a text summary of problem or ticket id.
 
 Examples:
