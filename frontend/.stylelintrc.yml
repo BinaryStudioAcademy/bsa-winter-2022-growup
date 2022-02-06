@@ -6,7 +6,7 @@ plugins:
   - stylelint-scss
 
 rules:
-    selector-pseudo-class-no-unknown:
+  selector-pseudo-class-no-unknown:
     - true
     - ignorePseudoClasses:
-      - global
+        - global
