@@ -3,9 +3,12 @@ import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConne
 import { env } from './env';
 
 const getDbConfig = (): PostgresConnectionOptions => {
-  const ssl = env.app.nodeEnv === 'production' ? {
-    rejectUnauthorized: false,
-  } : false;
+  const ssl =
+    env.app.nodeEnv === 'production'
+      ? {
+          rejectUnauthorized: false,
+        }
+      : false;
 
   const baseConfig: PostgresConnectionOptions = {
     type: 'postgres',
@@ -18,7 +21,13 @@ const getDbConfig = (): PostgresConnectionOptions => {
   };
 
   if (env.db.url) {
-    const { port, host, user: username, password, database } = parse(env.db.url);
+    const {
+      port,
+      host,
+      user: username,
+      password,
+      database,
+    } = parse(env.db.url);
     return {
       ...baseConfig,
       port: Number(port),
