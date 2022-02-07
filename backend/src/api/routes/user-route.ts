@@ -1,10 +1,14 @@
 import { Router } from 'express';
 import { run } from '../../common/helpers/route.helper';
-import { getSomething } from '../../services/user.service';
+import {
+  loginUserController,
+  registerUserController,
+} from '../controllers/user-controllers';
 
 const router: Router = Router();
 
 router
-  .get('/', run(req => getSomething(req.query)));
+  .post('/login', run(loginUserController))
+  .post('/register', run(registerUserController));
 
 export default router;
