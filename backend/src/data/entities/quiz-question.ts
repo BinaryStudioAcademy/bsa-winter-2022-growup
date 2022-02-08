@@ -7,6 +7,6 @@ export class QuizQuestion extends AbstractEntity {
   @Column({ type: 'varchar', length: 250 })
   question: string;
 
-  @ManyToOne(() => QuizCategory, (quizeCategory) => quizeCategory.id)
+  @ManyToOne(() => QuizCategory, (quizCategory) => quizCategory.id)
   category: QuizCategory[];
 }
