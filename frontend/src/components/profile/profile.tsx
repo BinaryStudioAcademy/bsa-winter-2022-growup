@@ -1,9 +1,7 @@
 import ProfileInfo from './components/profile-info/profile-info';
 
 const Profile: React.FC = () => (
-  <>
-    <ProfileInfo/>
-  </>
+    <ProfileInfo />
 );
 
 export default Profile;

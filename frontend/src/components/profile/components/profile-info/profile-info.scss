@@ -1,4 +1,14 @@
 .profile-info {
-  margin: 46px;
-}
+  padding-top: 16px;
+  background-color: #F6F7F9;
 
+  .header-wrapper {
+    width: 100%;
+    background-color: #fff;
+    padding: 0 46px;
+  }
+
+  .main-wrapper {
+    padding: 46px;
+  }
+}

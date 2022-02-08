@@ -60,10 +60,12 @@
   align-self: center;
   display: flex;
 
-  &__delete, &__edit {
+  &__delete,
+  &__edit {
     width: 15px;
     height: 15px;
     color: #4F00B5;
+    cursor: pointer;
   }
 
   &__delete {

@@ -10,9 +10,9 @@ const Header: React.FC = () => (
         <PencilFill className="edit-button" />
       </div>
     </div>
-    <div className="profile-info">
-      <p className="profile-info__name">Cristofer Westervelt</p>
-      <p className="profile-info__position">Fullstack JS Engineer</p>
+    <div className="profile-description">
+      <p className="profile-description__name">Cristofer Westervelt</p>
+      <p className="profile-description__position">Fullstack JS Engineer</p>
       <div className="level">
         <ShieldFillCheck className="level__icon"/>
         <p className="level__text">Level 2</p>

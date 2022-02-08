@@ -1,7 +1,11 @@
 .header {
   display: flex;
+  width: 100%;
   gap: 30px;
-  margin: 21px auto 65px 8px;
+  padding: 52px 8px;
+  align-items: center;
+  background-color: #fff;
+  margin-bottom: 13px;
 }
 
 .profile {
@@ -32,7 +36,7 @@
   }
 }
 
-.profile-info {
+.profile-description {
   display: flex;
   flex-direction: column;
   justify-content: center;

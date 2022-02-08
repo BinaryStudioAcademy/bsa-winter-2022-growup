@@ -1,5 +1,4 @@
 .edit-section {
-  width: 100%;
   border-radius: 10px;
   margin: 12px 0;
   background-color: #fff;
@@ -13,7 +12,7 @@
   background-color: #fff;
   color: #463DA8;
   padding: 26px 38px;
-
+  border-bottom: 1px solid #E1DBEA;
 
   &__title {
     font-size: 18px;
@@ -32,10 +31,14 @@
     line-height: 22px;
     color: #EE2A64;
   }
+
+  &__edit-icon {
+    margin-right: 10px;
+  }
 }
 
 .edit-section-content {
-  margin: 20px 28px 40px 34px;
+  padding: 20px 28px 38px 34px;
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;

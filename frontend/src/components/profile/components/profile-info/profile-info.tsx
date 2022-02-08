@@ -5,9 +5,13 @@ import './profile-info.scss';
 
 const ProfileInfo: React.FC = () =>(
   <div className="profile-info">
-    <Header />
-    <Tabs />
-    <ProfileMain />
+    <div className="header-wrapper">
+      <Header />
+    </div>
+    <div className="main-wrapper">
+      <Tabs />
+      <ProfileMain />
+    </div>
   </div>
 );
 

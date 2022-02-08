@@ -1,16 +1,22 @@
 .profile-main {
-  display: grid;
-  grid-template-columns: 3fr 2fr;
-  grid-template-rows: repeat(4, auto);
-  grid-column-gap: 14px;
-  grid-row-gap: 16px;
+  display: flex;
+  width: 100%;
+  gap: 15px;
+
+  .left-side {
+    width: 59%
+  }
+
+  .right-side {
+    width: 40%;
+  }
 }
 
 .group {
   width: 100%;
   text-align: left;
 
-  .group__title {
+  &__title {
     font-size: 12px;
     font-weight: 700;
     line-height: 17px;
