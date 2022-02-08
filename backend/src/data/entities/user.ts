@@ -1,13 +1,10 @@
-import { Entity, Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, ManyToOne } from 'typeorm';
 import { AbstractEntity } from '~/data/abstract/abstract.entity';
 import { DomainLevel } from './domainLevel';
 import { Company } from './company';
 
 @Entity()
 export class User extends AbstractEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
   @Column({ type: 'varchar', length: 50 })
   email: string;
 

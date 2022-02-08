@@ -1,12 +1,9 @@
-import { Entity, Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, ManyToOne } from 'typeorm';
 import { AbstractEntity } from '~/data/abstract/abstract.entity';
 import { User } from './user';
 
 @Entity()
 export class CareerJourney extends AbstractEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
   @Column()
   startDate: Date;
 
