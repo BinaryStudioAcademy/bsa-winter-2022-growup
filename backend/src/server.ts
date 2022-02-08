@@ -2,7 +2,7 @@ import cors from 'cors';
 import path from 'path';
 import express, { Express } from 'express';
 import { createConnection } from 'typeorm';
-import * as swaggerUi  from 'swagger-ui-express';
+import * as swaggerUi from 'swagger-ui-express';
 
 import routes from '~/api/routes';
 import ormconfig from '~/config/ormconfig';
