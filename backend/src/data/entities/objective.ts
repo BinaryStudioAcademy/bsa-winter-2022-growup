@@ -1,7 +1,7 @@
 import { Entity, Column, ManyToOne } from 'typeorm';
 import { AbstractEntity } from '~/data/abstract/abstract.entity';
 import { OKR } from './okr';
-import { SkillObjective } from './skillObjective';
+import { SkillObjective } from './skill-objective';
 
 @Entity()
 export class Objective extends AbstractEntity {

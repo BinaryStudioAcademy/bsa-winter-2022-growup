@@ -1,5 +1,5 @@
 import { Entity, PrimaryColumn, Column, OneToOne, JoinColumn } from 'typeorm';
-import { QuizCategory } from './quizCategory';
+import { QuizCategory } from './quiz-category';
 import { User } from './user';
 
 @Entity()

@@ -1,6 +1,6 @@
 import { Entity, OneToOne, PrimaryColumn, JoinColumn, Column } from 'typeorm';
 import { User } from './user';
-import { SkillCategory } from './skillCategory';
+import { SkillCategory } from './skill-category';
 
 @Entity()
 export class UserSkillCategory {

@@ -1,6 +1,6 @@
 import { Entity, Column, ManyToOne } from 'typeorm';
 import { AbstractEntity } from '~/data/abstract/abstract.entity';
-import { QuizQuestion } from './quizQuestion';
+import { QuizQuestion } from './quiz-question';
 
 @Entity()
 export class QuizAnswer extends AbstractEntity {

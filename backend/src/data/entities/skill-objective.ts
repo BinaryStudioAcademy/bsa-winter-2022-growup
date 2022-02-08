@@ -1,6 +1,6 @@
 import { Entity, Column, ManyToOne } from 'typeorm';
 import { AbstractEntity } from '~/data/abstract/abstract.entity';
-import { SkillCategory } from './skillCategory';
+import { SkillCategory } from './skill-category';
 
 @Entity()
 export class SkillObjective extends AbstractEntity {

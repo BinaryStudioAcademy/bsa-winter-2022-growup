@@ -1,6 +1,6 @@
 import { Entity, ManyToOne } from 'typeorm';
 import { AbstractEntity } from '~/data/abstract/abstract.entity';
-import { DomainLevel } from './domainLevel';
+import { DomainLevel } from './domain-level';
 import { Skill } from './skill';
 
 @Entity()
