@@ -3,10 +3,10 @@ import path from 'path';
 import express, { Express } from 'express';
 import { createConnection } from 'typeorm';
 
-import routes from './api/routes';
-import ormconfig from './config/ormconfig';
-import { env } from './config/env';
-import { logger } from './common/utils/logger.util';
+import routes from '~/api/routes';
+import ormconfig from '~/config/ormconfig';
+import { env } from '~/config/env';
+import { logger } from '~/common/utils/logger.util';
 
 const { port } = env.app;
 
