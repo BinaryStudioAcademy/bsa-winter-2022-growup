@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { ITokenPayload } from '~/common/models/middlevares/ITokenPayload';
+import { ITokenPayload } from '~/common/models/middlevares/token-payload';
 import { RoleType } from 'growup-shared';
 
   const validatePermissions=(allowedRoles:Array<RoleType>):((request: Request, response: Response, next: NextFunction)=>void)=>{
