@@ -37,9 +37,9 @@ const { reducer, actions } = createSlice({
 
     builder.addCase(loginUser.fulfilled, (state, action) => {
       state.isAuthenticated = true;
-      state.token = action.payload!.accessToken;
+      state.token = action.payload?.accessToken;
 
-      localStorage.setItem('user_token', action.payload!.accessToken);
+      localStorage.setItem('user_token', action.payload?.accessToken);
     });
 
     builder.addCase(loginUser.rejected, (state, _) => {
