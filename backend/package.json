@@ -9,20 +9,19 @@
     "npm": ">=8 <9"
   },
   "scripts": {
-    "start": "ts-node src/index.ts",
-    "start:dev": "ts-node-dev ./src/server.ts",
-    "start:fast": "ts-node-dev --respawn --type-check --notify=false --clear ./src/server.ts",
+    "start": "node -r tsconfig-paths/register ./server.js",
+    "start:dev": "nodemon --exec ts-node --files -r tsconfig-paths/register ./src/server.ts",
     "lint": "npx eslint \"./src/**/*.ts\" --fix",
     "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
     "add-migration": "ts-node node_modules/typeorm/cli.js migration:generate -n",
     "migrate": "ts-node node_modules/typeorm/cli.js migration:run",
     "migration-revert": "ts-node node_modules/typeorm/cli.js migration:revert",
     "generate-seed": "ts-node node_modules/typeorm/cli.js migration:create -d ./src/data/seeders -n",
-    "seed": "ts-node ./src/data/seeders",
+    "seed": "ts-node -r tsconfig-paths/register ./src/data/seeders",
     "build:ts": "tsc && tscpaths -p tsconfig.json --src . --out build",
     "build:copy": "cp -r public package.json package-lock.json build",
     "build": "npm run build:ts && npm run build:copy",
-    "prod": "node --max-old-space-size=1024 -r ts-node/register ./src/server.ts"
+    "prod": "node --max-old-space-size=1024 -r tsconfig-paths/register ./src/server.ts"
   },
   "author": "",
   "license": "ISC",
@@ -34,11 +33,10 @@
     "eslint-config-airbnb-base": "14.2.1",
     "eslint-plugin-import": "2.22.1",
     "growup-shared": "file:../shared/build",
+    "nodemon": "2.0.15",
     "ts-node-dev": "1.1.8",
-    "tscpaths": "0.0.9",
-    "ts-node": "3.3.0",
-    "@types/node": "^8.0.29",
-    "typescript": "3.3.3333"
+    "tsconfig-paths": "3.12.0",
+    "tscpaths": "0.0.9"
   },
   "dependencies": {
     "cors": "2.8.5",
