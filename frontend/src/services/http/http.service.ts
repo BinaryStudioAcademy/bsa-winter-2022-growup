@@ -1,12 +1,9 @@
-import { HttpError } from 'exceptions/exceptions';
 import { ContentType, HttpHeader, HttpMethod } from 'common/enums/enums';
 import { HttpOptions } from 'common/types/types';
+import { HttpError } from 'exceptions/exceptions';
 
 class Http {
-  public async load<T = unknown>(
-    url: string,
-    options: Partial<HttpOptions> = {},
-  ): Promise<T> {
+  public async load<T>(url: string, options: HttpOptions): Promise<T> {
     try {
       const { method = HttpMethod.GET, payload = null, contentType } = options;
       const headers = this.getHeaders(contentType);
