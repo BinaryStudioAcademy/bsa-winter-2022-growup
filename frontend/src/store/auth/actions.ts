@@ -1,22 +1,20 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { actions } from './slice';
 import { ActionType } from './common';
 import { AuthApi } from 'services';
 
-const login = createAsyncThunk(
-  ActionType.SetUser,
-  // eslint-disable-next-line
-  async (loginPayload: any, { dispatch }) => {
-    const loginResponse = await new AuthApi().loginUser(loginPayload);
-    dispatch(actions.setUser(loginResponse));
+import { IUserLoginForm } from 'common/interfaces/user';
+
+const loginUser = createAsyncThunk(
+  ActionType.LOGIN_USER,
+  async (data: IUserLoginForm, { rejectWithValue }) => {
+    const api = new AuthApi();
+    try {
+      const result = await api.loginUser(data);
+      return result;
+    } catch (err) {
+      rejectWithValue(err);
+    }
   },
 );
 
-const authActions = {
-  ...actions,
-  login,
-};
-
-export {
-  authActions,
-};
+export { loginUser };
