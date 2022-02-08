@@ -24,16 +24,18 @@ const Login: React.FC = () => {
           <Form.Control type="password" placeholder="Password" />
         </FloatingLabel>
 
-        <Form.Group className="mb-4 auth-check" controlId="authCheckbox">
+        <Form.Group className="auth-form__checkbox-container mb-4" controlId="authCheckbox">
           <Form.Check type="checkbox" label="Remember me" />
-          <p className="auth-btn-link"><a href="#">Forgot password?</a></p>
+          <p className="auth-form__btn-link">
+            <a className="auth-form__link" href="#">Forgot password?</a>
+          </p>
         </Form.Group>
 
         <div className="d-grid gap-2">
           <Button variant="danger" type="submit" size="lg">
             Sign in
           </Button>
-          <Form.Text id="authText" className="mb-1 text-center">or</Form.Text>
+          <Form.Text className="mb-1 text-center">or</Form.Text>
           <Button variant="primary" type="submit" size="lg">
             <Google className="mx-2" /> Sign in with Google
           </Button>

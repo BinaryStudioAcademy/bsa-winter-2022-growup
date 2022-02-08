@@ -11,9 +11,9 @@ const App: React.FC = () => {
   const { pathname } = useLocation();
 
   return (
-    <div className="App">
+    <div className="app">
       <div>
-        <ul className="App-navigation-list">
+        <ul className="app__navigation-list">
           <li>
             <Link to={AppRoute.ROOT}>Root</Link>
           </li>

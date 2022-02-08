@@ -7,22 +7,21 @@
   left: 50%;
 }
 
-.auth-check {
+.auth-form__checkbox-container {
   display: flex;
   align-items: baseline;
 }
 
-.auth-btn-link {
+.auth-form__btn-link {
   margin-left: auto;
 }
 
-p {
-  a {
-    text-decoration: auto;
-  }
-  a:hover {
-    text-decoration: underline;
-  }
+.auth-form__link {
+  text-decoration: auto;
+}
+
+.auth-form__link:hover {
+  text-decoration: underline;
 }
 
 @media (max-width: 360px) {
@@ -32,10 +31,10 @@ p {
 }
 
 @media (max-width: 280px) {
-  .auth-check {
-    display: block;
+  .auth-form__checkbox-container {
+    display: table;
   }
-  .auth-btn-link {
+  .auth-form__btn-link {
     margin-top: 10px;
   }
 }

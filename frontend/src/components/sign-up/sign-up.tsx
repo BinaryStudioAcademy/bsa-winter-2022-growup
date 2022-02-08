@@ -39,7 +39,7 @@ const SignUp: React.FC = () => {
           <Form.Control type="password" placeholder="Password" />
         </FloatingLabel>
 
-        <Button className="btn btn-danger form-control" type="submit" size="lg">
+        <Button className="form-control" variant="danger" type="submit" size="lg">
           Sign up
         </Button>
       </Form>
