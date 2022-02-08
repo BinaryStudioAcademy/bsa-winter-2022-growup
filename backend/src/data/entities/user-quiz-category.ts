@@ -3,7 +3,7 @@ import { QuizCategory } from './quiz-category';
 import { User } from './user';
 
 @Entity()
-export class User_QuizeCategory {
+export class User_QuizCategory {
   @PrimaryColumn()
   quizCaregoryId: number;
   @OneToOne(() => QuizCategory, (quizCategory) => quizCategory.id)

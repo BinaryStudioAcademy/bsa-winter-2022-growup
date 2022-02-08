@@ -5,7 +5,7 @@ import { User } from './user';
 @Entity()
 export class UserSkill extends AbstractEntity {
   @Column({ type: 'varchar', length: 50 })
-  role: string;
+  name: string;
 
   @ManyToOne(() => User, (user) => user.id)
   user: User;
