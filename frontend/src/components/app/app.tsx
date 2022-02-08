@@ -4,9 +4,10 @@ import Counter from 'components/counter/counter';
 import Login from 'components/login/login';
 import SignUp from 'components/sign-up/sign-up';
 import { Link, Route, Routes } from 'components/common/common';
-import logo from 'assets/img/logo.svg';
 import Ork from 'components/okrs/okrs';
 import Profile from 'components/profile/profile';
+import Header from 'components/header/header';
+import Sidebar from 'components/sidebar/sidebar';
 
 const App: React.FC = () => {
   const { pathname } = useLocation();
@@ -14,6 +15,8 @@ const App: React.FC = () => {
   return (
     <>
       <div className="App">
+        <Sidebar />
+        <Header />
         <div>
           <ul className="App-navigation-list">
             <li>
@@ -34,59 +37,41 @@ const App: React.FC = () => {
             <li>
               <Link to={AppRoute.SETTINGS_PROFILE}>Profile Settings</Link>
             </li>
+            {/* <li>
+              <Link to={AppRoute.HOME}>Home</Link>
+            </li>
+            <li>
+              <Link to={AppRoute.PROFILE}>Profile</Link>
+            </li>
+            <li>
+              <Link to={AppRoute.CAREER_PATH}>Career Path</Link>
+            </li>
+            <li>
+              <Link to={AppRoute.OKR}>OKR</Link>
+            </li>
+            <li>
+              <Link to={AppRoute.OPPORTUNITIES}>Opportunities</Link>
+            </li>
+            <li>
+              <Link to={AppRoute.MENTEE_PROFILES}>Mentee Profiles</Link>
+            </li> */}
           </ul>
           <p>Current path: {pathname}</p>
         </div>
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <Routes>
             <Route path={AppRoute.ROOT} element={Counter} />
             <Route path={AppRoute.LOGIN} element={Login} />
             <Route path={AppRoute.SIGN_UP} element={SignUp} />
             <Route path={AppRoute.ORKS} element={Ork} />
             <Route path={AppRoute.SETTINGS_PROFILE} element={Profile} />
+            <Route path={AppRoute.HOME} element={<div>Home</div>} />
+            <Route path={AppRoute.PROFILE} element={<div>Profile</div>} />
+            <Route path={AppRoute.CAREER_PATH} element={<div>Career Path</div>} />
+            <Route path={AppRoute.OKR} element={<div>OKR</div>} />
+            <Route path={AppRoute.OPPORTUNITIES} element={<div>Opportunities</div>} />
+            <Route path={AppRoute.MENTEE_PROFILES} element={<div>Mentee Profiles</div>} />
           </Routes>
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <span>
-            <span>Learn </span>
-            <a
-              className="App-link"
-              href="https://reactjs.org/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              React
-            </a>
-            <span>, </span>
-            <a
-              className="App-link"
-              href="https://redux.js.org/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Redux
-            </a>
-            <span>, </span>
-            <a
-              className="App-link"
-              href="https://redux-toolkit.js.org/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Redux Toolkit
-            </a>
-            ,<span> and </span>
-            <a
-              className="App-link"
-              href="https://react-redux.js.org/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              React Redux
-            </a>
-          </span>
         </header>
       </div>
     </>
