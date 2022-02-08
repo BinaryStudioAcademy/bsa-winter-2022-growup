@@ -1,10 +1,11 @@
 import { Button, Container, FloatingLabel, Form } from 'react-bootstrap';
 import { Google } from 'react-bootstrap-icons';
+import './styles.scss';
 
 const Login: React.FC = () => {
   return (
-    <Container className="auth-container">
-      <Form className="auth-form">
+    <Container>
+      <Form className="auth-form w-100">
         <p className="fs-1 text-center mb-4">Sign in</p>
 
         <FloatingLabel
@@ -23,9 +24,9 @@ const Login: React.FC = () => {
           <Form.Control type="password" placeholder="Password" />
         </FloatingLabel>
 
-        <Form.Group className="mb-3 auth-check" controlId="authCheckbox">
+        <Form.Group className="mb-4 auth-check" controlId="authCheckbox">
           <Form.Check type="checkbox" label="Remember me" />
-          <Button className="auth-btn-link" variant="link">Forgot password?</Button>
+          <p className="auth-btn-link"><a href="#">Forgot password?</a></p>
         </Form.Group>
 
         <div className="d-grid gap-2">

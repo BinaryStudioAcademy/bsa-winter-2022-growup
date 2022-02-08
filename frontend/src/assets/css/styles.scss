@@ -68,26 +68,3 @@ code {
     transform: translateY(0px)
   }
 }
-
-// login
-.auth-container {
-  width: 100%;
-  height: 100%;
-}
-
-.auth-form {
-  width: 400px;
-  transform: translate(-50%, -50%);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-}
-
-.auth-check {
-  display: flex;
-  align-items: center;
-}
-
-.auth-btn-link {
-  margin-left: auto;
-}

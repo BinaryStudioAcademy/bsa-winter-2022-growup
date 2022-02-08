@@ -1,0 +1,41 @@
+.auth-form {
+  max-width: 500px;
+  padding: 0 40px;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.auth-check {
+  display: flex;
+  align-items: baseline;
+}
+
+.auth-btn-link {
+  margin-left: auto;
+}
+
+p {
+  a {
+    text-decoration: auto;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+@media (max-width: 360px) {
+  .auth-form {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 280px) {
+  .auth-check {
+    display: block;
+  }
+  .auth-btn-link {
+    margin-top: 10px;
+  }
+}

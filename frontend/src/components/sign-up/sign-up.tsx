@@ -1,9 +1,10 @@
 import { Button, Container, FloatingLabel, Form } from 'react-bootstrap';
+import '../login/styles.scss';
 
 const SignUp: React.FC = () => {
   return (
-    <Container className="auth-container">
-      <Form className="auth-form">
+    <Container>
+      <Form className="auth-form w-100">
         <p className="fs-1 text-center mb-4">Sign up</p>
 
         <FloatingLabel
