@@ -88,6 +88,7 @@ const App: React.FC = () => {
             </a>
           </span>
         </header>
+        <div className="bg-our-black text-our-white">LAlmost before we knew it, we had left the ground.</div>
       </div>
     </>
   );
