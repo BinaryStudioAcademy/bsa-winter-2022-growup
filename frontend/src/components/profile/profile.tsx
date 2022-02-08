@@ -1,3 +1,9 @@
-const Profile: React.FC = () => <h1>Profile</h1>;
+import ProfileInfo from './components/profile-info/profile-info';
+
+const Profile: React.FC = () => (
+  <>
+    <ProfileInfo/>
+  </>
+);
 
 export default Profile;

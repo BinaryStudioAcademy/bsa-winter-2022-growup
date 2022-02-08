@@ -1,0 +1,15 @@
+.tag {
+  background-color: #EEEBFB;
+  color: #6B6293;
+  padding: 1px 8px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  text-align: left;
+  border-radius: 20px;
+  margin: 5px 0;
+}
+
+.tag + .tag {
+  margin-left: 5px;
+}

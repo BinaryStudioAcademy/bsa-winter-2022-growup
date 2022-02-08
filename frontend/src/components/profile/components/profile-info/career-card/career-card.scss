@@ -1,0 +1,72 @@
+.career-card {
+  border: 1px solid #E1DBEA;
+  margin: 5px 15px 20px 55px;
+  padding-top: 20px;
+  border-radius: 10px;
+}
+
+.career-card-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 26px;
+  padding-bottom: 26px;
+
+  &__title {
+    color: #1D1D1D;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 25px;
+    margin-bottom: 8px;
+  }
+
+  &__role, &__company {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 19px;
+    color: #1D1D1D;
+    margin: 0;
+    margin-bottom: 5px;
+    text-align: left;
+
+    span {
+      color: #808C9C;
+      margin-right: 10px;
+    }
+  }
+}
+
+
+.career-card-footer {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #E1DBEA;
+  padding-left: 26px;
+  width: 100%;
+  height: 46px;
+
+  &__duration {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    color: #808C9C;
+    margin: 0;
+    align-self: center;
+  }
+}
+
+.career-action-buttons {
+  margin-right: 23px;
+  align-self: center;
+  display: flex;
+
+  &__delete, &__edit {
+    width: 15px;
+    height: 15px;
+    color: #4F00B5;
+  }
+
+  &__delete {
+    margin-left: 20px;
+  }
+}

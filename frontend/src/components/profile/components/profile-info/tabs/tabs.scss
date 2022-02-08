@@ -1,0 +1,37 @@
+.tabs {
+  display: flex;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 22px;
+  gap:32px;
+
+  &__item {
+    color: #1D1D1D;
+    text-decoration: none;
+    padding-left: 2px;
+    padding-right: 2px;
+
+    &:hover {
+      color: #463DA8;
+    }
+  }
+}
+
+.active-tab {
+  color:#463DA8;
+  position: relative;
+  padding-bottom: 9px;
+
+  &:after {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: #463DA8;
+    margin-top: 15px;
+    border-radius: 1px;
+    bottom: 0;
+    left: 0
+  }
+}
