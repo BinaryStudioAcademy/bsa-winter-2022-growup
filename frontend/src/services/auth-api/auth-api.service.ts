@@ -1,9 +1,31 @@
-import { IUserWithTokens } from 'common/interfaces/user';
+import { ContentType, HttpMethod } from 'common/enums/enums';
+import { Http } from 'services';
+
+interface IAuthApi {
+  apiPath: string;
+  http: Http;
+}
+
+interface IUserPayload {
+  email: string;
+  password: string;
+}
 
 class AuthApi {
-  // eslint-disable-next-line
-  public async loginUser(loginPayload: any): Promise<IUserWithTokens> {
-    return new Promise(resolve => setTimeout(() => resolve(loginPayload), 1000));
+  private _apiPath: string;
+  private _http: Http;
+
+  constructor({ apiPath, http }: IAuthApi) {
+    this._apiPath = apiPath;
+    this._http = http;
+  }
+
+  loginUser(payload: IUserPayload): Promise<any> {
+    return this._http.load(`${this._apiPath}/login`, {
+      method: HttpMethod.POST,
+      contentType: ContentType.JSON,
+      payload: JSON.stringify(payload),
+    });
   }
 }
 
