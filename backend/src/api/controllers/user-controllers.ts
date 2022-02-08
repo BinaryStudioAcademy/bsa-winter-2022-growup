@@ -25,7 +25,7 @@ const loginUserController = async (req: Request): Promise<TokenResponse> => {
       message: 'Wrong credentials',
     });
 
-  const token = getUserJWT(user);
+  const token = await getUserJWT(user);
   return { token };
 };
 
@@ -39,7 +39,7 @@ const registerUserController = async (req: Request): Promise<TokenResponse> => {
       message: 'User with this email already exists',
     });
 
-  const token = getUserJWT(user);
+  const token = await getUserJWT(user);
   return { token };
 };
 

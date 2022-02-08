@@ -1,10 +1,12 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { RoleType } from 'growup-shared';
 
 import { getCustomRepository } from 'typeorm';
 
 import UserRepository from '../data/repositories/user.repository';
 import { User } from '../data/entities/user';
+import { createRole, findRole } from './role.service';
 
 import type {
   UserLoginForm,
@@ -45,21 +47,22 @@ export const registerUser = async (data: UserRegisterForm): Promise<User> => {
   const userInstance = userRepository.create({
     ...data,
     password: hashedPassword,
+    fullName: `${data.lastName} ${data.firstName}`,
     createdAt: new Date().toISOString(),
   });
 
   const user = await userInstance.save();
-  // await createRole(user, RoleType.Admin);
+  await createRole(user, RoleType.Admin);
 
   return user;
 };
 
-export const getUserJWT = (user: User): string => {
+export const getUserJWT = async (user: User): Promise<string> => {
+  const role = await findRole(user);
   const token = jwt.sign(
     {
       userId: user.id,
-      // companyId: user.companyId,
-      // role: user.role,
+      role: role.role,
     },
     process.env.APP_SECRET,
     {
