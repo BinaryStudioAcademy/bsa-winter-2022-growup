@@ -1,32 +1,18 @@
 import { Request, Router } from 'express';
 
 import { run } from '../../common/helpers/route.helper';
-import {
-  authenticateUser,
-  getUserJWT,
-  registerUser,
-} from '~/services/user.service';
+import { authenticateUser, registerUser } from '~/services/user.service';
 
 const router: Router = Router();
 
 router
   .post(
     '/login',
-    run(async (req: Request) => {
-      const user = await authenticateUser(req.body);
-      const token = await getUserJWT(user);
-
-      return { token };
-    }),
+    run(async (req: Request) => await authenticateUser(req.body)),
   )
   .post(
     '/register',
-    run(async (req: Request) => {
-      const user = await registerUser(req.body);
-      const token = await getUserJWT(user);
-
-      return { token };
-    }),
+    run(async (req: Request) => await registerUser(req.body)),
   );
 
 export default router;

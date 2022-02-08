@@ -17,7 +17,25 @@ import type {
   UserRegisterForm,
 } from '~/common/forms/user.forms';
 
-export const authenticateUser = async (data: UserLoginForm): Promise<User> => {
+type TokenResponse = {
+  token: string;
+};
+
+const getUserJWT = async (user: User): Promise<TokenResponse> => {
+  const roleRepository = getCustomRepository(UserRoleRepository);
+  const role = await roleRepository.findOne({ user });
+
+  const token = signToken({
+    userId: user.id,
+    role: role.role,
+  });
+
+  return { token };
+};
+
+export const authenticateUser = async (
+  data: UserLoginForm,
+): Promise<TokenResponse> => {
   const userRepository = getCustomRepository(UserRepository);
 
   const user = await userRepository.findOne({
@@ -39,10 +57,12 @@ export const authenticateUser = async (data: UserLoginForm): Promise<User> => {
       message: 'Wrong password',
     });
 
-  return user;
+  return getUserJWT(user);
 };
 
-export const registerUser = async (data: UserRegisterForm): Promise<User> => {
+export const registerUser = async (
+  data: UserRegisterForm,
+): Promise<TokenResponse> => {
   const userRepository = getCustomRepository(UserRepository);
   const roleRepository = getCustomRepository(UserRoleRepository);
 
@@ -70,17 +90,5 @@ export const registerUser = async (data: UserRegisterForm): Promise<User> => {
   const roleInstance = roleRepository.create({ user, role: RoleType.Admin });
   await roleInstance.save();
 
-  return user;
-};
-
-export const getUserJWT = async (user: User): Promise<string> => {
-  const roleRepository = getCustomRepository(UserRoleRepository);
-  const role = await roleRepository.findOne({ user });
-
-  const token = signToken({
-    userId: user.id,
-    role: role.role,
-  });
-
-  return token;
+  return getUserJWT(user);
 };
