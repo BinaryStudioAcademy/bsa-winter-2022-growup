@@ -15,5 +15,6 @@ ignore:
     - frontend/node_modules
     - backend/build
     - backend/node_modules
+    - backend/src/data/migrations
     - .git
     - .husky
