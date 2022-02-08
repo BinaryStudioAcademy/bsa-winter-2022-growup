@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { ITokenPayload } from '~/common/models/middlevares/ITokenPayload';
+import { ITokenPayload } from '~/common/models/middlevares/token-payload';
 import { env } from '~/config/env';
 import { verify } from 'jsonwebtoken';
 
