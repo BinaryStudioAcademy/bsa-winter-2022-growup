@@ -55,7 +55,6 @@
     "shared/**/*.{ts,tsx}": "npm run lint:shared"
   },
   "dependencies": {
-    "react-bootstrap-icons": "^1.7.2",
     "yup": "0.32.11"
   }
 }
