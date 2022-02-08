@@ -4,7 +4,7 @@ import Counter from 'components/counter/counter';
 import Login from 'components/login/login';
 import SignUp from 'components/sign-up/sign-up';
 import { Link, Route, Routes } from 'components/common/common';
-import logo from 'assets/img/logo.svg';
+// import logo from 'assets/img/logo.svg';
 import Ork from 'components/okrs/okrs';
 import Profile from 'components/profile/profile';
 
@@ -38,15 +38,15 @@ const App: React.FC = () => {
           <p>Current path: {pathname}</p>
         </div>
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          {/* <img src={logo} className="App-logo" alt="logo" /> */}
           <Routes>
             <Route path={AppRoute.ROOT} element={Counter} />
             <Route path={AppRoute.LOGIN} element={Login} />
             <Route path={AppRoute.SIGN_UP} element={SignUp} />
             <Route path={AppRoute.ORKS} element={Ork} />
-            <Route path={AppRoute.SETTINGS_PROFILE} element={Profile} />
+            <Route path={AppRoute.SETTINGS_PROFILE} element={<Profile/>} />
           </Routes>
-          <p>
+          {/* <p>
             Edit <code>src/App.tsx</code> and save to reload.
           </p>
           <span>
@@ -86,7 +86,7 @@ const App: React.FC = () => {
             >
               React Redux
             </a>
-          </span>
+          </span> */}
         </header>
       </div>
     </>
