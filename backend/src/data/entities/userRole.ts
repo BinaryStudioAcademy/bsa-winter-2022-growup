@@ -1,11 +1,12 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { AbstractEntity } from '~/data/abstract/abstract.entity';
 import { User } from './user';
 import { RoleType } from '../../common/enums/role-type';
 
 @Entity()
-export class UserRole {
+export class UserRole extends AbstractEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column({
     type: 'enum',

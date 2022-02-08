@@ -1,11 +1,12 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { AbstractEntity } from '~/data/abstract/abstract.entity';
 import { Company } from './company';
 import { PermissionType } from '../../common/enums/permission-type';
 
 @Entity()
-export class Skill {
+export class Skill extends AbstractEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @ManyToOne(() => Company, (company) => company.id)
   company: Company;

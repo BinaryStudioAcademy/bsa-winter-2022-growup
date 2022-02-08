@@ -1,11 +1,12 @@
 import { Entity, Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { AbstractEntity } from '~/data/abstract/abstract.entity';
 import { OKR } from './okr';
 import { SkillObjective } from './skillObjective';
 
 @Entity()
-export class Objective {
+export class Objective extends AbstractEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column({ type: 'varchar', length: 50, nullable: true })
   name: string;

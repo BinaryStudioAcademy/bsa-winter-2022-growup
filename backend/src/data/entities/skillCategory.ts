@@ -1,11 +1,12 @@
 import { Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { AbstractEntity } from '~/data/abstract/abstract.entity';
 import { DomainLevel } from './domainLevel';
 import { Skill } from './skill';
 
 @Entity()
-export class SkillCategory {
+export class SkillCategory extends AbstractEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @ManyToOne(() => Skill, (skill) => skill.id)
   skill: Skill;

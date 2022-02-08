@@ -1,10 +1,11 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { AbstractEntity } from '~/data/abstract/abstract.entity';
 import { QuizQuestion } from './quizQuestion';
 
 @Entity()
-export class QuizAnswer {
+export class QuizAnswer extends AbstractEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column({ type: 'varchar', length: 250 })
   answer: string;
