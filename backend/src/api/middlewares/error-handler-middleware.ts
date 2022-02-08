@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { HttpError } from 'growup-shared';
+import { HttpCode, HttpError } from 'growup-shared';
 
 export const errorHandlerMiddleware = (
   err: HttpError,
@@ -7,8 +7,8 @@ export const errorHandlerMiddleware = (
   res: Response,
   __: NextFunction,
 ): void => {
-  res.status(err.status).json({
+  res.status(err.status || HttpCode.INTERNAL_SERVER_ERROR).json({
     success: false,
-    message: err.message,
+    message: err.message || 'Internal Server Error',
   });
 };
