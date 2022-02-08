@@ -14,7 +14,7 @@
     "lint": "npx eslint \"./src/**/*.ts\" --fix",
     "typeorm": "ts-node node_modules/typeorm/cli.js",
     "add-migration": "ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:generate -n",
-    "migrate": "ts-node node_modules/typeorm/cli.js migration:run",
+    "migrate": "ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:run",
     "migration-revert": "ts-node node_modules/typeorm/cli.js migration:revert",
     "generate-seed": "ts-node node_modules/typeorm/cli.js migration:create -d ./src/data/seeders -n",
     "seed": "ts-node -r tsconfig-paths/register ./src/data/seeders",

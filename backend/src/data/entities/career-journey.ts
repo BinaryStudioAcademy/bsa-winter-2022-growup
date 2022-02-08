@@ -7,8 +7,8 @@ export class CareerJourney extends AbstractEntity {
   @Column()
   startDate: Date;
 
-  @Column({ type: 'date', nullable: true })
-  endDate: string;
+  @Column({ nullable: true })
+  endDate: Date;
 
   @Column({ type: 'varchar', length: 250 })
   company: string;
