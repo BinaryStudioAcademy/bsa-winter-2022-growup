@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { run } from '../../common/helpers/route.helper';
-import { getSomething } from '../../services/user.service';
+import { run } from '~/common/helpers/route.helper';
+import { getSomething } from '~/services/user.service';
 
 const router: Router = Router();
 
