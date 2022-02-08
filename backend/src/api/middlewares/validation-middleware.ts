@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { ITokenPayload } from '~/common/models/middlevares/token-payload';
 import { RoleType } from 'growup-shared';
+import * as yup  from 'yup';
 
   const validatePermissions=(allowedRoles:Array<RoleType>):((request: Request, response: Response, next: NextFunction)=>void)=>{
     return (request: Request, response: Response, next: NextFunction)=>{
@@ -20,4 +21,26 @@ import { RoleType } from 'growup-shared';
     };
   };
 
-  export default validatePermissions;
+  const validateBody=(schema:yup.BaseSchema):((request: Request, response: Response, next: NextFunction)=>void)=>{
+      return async (request: Request, response: Response, next: NextFunction)=>{
+        const badRequest = (message: string):Response => response.status(400).json({
+            ok: false,
+            status: 400,
+            message: message,
+        });
+          try{
+            request.body=await schema.validate(request.body);
+          }catch(error:any){
+            if (error.errors.length > 1) {
+                badRequest(`${error.message},\n${error.errors.join(',\n')}`);
+              } else {
+                badRequest(error.message);
+              }
+              return;
+          }
+
+        next();
+      };
+  };
+
+  export { validatePermissions, validateBody };
