@@ -37,24 +37,6 @@ const App: React.FC = () => {
             <li>
               <Link to={AppRoute.SETTINGS_PROFILE}>Profile Settings</Link>
             </li>
-            {/* <li>
-              <Link to={AppRoute.HOME}>Home</Link>
-            </li>
-            <li>
-              <Link to={AppRoute.PROFILE}>Profile</Link>
-            </li>
-            <li>
-              <Link to={AppRoute.CAREER_PATH}>Career Path</Link>
-            </li>
-            <li>
-              <Link to={AppRoute.OKR}>OKR</Link>
-            </li>
-            <li>
-              <Link to={AppRoute.OPPORTUNITIES}>Opportunities</Link>
-            </li>
-            <li>
-              <Link to={AppRoute.MENTEE_PROFILES}>Mentee Profiles</Link>
-            </li> */}
           </ul>
           <p>Current path: {pathname}</p>
         </div>
