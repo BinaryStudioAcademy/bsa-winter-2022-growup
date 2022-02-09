@@ -20,7 +20,7 @@ const Login: React.FC = () => {
     [dispatch],
   );
 
-  const onLogin = (values: any): void => {
+  const onLogin = (values: object): void => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     handleLogin(values).unwrap().then(() => {
