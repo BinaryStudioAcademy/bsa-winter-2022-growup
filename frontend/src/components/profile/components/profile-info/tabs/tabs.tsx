@@ -1,7 +1,7 @@
 import  './tabs.scss';
 
-const Navigation: React.FC = () => (
-  <div className="tabs">
+const Tabs: React.FC = () => (
+  <nav className="tabs">
     <a className="tabs__item active-tab" href="#">
       Summary
     </a>
@@ -11,7 +11,7 @@ const Navigation: React.FC = () => (
     <a className="tabs__item" href="#">
       Interests
     </a>
-  </div>
+  </nav>
 );
 
-export default Navigation;
+export default Tabs;
