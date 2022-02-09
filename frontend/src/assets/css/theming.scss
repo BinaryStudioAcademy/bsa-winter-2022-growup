@@ -1,0 +1,28 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
+/* stylelint-disable */
+
+$custom-colors: (
+  "gu-white": #f6f7f9,
+  "gu-black": #1d1d1d,
+  "gu-purple": #291965,
+  "gu-blue": #463DA8,
+  "gu-pink": #EE2A64,
+) !default;
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+$theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");
+$utilities-colors: map-merge(
+  $theme-colors-rgb,
+  (
+    "black": to-rgb($black),
+    "white": to-rgb($white),
+    "body":  to-rgb($body-color)
+  )
+);
+
+$utilities-text-colors: map-loop($utilities-colors, rgba-css-var, "$key", "text");
+$utilities-bg-colors: map-loop($utilities-colors, rgba-css-var, "$key", "bg");
+/* stylelint-enable */
