@@ -39,10 +39,13 @@
     "tscpaths": "0.0.9"
   },
   "dependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/jsonwebtoken": "^8.5.8",
+    "bcrypt": "^5.0.1",
     "cors": "2.8.5",
     "dotenv": "14.3.2",
     "express": "4.17.2",
-    "jsonwebtoken": "8.5.1",
+    "jsonwebtoken": "^8.5.1",
     "pg": "8.7.1",
     "pg-connection-string": "2.5.0",
     "pino": "7.6.5",
