@@ -36,19 +36,21 @@ const Admin: React.FC<PropTypes> = ({ variant }) => (
         <Col sm={8} lg={8} md={8}>
           <Nav variant="tabs" defaultActiveKey="/">
             <Nav.Item>
-              <Link to={AppRoute.ADMIN}>
-                <Nav.Link href="/">Your Company</Nav.Link>
-              </Link>
+              <Nav.Link
+                className={variant === Variants.company ? 'active' : ''}
+              >
+                <Link to={AppRoute.ADMIN}>Your Company</Link>
+              </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Link to={AppRoute.ADMIN_USERS}>
-                <Nav.Link>Users</Nav.Link>
-              </Link>
+              <Nav.Link className={variant === Variants.users ? 'active' : ''}>
+                <Link to={AppRoute.ADMIN_USERS}>Users</Link>
+              </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Link to={AppRoute.ADMIN_CAREER_PATH}>
-                <Nav.Link>Career path</Nav.Link>
-              </Link>
+              <Nav.Link className={variant === Variants.career ? 'active' : ''}>
+                <Link to={AppRoute.ADMIN_CAREER_PATH}>Career path</Link>
+              </Nav.Link>
             </Nav.Item>
           </Nav>
         </Col>
@@ -57,7 +59,6 @@ const Admin: React.FC<PropTypes> = ({ variant }) => (
         {variant === Variants.company && <Companies />}
         {variant === Variants.users && <Users userList={[]} />}
         {variant === Variants.career && <CareerPath />}
-        <Companies />
       </Row>
     </Container>
   </>
