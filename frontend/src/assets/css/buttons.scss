@@ -1,0 +1,66 @@
+%btn-growup {
+  border-radius: 70px !important;
+  font-weight: bold !important;
+  font-size: 16px !important;
+}
+
+%btn-growup-outline {
+  background-color: transparent !important;
+  border: 2px solid !important;
+
+  padding: 0.2rem 1.5rem !important;
+  transition: 0.3s;
+}
+
+.btn-growup-primary {
+  @extend %btn-growup;
+
+  background-color: $violet !important;
+  color: $white !important;
+}
+
+.btn-growup-outline-primary {
+  @extend %btn-growup;
+  @extend %btn-growup-outline;
+
+  color: $violet !important;
+  border-color: $violet !important;
+
+  &:hover {
+    color: $white !important;
+    background: $violet !important;
+  }
+}
+
+.btn-growup-secondary {
+  @extend %btn-growup;
+
+  background-color: $pink !important;
+  color: $white !important;
+}
+
+.btn-growup-outline-secondary {
+  @extend %btn-growup;
+  @extend %btn-growup-outline;
+
+  color: $pink !important;
+  border-color: $pink !important;
+
+  &:hover {
+    color: $white !important;
+    background: $pink !important;
+  }
+}
+
+.btn-growup-outline-white {
+  @extend %btn-growup;
+  @extend %btn-growup-outline;
+
+  color: $white !important;
+  border-color: $white !important;
+
+  &:hover {
+    color: $violet !important;
+    background: $white !important;
+  }
+}

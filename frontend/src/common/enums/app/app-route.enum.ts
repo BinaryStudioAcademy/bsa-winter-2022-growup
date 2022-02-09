@@ -1,5 +1,6 @@
 enum AppRoute {
   ROOT = '/',
+  ADMIN = '/',
   LOGIN = '/login',
   SIGN_UP = '/signup',
   ORKS = '/ork',
