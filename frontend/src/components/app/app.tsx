@@ -10,7 +10,12 @@ import Admin from 'components/admin/admin';
 const App: React.FC = () => {
   return (
     <Routes>
-      <Route path={AppRoute.ADMIN} element={<Admin />} />
+      <Route path={AppRoute.ADMIN} element={<Admin variant="company" />} />
+      <Route path={AppRoute.ADMIN_USERS} element={<Admin variant="users" />} />
+      <Route
+        path={AppRoute.ADMIN_CAREER_PATH}
+        element={<Admin variant="career" />}
+      />
       <Route path={AppRoute.ROOT} element={Counter} />
       <Route path={AppRoute.LOGIN} element={Login} />
       <Route path={AppRoute.SIGN_UP} element={SignUp} />
