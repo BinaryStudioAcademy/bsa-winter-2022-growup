@@ -6,14 +6,17 @@ import Ork from 'components/okrs/okrs';
 import Profile from 'components/profile/profile';
 import SignUp from 'components/sign-up/sign-up';
 import { useLocation } from 'hooks/hooks';
+import { NotificationContainer } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const App: React.FC = () => {
   const { pathname } = useLocation();
 
   return (
-    <div className="app">
+    <div>
+      <NotificationContainer />
       <div>
-        <ul className="app__navigation-list">
+        <ul>
           <li>
             <Link to={AppRoute.ROOT}>Root</Link>
           </li>

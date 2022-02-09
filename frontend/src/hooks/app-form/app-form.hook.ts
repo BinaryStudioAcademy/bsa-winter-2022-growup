@@ -1,3 +1,5 @@
+import { joiResolver } from '@hookform/resolvers/joi';
+import * as Joi from 'joi';
 import { Control, useForm, UseFormHandleSubmit } from 'react-hook-form';
 
 interface IUseAppForm {
@@ -8,15 +10,17 @@ interface IUseAppForm {
 
 interface IUseAppFormProps {
   defaultValues: object,
+  validationSchema: Joi.Schema<any>
 }
 
-const useAppForm = ({ defaultValues }: IUseAppFormProps): IUseAppForm => {
+const useAppForm = ({ defaultValues, validationSchema }: IUseAppFormProps): IUseAppForm => {
   const {
     control,
     formState: { errors },
     handleSubmit,
   } = useForm({
     defaultValues,
+    resolver: validationSchema ? joiResolver(validationSchema) : undefined,
   });
 
   return {
