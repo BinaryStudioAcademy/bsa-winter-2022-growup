@@ -1,0 +1,61 @@
+.not_found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+
+  .not_found_main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 456px;
+
+    .not_found_404 {
+      height: 280px;
+      position: relative;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 0.5rem;
+
+      h1 {
+        position: absolute;
+        font-size: 15rem;
+        font-weight: 500;
+        line-height: 1.2;
+        text-align: center;
+        font-family: fantasy;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-size: cover;
+        background-position: center;
+        background-image: url('https://colorlib.com/etc/404/colorlib-error-404-10/img/bg.jpg');
+      }
+    }
+
+    p {
+      font-size: 10rem;
+      color: #495057;
+      font-weight: 500;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+      margin-top: 0;
+      text-align: center;
+    }
+
+    .h1 {
+      font-size: 1.65rem;
+    }
+
+    .h2 {
+      font-size: 1.44375rem;
+      margin-top: 1rem;
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+  }
+}
