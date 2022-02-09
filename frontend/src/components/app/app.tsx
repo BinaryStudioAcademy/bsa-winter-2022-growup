@@ -7,9 +7,14 @@ import { Link, Route, Routes } from 'components/common/common';
 import logo from 'assets/img/logo.svg';
 import Ork from 'components/okrs/okrs';
 import Profile from 'components/profile/profile';
+import { NotFound } from 'components/notFound/NotFound';
 
 const App: React.FC = () => {
   const { pathname } = useLocation();
+
+  const isIncludePath = Object.values(AppRoute).includes(pathname as AppRoute);
+
+  if (!isIncludePath) return <NotFound />;
 
   return (
     <>
