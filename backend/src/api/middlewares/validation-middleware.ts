@@ -1,7 +1,7 @@
 import { NextFunction, Response } from 'express';
 import { HttpCode, HttpError, RoleType } from 'growup-shared';
 import * as yup from 'yup';
-import { IRequest } from '~/common/models/middlevares/request';
+import { IRequest } from '~/common/models/middlewares/request';
 
 const validatePermissions = (allowedRoles: Array<RoleType>): ((request: IRequest, response: Response, next: NextFunction) => void) => {
   return (request: IRequest, _response: Response, next: NextFunction) => {
@@ -20,8 +20,9 @@ const validateBody = (schema: yup.BaseSchema): ((request: IRequest, response: Re
   return async (request: IRequest, _response: Response, next: NextFunction) => {
     try {
       request.body = await schema.validate(request.body);
-    } catch (error: any) {
-      const message: string = error.errors.length > 1 ? `${error.message},\n${error.errors.join(',\n')}` : error.message;
+    } catch (error: unknown) {
+      const validationError: yup.ValidationError = error as yup.ValidationError;
+      const message: string = validationError.errors.length > 1 ? `${validationError.message},\n${validationError.errors.join(',\n')}` : validationError.message;
       throw new HttpError({
         status: HttpCode.BAD_REQUEST,
         message: message,

@@ -1,9 +1,9 @@
 import { NextFunction, Response } from 'express';
-import { ITokenPayload } from '~/common/models/middlevares/token-payload';
+import { ITokenPayload } from '~/common/models/middlewares/token-payload';
 import { env } from '~/config/env';
 import { verify } from 'jsonwebtoken';
 import { HttpCode, HttpError } from 'growup-shared';
-import { IRequest } from '~/common/models/middlevares/request';
+import { IRequest } from '~/common/models/middlewares/request';
 
 const verifyToken = (request: IRequest, _response: Response, next: NextFunction): void => {
     const token = request.headers.authorization;
@@ -13,18 +13,17 @@ const verifyToken = (request: IRequest, _response: Response, next: NextFunction)
             message: 'Required Authorization header not found',
         });
     }
-    let tokenPayload: ITokenPayload;
     try {
-        tokenPayload = <ITokenPayload>verify(token, env.app.secretKey);
+        const tokenPayload = <ITokenPayload>verify(token, env.app.secretKey);
+        request.userId = tokenPayload.userId;
+        request.userRole = tokenPayload.userRole;
+        next();
     } catch {
         throw new HttpError({
             status: HttpCode.UNAUTHORIZED,
             message: 'Invalid Token',
         });
     }
-    request.userId = tokenPayload.userId;
-    request.userRole = tokenPayload.userRole;
-    next();
 };
 
 export default verifyToken;
