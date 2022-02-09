@@ -1,10 +1,18 @@
-import { Router } from 'express';
+import { Request, Router } from 'express';
+
 import { run } from '../../common/helpers/route.helper';
-import { getSomething } from '../../services/user.service';
+import { authenticateUser, registerUser } from '~/services/user.service';
 
 const router: Router = Router();
 
 router
-  .get('/', run(req => getSomething(req.query)));
+  .post(
+    '/login',
+    run(async (req: Request) => await authenticateUser(req.body)),
+  )
+  .post(
+    '/register',
+    run(async (req: Request) => await registerUser(req.body)),
+  );
 
 export default router;
