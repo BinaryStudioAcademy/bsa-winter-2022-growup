@@ -7,14 +7,10 @@ import { Link, Route, Routes } from 'components/common/common';
 import logo from 'assets/img/logo.svg';
 import Ork from 'components/okrs/okrs';
 import Profile from 'components/profile/profile';
-import { NotFound } from 'components/notFound/NotFound';
+import { NotFound } from 'components/notFound';
 
 const App: React.FC = () => {
   const { pathname } = useLocation();
-
-  const isIncludePath = Object.values(AppRoute).includes(pathname as AppRoute);
-
-  if (!isIncludePath) return <NotFound />;
 
   return (
     <>
@@ -50,6 +46,7 @@ const App: React.FC = () => {
             <Route path={AppRoute.SIGN_UP} element={SignUp} />
             <Route path={AppRoute.ORKS} element={Ork} />
             <Route path={AppRoute.SETTINGS_PROFILE} element={Profile} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
           <p>
             Edit <code>src/App.tsx</code> and save to reload.
