@@ -1,46 +1,34 @@
-import { NextFunction, Request, Response } from 'express';
-import { ITokenPayload } from '~/common/models/middlevares/token-payload';
-import { RoleType } from 'growup-shared';
-import * as yup  from 'yup';
+import { NextFunction, Response } from 'express';
+import { HttpCode, HttpError, RoleType } from 'growup-shared';
+import * as yup from 'yup';
+import { IRequest } from '~/common/models/middlevares/request';
 
-  const validatePermissions=(allowedRoles:Array<RoleType>):((request: Request, response: Response, next: NextFunction)=>void)=>{
-    return (request: Request, response: Response, next: NextFunction)=>{
-        const unauthorized = (message: string):Response => response.status(401).json({
-            ok: false,
-            status: 401,
-            message: message,
-        });
-        const tokenPayload:ITokenPayload={ ...request.body };
-        const userRole=tokenPayload.userRole;
-        if(!allowedRoles.includes(userRole)){
-            unauthorized('You dont have permissions for this action');
-            return;
-        }
-
-        next();
-    };
+const validatePermissions = (allowedRoles: Array<RoleType>): ((request: IRequest, response: Response, next: NextFunction) => void) => {
+  return (request: IRequest, _response: Response, next: NextFunction) => {
+    const userRole = request.userRole;
+    if (!allowedRoles.includes(userRole)) {
+      throw new HttpError({
+        status: HttpCode.UNAUTHORIZED,
+        message: 'You dont have permissions for this action',
+      });
+    }
+    next();
   };
+};
 
-  const validateBody=(schema:yup.BaseSchema):((request: Request, response: Response, next: NextFunction)=>void)=>{
-      return async (request: Request, response: Response, next: NextFunction)=>{
-        const badRequest = (message: string):Response => response.status(400).json({
-            ok: false,
-            status: 400,
-            message: message,
-        });
-          try{
-            request.body=await schema.validate(request.body);
-          }catch(error:any){
-            if (error.errors.length > 1) {
-                badRequest(`${error.message},\n${error.errors.join(',\n')}`);
-              } else {
-                badRequest(error.message);
-              }
-              return;
-          }
-
-        next();
-      };
+const validateBody = (schema: yup.BaseSchema): ((request: IRequest, response: Response, next: NextFunction) => void) => {
+  return async (request: IRequest, _response: Response, next: NextFunction) => {
+    try {
+      request.body = await schema.validate(request.body);
+    } catch (error: any) {
+      const message: string = error.errors.length > 1 ? `${error.message},\n${error.errors.join(',\n')}` : error.message;
+      throw new HttpError({
+        status: HttpCode.BAD_REQUEST,
+        message: message,
+      });
+    }
+    next();
   };
+};
 
-  export { validatePermissions, validateBody };
+export { validatePermissions, validateBody };

@@ -1,28 +1,30 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Response } from 'express';
 import { ITokenPayload } from '~/common/models/middlevares/token-payload';
 import { env } from '~/config/env';
 import { verify } from 'jsonwebtoken';
+import { HttpCode, HttpError } from 'growup-shared';
+import { IRequest } from '~/common/models/middlevares/request';
 
-const verifyToken = (request: Request, response: Response, next: NextFunction):void => {
-    const unauthorized = (message: string):Response => response.status(401).json({
-        ok: false,
-        status: 401,
-        message: message,
-    });
+const verifyToken = (request: IRequest, _response: Response, next: NextFunction): void => {
     const token = request.headers.authorization;
     if (!token) {
-        unauthorized('Required Authorization header not found');
-        return;
+        throw new HttpError({
+            status: HttpCode.UNAUTHORIZED,
+            message: 'Required Authorization header not found',
+        });
     }
-    let tokenPayload:ITokenPayload;
+    let tokenPayload: ITokenPayload;
     try {
         tokenPayload = <ITokenPayload>verify(token, env.app.secretKey);
     } catch {
-        unauthorized('Invalid Token');
-        return;
+        throw new HttpError({
+            status: HttpCode.UNAUTHORIZED,
+            message: 'Invalid Token',
+        });
     }
-    request.body={ ...request.body, ...tokenPayload };
+    request.userId = tokenPayload.userId;
+    request.userRole = tokenPayload.userRole;
     next();
-  };
+};
 
-  export default verifyToken;
+export default verifyToken;
