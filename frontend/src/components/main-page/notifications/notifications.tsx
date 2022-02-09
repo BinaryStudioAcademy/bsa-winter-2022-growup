@@ -1,4 +1,4 @@
-import 'components/main-page/notifications/notification.scss';
+import './notification.scss';
 import { ReactChild } from 'react';
 import { ArrowDown } from 'react-bootstrap-icons';
 import Notification from './notification';
@@ -35,7 +35,7 @@ const Notifications:React.FC = ()=>{
 
     return(
     <section className="notifications d-flex flex-column w-100 rounded-1 text-start shadow-lg">
-        <p className="notifications__title white text-start mb-0 py-1 ps-2 rounded-top">Your Notifications:</p>
+        <span className="notifications__title text-start mb-0 py-3 ps-3 rounded-top">Your Notifications:</span>
         <div className="d-flex flex-column overflow-hidden">
             {notifications}
         </div>

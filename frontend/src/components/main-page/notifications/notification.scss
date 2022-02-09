@@ -2,7 +2,7 @@
     &__title{
         background-color:#4F00B5;
         color:#fff;
-        font-size:1.1rem;
+        font-size:1.0rem;
     }
     &__view-all{
         font-size:0.9rem;
@@ -17,27 +17,47 @@
 
 .notification{
     cursor: pointer;
-    transition: all 0.5s ease-out;
+    transition: all 0.5s linear;
     &:hover{
         background-color:rgba(207, 204, 204, 0.781) !important;
     }
     &__name{
+        max-width:400px;
+        font-size:0.9rem;
+    }
+
+    &__description{
+        font-size:0.8rem;
         text-overflow: ellipsis;
         max-width:600px;
+        @media screen and (max-width:767px) {
+            max-width:200px;
+        }
+    }
+
+    &__time{
+        font-size:0.7rem;
     }
 
     &__type{
-        border-radius: 10px;
-        color:#fff;
-        font-size:0.8rem;
+        width:30px;
+        height:30px;
         background-color:#4F00B5;
-        flex-basis:90px;
-        height:24px;
         &--okr{
             background-color:#EE2A64;
         }
         &--approve-skills{
             background-color:rgba(28, 195, 54, 1);
         }
+        svg{
+            position: absolute;
+            top:50%;
+            left:50%;
+            transform: translate(-50%,-50%);
+            width:60%;
+            height:60%;
+            color:#fff;
+        }
     }
+
 }

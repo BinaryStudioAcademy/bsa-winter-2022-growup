@@ -1,21 +1,24 @@
 .opportunities{
+    &__cart{
+        cursor:pointer;
+        background-color: rgba(255, 255, 255, 0.295);
+        transition: all 0.5s linear;
+        &:hover{
+            background-color:rgba(207, 204, 204, 0.781);
+        }
+    }
     &__header{
         background-color: #4F00B5;
         color: #fff;
     }
     &__title{
-        font-size:1.1rem;
+        font-size:1rem;
     }
     &__add-opportunity-btn{
-        font-size:0.8rem;
-        cursor: pointer;
-        transition: all 0.5s ease-in-out;
-        &:hover{
-            color:rgb(211, 211, 211);
-        }
+        font-size:0.7rem !important;
     }
     &__cart--text{
-        font-size:0.9rem;
+        font-size:0.8rem;
     }
     &__cart--text-item{
         &:last-child{
@@ -23,20 +26,16 @@
         }
     }
     &__cart--tags{
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         color: #0070f5;
     }
-    &__cart--link{
-        flex-basis:100%;
-        span{
-            font-size:0.8rem;
-            background-color:#4F00B5;
-            color:#fff;
-            cursor: pointer;
-            transition: all 0.5s ease-in-out;
-            &:hover{
-                background-color:#430397;
-            }
-        }
+    &__cart--tags-item{
+        background-color: #4F00B5;
+        opacity: 0.4;
+        color:#fff;
+        padding:2px 0;
+    }
+    &__type{
+        color:#989898;
     }
 }

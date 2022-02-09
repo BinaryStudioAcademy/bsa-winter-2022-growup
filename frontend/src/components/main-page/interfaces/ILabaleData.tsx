@@ -1,4 +1,4 @@
 export default interface ILabelData{
-    typeTitle:string,
+    typeTitle?:string,
     type:string,
 }
