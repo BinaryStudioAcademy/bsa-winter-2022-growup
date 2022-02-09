@@ -1,20 +1,9 @@
 .opportunities{
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    margin-top: 50px;
     &__header{
-        display: flex;
         background-color: #4F00B5;
         color: #fff;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-        align-items:center;
-        padding:5px 10px;
     }
     &__title{
-        flex:1 1;
-        text-align: left;
         font-size:1.1rem;
     }
     &__add-opportunity-btn{
@@ -25,40 +14,24 @@
             color:rgb(211, 211, 211);
         }
     }
-    &__cart{
-        display:flex;
-        padding:10px 10px;
-        margin-top:20px;
-        box-shadow:0px 0px 15px 0px #9b9b9b;
-        border-radius:5px;
-        flex-wrap:wrap;
-    }
     &__cart--text{
-        display:flex;
-        flex-direction:column;
-        flex:1 1;
         font-size:0.9rem;
     }
     &__cart--text-item{
-        margin-bottom:5px;
+        &:last-child{
+            margin-bottom:0 !important;
+        }
     }
     &__cart--tags{
-        align-self: flex-end;
         font-size: 0.9rem;
         color: #0070f5;
     }
-    &__cart--tags-item{
-        margin-right:10px;
-    }
     &__cart--link{
-        flex:1 0 100%;
+        flex-basis:100%;
         span{
             font-size:0.8rem;
             background-color:#4F00B5;
             color:#fff;
-            border-radius: 5px;
-            padding:5px;
-            text-align:center;
             cursor: pointer;
             transition: all 0.5s ease-in-out;
             &:hover{

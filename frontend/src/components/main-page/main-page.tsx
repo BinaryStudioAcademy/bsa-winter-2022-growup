@@ -5,7 +5,7 @@ import Opportunities from 'components/main-page/opportunities/opportunities';
 const Main_Page:React.FC = ()=>{
     return(
         <>
-        <section className="main-page">
+        <section className="w-75 main-page d-flex flex-column ">
             <Notifications></Notifications>
             <Opportunities></Opportunities>
         </section>
