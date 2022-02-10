@@ -1,26 +1,29 @@
 import { DeleteResult, getCustomRepository } from 'typeorm';
 
 import TagsRepository from '~/data/repositories/tags.repository';
-import CompanyRepository from '~/data/repositories/company.repository';
-
 import { Tags } from '~/data/entities/tags';
 
 import { asyncForEach } from '~/common/helpers/array.helper';
+import { Company } from '~/data/entities/company';
 
-export const createTags = async (data: Tags['name'][]): Promise<void> => {
+export const createTags = async (
+  data: Tags['name'][],
+  company: Company,
+): Promise<Tags[] | Tags> => {
   const tagsRepository = getCustomRepository(TagsRepository);
-  const companyRepository = getCustomRepository(CompanyRepository);
+  const tags: Tags[] = [];
 
-  const company = await companyRepository.findOne('id');
-
-  asyncForEach(async (tag) => {
+  asyncForEach(async (tagName) => {
     const tagInstance = tagsRepository.create();
 
-    tagInstance.name = tag;
+    tagInstance.name = tagName;
     tagInstance.company = company;
 
-    await tagInstance.save();
+    const tag = await tagInstance.save();
+    tags.push(tag);
   }, data);
+
+  return tags.length === 1 ? tags[0] : tags;
 };
 
 export const deleteTag = async (id: Tags['id']): Promise<DeleteResult> => {
