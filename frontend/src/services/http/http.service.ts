@@ -32,7 +32,7 @@ class Http {
       await this.checkStatus(response);
 
       return this.parseJSON<T>(response);
-    } catch (err) {
+    } catch (err: any) {
       this.throwError(err);
     }
   }
@@ -56,9 +56,11 @@ class Http {
     return headers;
   }
 
-  private checkStatus(response: Response): Response {
+  private async checkStatus(response: Response): Promise<Response> {
     if (!response.ok) {
+      const responseJson: any = await this.parseJSON(response);
       throw new HttpError({
+        message: responseJson.message,
         status: response.status,
       });
     }
