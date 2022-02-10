@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.use(verifyToken);
+app.use('/api',verifyToken);
 
 routes(app);
 
