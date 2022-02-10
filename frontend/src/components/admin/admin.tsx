@@ -1,4 +1,4 @@
-import { Navbar, Container, Row, Col, Nav } from 'react-bootstrap';
+import { Navbar, Container, Nav } from 'react-bootstrap';
 import { AppRoute } from 'common/enums/enums';
 
 import Companies from './components/companies/companies';
@@ -32,8 +32,8 @@ const Admin: React.FC<PropTypes> = ({ variant }) => (
       </Container>
     </Navbar>
     <Container className="d-grid gap-2">
-      <Row>
-        <Col sm={8} lg={8} md={8}>
+      <div className="row">
+        <div className="col col-sm-8 col-md-8 col-lg-8">
           <Nav variant="tabs" defaultActiveKey="/">
             <Nav.Item>
               <Link
@@ -66,13 +66,13 @@ const Admin: React.FC<PropTypes> = ({ variant }) => (
               </Link>
             </Nav.Item>
           </Nav>
-        </Col>
-      </Row>
-      <Row>
+        </div>
+      </div>
+      <div className="row">
         {variant === Variants.company && <Companies />}
         {variant === Variants.users && <Users userList={[]} />}
         {variant === Variants.career && <CareerPath />}
-      </Row>
+      </div>
     </Container>
   </>
 );

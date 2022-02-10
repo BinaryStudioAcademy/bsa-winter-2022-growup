@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Card, Button, Col } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import type { IUser } from 'common/interfaces/user/index';
 
 type PropTypes = {
@@ -7,10 +7,12 @@ type PropTypes = {
 };
 
 const Users: React.FC<PropTypes> = ({ userList }) => (
-  <Col sm={12} md={12} lg={12}>
+  <div className="col">
     <Card className="growup-card-primary">
       <Card.Header className="d-flex justify-content-end growup-card-header">
-        <Button variant="growup-outline-white">+ Add User</Button>
+        <button className="btn btn-outline-gu-white btn-hover-gu-purple fw-bold fs-5 border-2">
+          + Add User
+        </button>
       </Card.Header>
       <Card.Body>
         {userList.length ? (
@@ -20,7 +22,7 @@ const Users: React.FC<PropTypes> = ({ userList }) => (
         )}
       </Card.Body>
     </Card>
-  </Col>
+  </div>
 );
 
 export default memo(Users);

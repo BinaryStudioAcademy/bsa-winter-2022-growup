@@ -1,5 +1,4 @@
 import { memo } from 'react';
-import { Col } from 'react-bootstrap';
 
 import Company from './company';
 import Tags from './tags/tags';
@@ -7,12 +6,12 @@ import Tags from './tags/tags';
 const Companies: React.FC = () => {
   return (
     <>
-      <Col sm={8} lg={8} md={8}>
+      <div className="col col-sm-8 col-md-8 col-lg-8">
         <Company companyList={[]} />
-      </Col>
-      <Col sm={4} lg={4} md={4}>
+      </div>
+      <div className="col col-sm-4 col-md-4 col-lg-4">
         <Tags tagList={[]} />
-      </Col>
+      </div>
     </>
   );
 };

@@ -1,8 +1,8 @@
 import { memo, useState, useCallback } from 'react';
-import { Row, Col, Button, Card } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import type { ITag } from 'common/interfaces/tag/tag';
 
-import Tag from './tag';
+import Tag from './common/tag';
 import TagModal from './modal/tag-modal';
 
 type PropTypes = {
@@ -15,25 +15,36 @@ const Tags: React.FC<PropTypes> = ({ tagList }) => {
   const hideModal = useCallback(() => {
     setIsModalVisible(false);
   }, []);
+  const showModal = (): void => setIsModalVisible(true);
+
+  const deleteTag = useCallback((id: ITag['id']) => {
+    // eslint-disable-next-line
+    console.log('I am deleted', id);
+  }, []);
 
   return (
     <>
       <TagModal show={isModalVisible} onClose={hideModal} />
       <Card className="growup-card-secondary">
         <Card.Header className="growup-card-header">
-          <Row>
-            <Col className="d-flex align-items-center">
+          <div className="row">
+            <div className="col d-flex align-items-center">
               <h3 className="m-0">Tags</h3>
-            </Col>
-            <Col className="d-flex align-items-center justify-content-end">
-              <Button variant="growup-outline-secondary">+ Add Tag</Button>
-            </Col>
-          </Row>
+            </div>
+            <div className="col d-flex align-items-center justify-content-end">
+              <button
+                className="btn btn-outline-gu-pink btn-hover-gu-white fw-bold fs-5 border-2"
+                onClick={showModal}
+              >
+                + Add Tag
+              </button>
+            </div>
+          </div>
         </Card.Header>
         <Card.Body>
           <div className="d-grid">
             {tagList.length ? (
-              tagList.map((tag) => <Tag tagName={tag.name} />)
+              tagList.map((tag) => <Tag tag={tag} onDelete={deleteTag} />)
             ) : (
               <p className="m-0 text-center">No tags here...</p>
             )}
