@@ -16,6 +16,4 @@ const counterActions = {
   incrementAsync,
 };
 
-export {
-  counterActions,
-};
+export { counterActions };
