@@ -13,11 +13,11 @@ const Sidebar: React.FC = () => {
     const isMentor = true;
 
       return (
-          <aside className="sidebar-section h-100 position-fixed bg-gu-blue">
-              <div className="sidebar-container d-flex flex-column justify-content-between">
+          <aside className="sidebar-section position-fixed h-100 bg-gu-blue">
+              <div className="sidebar-container d-flex flex-column">
                 <a className="logo-section d-flex align-items-center text-decoration-none" href="">
                     <img className="logo-section__icon logo-icon" src={logo} alt="logo" />
-                    <span className="logo-section__title logo-title font-weight-bold fs-1 text-gu-white m-0 d-none d-sm-block">Grow Up</span>
+                    <span className="logo-section__title logo-title fs-1 text-gu-white m-0 d-none d-md-block">Grow Up</span>
                 </a>
                 <nav className="navigation-section">
                     <ul className="navigation-section__list navigation-list d-flex flex-column m-0 p-0">
@@ -25,7 +25,7 @@ const Sidebar: React.FC = () => {
                           <Link to={AppRoute.HOME}>
                               <span className="navigation-item__link navigation-link d-flex align-items-center fs-4 font-weight-normal text-gu-white">
                                   <HomeIcon className="navigation-link__icon" />
-                                  <span className="navigation-link__title d-none d-sm-block">Home</span>
+                                  <span className="navigation-link__title d-none d-md-block">Home</span>
                               </span>
                           </Link>
                       </li>
@@ -33,7 +33,7 @@ const Sidebar: React.FC = () => {
                         <Link to={AppRoute.OPPORTUNITIES}>
                             <span className="navigation-item__link navigation-link d-flex align-items-center fs-4 font-weight-normal text-gu-white">
                                 <OpportunitiesIcon className="navigation-link__icon" />
-                                <span className="navigation-link__title d-none d-sm-block">Opportunities</span>
+                                <span className="navigation-link__title d-none d-md-block">Opportunities</span>
                             </span>
                         </Link>
                       </li>
@@ -41,7 +41,7 @@ const Sidebar: React.FC = () => {
                           <Link to={AppRoute.PROFILE}>
                             <span className="navigation-item__link navigation-link d-flex align-items-center fs-4 font-weight-normal text-gu-white">
                                 <ProfileIcon className="navigation-link__icon" />
-                                <span className="navigation-link__title d-none d-sm-block">Profile</span>
+                                <span className="navigation-link__title d-none d-md-block">Profile</span>
                             </span>
                           </Link>
                       </li>
@@ -49,7 +49,7 @@ const Sidebar: React.FC = () => {
                           <Link to={AppRoute.OKR}>
                             <span className="navigation-item__link navigation-link d-flex align-items-center fs-4 font-weight-normal text-gu-white">
                                 <OkrIcon className="navigation-link__icon" />
-                                <span className="navigation-link__title d-none d-sm-block">OKR</span>
+                                <span className="navigation-link__title d-none d-md-block">OKR</span>
                             </span>
                           </Link>
                       </li>
@@ -57,18 +57,19 @@ const Sidebar: React.FC = () => {
                           <Link to={AppRoute.CAREER_PATH}>
                             <span className="navigation-item__link navigation-link d-flex align-items-center fs-4 font-weight-normal text-gu-white">
                                 <CareerPathIcon className="navigation-link__icon" />
-                                <span className="navigation-link__title d-none d-sm-block">Career Path</span>
+                                <span className="navigation-link__title d-none d-md-block">Career Path</span>
                             </span>
                           </Link>
                       </li>
-                      {isMentor ? <li className="navigation-list__item navigation-item">
-                          <Link to={AppRoute.MENTEE_PROFILES}>
-                            <span className="navigation-item__link navigation-link d-flex align-items-center fs-4 font-weight-normal text-gu-white">
-                                <MenteeProfileIcon className="navigation-link__icon" />
-                                <span className="navigation-link__title d-none d-sm-block">Mentee Profiles</span>
-                            </span>
-                          </Link>
-                      </li>: null}
+                      {isMentor ?
+                        <li className="navigation-list__item navigation-item">
+                            <Link to={AppRoute.MENTEE_PROFILES}>
+                                <span className="navigation-item__link navigation-link d-flex align-items-center fs-4 font-weight-normal text-gu-white">
+                                    <MenteeProfileIcon className="navigation-link__icon" />
+                                    <span className="navigation-link__title d-none d-md-block">Mentee Profiles</span>
+                                </span>
+                            </Link>
+                        </li> : null}
                   </ul>
                 </nav>
             </div>
