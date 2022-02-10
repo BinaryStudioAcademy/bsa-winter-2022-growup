@@ -1,0 +1,21 @@
+.modal-content {
+  background-color: #f6f7f9;
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+  }
+
+  .modal-footer {
+    background: none;
+    border: none;
+
+    button {
+      color: white;
+      margin: 0;
+      padding: 6px 26px;
+    }
+  }
+}
