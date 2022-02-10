@@ -1,32 +1,29 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ReducerName } from 'common/enums/app/reducer-name.enum';
 import { IUser } from 'common/interfaces/user';
-import { ActionType } from './common';
-
 import { loginUser } from './actions';
+import { ActionType } from './common';
 
 type State = {
   user: IUser | null;
   isLoading: boolean;
   isAuthenticated: boolean;
-  token: string | null;
 };
 
 const initialState: State = {
   user: null,
   isLoading: false,
   isAuthenticated: false,
-  token: localStorage.getItem('user_token'),
 };
 
 const { reducer, actions } = createSlice({
   name: ReducerName.AUTH,
   initialState,
   reducers: {
-    [ActionType.SetUser]: (state, action: PayloadAction<IUser>) => {
+    [ActionType.SET_USER]: (state, action: PayloadAction<IUser>) => {
       state.user = action.payload;
     },
-    [ActionType.RemoveUser]: (state) => {
+    [ActionType.REMOVE_USER]: (state) => {
       state.user = null;
     },
   },
@@ -37,13 +34,11 @@ const { reducer, actions } = createSlice({
 
     builder.addCase(loginUser.fulfilled, (state) => {
       state.isAuthenticated = true;
+      state.isLoading = false;
     });
 
     builder.addCase(loginUser.rejected, (state, _) => {
       state.isLoading = false;
-      state.token = null;
-
-      localStorage.removeItem('user_token');
     });
   },
 });

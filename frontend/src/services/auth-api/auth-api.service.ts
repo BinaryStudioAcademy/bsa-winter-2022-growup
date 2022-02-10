@@ -1,14 +1,10 @@
 import { ContentType, HttpMethod } from 'common/enums/enums';
+import { IToken, IUserLoginForm } from 'common/interfaces/user';
 import { Http } from 'services/http/http.service';
 
 interface IAuthApi {
   apiPath: string;
   http: Http;
-}
-
-interface IUserPayload {
-  email: string;
-  password: string;
 }
 
 class AuthApi {
@@ -20,7 +16,7 @@ class AuthApi {
     this._http = http;
   }
 
-  loginUser(payload: IUserPayload): Promise<any> {
+  loginUser(payload: IUserLoginForm): Promise<IToken> {
     return this._http.load(`${this._apiPath}/auth/login`, {
       method: HttpMethod.POST,
       contentType: ContentType.JSON,

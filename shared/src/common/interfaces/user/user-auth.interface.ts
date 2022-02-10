@@ -1,8 +1,7 @@
 import { IUser } from './user.interface';
 
 interface IUserWithTokens extends IUser {
-  accessToken: string;
-  refreshToken: string;
+  token: string;
 }
 
 export type { IUserWithTokens };

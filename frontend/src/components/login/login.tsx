@@ -1,7 +1,6 @@
 import { UserPayloadKey } from 'common/enums/enums';
 import FormInput from 'components/common/form-input/form-input';
-import { useAppForm, useDispatch } from 'hooks/hooks';
-import { useCallback, useState } from 'react';
+import { useAppDispatch, useAppForm, useAppSelector, useCallback } from 'hooks/hooks';
 import { Button, Container, FloatingLabel, Form } from 'react-bootstrap';
 import { Google } from 'react-bootstrap-icons';
 import { NotificationManager } from 'react-notifications';
@@ -11,8 +10,8 @@ import { DEFAULT_LOGIN_PAYLOAD } from './common/constants';
 import './styles.scss';
 
 const Login: React.FC = () => {
-  const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useAppDispatch();
+  const isLoading = useAppSelector(state => state.auth.isLoading);
 
   const { control, errors, handleSubmit } = useAppForm({
     defaultValues: DEFAULT_LOGIN_PAYLOAD,
@@ -25,18 +24,13 @@ const Login: React.FC = () => {
   );
 
   const onLogin = (values: object): void => {
-    setIsLoading(true);
-
     handleLogin(values)
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
       .unwrap()
       .then(() => {
         window.location.href = '/';
       })
       .catch((err: Error) => {
         NotificationManager.error(err.message);
-        setIsLoading(false);
       });
   };
 
