@@ -41,11 +41,11 @@ const App: React.FC = () => {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <Routes>
-            <Route path={AppRoute.ROOT} element={Counter} />
-            <Route path={AppRoute.LOGIN} element={Login} />
-            <Route path={AppRoute.SIGN_UP} element={SignUp} />
-            <Route path={AppRoute.ORKS} element={Ork} />
-            <Route path={AppRoute.SETTINGS_PROFILE} element={Profile} />
+            <Route path={AppRoute.ROOT} element={<Counter />} />
+            <Route path={AppRoute.LOGIN} element={<Login />} />
+            <Route path={AppRoute.SIGN_UP} element={<SignUp />} />
+            <Route path={AppRoute.ORKS} element={<Ork />} />
+            <Route path={AppRoute.SETTINGS_PROFILE} element={<Profile />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <p>
