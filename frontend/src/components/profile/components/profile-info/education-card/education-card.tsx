@@ -1,13 +1,8 @@
-import { PencilFill, TrashFill } from 'react-bootstrap-icons';
+import { Calendar, PencilFill, TrashFill } from 'react-bootstrap-icons';
 import './education-card.scss';
+import { Education } from '../interfaces';
 
-type Props = {
-  title: string;
-  university: string;
-  degree: string
-  startDate: Date;
-  endDate: Date;
-};
+type Props = Omit<Education, 'id'>;
 
 const EducationCard: React.FC<Props> = ({ title, university, degree, startDate, endDate }) => {
   const absoluteYears: number = endDate.getFullYear() - startDate.getFullYear();
@@ -17,17 +12,18 @@ const EducationCard: React.FC<Props> = ({ title, university, degree, startDate, 
   const months = absoluteMonths > 0 ? absoluteMonths: 12 - Math.abs(absoluteMonths);
 
   return (
-  <div className="education-card">
-    <div className="education-info">
-      <h3 className="education-info__title">{title}</h3>
-      <p className="education-info__universitet"><span>Universitet</span>{university}</p>
-      <p className="education-info__degree"><span>Degree</span>{degree}</p>
+  <div className=" card education-card">
+    <div className="card-body education-card-info d-flex flex-column align-items-start">
+      <h3 className="card-text education-card-info__title fw-bold">{title}</h3>
+      <p className="card-text education-card-info__universitet m-0 mb-1"><span>Universitet</span>{university}</p>
+      <p className="card-text education-card-info__degree m-0 mb-1"><span>Degree</span>{degree}</p>
     </div>
-    <div className="education-footer">
-      <div className="education-footer__duration">
-        {years > 0 ? `${years} y`: '' }  {months > 0 ? `${months} mo`: '' }
+    <div className="card-footer  bg-white education-footer d-flex justify-content-between">
+      <div className="education-footer__duration align-self-center">
+        <Calendar className="career-card-footer__calendar-icon" />
+        <span>{years > 0 ? `${years} y`: '' }  {months > 0 ? `${months} mo`: '' }</span>
       </div>
-      <div className="education-action-buttons">
+      <div className="education-action-buttons d-flex align-self-center">
         <PencilFill className="education-action-buttons__edit" />
         <TrashFill className="education-action-buttons__delete" />
       </div>

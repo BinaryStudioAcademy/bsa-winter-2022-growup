@@ -1,13 +1,8 @@
 import './career-card.scss';
-import { PencilFill, TrashFill } from 'react-bootstrap-icons';
+import { Calendar, PencilFill, TrashFill } from 'react-bootstrap-icons';
+import { CareerJourney } from '../interfaces';
 
-type Props = {
-  title: string;
-  position: string;
-  company: string
-  startDate: Date;
-  endDate: Date;
-};
+type Props = Omit<CareerJourney, 'id'>;
 
 const CareerCard: React.FC<Props> = ({ title, position, company, startDate, endDate }) => {
   const absoluteYears: number = endDate.getFullYear() - startDate.getFullYear();
@@ -17,22 +12,24 @@ const CareerCard: React.FC<Props> = ({ title, position, company, startDate, endD
   const months = absoluteMonths > 0 ? absoluteMonths: 12 - Math.abs(absoluteMonths);
 
   return (
-  <div className="career-card">
-    <div className="career-card-info">
-      <h3 className="career-card-info__title">{title}</h3>
-      <p className="career-card-info__role"><span>Role</span>{position}</p>
-      <p className="career-card-info__company"><span>Company</span>{company}</p>
+  <div className="card career-card">
+    <div className="career-card-time">{startDate.getFullYear()}</div>
+    <div className="card-body career-card-info">
+      <h3 className="card-text career-card-info__title fw-bold">{title}</h3>
+      <p className="card-text career-card-info__role m-0 mb-1"><span>Role</span>{position}</p>
+      <p className="card-text career-card-info__company m-0 mb-1"><span>Company</span>{company}</p>
     </div>
-    <div className="career-card-footer">
-      <div className="career-card-footer__duration">
-        {years > 0 ? `${years} y`: '' }  {months > 0 ? `${months} mo`: '' }
+    <div className="card-footer bg-white d-flex align-items-center justify-content-between">
+      <div className="career-card-footer__duration d-flex align-items-center">
+        <Calendar className="career-card-footer__calendar-icon" />
+          <span>{years > 0 ? `${years} y`: '' }  {months > 0 ? `${months} mo`: '' }</span>
       </div>
-      <div className="career-action-buttons">
-        <PencilFill className="career-action-buttons__edit" />
-        <TrashFill className="career-action-buttons__delete" />
+      <div className="career-action-buttons d-flex align-self-center">
+          <PencilFill className="career-action-buttons__edit" />
+          <TrashFill className="career-action-buttons__delete" />
       </div>
     </div>
-  </div>
+</div>
 );};
 
 export default CareerCard;

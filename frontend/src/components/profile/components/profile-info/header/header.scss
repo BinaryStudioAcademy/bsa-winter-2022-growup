@@ -1,9 +1,7 @@
 .header {
-  display: flex;
   width: 100%;
   gap: 30px;
   padding: 52px 8px;
-  align-items: center;
   background-color: #fff;
   margin-bottom: 13px;
 }
@@ -21,25 +19,20 @@
     border-radius: 100%;
     width: 26px;
     height: 26px;
-    position: absolute;
     top: 13px;
     right: 0px;
     background-color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 
   .edit-button {
     width: 10px;
     color: #EE2A64;
+    cursor: pointer;
   }
 }
 
 .profile-description {
-  display: flex;
   flex-direction: column;
-  justify-content: center;
 
   &__name {
     font-size: 24px;
@@ -62,8 +55,6 @@
 }
 
 .level {
-  display: flex;
-  align-items: center;
   margin-top: 6px;
   gap: 8px;
 
@@ -80,5 +71,20 @@
     color: #4F00B5;
     height: 14px;
     width: 13px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .profile__edit {
+    visibility: hidden;
+  }
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding-top: 16px;
+    padding-bottom: 28px;
   }
 }
