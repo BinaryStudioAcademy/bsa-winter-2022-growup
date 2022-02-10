@@ -45,6 +45,10 @@ const App: React.FC = () => {
             <Route path={AppRoute.SETTINGS_PROFILE} element={<Profile/>} />
           </Routes>
         </header>
+        <input type="button" value="Click" className="btn-gu-purple"/>
+        <div className="bg-gu-black text-gu-white fs-2">LAlmost before we knew it, we had left the ground.</div>
+        <div className="bg-gu-black text-gu-white fs-3">LAlmost before we knew it, we had left the ground.</div>
+        <div className="bg-gu-black text-gu-white fs-4">LAlmost before we knew it, we had left the ground.</div>
       </div>
     </>
   );
