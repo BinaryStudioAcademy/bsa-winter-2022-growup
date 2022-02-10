@@ -1,0 +1,23 @@
+.opportunities{
+    &__cart{
+        cursor:pointer;
+        transition: all 0.5s linear;
+        &:hover{
+            background-color:rgba(207, 204, 204, 0.781) !important;
+        }
+    }
+    &__cart--text{
+        max-width:70%;
+    }
+    &__cart--text-item{
+        text-overflow: ellipsis;
+        max-width:100%;
+    }
+    &__cart--tags-item{
+        opacity: 0.4;
+        padding:2px 0;
+    }
+    &__type{
+        color:#989898;
+    }
+}
