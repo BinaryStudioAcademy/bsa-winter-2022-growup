@@ -6,7 +6,6 @@
 .education-card-info {
   &__title {
     color: #1D1D1D;
-    font-size: 18px;
     line-height: 25px;
   }
 
@@ -19,7 +18,6 @@
   }
 
   &__universitet, &__degree {
-    font-size: 14px;
     font-weight: 600;
     line-height: 19px;
     text-align: left;
@@ -37,7 +35,6 @@
   &__duration {
     font-size: 12px;
     font-weight: 400;
-    line-height: 16px;
     color: #808C9C;
   }
 }
@@ -47,7 +44,6 @@
   &__edit {
     width: 15px;
     height: 15px;
-    color: #4F00B5;
     cursor: pointer;
   }
 

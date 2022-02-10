@@ -16,7 +16,6 @@
 }
 
 .career-card-time {
-  font-size: 12px;
   font-weight: 400;
   line-height: 16px;
   text-align: left;
@@ -42,7 +41,6 @@
   border-color: #E1DBEA;
   margin: 5px 15px 20px 15px;
 
-
   &::before {
     height: calc(100% + 7px);
     top: -7px
@@ -53,16 +51,12 @@
   text-align: start;
 
   &__title {
-    color: #1D1D1D;
-    font-size: 18px;
     line-height: 25px;
   }
 
   &__role, &__company {
-    font-size: 14px;
     font-weight: 600;
     line-height: 19px;
-    color: #1D1D1D;
 
     span {
       color: #808C9C;
@@ -75,7 +69,6 @@
   border-top: 1px solid #E1DBEA;
 
   &__duration {
-    font-size: 12px;
     font-weight: 400;
     line-height: 16px;
     color: #808C9C;
@@ -91,7 +84,6 @@
   &__edit {
     width: 15px;
     height: 15px;
-    color: #4F00B5;
     cursor: pointer;
   }
 

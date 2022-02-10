@@ -10,17 +10,15 @@
   border-bottom: 1px solid #E1DBEA;
 
   &__title {
-    font-size: 18px;
     line-height: 25px;
   }
 
   &__edit {
     padding: 6px 23px;
+    color: #ee2a64;
     border: 2px solid #EE2A64;
     border-radius: 30px;
-    font-size: 16px;
     line-height: 22px;
-    color: #EE2A64;
   }
 
   &__edit-icon {

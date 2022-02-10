@@ -93,19 +93,19 @@ const ProfileMain: React.FC = () => (
     <div className="right-side">
       <EditSection title="Skills">
         <div className="group">
-          <h4 className="group__title">Technical skills</h4>
+          <h4 className="group__title fw-bold fs-7">Technical skills</h4>
           {skillData.map((item, i) =>
             <Tag key={i}>{item.name}</Tag>,
           )}
         </div>
         <div className="group">
-          <h4 className="group__title">Language</h4>
+          <h4 className="group__title fw-bold fs-7">Language</h4>
           <Tag>English</Tag>
           <Tag>French</Tag>
         </div>
       </EditSection>
       <EditSection title="Interests">
-        <div className="group">
+        <div className="group fw-bold fs-7">
           {interestsData.map((item, i) =>
             <Tag key={i}>{item.name}</Tag>,
           )}

@@ -1,16 +1,16 @@
 import  './tabs.scss';
 
 const Tabs: React.FC = () => (
-  <nav className="tabs d-flex justify-content-center bg-white">
-    <a className="tabs__item tabs__item_active text-decoration-none" href="#">
-      Summary
-    </a>
-    <a className="tabs__item text-decoration-none" href="#">
-      Qualities
-    </a>
-    <a className="tabs__item text-decoration-none" href="#">
-      Interests
-    </a>
+  <nav className="nav-tabs d-flex">
+    <div className="nav-item">
+      <a className="nav-link active text-decoration-none" href="#">Summary</a>
+    </div>
+    <div className="nav-item">
+      <a className="nav-link text-decoration-none" href="#">Qualities</a>
+    </div>
+    <div className="nav-item">
+      <a className="nav-link text-decoration-none" href="#">Interests</a>
+    </div>
   </nav>
 );
 

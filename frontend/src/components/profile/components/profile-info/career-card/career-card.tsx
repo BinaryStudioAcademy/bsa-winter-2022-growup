@@ -13,18 +13,18 @@ const CareerCard: React.FC<Props> = ({ title, position, company, startDate, endD
 
   return (
   <div className="card career-card">
-    <div className="career-card-time">{startDate.getFullYear()}</div>
+    <div className="career-card-time fs-7 ">{startDate.getFullYear()}</div>
     <div className="card-body career-card-info">
-      <h3 className="card-text career-card-info__title fw-bold">{title}</h3>
-      <p className="card-text career-card-info__role m-0 mb-1"><span>Role</span>{position}</p>
-      <p className="card-text career-card-info__company m-0 mb-1"><span>Company</span>{company}</p>
+      <h3 className="card-text career-card-info__title fw-bold fs-4 text-gu-black">{title}</h3>
+      <p className="card-text career-card-info__role m-0 mb-1 fs-6 text-gu-black"><span>Role</span>{position}</p>
+      <p className="card-text career-card-info__company m-0 mb-1 fs-6 text-gu-black"><span>Company</span>{company}</p>
     </div>
     <div className="card-footer bg-white d-flex align-items-center justify-content-between">
-      <div className="career-card-footer__duration d-flex align-items-center">
+      <div className="career-card-footer__duration d-flex align-items-center fs-7">
         <Calendar className="career-card-footer__calendar-icon" />
           <span>{years > 0 ? `${years} y`: '' }  {months > 0 ? `${months} mo`: '' }</span>
       </div>
-      <div className="career-action-buttons d-flex align-self-center">
+      <div className="career-action-buttons d-flex align-self-center text-gu-purple">
           <PencilFill className="career-action-buttons__edit" />
           <TrashFill className="career-action-buttons__delete" />
       </div>

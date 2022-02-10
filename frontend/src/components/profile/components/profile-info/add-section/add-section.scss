@@ -5,19 +5,15 @@
 
 .add-section-header {
   border-radius: 10px 10px 0 0;
-  background-color: #463DA8;
   padding: 26px 38px;
 
   &__title {
-    font-size: 18px;
     line-height: 25px;
   }
 
   &__add {
     border-radius: 30px;
     border: 2px solid #fff;
-    font-size: 16px;
-    color: #fff;
     padding: 6px 23px;
     line-height: 22px;
   }
