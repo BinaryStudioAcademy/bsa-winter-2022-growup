@@ -7,8 +7,8 @@ import './header.scss';
 const Header: React.FC = () => {
 
       return (
-          <header className="header-section mw-100 position-relative">
-              <div className="header-container d-flex align-items-center justify-content-end pe-5">
+          <header className="header-section w-100 position-fixed">
+              <div className="header-container d-flex align-items-center justify-content-end">
                 <form className="form-section" method="get" action="#">
                     <img className="form-section__search-icon search-icon position-absolute" src={searchIcon} alt="search icon" />
                     <input className="form-section__search-input search-input fs-7 border-0 gu-black font-weight-normal" placeholder="Search..." type="text" name="search" />
