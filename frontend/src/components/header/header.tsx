@@ -7,15 +7,15 @@ import './header.scss';
 const Header: React.FC = () => {
 
       return (
-          <header className="header-section">
-              <div className="header-container">
+          <header className="header-section mw-100 position-relative">
+              <div className="header-container d-flex align-items-center justify-content-end pe-5">
                 <form className="form-section" method="get" action="#">
-                    <img className="form-section__search-icon search-icon" src={searchIcon} alt="search icon" />
-                    <input className="form-section__search-input search-input" placeholder="Search..." type="text" name="search" />
+                    <img className="form-section__search-icon search-icon position-absolute" src={searchIcon} alt="search icon" />
+                    <input className="form-section__search-input search-input fs-7 border-0 gu-black font-weight-normal" placeholder="Search..." type="text" name="search" />
                 </form>
-                <div className="notification-section">
+                <div className="notification-section position-relative">
                     <img className="notification-section__icon notification-icon" src={notificationIcon} alt="notification icon" />
-                    <img className="notification-section__notification-pointer notification-pointer" src={notificationPointer} alt="notification pointer" />
+                    <img className="notification-section__notification-pointer notification-pointer position-absolute" src={notificationPointer} alt="notification pointer" />
                 </div>
                 <img className="avatar-icon" src={avatarIcon} alt="avatar icon" />
               </div>

@@ -1,29 +1,33 @@
+/* stylelint-disable */
+@import "../../assets/css/theming.scss";
+/* stylelint-enable */
+
 .sidebar-section {
-    min-height: 100%;
-    background: #463DA8;
-    position: fixed;
     z-index: 3;
 }
 
 .sidebar-container {
+    width: 273px;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    max-width: 273px;
     padding-top: 1.53125em;
+    @media screen and ( max-width:35.9375em) {
+        align-items: center;
+        width: 70px;
+    }
 }
 
 .logo-section {
-    display: flex;
-    align-items: center;
-    padding-left: 2.21875em;
-    text-decoration: none;
+    padding-left: .5em;
+    padding-right: .5em;
     margin-bottom: 6.203125em;
     &__icon {
-        margin-right: 0.4375em;
+        margin-right: 0em;
     }
-    &__title {
-        margin: 0;
+    @media screen and ( min-width:35.9375em) {
+        padding-left: 2.21875em;
+        &__icon {
+            margin-right: 0.927em;
+        }
     }
 }
 
@@ -33,58 +37,58 @@
 }
 
 .logo-title {
-    // font-family: Nunito;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 1.63rem;
     line-height: 1.380em;
-    color: #FFFFFF;
 }
 
 .navigation-section {
-    padding-left: 0.96875em;
-    padding-right: 0.96875em;
-}
-
-.navigation-list {
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    padding: 0;
+    @media screen and ( min-width:35.9375em) {
+        padding-left: 0.96875em;
+        padding-right: 0.96875em;
+    }
 }
 
 .navigation-link {
-    // font-family: Nunito;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 1.125rem;
     line-height: 1.38em;
-    color: #F6F7F9;
     &__icon {
         max-width: 20px;
         max-height: 20px;
-        margin-right: 0.927em;
+        margin-right: 0;
+    }
+    @media screen and ( min-width:35.9375em) {
+        &__icon {
+            margin-right: 0.927em;
+        }
     }
 }
+
+.navigation-item .active {
+    display: flex;
+    align-items: center;
+    flex: 1 1 238px;
+    height: 45px;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.active .navigation-link * {
+    display: flex;
+    width: 100%;
+    font-weight: bold;
+    color: $gu-blue;
+    fill: $gu-pink;
+}
+
 
 .navigation-item {
     list-style-type: none;
     &__link {
-        display: flex;
-        align-items: center;
-        padding-left: 1.938em;
+    //    padding-left: 1em;
     }
-    &__link--active {
-        display: flex;
-        align-items: center;
-        width: 238px;
-        height: 45px;
-        padding-left: 1.938em;
-        background-color: #FFFFFF;
-        border-radius: 10px;
-        //font-family: Nunito;
-        font-weight: bold;
-        color: #463DA8;
+    @media screen and ( min-width:35.9375em) {
+        &__link {
+            padding-left: 1.938em;
+        }
     }
 }
 

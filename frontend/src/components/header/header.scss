@@ -1,12 +1,6 @@
-.header-section {
-    position: relative;
-    max-width: 100%;
-}
+$white-blue: #F0F3F9;
 
 .header-container {
-    display: flex;
-    align-items: center;
-    justify-content: end;
     max-height: 88.5px;
     padding-right: 3.2225em;
     padding-top: 1.375em;
@@ -16,8 +10,7 @@
 .form-section {
     &__search-icon {
         margin-left: 1.425625em;
-        position: absolute;
-        top: 45%;
+        top: 43%;
     }
     &__search-input {
         margin-right: 2.29375em;
@@ -33,39 +26,31 @@
 .search-input {
     height: 45px;
     width: 280px;
-    background-color: #F0F3F9;
+    background-color: $white-blue;
     border-radius: 50px;
-    border: none;
-    padding-left: 2.78875em;
+    padding-left: 3.6em;
     padding-top: 0.9375em;
     padding-bottom: 0.9375em;
 }
 
 .search-input::placeholder {
-    // font-family: Nunito;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 0.75rem;
     line-height: 1.36em;
-    color: #1D1D1D;
     opacity: 0.4;
 }
 
 .notification-section {
-    position: relative;
     cursor: pointer;
     &__icon {
         margin-right: 2.414375em;
     }
     &__notification-pointer {
-        position: absolute;
         left: 11px;
         top: 3px;
     }
 }
 
 .avatar-icon {
-    cursor: pointer;
+      cursor: pointer;
       width: 47.64px;
       height: 47.64px;
 }
