@@ -1,16 +1,9 @@
 .notifications{
-    &__title{
-        background-color:#4F00B5;
-        color:#fff;
-        font-size:1.0rem;
-    }
     &__view-all{
-        font-size:0.9rem;
         cursor: pointer;
-        color:rgba(0, 112, 245, 1);
         transition: all 0.5s ease-out;
         &:hover{
-            color:rgb(3, 96, 209)
+            color:rgb(54, 45, 153) !important;
         }
     }
 }
@@ -22,30 +15,17 @@
         background-color:rgba(207, 204, 204, 0.781) !important;
     }
     &__name{
-        max-width:400px;
-        font-size:0.9rem;
+        max-width:80%;
     }
 
     &__description{
-        font-size:0.8rem;
         text-overflow: ellipsis;
-        max-width:600px;
-        @media screen and (max-width:767px) {
-            max-width:200px;
-        }
-    }
-
-    &__time{
-        font-size:0.7rem;
+        max-width:80%;
     }
 
     &__type{
         width:30px;
         height:30px;
-        background-color:#4F00B5;
-        &--okr{
-            background-color:#EE2A64;
-        }
         &--approve-skills{
             background-color:rgba(28, 195, 54, 1);
         }

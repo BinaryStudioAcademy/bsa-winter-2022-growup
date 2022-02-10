@@ -4,9 +4,9 @@ import OpportunitieCart from './opportunitieCart';
 const Opportunities:React.FC = ()=>{
     return(
     <section className="opportunities mt-5 text-start d-flex flex-column ">
-        <div className="opportunities__header d-flex align-items-center px-3 py-3 rounded-top">
-            <span className="opportunities__title flex-shrink-1 flex-grow-1 text-start">Recommended opportunities</span>
-            <span className="opportunities__add-opportunity-btn btn btn-outline-light">+ Add Opportunity</span>
+        <div className=" d-flex align-items-center px-3 py-3 rounded-top bg-gu-purple text-gu-white">
+            <span className="flex-shrink-1 flex-grow-1 text-start fs-5">Recommended opportunities</span>
+            <span className="btn btn-outline-gu-white fs-7 ">+ Add Opportunity</span>
         </div>
         <div className="oppotunities__list">
             <OpportunitieCart />

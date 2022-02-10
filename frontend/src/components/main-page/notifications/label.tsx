@@ -1,11 +1,15 @@
 import { ReactElement } from 'react';
 import ILabelData from '../interfaces/ILabaleData';
-import { ReactComponent as OpportunityLogo } from '../icons/opportunityIcon.svg';
-import { ReactComponent as OKRLogo } from '../icons/okrIcon.svg';
-import { ReactComponent as ApproveSkillsLogo } from '../icons/approveSkills.svg';
+import { ReactComponent as OpportunityLogo } from '../icons/opportunity-icon.svg';
+import { ReactComponent as OKRLogo } from '../icons/okr-icon.svg';
+import { ReactComponent as ApproveSkillsLogo } from '../icons/approve-skill.svg';
 import { NotificationTypes } from '../enums/NotificationTypes';
 
-const Label = ( { type } :ILabelData):ReactElement=>{
+interface Props extends ILabelData{
+
+}
+
+const Label = ( { type } :Props):ReactElement=>{
     switch(type){
         case NotificationTypes.approve_skills:
             return(<ApproveSkillsLogo></ApproveSkillsLogo>);

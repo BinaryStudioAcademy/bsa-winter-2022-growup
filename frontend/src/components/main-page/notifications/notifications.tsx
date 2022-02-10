@@ -35,11 +35,11 @@ const Notifications:React.FC = ()=>{
 
     return(
     <section className="notifications d-flex flex-column w-100 rounded-1 text-start shadow-lg">
-        <span className="notifications__title text-start mb-0 py-3 ps-3 rounded-top">Your Notifications:</span>
+        <span className="text-start mb-0 py-3 ps-3 rounded-top bg-gu-purple text-gu-white fs-5">Your Notifications:</span>
         <div className="d-flex flex-column overflow-hidden">
             {notifications}
         </div>
-        <span className="notifications__view-all notifications__view-all--showed d-flex align-items-center align-self-end me-2 mb-2">
+        <span className="notifications__view-all  d-flex align-items-center align-self-end me-2 mb-2 mt-2 fs-6 text-gu-blue">
             <span className="me-1">view all</span>
             <ArrowDown />
         </span>
