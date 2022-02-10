@@ -3,28 +3,29 @@
 /* stylelint-enable */
 
 .sidebar-section {
-    z-index: 3;
+    z-index: 20;
+    overflow: scroll;
 }
 
 .sidebar-container {
     width: 273px;
-    display: flex;
-    padding-top: 1.53125em;
-    @media screen and ( max-width:35.9375em) {
+    padding-top: 1.375em;
+    @media screen and ( max-width: 47.9375em) {
+        padding-top: .9em;
         align-items: center;
-        width: 70px;
+        width: 65px;
+        padding-left: .3em;
+        padding-right: .3em;
     }
 }
 
 .logo-section {
-    padding-left: .5em;
-    padding-right: .5em;
-    margin-bottom: 6.203125em;
-    &__icon {
-        margin-right: 0em;
-    }
-    @media screen and ( min-width:35.9375em) {
+    padding-left: .7em;
+    padding-right: .7em;
+    margin-bottom: 3em;
+    @media screen and ( min-width: 47.9375em) {
         padding-left: 2.21875em;
+        margin-bottom: 6.203125em;
         &__icon {
             margin-right: 0.927em;
         }
@@ -38,25 +39,32 @@
 
 .logo-title {
     line-height: 1.380em;
+    font-weight: bold;
 }
 
 .navigation-section {
-    @media screen and ( min-width:35.9375em) {
+    @media screen and ( min-width: 47.9375em) {
         padding-left: 0.96875em;
         padding-right: 0.96875em;
+    }
+}
+.navigation-section__list{
+    @media screen and ( max-width: 47.9375em) {
+        align-items: center;
     }
 }
 
 .navigation-link {
     line-height: 1.38em;
     &__icon {
-        max-width: 20px;
-        max-height: 20px;
-        margin-right: 0;
+        width: 27px;
+        height: 27px;
     }
-    @media screen and ( min-width:35.9375em) {
+    @media screen and ( min-width: 47.9375em) {
         &__icon {
             margin-right: 0.927em;
+            max-width: 20px;
+            max-height: 20px;
         }
     }
 }
@@ -64,11 +72,15 @@
 .navigation-item .active {
     display: flex;
     align-items: center;
-    flex: 1 1 238px;
-    height: 45px;
-    width: 100%;
+    height: 41px;
+    width: 41px;
     background-color: #fff;
-    border-radius: 10px;
+    border-radius: 33%;
+    @media screen and ( min-width: 47.9375em) {
+        height: 45px;
+        width: 100%;
+        border-radius: 10px;
+    }
 }
 
 .active .navigation-link * {
@@ -79,23 +91,15 @@
     fill: $gu-pink;
 }
 
-
 .navigation-item {
     list-style-type: none;
+    margin-bottom: 1.53125em;
     &__link {
-    //    padding-left: 1em;
+        padding: .5em;
     }
-    @media screen and ( min-width:35.9375em) {
+    @media screen and ( min-width: 47.9375em) {
         &__link {
             padding-left: 1.938em;
         }
     }
-}
-
-.navigation-item a {
-    text-decoration: none;
-}
-
-.navigation-item:not(:last-child) {
-    margin-bottom: 1.53125em;
 }
