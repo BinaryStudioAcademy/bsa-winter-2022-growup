@@ -1,0 +1,32 @@
+.quiz {
+  margin: 20px 0;
+  text-align: center;
+
+  &__title {
+    font-weight: 700;
+  }
+
+  .range {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .range {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .range {
+
+    &__end-title, &__start-title{
+      display: none;
+    }
+  }
+}
