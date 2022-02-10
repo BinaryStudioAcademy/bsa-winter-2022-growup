@@ -1,6 +1,6 @@
+import { ErrorMessage } from '@hookform/error-message';
 import { Form } from 'react-bootstrap';
 import { Control, useController } from 'react-hook-form';
-import { ErrorMessage } from '@hookform/error-message';
 import styles from './styles.module.scss';
 
 interface IFormInput {
@@ -20,7 +20,6 @@ const FormInput = ({ name, control, errors, type, placeholder }: IFormInput): JS
         {...field}
         type={type}
         placeholder={placeholder}
-        required
       />
       <span className={styles.error}>
         <ErrorMessage errors={errors} name={name} />

@@ -1,6 +1,6 @@
-import { UserPayloadKey } from 'common/enums/enums';
+import { AppRoute, UserPayloadKey } from 'common/enums/enums';
 import FormInput from 'components/common/form-input/form-input';
-import { useAppDispatch, useAppForm, useAppSelector, useCallback } from 'hooks/hooks';
+import { useAppDispatch, useAppForm, useAppSelector, useCallback, useNavigate } from 'hooks/hooks';
 import { Button, Container, FloatingLabel, Form } from 'react-bootstrap';
 import { Google } from 'react-bootstrap-icons';
 import { NotificationManager } from 'react-notifications';
@@ -10,6 +10,7 @@ import { DEFAULT_LOGIN_PAYLOAD } from './common/constants';
 import './styles.scss';
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(state => state.auth.isLoading);
 
@@ -27,7 +28,7 @@ const Login: React.FC = () => {
     handleLogin(values)
       .unwrap()
       .then(() => {
-        window.location.href = '/';
+        navigate(AppRoute.ROOT);
       })
       .catch((err: Error) => {
         NotificationManager.error(err.message);

@@ -1,7 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
 import { ReducerName } from 'common/enums/app/reducer-name.enum';
 import { IUser } from 'common/interfaces/user';
-import { loginUser } from './actions';
+import { loginUser, signUpUser } from './actions';
 import { ActionType } from './common';
 
 type State = {
@@ -28,18 +28,35 @@ const { reducer, actions } = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(loginUser.pending, (state, _) => {
-      state.isLoading = true;
-    });
-
-    builder.addCase(loginUser.fulfilled, (state) => {
-      state.isAuthenticated = true;
-      state.isLoading = false;
-    });
-
-    builder.addCase(loginUser.rejected, (state, _) => {
-      state.isLoading = false;
-    });
+    builder
+      .addMatcher(
+        isAnyOf(
+          loginUser.pending,
+          signUpUser.pending,
+        ),
+        (state, _) => {
+          state.isLoading = true;
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          loginUser.fulfilled,
+          signUpUser.fulfilled,
+        ),
+        (state) => {
+          state.isAuthenticated = true;
+          state.isLoading = false;
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          loginUser.rejected,
+          signUpUser.rejected,
+        ),
+        (state, _) => {
+          state.isLoading = false;
+        },
+      );
   },
 });
 
