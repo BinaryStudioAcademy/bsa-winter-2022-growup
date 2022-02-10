@@ -1,36 +1,63 @@
 $white-blue: #F0F3F9;
 
+.header-section {
+    z-index: 10;
+    background-color: #fff;
+}
+
 .header-container {
     max-height: 88.5px;
-    padding-right: 3.2225em;
-    padding-top: 1.375em;
-    padding-bottom: 1.34375em;
+    padding-right: 1.2225em;
+    padding-top: .6em;
+    padding-bottom: .6em;
+    @media screen and ( min-width: 47.9375em) {
+        padding-right: 3.2225em;
+        padding-top: 1.375em;
+        padding-bottom: 1.34375em;
+    }
 }
 
 .form-section {
     &__search-icon {
-        margin-left: 1.425625em;
-        top: 43%;
+        top: 38%;
+        margin-left: .85em;
     }
     &__search-input {
-        margin-right: 2.29375em;
+        margin-right: 2em;
+    }
+    @media screen and ( min-width: 47.9375em) {
+        &__search-icon {
+            margin-left: 1.425625em;
+            top: 43%;
+        }
+        &__search-input {
+            margin-right: 2.29375em;
+        }
     }
 }
 
 .search-icon {
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
     opacity: 0.4;
+    @media screen and ( min-width: 47.9375em) {
+        width: 15px;
+        height: 15px;
+    }
 }
 
 .search-input {
     height: 45px;
-    width: 280px;
+    width: 45px;
     background-color: $white-blue;
-    border-radius: 50px;
+    border-radius: 33%;
     padding-left: 3.6em;
     padding-top: 0.9375em;
     padding-bottom: 0.9375em;
+    @media screen and ( min-width: 47.9375em) {
+        width: 280px;
+        border-radius: 50px;
+    }
 }
 
 .search-input::placeholder {
@@ -41,11 +68,16 @@ $white-blue: #F0F3F9;
 .notification-section {
     cursor: pointer;
     &__icon {
-        margin-right: 2.414375em;
+        margin-right: 2em;
     }
     &__notification-pointer {
         left: 11px;
         top: 3px;
+    }
+    @media screen and ( min-width: 47.9375em) {
+        &__icon {
+            margin-right: 2.414375em;
+        }
     }
 }
 
