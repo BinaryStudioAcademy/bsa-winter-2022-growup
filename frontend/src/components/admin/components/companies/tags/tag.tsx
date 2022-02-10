@@ -1,5 +1,4 @@
 import { memo } from 'react';
-import { Row, Col } from 'react-bootstrap';
 
 type PropTypes = {
   tagName: string;
@@ -7,9 +6,9 @@ type PropTypes = {
 
 const Tag: React.FC<PropTypes> = ({ tagName }) => {
   return (
-    <Row>
-      <Col>{tagName}</Col>
-    </Row>
+    <div className="row">
+      <div className="col">{tagName}</div>
+    </div>
   );
 };
 

@@ -1,4 +1,4 @@
-import { Card, Button } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import type { ICompany } from 'common/interfaces/company/company';
 
 type PropTypes = {
@@ -9,7 +9,10 @@ const Company: React.FC<PropTypes> = ({ companyList }) => {
   return (
     <Card className="growup-card-primary">
       <Card.Header className="d-flex justify-content-end growup-card-header">
-        <Button variant="growup-outline-white">+ Add Company</Button>
+        {/* <Button variant="growup-outline-white">+ Add Company</Button> */}
+        <button className="btn btn-outline-gu-white btn-hover-gu-purple border-2 fs-5 fw-bold">
+          + Add Company
+        </button>
       </Card.Header>
       <Card.Body>
         {companyList.length ? (
