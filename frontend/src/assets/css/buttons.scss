@@ -1,0 +1,13 @@
+@import '~bootstrap/scss/variables';
+
+.btn {
+  border-radius: 70px !important;
+}
+
+.btn-hover-gu-purple:hover {
+  color: $purple-dark !important;
+}
+
+.btn-hover-gu-white:hover {
+  color: $white !important;
+}
