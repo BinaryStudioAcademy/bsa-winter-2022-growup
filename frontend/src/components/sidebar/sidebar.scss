@@ -1,34 +1,23 @@
 /* stylelint-disable */
 @import "../../assets/css/theming.scss";
+@import "../../assets/css/styles.scss";
 /* stylelint-enable */
 
 .sidebar-section {
-    z-index: 20;
-    overflow: scroll;
+    z-index: 3;
 }
 
 .sidebar-container {
     width: 273px;
-    padding-top: 1.375em;
-    @media screen and ( max-width: 47.9375em) {
-        padding-top: .9em;
-        align-items: center;
+    @include media-breakpoint-down(md) {
         width: 65px;
-        padding-left: .3em;
-        padding-right: .3em;
     }
 }
 
 .logo-section {
-    padding-left: .7em;
-    padding-right: .7em;
     margin-bottom: 3em;
-    @media screen and ( min-width: 47.9375em) {
-        padding-left: 2.21875em;
-        margin-bottom: 6.203125em;
-        &__icon {
-            margin-right: 0.927em;
-        }
+    @include media-breakpoint-up(md) {
+        margin-bottom: 6.2em;
     }
 }
 
@@ -38,18 +27,12 @@
 }
 
 .logo-title {
-    line-height: 1.380em;
+    line-height: 1.38em;
     font-weight: bold;
 }
 
-.navigation-section {
-    @media screen and ( min-width: 47.9375em) {
-        padding-left: 0.96875em;
-        padding-right: 0.96875em;
-    }
-}
 .navigation-section__list {
-    @media screen and ( max-width: 47.9375em) {
+    @include media-breakpoint-down(md) {
         align-items: center;
     }
 }
@@ -60,9 +43,8 @@
         width: 27px;
         height: 27px;
     }
-    @media screen and ( min-width: 47.9375em) {
+    @include media-breakpoint-up(md) {
         &__icon {
-            margin-right: 0.927em;
             max-width: 20px;
             max-height: 20px;
         }
@@ -76,7 +58,7 @@
     width: 41px;
     background-color: #fff;
     border-radius: 33%;
-    @media screen and ( min-width: 47.9375em) {
+    @include media-breakpoint-up(md) {
         height: 45px;
         width: 100%;
         border-radius: 10px;
@@ -93,13 +75,4 @@
 
 .navigation-item {
     list-style-type: none;
-    margin-bottom: 1.53125em;
-    &__link {
-        padding: .5em;
-    }
-    @media screen and ( min-width: 47.9375em) {
-        &__link {
-            padding-left: 1.938em;
-        }
-    }
 }
