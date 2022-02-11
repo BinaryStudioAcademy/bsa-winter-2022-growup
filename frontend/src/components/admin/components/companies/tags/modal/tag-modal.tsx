@@ -14,12 +14,15 @@ type PropTypes = {
 
 const TagModal: React.FC<PropTypes> = ({ show, onClose }) => {
   // const { tags } = useSelector((state) => state.admin);
-  const { list: tagList, addItem, deleteItem } = useTagList();
+  const { list: tagList, addItem, deleteItem, clearItems } = useTagList();
 
   const dispatch = useDispatch();
 
   const clickHandler = (e: FormEvent): void => {
     e.preventDefault();
+
+    onClose();
+    clearItems();
     dispatch(adminActions.createTags(tagList));
   };
 

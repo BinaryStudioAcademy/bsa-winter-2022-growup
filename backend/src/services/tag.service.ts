@@ -1,4 +1,4 @@
-import { getCustomRepository } from 'typeorm';
+import { FindManyOptions, getCustomRepository } from 'typeorm';
 import { companies } from '~/data/seed-data/company.data';
 
 import TagsRepository from '~/data/repositories/tags.repository';
@@ -21,8 +21,12 @@ export const getTags = async (): Promise<Tags[]> => {
     name: companies[0].name,
   });
 
-  const tags = await tagsRepository.find({ company: companyInstance });
-  return tags;
+  const tags = await tagsRepository.find({
+    company: companyInstance,
+    relations: ['company'],
+  } as FindManyOptions);
+
+  return tags.map((tag) => tagsMapper(tag));
 };
 
 export const createTags = async (

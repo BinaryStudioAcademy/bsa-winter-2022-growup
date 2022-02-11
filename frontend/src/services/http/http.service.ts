@@ -33,7 +33,7 @@ class Http implements IHttp {
       headers.append(HttpHeader.CONTENT_TYPE, contentType);
       headers.append(
         'Authorization',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyNDBhMjY5Yi1iY2NiLTQ2ZWUtYTI0Mi1iMDUxMDVkNDhmMTkiLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE2NDQ1NjE1NzgsImV4cCI6MTY0NDY0Nzk3OH0.n7nqxJWnJdrtGh793ptTqI4Tyx4wGpwFOrqtkwR79F8',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyNDBhMjY5Yi1iY2NiLTQ2ZWUtYTI0Mi1iMDUxMDVkNDhmMTkiLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE2NDQ1Njk2MTMsImV4cCI6MTY0NDY1NjAxM30.Wy40ga9XUkwvinXv8KnVWqdmX4qq8vpFzMFU7BUrtyY',
       );
     }
 

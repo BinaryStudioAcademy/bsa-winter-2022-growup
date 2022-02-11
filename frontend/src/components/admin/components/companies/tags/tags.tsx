@@ -1,6 +1,9 @@
-import { memo, useState, useCallback } from 'react';
+import { memo } from 'react';
+import { useState, useCallback, useDispatch } from 'hooks/hooks';
 import { Card } from 'react-bootstrap';
 import type { ITag } from 'common/interfaces/tag/tag';
+
+import { adminActions } from 'store/actions';
 
 import Tag from './common/tag';
 import TagModal from './modal/tag-modal';
@@ -10,16 +13,16 @@ type PropTypes = {
 };
 
 const Tags: React.FC<PropTypes> = ({ tagList }) => {
-  const [isModalVisible, setIsModalVisible] = useState(true);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const dispatch = useDispatch();
 
   const hideModal = useCallback(() => {
     setIsModalVisible(false);
   }, []);
-  const showModal = (): void => setIsModalVisible(true);
 
+  const showModal = (): void => setIsModalVisible(true);
   const deleteTag = useCallback((id: ITag['id']) => {
-    // eslint-disable-next-line
-    console.log('I am deleted', id);
+    dispatch(adminActions.deleteTag(id));
   }, []);
 
   return (
@@ -42,9 +45,11 @@ const Tags: React.FC<PropTypes> = ({ tagList }) => {
           </div>
         </Card.Header>
         <Card.Body>
-          <div className="d-grid">
+          <div className="d-flex flex-wrap gap-2">
             {tagList.length ? (
-              tagList.map((tag) => <Tag tag={tag} onDelete={deleteTag} />)
+              tagList.map((tag) => (
+                <Tag key={tag.id} tag={tag} onDelete={deleteTag} />
+              ))
             ) : (
               <p className="m-0 text-center">No tags here...</p>
             )}

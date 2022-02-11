@@ -17,7 +17,9 @@ const useTagList = (): UseTagList => {
     [],
   );
 
-  return { list, addItem, deleteItem };
+  const clearItems = useCallback(() => setList([]), []);
+
+  return { list, addItem, deleteItem, clearItems };
 };
 
 export { useTagList };
