@@ -5,6 +5,11 @@ import { HttpError } from 'exceptions/exceptions';
 import { stringify } from 'query-string';
 import { Storage } from 'services/storage/storage.service';
 
+interface IResponse {
+  success: string;
+  message: string;
+}
+
 class Http {
   private _storage: Storage;
 
@@ -32,7 +37,7 @@ class Http {
       await this.checkStatus(response);
 
       return this.parseJSON<T>(response);
-    } catch (err: any) {
+    } catch (err) {
       this.throwError(err);
     }
   }
@@ -58,7 +63,7 @@ class Http {
 
   private async checkStatus(response: Response): Promise<Response> {
     if (!response.ok) {
-      const responseJson: any = await this.parseJSON(response);
+      const responseJson: IResponse = await this.parseJSON(response);
       throw new HttpError({
         message: responseJson.message,
         status: response.status,
