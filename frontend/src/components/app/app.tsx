@@ -4,6 +4,7 @@ import SignUp from 'components/sign-up/sign-up';
 import { Route, Routes } from 'components/common/common';
 import Ork from 'components/okrs/okrs';
 import Profile from 'components/profile/profile';
+import { NotFound } from 'components/not-found';
 import Admin from 'components/admin/admin';
 import Header from 'components/header/header';
 import Sidebar from 'components/sidebar/sidebar';
@@ -38,6 +39,7 @@ const App: React.FC = () => {
                     <Route path={AppRoute.SIGN_UP} element={SignUp} />
                     <Route path={AppRoute.ORKS} element={Ork} />
                     <Route path={AppRoute.SETTINGS_PROFILE} element={Profile} />
+                    <Route path="*" element={<NotFound />} />
                     <Route path={AppRoute.HOME} element={<Main_Page />} />
                     <Route path={AppRoute.PROFILE} element={<div>Profile</div>} />
                     <Route path={AppRoute.CAREER_PATH} element={<div>Career Path</div>} />
