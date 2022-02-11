@@ -1,20 +1,13 @@
 .modal-content {
-  background-color: #f6f7f9;
+  background-color: var(--bs-gray-200);
 
   .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: white;
+    background-color: var(--bs-white);
   }
 
   .modal-footer {
-    background: none;
-    border: none;
-
     button {
-      color: white;
-      margin: 0;
+      color: var(--bs-white);
       padding: 6px 26px;
     }
   }

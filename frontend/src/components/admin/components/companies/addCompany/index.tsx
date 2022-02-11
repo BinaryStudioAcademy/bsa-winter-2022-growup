@@ -33,7 +33,7 @@ const AddCompany: FC<IAddCompany> = ({ show, handleClose }) => {
 
   return (
     <Modal show={show} onHide={handleClose} centered={true}>
-      <Modal.Header>
+      <Modal.Header className="d-flex justify-content-between align-items-center">
         <Modal.Title>Create new company</Modal.Title>
         <CloseButton onClick={handleClose} />
       </Modal.Header>
@@ -58,8 +58,8 @@ const AddCompany: FC<IAddCompany> = ({ show, handleClose }) => {
           />
         </Form.Group>
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="gu-pink" type="submit" onClick={send}>
+      <Modal.Footer className="border-0">
+        <Button className="mg-0" variant="gu-pink" type="submit" onClick={send}>
           Save
         </Button>
       </Modal.Footer>
