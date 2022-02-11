@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 
 interface Props{
-    isOpportunitiesPage:boolean,
+    isOpportunitiesPage?:boolean,
 }
 
 const OpportunitieCart = ( { isOpportunitiesPage } :Props):ReactElement=>{
