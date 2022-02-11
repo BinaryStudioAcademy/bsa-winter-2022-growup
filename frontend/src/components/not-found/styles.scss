@@ -1,46 +1,27 @@
 .card {
-  display: flex;
-  align-items: center;
   height: 100vh;
-  width: 100%;
 
   .card-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
     .card-title {
+      color: var(--bs-gray-700);
       font-size: 15rem;
       font-weight: 500;
       line-height: 1.2;
-      text-align: center;
       font-family: fantasy;
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-size: cover;
-      background-position: center;
-      background-image: url('https://colorlib.com/etc/404/colorlib-error-404-10/img/bg.jpg');
     }
 
     .card-text {
-      color: #495057;
+      color: var(--bs-gray-800);
       font-weight: 500;
       line-height: 1.2;
-      margin-bottom: 0.5rem;
-      margin-top: 0;
-      text-align: center;
     }
 
-    .card-text.h1 {
-      font-size: 1.65rem;
+    .card-text.text1 {
+      font-size: 1.6rem;
     }
 
-    .card-text.h2 {
-      font-size: 1.44375rem;
-      margin-top: 1rem;
-      margin-bottom: 1.5rem;
+    .card-text.text2 {
+      font-size: 1.4rem;
       font-weight: 400;
     }
   }
