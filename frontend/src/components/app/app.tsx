@@ -35,8 +35,8 @@ const App: React.FC = () => {
               ):(
               <main className="main-container w-100 px-5 pt-3 pb-5">
                   <Routes>
-                    <Route path={AppRoute.LOGIN} element={Login} />
-                    <Route path={AppRoute.SIGN_UP} element={SignUp} />
+                    <Route path={AppRoute.LOGIN} element={<Login/>} />
+                    <Route path={AppRoute.SIGN_UP} element={<SignUp/>} />
                     <Route path={AppRoute.ORKS} element={Ork} />
                     <Route path={AppRoute.SETTINGS_PROFILE} element={Profile} />
                     <Route path="*" element={<NotFound />} />

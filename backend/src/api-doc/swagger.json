@@ -1,59 +1,139 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "version": "1.0.0",
-        "title": "GrowUP API"
-    },
-    "host": "localhost:8000",
-    "basePath": "/",
-    "tags": [
-        {
-            "name": "Users",
-            "description": "API for users. Example how use Swagger"
-        }
-    ],
-    "schemes": [
-        "https"
-    ],
-    "consumes": [
-        "application/json"
-    ],
-    "produces": [
-        "application/json"
-    ],
-    "paths": {
-        "/users": {
-            "post": {
-                "tags": [
-                    "Users"
-                ],
-                "summary": "Create new user",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/Users"
-                        }
-                    }
-                }
-            }
-        }
-    },
-    "definitions": {
-        "User": {
-            "required": [
-                "id",
-                "name"
-            ],
-            "properties": {
-                "id": {
-                    "type": "integer",
-                    "uniqueItems": true
-                },
-                "name": {
-                    "type": "string"
-                }
-            }
-        }
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "GrowUP API"
+  },
+  "host": "localhost:3001",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Users",
+      "description": "API for users. Example how use Swagger"
     }
+  ],
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/api/auth/register": {
+      "post": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "email",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User email"
+          },
+          {
+            "in": "path",
+            "name": "password",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User password"
+          },
+          {
+            "in": "path",
+            "name": "firstName",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User first name"
+          },
+          {
+            "in": "path",
+            "name": "lastName",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User last name"
+          }
+        ],
+        "tags": ["Users"],
+        "summary": "Create new user",
+        "responses": {
+          "200": {
+            "description": "Returns token if everything is ok. Token contains userId and role. It expires in 24h.",
+            "schema": {
+              "$ref": "#/definitions/Token"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "email",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User email"
+          },
+          {
+            "in": "path",
+            "name": "password",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User password"
+          }
+        ],
+        "tags": ["Users"],
+        "summary": "Authenticate user",
+        "responses": {
+          "200": {
+            "description": "Returns token if eveeyrthing is ok. Token contains userId and role. It expires in 24h.",
+            "schema": {
+              "$ref": "#/definitions/Token"
+            }
+          },
+          "404": {
+            "description": "Returns error if credentials are invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Token": {
+      "required": ["token"],
+      "properties": {
+        "token": {
+          "type": "string"
+        }
+      }
+    },
+    "Error": {
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "default": "false"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  }
 }
