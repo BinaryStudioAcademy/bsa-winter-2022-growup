@@ -9,16 +9,19 @@ import ormconfig from '~/config/ormconfig';
 import { env } from '~/config/env';
 import { logger } from '~/common/utils/logger.util';
 import swaggerDocument from '~/api-doc/swagger.json';
+import verifyToken from './api/middlewares/authorization-middleware';
 
 const { port } = env.app;
 
 const app: Express = express();
 
 app.use(cors());
-app.use(express.static(path.join(__dirname, './public')));
+app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.use('/api',verifyToken);
 
 routes(app);
 
