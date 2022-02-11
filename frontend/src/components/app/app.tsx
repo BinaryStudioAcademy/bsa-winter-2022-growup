@@ -20,7 +20,7 @@ const App: React.FC = () => {
       <Route path={AppRoute.LOGIN} element={Login} />
       <Route path={AppRoute.SIGN_UP} element={SignUp} />
       <Route path={AppRoute.ORKS} element={Ork} />
-      <Route path={AppRoute.SETTINGS_PROFILE} element={Profile} />
+      <Route path={AppRoute.SETTINGS_PROFILE} element={<Profile/>} />
     </Routes>
   );
 };
