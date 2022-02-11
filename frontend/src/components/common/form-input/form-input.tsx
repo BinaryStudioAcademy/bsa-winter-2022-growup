@@ -3,7 +3,7 @@ import { Form } from 'react-bootstrap';
 import { Control, useController } from 'react-hook-form';
 import styles from './styles.module.scss';
 
-interface IFormInput {
+interface Props {
   name: string,
   control: Control<object, object>,
   errors: object,
@@ -11,7 +11,7 @@ interface IFormInput {
   placeholder: string
 }
 
-const FormInput = ({ name, control, errors, type, placeholder }: IFormInput): JSX.Element => {
+const FormInput = ({ name, control, errors, type, placeholder }: Props): JSX.Element => {
   const { field } = useController<any>({ name, control });
 
   return (
