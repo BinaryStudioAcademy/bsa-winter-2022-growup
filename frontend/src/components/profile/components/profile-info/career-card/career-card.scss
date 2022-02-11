@@ -1,0 +1,93 @@
+.career-card {
+  border-color: #E1DBEA;
+  margin: 5px 15px 20px 15px;
+  position: relative;
+
+  &::before {
+    position: absolute;
+    content: "";
+    display: block;
+    height: calc(100% + 30px);
+    width: 1px;
+    background-color: #E1DBEA;
+    margin-left: -15px;
+    top: -30px
+  }
+}
+
+.career-card-time {
+  font-weight: 400;
+  line-height: 16px;
+  text-align: left;
+  color:#4F00B5;
+  position: absolute;
+  top: -18px;
+
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    border-radius: 100%;
+    width: 8px;
+    height: 8px;
+    background-color: #463DA8;
+    margin-left: calc(-15px);
+    transform: translateX(-45%);
+    top: 8px;
+  }
+}
+
+.career-card:first-child {
+  border-color: #E1DBEA;
+  margin: 5px 15px 20px 15px;
+
+  &::before {
+    height: calc(100% + 7px);
+    top: -7px
+  }
+}
+
+.career-card-info {
+  text-align: start;
+
+  &__title {
+    line-height: 25px;
+  }
+
+  &__role, &__company {
+    font-weight: 600;
+    line-height: 19px;
+
+    span {
+      color: #808C9C;
+      margin-right: 10px;
+    }
+  }
+}
+
+.career-card-footer {
+  border-top: 1px solid #E1DBEA;
+
+  &__duration {
+    font-weight: 400;
+    line-height: 16px;
+    color: #808C9C;
+  }
+
+  &__calendar-icon {
+    margin-right: 9px;
+  }
+}
+
+.career-action-buttons {
+  &__delete,
+  &__edit {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+  }
+
+  &__delete {
+    margin-left: 20px;
+  }
+}
