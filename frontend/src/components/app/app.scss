@@ -1,0 +1,12 @@
+/* stylelint-disable */
+@import "../../assets/css/styles.scss";
+/* stylelint-enable */
+
+.main-container {
+  margin-left: 4em;
+  margin-top: 5em;
+  @include media-breakpoint-up(md) {
+    margin-left: 16.875em;
+    margin-top: 6.25em;
+  }
+}
