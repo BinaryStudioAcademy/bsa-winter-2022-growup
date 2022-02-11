@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
-import { IOpportunityPage } from '../interfaces/IOpportunityPage';
-interface Props extends IOpportunityPage {
+
+interface Props{
+    isOpportunitiesPage:boolean,
 }
 
 const OpportunitieCart = ( { isOpportunitiesPage } :Props):ReactElement=>{
