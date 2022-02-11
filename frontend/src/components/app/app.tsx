@@ -1,19 +1,20 @@
-import { useLocation } from 'hooks/hooks';
-import { AppRoute } from 'common/enums/enums';
-import Counter from 'components/counter/counter';
-import Login from 'components/login/login';
-import SignUp from 'components/sign-up/sign-up';
-import { Link, Route, Routes } from 'components/common/common';
-import logo from 'assets/img/logo.svg';
-import Ork from 'components/okrs/okrs';
-import Profile from 'components/profile/profile';
+// import { useLocation } from 'hooks/hooks';
+// import { AppRoute } from 'common/enums/enums';
+// import Counter from 'components/counter/counter';
+// import Login from 'components/login/login';
+// import SignUp from 'components/sign-up/sign-up';
+// import { Link, Route, Routes } from 'components/common/common';
+// import logo from 'assets/img/logo.svg';
+// import Ork from 'components/okrs/okrs';
+// import Profile from 'components/profile/profile';
+import ControlledTabs from 'components/okrs/components/tabs-okr/two-tabs';
 
 const App: React.FC = () => {
-  const { pathname } = useLocation();
+  // const { pathname } = useLocation();
 
   return (
     <>
-      <div className="App">
+      {/* <div className="App">
         <div>
           <ul className="App-navigation-list">
             <li>
@@ -88,11 +89,8 @@ const App: React.FC = () => {
             </a>
           </span>
         </header>
-        <input type="button" value="Click" className="btn-gu-purple"/>
-        <div className="bg-gu-black text-gu-white fs-2">LAlmost before we knew it, we had left the ground.</div>
-        <div className="bg-gu-black text-gu-white fs-3">LAlmost before we knew it, we had left the ground.</div>
-        <div className="bg-gu-black text-gu-white fs-4">LAlmost before we knew it, we had left the ground.</div>
-      </div>
+      </div> */}
+      <ControlledTabs/>
     </>
   );
 };
