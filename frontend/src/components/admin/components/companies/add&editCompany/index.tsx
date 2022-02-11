@@ -1,7 +1,8 @@
-import React, { ChangeEvent, FC, useState } from 'react';
+import React, { ChangeEvent, FC } from 'react';
 import { CloseButton, Form, Button, Modal } from 'react-bootstrap';
+import { useDispatch, useState } from 'hooks/hooks';
 import { ICompany } from 'common/interfaces/company/company';
-import { companyApi } from 'services/company-api';
+import { companyActions } from 'store/company/actions';
 
 import './styles.scss';
 
@@ -16,6 +17,8 @@ const AddEditCompany: FC<IAddCompany> = ({ show, handleClose, company }) => {
   const [description, setDescription] = useState<string>(
     company?.description ? company.description : '',
   );
+
+  const dispatch = useDispatch();
 
   const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { value, name } = e.target;
@@ -35,10 +38,10 @@ const AddEditCompany: FC<IAddCompany> = ({ show, handleClose, company }) => {
     newCompany = { ...newCompany, ...{ description, name } };
 
     if (company) {
-      companyApi.editCompany(newCompany as ICompany);
+      dispatch(companyActions.edit_companyAsync(newCompany as ICompany));
       return;
     }
-    companyApi.addCompany(newCompany as ICompany);
+    dispatch(companyActions.add_companyAsync(newCompany as ICompany));
   };
 
   return (

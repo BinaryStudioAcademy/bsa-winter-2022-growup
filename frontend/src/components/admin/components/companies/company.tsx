@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Card } from 'react-bootstrap';
 import type { ICompany } from 'common/interfaces/company/company';
 import AddEditCompany from './add&editCompany';
+import CompanyCard from './companyCard';
 
 type PropTypes = {
   companyList: ICompany[];
@@ -27,7 +28,9 @@ const Company: React.FC<PropTypes> = ({ companyList }) => {
         </Card.Header>
         <Card.Body>
           {companyList.length ? (
-            companyList.map((company) => <p>{company.name}</p>)
+            companyList.map((company) => (
+              <CompanyCard company={company} key={company.id} />
+            ))
           ) : (
             <p className="m-0 text-center">No companies here...</p>
           )}
