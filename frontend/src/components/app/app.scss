@@ -1,7 +1,11 @@
+/* stylelint-disable */
+@import "../../assets/css/styles.scss";
+/* stylelint-enable */
+
 .main-container {
   margin-left: 4em;
   margin-top: 5em;
-  @media screen and ( min-width: 47.9375em) {
+  @include media-breakpoint-down(md) {
     margin-left: 16.875em;
     margin-top: 6.25em;
   }

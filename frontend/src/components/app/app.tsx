@@ -14,7 +14,7 @@ const App: React.FC = () => {
   const isAdmin = false;
 
   return (
-      <div className="">
+      <div>
         {isAdmin ? null:
         <>
           <Sidebar />
