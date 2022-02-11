@@ -35,7 +35,7 @@ const Notifications:React.FC = ()=>{
 
     return(
     <section className="notifications d-flex flex-column w-100 rounded-1 text-start shadow-lg">
-        <span className="text-start mb-0 py-3 ps-3 rounded-top bg-gu-purple text-gu-white fs-5">Your Notifications:</span>
+        <span className="text-start mb-0 py-3 ps-3 rounded-top bg-gu-blue text-gu-white fs-5">Your Notifications:</span>
         <div className="d-flex flex-column overflow-hidden">
             {notifications}
         </div>
