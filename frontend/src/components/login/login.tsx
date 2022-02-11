@@ -28,7 +28,7 @@ const Login: React.FC = () => {
     handleLogin(values)
       .unwrap()
       .then(() => {
-        navigate(AppRoute.ROOT);
+        navigate(AppRoute.HOME);
       })
       .catch((err: Error) => {
         NotificationManager.error(err.message);

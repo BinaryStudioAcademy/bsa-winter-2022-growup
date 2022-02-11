@@ -27,7 +27,7 @@ const SignUp: React.FC = () => {
     handleSignUp(values)
       .unwrap()
       .then(() => {
-        navigate(AppRoute.ROOT);
+        navigate(AppRoute.HOME);
       })
       .catch((err: Error) => {
         NotificationManager.error(err.message);
