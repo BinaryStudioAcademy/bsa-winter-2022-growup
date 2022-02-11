@@ -1,7 +1,7 @@
 import { AppRoute, UserPayloadKey } from 'common/enums/enums';
 import FormInput from 'components/common/form-input/form-input';
 import { useAppDispatch, useAppForm, useAppSelector, useCallback, useNavigate } from 'hooks/hooks';
-import { Button, Container, FloatingLabel, Form } from 'react-bootstrap';
+import { Container, FloatingLabel, Form } from 'react-bootstrap';
 import { NotificationManager } from 'react-notifications';
 import { signUpUser } from 'store/auth/actions';
 import { signUp as signUpValidationSchema } from 'validation-schemas/validation-schemas';
@@ -95,9 +95,9 @@ const SignUp: React.FC = () => {
             />
           </FloatingLabel>
 
-          <Button className="form-control" variant="danger" type="submit" size="lg">
+          <button className="btn btn-gu-pink text-gu-white form-control" type="submit">
             Sign up
-          </Button>
+          </button>
         </fieldset>
       </Form>
     </Container>

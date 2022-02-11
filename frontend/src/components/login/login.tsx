@@ -1,7 +1,7 @@
 import { AppRoute, UserPayloadKey } from 'common/enums/enums';
 import FormInput from 'components/common/form-input/form-input';
 import { useAppDispatch, useAppForm, useAppSelector, useCallback, useNavigate } from 'hooks/hooks';
-import { Button, Container, FloatingLabel, Form } from 'react-bootstrap';
+import { Container, FloatingLabel, Form } from 'react-bootstrap';
 import { Google } from 'react-bootstrap-icons';
 import { NotificationManager } from 'react-notifications';
 import { loginUser } from 'store/auth/actions';
@@ -77,13 +77,13 @@ const Login: React.FC = () => {
           </Form.Group>
 
           <div className="d-grid gap-2">
-            <Button variant="danger" type="submit" size="lg">
+            <button className="btn btn-gu-pink text-gu-white" type="submit">
               Sign in
-            </Button>
+            </button>
             <Form.Text className="mb-1 text-center">or</Form.Text>
-            <Button variant="primary" type="submit" size="lg">
+            <button className="btn btn-gu-blue" type="submit">
               <Google className="mx-2" /> Sign in with Google
-            </Button>
+            </button>
           </div>
         </fieldset>
       </Form>
