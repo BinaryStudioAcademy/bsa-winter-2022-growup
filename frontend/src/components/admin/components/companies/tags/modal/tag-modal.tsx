@@ -1,6 +1,7 @@
-import { useState, useCallback } from 'react';
+import { FormEvent } from 'react';
+import { useDispatch, useTagList } from 'hooks/hooks';
+import { adminActions } from 'store/actions';
 
-import { ITag } from 'common/interfaces/tag/tag';
 import { Modal } from 'components/common/common';
 
 import TagForm from './form';
@@ -12,51 +13,15 @@ type PropTypes = {
 };
 
 const TagModal: React.FC<PropTypes> = ({ show, onClose }) => {
-  const [tagList, setTagList] = useState<ITag[]>([
-    {
-      id: '1',
-      name: 'Hey',
-    },
-    {
-      id: '2',
-      name: 'Hey t',
-    },
-    {
-      id: '3',
-      name: 'Hey the',
-    },
-    {
-      id: '4',
-      name: 'Hey there',
-    },
-    {
-      id: '5',
-      name: 'Hey there m',
-    },
-    {
-      id: '6',
-      name: 'Hey there my ',
-    },
-    {
-      id: '7',
-      name: 'Hey there my de',
-    },
-    {
-      id: '8',
-      name: 'Hey there my dear',
-    },
-  ]);
+  // const { tags } = useSelector((state) => state.admin);
+  const { list: tagList, addItem, deleteItem } = useTagList();
 
-  const deleteItem = useCallback(
-    (id: ITag['id']) =>
-      setTagList((state) => state.filter((tag) => tag.id !== id)),
-    [],
-  );
+  const dispatch = useDispatch();
 
-  const addItem = useCallback(
-    (tag: ITag) => setTagList((state) => [...state, tag]),
-    [],
-  );
+  const clickHandler = (e: FormEvent): void => {
+    e.preventDefault();
+    dispatch(adminActions.createTags(tagList));
+  };
 
   return (
     <Modal
@@ -68,7 +33,10 @@ const TagModal: React.FC<PropTypes> = ({ show, onClose }) => {
       <TagForm onSubmit={addItem} />
       <TagList tagList={tagList} onDelete={deleteItem} />
 
-      <button className="btn btn-outline-gu-purple btn-hover-gu-white fw-bold fs-5 border-2">
+      <button
+        className="btn btn-outline-gu-purple btn-hover-gu-white fw-bold fs-5 border-2"
+        onClick={clickHandler}
+      >
         Save
       </button>
     </Modal>

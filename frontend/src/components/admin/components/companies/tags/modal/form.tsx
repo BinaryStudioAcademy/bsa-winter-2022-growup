@@ -1,9 +1,11 @@
-import { ITag } from 'common/interfaces/tag/tag';
-import { ChangeEvent, useState, memo, FormEvent } from 'react';
+import { ChangeEvent, memo, FormEvent } from 'react';
+import { useState } from 'hooks/hooks';
 import { Form } from 'react-bootstrap';
 
+import type { UseTagList } from 'hooks/common';
+
 type PropTypes = {
-  onSubmit: (tag: ITag) => void;
+  onSubmit: UseTagList['addItem'];
 };
 
 const TagForm: React.FC<PropTypes> = ({ onSubmit }) => {
@@ -12,11 +14,7 @@ const TagForm: React.FC<PropTypes> = ({ onSubmit }) => {
   const submitHandler = (e: FormEvent): void => {
     e.preventDefault();
 
-    // TODO: Remove id here
-    onSubmit({
-      id: new Date().toISOString(),
-      name: value,
-    });
+    onSubmit({ name: value });
 
     setValue('');
   };

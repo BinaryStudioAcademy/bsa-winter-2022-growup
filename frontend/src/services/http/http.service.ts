@@ -2,7 +2,9 @@ import { HttpError } from 'exceptions/exceptions';
 import { ContentType, HttpHeader, HttpMethod } from 'common/enums/enums';
 import { HttpOptions } from 'common/types/types';
 
-class Http {
+import { IHttp } from 'common/interfaces/http/http';
+
+class Http implements IHttp {
   public async load<T = unknown>(
     url: string,
     options: Partial<HttpOptions> = {},
@@ -16,7 +18,7 @@ class Http {
         headers,
         body: payload,
       });
-      await this.checkStatus(response);
+      this.checkStatus(response);
 
       return this.parseJSON<T>(response);
     } catch (err) {
@@ -29,6 +31,10 @@ class Http {
 
     if (contentType) {
       headers.append(HttpHeader.CONTENT_TYPE, contentType);
+      headers.append(
+        'Authorization',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyNDBhMjY5Yi1iY2NiLTQ2ZWUtYTI0Mi1iMDUxMDVkNDhmMTkiLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE2NDQ1NjE1NzgsImV4cCI6MTY0NDY0Nzk3OH0.n7nqxJWnJdrtGh793ptTqI4Tyx4wGpwFOrqtkwR79F8',
+      );
     }
 
     return headers;

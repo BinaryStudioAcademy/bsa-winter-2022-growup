@@ -1,10 +1,11 @@
-import { ITag } from 'common/interfaces/tag/tag';
 import { memo } from 'react';
 import * as Icon from 'react-bootstrap-icons';
 
+import type { TagVisibleInfo } from 'common/types/types';
+
 type PropTypes = {
-  tag: ITag;
-  onDelete: (id: ITag['id']) => void;
+  tag: TagVisibleInfo;
+  onDelete: (id: TagVisibleInfo['id']) => void;
 };
 
 const Tag: React.FC<PropTypes> = ({ tag, onDelete }) => {

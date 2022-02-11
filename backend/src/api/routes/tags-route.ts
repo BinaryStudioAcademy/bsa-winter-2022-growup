@@ -1,8 +1,13 @@
 import { Router } from 'express';
 import { run } from '~/common/helpers/route.helper';
-import { createTags, deleteTag } from '~/services/tag.service';
+import { createTags, deleteTag, getTags } from '~/services/tag.service';
 
 const router: Router = Router();
+
+router.get(
+  '/',
+  run((_) => getTags()),
+);
 
 router.post(
   '/',

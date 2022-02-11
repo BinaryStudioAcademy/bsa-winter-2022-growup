@@ -17,6 +17,4 @@ const authActions = {
   login,
 };
 
-export {
-  authActions,
-};
+export { authActions };

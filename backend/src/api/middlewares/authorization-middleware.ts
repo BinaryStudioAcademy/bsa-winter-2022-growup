@@ -24,6 +24,7 @@ const verifyToken = (
       const tokenPayload = <ITokenPayload>verify(token, env.app.secretKey);
       request.userId = tokenPayload.userId;
       request.userRole = tokenPayload.userRole;
+
       next();
     } catch {
       throw new HttpError({
