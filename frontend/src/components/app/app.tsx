@@ -1,10 +1,10 @@
 import { AppRoute } from 'common/enums/enums';
-import Login from 'components/login/login';
-import SignUp from 'components/sign-up/sign-up';
+import Admin from 'components/admin/admin';
 import { Route, Routes } from 'components/common/common';
+import Login from 'components/login/login';
 import Ork from 'components/okrs/okrs';
 import Profile from 'components/profile/profile';
-import Admin from 'components/admin/admin';
+import SignUp from 'components/sign-up/sign-up';
 
 const App: React.FC = () => {
   return (
@@ -15,8 +15,8 @@ const App: React.FC = () => {
         path={AppRoute.ADMIN_CAREER_PATH}
         element={<Admin variant="career" />}
       />
-      <Route path={AppRoute.LOGIN} element={Login} />
-      <Route path={AppRoute.SIGN_UP} element={SignUp} />
+      <Route path={AppRoute.LOGIN} element={<Login />} />
+      <Route path={AppRoute.SIGN_UP} element={<SignUp />} />
       <Route path={AppRoute.ORKS} element={Ork} />
       <Route path={AppRoute.SETTINGS_PROFILE} element={Profile} />
     </Routes>
