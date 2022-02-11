@@ -1,10 +1,12 @@
 import { Router } from 'express';
 import { run } from '~/common/helpers/route.helper';
-import { getSomething } from '~/services/user.service';
+import { updateUserAvatar } from '~/services/user.service';
 
 const router: Router = Router();
 
-router
-  .get('/', run(req => getSomething(req.query)));
+router.put(
+  '/',
+  run((req) => updateUserAvatar(req.userId, req.body.url)),
+);
 
 export default router;
