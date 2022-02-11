@@ -1,0 +1,41 @@
+.profile-main {
+  display: flex;
+  width: 100%;
+  gap: 15px;
+}
+
+.left-side {
+  width: 59%
+}
+
+.right-side {
+  width: 40%;
+}
+
+.group {
+  width: 100%;
+  text-align: left;
+
+  &__title {
+    line-height: 17px;
+    text-align: left;
+    color:  #808C9C;
+    width: 100%;
+  }
+}
+
+.group + .group {
+  margin-top: 50px;
+}
+
+
+@media screen and (max-width: 768px) {
+  .profile-main {
+    display: block;
+  }
+
+  .left-side,
+  .right-side {
+    width: auto;
+  }
+}
