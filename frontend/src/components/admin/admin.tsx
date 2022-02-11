@@ -34,10 +34,10 @@ const Admin: React.FC<PropTypes> = ({ variant }) => (
     <Container className="d-grid gap-2">
       <div className="row">
         <div className="col col-sm-8 col-md-8 col-lg-8">
-          <Nav variant="tabs" defaultActiveKey="/">
+          <Nav variant="tabs" defaultActiveKey="/" >
             <Nav.Item>
               <Link
-                className={`nav-link ${
+                  className={`nav-link ${
                   variant === Variants.company ? 'active' : ''
                 }`}
                 to={AppRoute.ADMIN}
