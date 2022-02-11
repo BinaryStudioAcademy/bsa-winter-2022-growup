@@ -1,21 +1,15 @@
-.range-slider,
-.range-ticks,
-.label-range{
-  display: flex;
-}
+@import 'assets/css/styles';
 
 .range-slider {
   flex-flow: column nowrap;
   width: 27em;
   box-sizing: border-box;
-  font-size: 2em;
 }
 
 .range-input,
 .range-item {
   border-radius: 0.75em;
   overflow: hidden;
-  position: relative;
   height: 1.5em;
 }
 
@@ -23,7 +17,6 @@
   background-color: transparent;
   font-size: 1em;
   box-shadow: 0.3em 0.3em 0.4em #c1c2c5 inset, -0.3em -0.3em 0.4em #fff inset;
-  display: block;
   padding: 0 0.1em;
   width: 100%;
   -webkit-appearance: none;
@@ -36,7 +29,6 @@
 }
 
 .range-ticks {
-  font-size: 1em;
   justify-content: space-between;
   align-items: center;
   pointer-events: none;
@@ -47,14 +39,8 @@
   height: 100%;
 }
 
-.range-tick,
-.range-tick-text {
-  display: inline-block;
-}
-
 .range-tick {
   color: #454954;
-  font-size: 0.5em;
   text-align: center;
   width: 0;
   -webkit-user-select: none;
@@ -67,34 +53,25 @@
 }
 
 .data-range {
-  display: flex;
   height: 3em;
   width: 3em;
-  justify-content: center;
-  align-items: center;
   text-align: center;
   font-size: 0.5em;
-  color: #fff;
-  position: absolute;
   pointer-events: none;
   top: 0;
-  z-index: 2;
-  background-color: #463da8;
   border: 0;
   border-radius: 50%;
   box-shadow: -0.3em -0.3em 0.5em #463da8 inset, 0 -0.2em 0.2em 0 rgba(0,0,0,0.2), 0.3em 0.5em 0.8em  rgba(0,0,0,0.3);
 }
 
-
-@media screen and (max-width: 768px) {
+@include media-breakpoint-down(md) {
   .range-slider {
     min-width: 13em;
-    box-sizing: border-box;
     font-size: 1.7em;
   }
 }
 
-@media screen and (max-width: 576px) {
+@include media-breakpoint-down(sm) {
   .range-slider {
     min-width: 12em;
     box-sizing: border-box;

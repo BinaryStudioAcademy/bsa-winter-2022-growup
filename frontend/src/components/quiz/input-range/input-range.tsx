@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import './input-range.scss';
+import './styles.scss';
 
 type Props  = {
   value?: number;
@@ -44,24 +44,27 @@ const InputRange: React.FC<Props> = ({ value = 0, min = 0, max = 10, onChange })
   };
 
   return (
-  <div className="range-slider">
-      <div className="range-item">
+  <div className="range-slider d-flex fs-1">
+      <div className="range-item position-relative">
         <input
-          className="range-input"
+          className="range-input position-relative d-block"
           type="range"
           min={min}
           max={max}
           value={value}
           onChange={handleChangeInput}
         />
-        <div className="range-ticks">
+        <div className="range-ticks d-flex fs-1">
           {getTicksArray().map((tick, i) => (
-            <span key={i} className="range-tick">
-              <span className="range-tick__text">{tick}</span>
+            <span key={i} className="range-tick d-inline-block fs-5">
+              <span className="range-tick__text d-inline-block">{tick}</span>
             </span>
           ))}
         </div>
-        <div className="data-range" style={{ left: tickPositionStyle }}>{value}</div>
+        <div
+          className="data-range position-absolute d-flex align-items-center justify-content-center bg-gu-blue text-gu-white"
+          style={{ left: tickPositionStyle }}>{value}
+        </div>
       </div>
   </div>
 );};
