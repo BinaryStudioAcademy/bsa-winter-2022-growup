@@ -1,29 +1,24 @@
 import { ErrorMessage } from '@hookform/error-message';
 import { Form } from 'react-bootstrap';
-import { Control, useController, UseControllerProps } from 'react-hook-form';
+import { Control, useController } from 'react-hook-form';
 import './styles.scss';
 
 interface Props {
   name: string;
-  control: Control<object, object>;
   errors: object;
+  control: Control;
   type: string;
   placeholder: string;
 }
 
-type FieldType = Pick<Props, 'name' | 'control'>;
-
 const FormInput = ({
   name,
-  control,
   errors,
+  control,
   type,
   placeholder,
 }: Props): JSX.Element => {
-  const { field } = useController<UseControllerProps<FieldType>>({
-    name: name,
-    control,
-  });
+  const { field } = useController({ name, control });
 
   return (
     <>
