@@ -5,6 +5,7 @@ import SignUp from 'components/sign-up/sign-up';
 import { Route, Routes } from 'components/common/common';
 import Ork from 'components/okrs/okrs';
 import Profile from 'components/profile/profile';
+import { NotFound } from 'components/not-found';
 import Admin from 'components/admin/admin';
 
 const App: React.FC = () => {
@@ -20,7 +21,8 @@ const App: React.FC = () => {
       <Route path={AppRoute.LOGIN} element={Login} />
       <Route path={AppRoute.SIGN_UP} element={SignUp} />
       <Route path={AppRoute.ORKS} element={Ork} />
-      <Route path={AppRoute.SETTINGS_PROFILE} element={<Profile/>} />
+      <Route path={AppRoute.SETTINGS_PROFILE} element={<Profile />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };
