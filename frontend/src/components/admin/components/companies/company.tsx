@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Card } from 'react-bootstrap';
 import type { ICompany } from 'common/interfaces/company/company';
-import AddCompany from './addCompany';
+import AddEditCompany from './add&editCompany';
 
 type PropTypes = {
   companyList: ICompany[];
@@ -33,7 +33,7 @@ const Company: React.FC<PropTypes> = ({ companyList }) => {
           )}
         </Card.Body>
       </Card>
-      <AddCompany show={show} handleClose={handleClose} />
+      <AddEditCompany show={show} handleClose={handleClose} />
     </>
   );
 };

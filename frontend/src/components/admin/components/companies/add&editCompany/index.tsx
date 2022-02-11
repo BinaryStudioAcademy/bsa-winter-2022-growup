@@ -7,34 +7,46 @@ import './styles.scss';
 
 interface IAddCompany {
   show: boolean;
+  company?: ICompany;
   handleClose: () => void;
 }
 
-const AddCompany: FC<IAddCompany> = ({ show, handleClose }) => {
-  const [company, setCompany] = useState<ICompany | unknown>({});
+const AddEditCompany: FC<IAddCompany> = ({ show, handleClose, company }) => {
+  const [name, setName] = useState<string>(company ? company.name : '');
+  const [description, setDescription] = useState<string>(
+    company?.description ? company.description : '',
+  );
 
   const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { value, name } = e.target;
-    const newCompany = Object.assign(company, { [name]: value });
-    setCompany(newCompany);
+    if (name === 'name') setName(value);
+    if (name === 'description') setDescription(value);
   };
 
   const send = (): void => {
-    const arr = Object.entries(company as ICompany);
-    const index = arr.findIndex((val: [string, string]) => val[1] === '');
+    let newCompany = {};
+    if (company) newCompany = { ...company };
 
-    if (index === -1) {
-      companyApi.addCompany(company as ICompany);
+    if (!name || !description) {
+      alert('Youhave empty field!!!');
       return;
     }
 
-    alert('Field ' + arr[index] + ' is empty!!!');
+    newCompany = { ...newCompany, ...{ description, name } };
+
+    if (company) {
+      companyApi.editCompany(newCompany as ICompany);
+      return;
+    }
+    companyApi.addCompany(newCompany as ICompany);
   };
 
   return (
     <Modal show={show} onHide={handleClose} centered={true}>
       <Modal.Header className="d-flex justify-content-between align-items-center">
-        <Modal.Title>Create new company</Modal.Title>
+        <Modal.Title>
+          {company ? 'Edit company' : 'Create new company'}
+        </Modal.Title>
         <CloseButton onClick={handleClose} />
       </Modal.Header>
       <Modal.Body>
@@ -45,6 +57,7 @@ const AddCompany: FC<IAddCompany> = ({ show, handleClose }) => {
             placeholder="Company name"
             onChange={onChange}
             name="name"
+            value={name}
           />
         </Form.Group>
 
@@ -55,16 +68,17 @@ const AddCompany: FC<IAddCompany> = ({ show, handleClose }) => {
             placeholder="Description"
             onChange={onChange}
             name="description"
+            value={description}
           />
         </Form.Group>
       </Modal.Body>
       <Modal.Footer className="border-0">
         <Button className="mg-0" variant="gu-pink" type="submit" onClick={send}>
-          Save
+          {company ? 'Edit' : 'Save'}
         </Button>
       </Modal.Footer>
     </Modal>
   );
 };
 
-export default AddCompany;
+export default AddEditCompany;
