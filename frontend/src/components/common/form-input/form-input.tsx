@@ -1,7 +1,7 @@
 import { ErrorMessage } from '@hookform/error-message';
 import { Form } from 'react-bootstrap';
 import { Control, useController } from 'react-hook-form';
-import styles from './styles.module.scss';
+import './styles.scss';
 
 interface Props {
   name: string,
@@ -21,7 +21,7 @@ const FormInput = ({ name, control, errors, type, placeholder }: Props): JSX.Ele
         type={type}
         placeholder={placeholder}
       />
-      <span className={styles.error}>
+      <span className="fs-6 text-gu-pink error">
         <ErrorMessage errors={errors} name={name} />
       </span>
     </>
