@@ -55,7 +55,10 @@
     "shared/**/*.{ts,tsx}": "npm run lint:shared"
   },
   "dependencies": {
+    "@types/multer": "^1.4.7",
     "axios": "^0.25.0",
+    "multer": "^1.4.4",
+    "react-avatar": "^4.0.0",
     "react-bootstrap-icons": "^1.7.2",
     "yup": "0.32.11"
   }

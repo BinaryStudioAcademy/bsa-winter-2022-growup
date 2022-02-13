@@ -1,5 +1,6 @@
 import AWS from 'aws-sdk';
-import { UploadedFile } from 'express-fileupload';
+// import { Express } from 'express';
+// import { UploadedFile } from 'express-fileupload';
 
 type Credentials = {
   secret: string;
@@ -8,7 +9,7 @@ type Credentials = {
 
 type UploadProps = Credentials & {
   bucketName: string;
-  file: UploadedFile;
+  file: Express.Multer.File;
 };
 
 type DeleteProps = Credentials & {
@@ -35,8 +36,9 @@ const uploadImage = ({
   return s3
     .upload({
       Bucket: bucketName,
-      Key: file.name,
-      Body: file.data,
+      Key: file.filename,
+      Body: file.buffer,
+      ACL: 'public-read',
     })
     .promise();
 };

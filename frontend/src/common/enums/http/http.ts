@@ -1,1 +1,1 @@
-export { HttpHeader, HttpMethod } from 'growup-shared/common/enums';
+export { HttpMethod, HttpHeader } from 'growup-shared/common/enums';

@@ -2,7 +2,7 @@ import cors from 'cors';
 import path from 'path';
 import express, { Express } from 'express';
 import { createConnection } from 'typeorm';
-import fileUpload from 'express-fileupload';
+// import fileUpload from 'express-fileupload';
 import * as swaggerUi from 'swagger-ui-express';
 
 import routes from '~/api/routes';
@@ -16,11 +16,12 @@ const { port } = env.app;
 
 const app: Express = express();
 
-app.use(
-  fileUpload({
-    createParentPath: true,
-  }),
-);
+// app.use(
+//   fileUpload({
+//     createParentPath: true,
+//     debug: true,
+//   }),
+// );
 app.use(cors());
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.json());

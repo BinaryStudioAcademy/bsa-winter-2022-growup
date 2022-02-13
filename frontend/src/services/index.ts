@@ -1,6 +1,7 @@
 import { ENV } from 'common/enums/enums';
 import { AuthApi } from './auth-api/auth-api.service';
 import { Http } from './http/http.service';
+import { ProfileApi } from './profile-api/profile-api.service';
 import { Storage } from './storage/storage.service';
 
 const storage = new Storage({
@@ -16,4 +17,12 @@ const auth = new AuthApi({
   http,
 });
 
-export { http, storage, auth };
+// eslint-disable-next-line
+console.log(ENV.API_PATH);
+
+const profile = new ProfileApi({
+  apiPath: ENV.API_PATH || '',
+  http,
+});
+
+export { http, storage, auth, profile };

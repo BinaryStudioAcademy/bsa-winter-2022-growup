@@ -1,4 +1,4 @@
-import { UploadedFile } from 'express-fileupload';
+// import { UploadedFile } from 'express-fileupload';
 import { getCustomRepository } from 'typeorm';
 
 import { RoleType, HttpCode, HttpError } from 'growup-shared';
@@ -98,9 +98,15 @@ export const registerUser = async (
   return getUserJWT(user);
 };
 
+export const fetchUser = async (id: User['id']): Promise<User> => {
+  const userRepository = getCustomRepository(UserRepository);
+  const user = await userRepository.findOne(id);
+  return user;
+};
+
 export const updateUserAvatar = async (
   id: User['id'],
-  file: UploadedFile,
+  file: Express.Multer.File,
 ): Promise<User> => {
   const userRepository = getCustomRepository(UserRepository);
 
@@ -118,10 +124,9 @@ export const updateUserAvatar = async (
     ...props,
     file: {
       ...file,
-      name: `${getCurrentTimeMS()}-${file.name}`,
+      filename: `${getCurrentTimeMS()}-${file.filename}`,
     },
   });
-  // console.log(avatar);
 
   user.avatar = avatar.Location;
 

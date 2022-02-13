@@ -1,5 +1,9 @@
 import { ContentType, HttpMethod } from 'common/enums/enums';
-import { IToken, IUserLoginForm, IUserSignUpForm } from 'common/interfaces/user';
+import {
+  IToken,
+  IUserLoginForm,
+  IUserSignUpForm,
+} from 'common/interfaces/user';
 import { Http } from 'services/http/http.service';
 
 interface IAuthApi {
@@ -17,6 +21,8 @@ class AuthApi {
   }
 
   loginUser(payload: IUserLoginForm): Promise<IToken> {
+    //eslint-disable-next-line
+    console.log(payload);
     return this._http.load(`${this._apiPath}/auth/login`, {
       method: HttpMethod.POST,
       contentType: ContentType.JSON,
