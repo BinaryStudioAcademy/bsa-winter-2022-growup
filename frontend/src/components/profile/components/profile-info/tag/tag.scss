@@ -1,0 +1,12 @@
+.tag {
+  padding: 1px 8px;
+  font-weight: 600;
+  line-height: 18px;
+  text-align: left;
+  border-radius: 20px;
+  margin: 5px 0;
+}
+
+.tag + .tag {
+  margin-left: 5px;
+}
