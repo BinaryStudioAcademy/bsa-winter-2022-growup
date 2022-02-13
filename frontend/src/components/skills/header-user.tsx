@@ -1,8 +1,5 @@
 import avatar from 'assets/img/profile-avatar.png';
 import '../profile/components/profile-info/header/header.scss';
-// interface ProfileTypes {
-//     name: string
-// }
 
 const ProfileHeader: React.FC = () => (
     <div className="header d-flex">
