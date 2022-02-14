@@ -17,7 +17,10 @@ const auth = new AuthApi({
   http,
 });
 
-const tags = new TagsApi(http);
+const tags = new TagsApi({
+  apiPath: ENV.API_PATH || '',
+  http,
+});
 
 export { tags as TagsApi };
 export { http, storage, auth, tags };

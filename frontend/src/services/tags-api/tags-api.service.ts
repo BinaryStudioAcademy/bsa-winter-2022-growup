@@ -4,18 +4,23 @@ import type { IHttp } from 'common/interfaces/http/http';
 import type { ITag } from 'common/interfaces/tag/tag';
 import type { TagCreation } from 'common/types/types';
 
-import { TagsApiRoutes } from './common';
+type Props = {
+  apiPath: string;
+  http: IHttp;
+};
 
 class TagsApi {
   private http: IHttp;
+  private apiPath: string;
 
-  constructor(http: IHttp) {
+  constructor({ apiPath, http }: Props) {
     this.http = http;
+    this.apiPath = apiPath;
   }
 
   public async fetchTags(): Promise<ITag[] | null> {
     try {
-      const result = await this.http.load(TagsApiRoutes.FETCH_TAGS, {
+      const result = await this.http.load(`${this.apiPath}/company/tags`, {
         contentType: ContentType.JSON,
       });
       return result as ITag[];
@@ -28,7 +33,7 @@ class TagsApi {
     tagsPayload: TagCreation['name'][],
   ): Promise<ITag[] | null> {
     try {
-      const result = await this.http.load(TagsApiRoutes.FETCH_TAGS, {
+      const result = await this.http.load(`${this.apiPath}/company/tags`, {
         contentType: ContentType.JSON,
         method: HttpMethod.POST,
         hasAuth: true,
@@ -46,7 +51,7 @@ class TagsApi {
   public async deleteTag(tagId: ITag['id']): Promise<unknown> {
     try {
       const result = await this.http.load(
-        `${TagsApiRoutes.$DELETE_TAG}${tagId}`,
+        `${this.apiPath}/company/tags/${tagId}`,
         {
           contentType: ContentType.JSON,
           method: HttpMethod.DELETE,
