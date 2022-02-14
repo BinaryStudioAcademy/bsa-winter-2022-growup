@@ -1,3 +1,5 @@
+@import 'assets/css/styles';
+
 .profile-info {
   display: grid;
   grid-template-areas:
@@ -27,12 +29,7 @@
   grid-area: p-main;
 }
 
-@media screen and (max-width: 1200px) {
-  .header-wrapper,
-  .main-wrapper {
-    padding: 0;
-  }
-
+@include media-breakpoint-down(xl) {
   .profile-info {
     grid-template-areas:
     "p-tabs"
