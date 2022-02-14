@@ -1,4 +1,4 @@
-export interface userTypes {
+export interface IUser {
     id: number,
     email: string,
     password: number,
@@ -9,7 +9,7 @@ export interface userTypes {
     domenLevelId: number
 }
 
-export interface okrTypes {
+export interface IOkr {
     id: number,
     name: string,
     startDate: string,
@@ -17,7 +17,7 @@ export interface okrTypes {
     userId: number
 }
 
-export interface objectiveTypes {
+export interface IObjective {
     id: number,
     name: string,
     skillObjectiveId: number,
@@ -25,7 +25,7 @@ export interface objectiveTypes {
     result: number
 }
 
-export interface keyResultTypes {
+export interface IKeyResult {
     id: number,
     name: string,
     ObjectiveId: number

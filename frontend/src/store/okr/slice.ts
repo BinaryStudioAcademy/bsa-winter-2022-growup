@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ReducerName } from 'common/enums/app/reducer-name.enum';
-import { userTypes, okrTypes, objectiveTypes, keyResultTypes } from '../common/interfaces';
+import { IUser, IOkr, IObjective, IKeyResult } from '../common/interfaces';
 
 type State = {
-    User: userTypes,
-    OKR: okrTypes[],
-    Objective: objectiveTypes[],
-    KeyResult: keyResultTypes[],
+    User: IUser,
+    OKR: IOkr[],
+    Objective: IObjective[],
+    KeyResult: IKeyResult[],
 };
 
 const initialState: State = {
@@ -15,7 +15,7 @@ const initialState: State = {
         email: 'rui@gmail.com',
         password: 123,
         firstname: 'Rui',
-        lastname: 'Nats',
+        lastname: 'Tachibana',
         companyId: 0,
         mentorId: 0,
         domenLevelId: 0,
@@ -23,42 +23,42 @@ const initialState: State = {
     OKR: [
         {
             id: 1,
-            name: 'QWER1',
+            name: 'Q1',
             startDate: `${new Date().getDate()}th ${new Date().getMonth()} ${new Date().getFullYear()}`,
             endDate: `${new Date().getDate()}th ${new Date().getMonth()} ${new Date().getFullYear()}`,
             userId: 1,
         },
         {
             id: 2,
-            name: 'QWER643',
+            name: 'Q2',
             startDate: `${new Date().getDate()}th ${new Date().getMonth()} ${new Date().getFullYear()}`,
             endDate: `${new Date().getDate()}th ${new Date().getMonth()} ${new Date().getFullYear()}`,
             userId: 2,
         },
         {
             id: 3,
-            name: 'QWER97',
+            name: 'Q3',
             startDate: `${new Date().getDate()}th ${new Date().getMonth()} ${new Date().getFullYear()}`,
             endDate: `${new Date().getDate()}th ${new Date().getMonth()} ${new Date().getFullYear()}`,
             userId: 1,
         },
         {
             id: 4,
-            name: 'QWER129',
+            name: 'Q4',
             startDate: `${new Date().getDate()}th ${new Date().getMonth()} ${new Date().getFullYear()}`,
             endDate: `${new Date().getDate()}th ${new Date().getMonth()} ${new Date().getFullYear()}`,
             userId: 1,
         },
         {
             id: 5,
-            name: 'QWER411',
+            name: 'Q5',
             startDate: `${new Date().getDate()}th ${new Date().getMonth()} ${new Date().getFullYear()}`,
             endDate: `${new Date().getDate()}th ${new Date().getMonth()} ${new Date().getFullYear()}`,
             userId: 2,
         },
         {
             id: 6,
-            name: 'QWER116',
+            name: 'Q6',
             startDate: `${new Date().getDate()}th ${new Date().getMonth()} ${new Date().getFullYear()}`,
             endDate: `${new Date().getDate()}th ${new Date().getMonth()} ${new Date().getFullYear()}`,
             userId: 1,

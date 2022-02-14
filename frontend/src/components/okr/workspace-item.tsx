@@ -1,4 +1,4 @@
-import '../../styles.scss';
+import './styles.scss';
 import calendar from 'assets/img/okr-items/calendar-orange.png';
 import pencil from 'assets/img/okr-items/pencil.png';
 

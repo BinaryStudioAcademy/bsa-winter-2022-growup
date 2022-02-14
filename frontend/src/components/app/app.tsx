@@ -4,7 +4,7 @@ import { AppRoute } from 'common/enums/enums';
 import Login from 'components/login/login';
 import SignUp from 'components/sign-up/sign-up';
 import { Route, Routes } from 'components/common/common';
-import Ork from 'components/okrs/okrs';
+import Ork from 'components/okr/okrs';
 import Profile from 'components/profile/profile';
 import { NotFound } from 'components/not-found';
 import Admin from 'components/admin/admin';
@@ -12,7 +12,7 @@ import Header from 'components/header/header';
 import Sidebar from 'components/sidebar/sidebar';
 import Main_Page from 'components/main-page/main-page';
 import './app.scss';
-import ControlledTabs from 'components/okrs/components/tabs-okr/two-tabs';
+import ControlledTabs from 'components/okr/two-tabs';
 
 const App: React.FC = () => {
   const isAdmin = false;
