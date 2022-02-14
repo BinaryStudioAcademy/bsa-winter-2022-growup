@@ -11,6 +11,7 @@ import Admin from 'components/admin/admin';
 import Header from 'components/header/header';
 import Sidebar from 'components/sidebar/sidebar';
 import Main_Page from 'components/main-page/main-page';
+import SkillOverview from 'components/skills/skill-overview';
 import './app.scss';
 
 const App: React.FC = () => {
@@ -68,6 +69,7 @@ const App: React.FC = () => {
           </main>
         )}
       </div>
+      <SkillOverview/>
     </div>
   );
 };

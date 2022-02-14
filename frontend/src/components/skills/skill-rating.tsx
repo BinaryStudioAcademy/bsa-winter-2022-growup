@@ -9,8 +9,8 @@ const SkillElement: React.FC<SkillTypes> = (props) => (
         <tr>
             <td className="align-middle">{props.name} <img alt="star" src={star}/></td>
             <td className="skill-rating text-center"><strong>
-                <div className="conteiner-proggres-bar">
-                    <div className="b-progress-bar">
+                <div className="container-progress-bar">
+                    <div className="b-progress-bar position-relative text-center overflow-hidden">
                         <ProgressActive/>
                         <ProgressActive/>
                         <ProgressActive/>
@@ -19,12 +19,12 @@ const SkillElement: React.FC<SkillTypes> = (props) => (
                         <ProgressPassive/>
                         <ProgressPassive/>
                         <ProgressPassive/>
-                        <span className="fs-4">5</span>
+                        <span className="fs-4 d-inline-block align-middle position-absolute fw-bold">5</span>
                     </div></div>
                 </strong></td>
             <td className="skill-rating text-center"><strong>
-            <div className="conteiner-proggres-bar">
-                    <div className="b-progress-bar">
+            <div className="container-progress-bar">
+                    <div className="b-progress-bar position-relative text-center overflow-hidden">
                         <ProgressActive/>
                         <ProgressActive/>
                         <ProgressPassive/>
@@ -33,12 +33,12 @@ const SkillElement: React.FC<SkillTypes> = (props) => (
                         <ProgressPassive/>
                         <ProgressPassive/>
                         <ProgressPassive/>
-                    <span className="fs-4">2</span>
+                    <span className="fs-4 d-inline-block align-middle position-absolute fw-bold">2</span>
                     </div></div>
                 </strong></td>
             <td className="skill-rating text-center"><strong>
-            <div className="conteiner-proggres-bar">
-                    <div className="b-progress-bar">
+            <div className="container-progress-bar">
+                    <div className="b-progress-bar position-relative text-center overflow-hidden">
                         <ProgressPassive/>
                         <ProgressPassive/>
                         <ProgressPassive/>
@@ -47,7 +47,7 @@ const SkillElement: React.FC<SkillTypes> = (props) => (
                         <ProgressPassive/>
                         <ProgressPassive/>
                         <ProgressPassive/>
-<span className="fs-4 text-gu-blue">+</span>
+<span className="fs-4 text-gu-blue d-inline-block align-middle position-absolute fw-bold">+</span>
                     </div></div>
                 </strong></td>
         </tr>

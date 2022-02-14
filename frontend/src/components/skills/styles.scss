@@ -1,4 +1,4 @@
-.conteiner-proggres-bar{
+.container-progress-bar{
     max-width: 50px;
     min-height: 50px;
     margin: 0 auto;
@@ -7,27 +7,18 @@
 .b-progress-bar{
     width: 50px;
     height: 50px;
-    position: relative;
-    overflow: hidden;
     border-radius: 50%;
-    text-align: center;
 }
 
 .b-progress-bar span{
-    display: inline-block;
-    vertical-align: middle;
     background-color: #f6f7f9;
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    position: absolute;
     top:50%;
     left: 50%;
     transform:translate(-50%,-50%);
-    font-size: 0.4rem;
     line-height: 2.5;
-    color: black;
-    font-weight: bold;
 }
 
 .b-progress-bar div{

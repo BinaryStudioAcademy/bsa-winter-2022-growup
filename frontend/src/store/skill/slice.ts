@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ReducerName } from 'common/enums/app/reducer-name.enum';
+import { ISkill } from './common/interfaces';
 
 type State = {
-    UserSkill: any;
+    UserSkill: ISkill[];
 };
 
 const initialState: State = {
