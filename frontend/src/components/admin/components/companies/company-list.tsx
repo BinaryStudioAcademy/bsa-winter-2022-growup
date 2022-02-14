@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { Card } from 'react-bootstrap';
 import type { ICompany } from 'common/interfaces/company/company';
 import AddEditCompany from './addedit-company';
+
 import CompanyCard from './company-card';
 
 type PropTypes = {
   companyList: ICompany[];
 };
 
-const Company: React.FC<PropTypes> = ({ companyList }) => {
+const CompanyList: React.FC<PropTypes> = ({ companyList }) => {
   const [show, setShow] = useState(false);
 
   const handleClose = (): void => setShow(false);
@@ -41,4 +42,4 @@ const Company: React.FC<PropTypes> = ({ companyList }) => {
   );
 };
 
-export default Company;
+export default CompanyList;

@@ -14,7 +14,7 @@ import Main_Page from 'components/main-page/main-page';
 import './app.scss';
 
 const App: React.FC = () => {
-  const isAdmin = false;
+  const isAdmin = true;
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   return (
@@ -27,20 +27,22 @@ const App: React.FC = () => {
       )}
       <div className="d-flex">
         {isAdmin ? (
-          <Routes>
-            <Route
-              path={AppRoute.ADMIN}
-              element={<Admin variant="company" />}
-            />
-            <Route
-              path={AppRoute.ADMIN_USERS}
-              element={<Admin variant="users" />}
-            />
-            <Route
-              path={AppRoute.ADMIN_CAREER_PATH}
-              element={<Admin variant="career" />}
-            />
-          </Routes>
+          <div className="w-100">
+            <Routes>
+              <Route
+                path={AppRoute.ADMIN}
+                element={<Admin variant="company" />}
+              />
+              <Route
+                path={AppRoute.ADMIN_USERS}
+                element={<Admin variant="users" />}
+              />
+              <Route
+                path={AppRoute.ADMIN_CAREER_PATH}
+                element={<Admin variant="career" />}
+              />
+            </Routes>
+          </div>
         ) : (
           <main className="main-container w-100 px-5 pt-3 pb-5">
             <Routes>

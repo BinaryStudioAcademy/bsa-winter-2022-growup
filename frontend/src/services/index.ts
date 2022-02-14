@@ -2,6 +2,7 @@ import { ENV } from 'common/enums/enums';
 import { AuthApi } from './auth-api/auth-api.service';
 import { CompanyApi } from './company-api';
 import { Http } from './http/http.service';
+import { TagsApi } from './tags-api/tags-api.service';
 import { Storage } from './storage/storage.service';
 
 const storage = new Storage({
@@ -20,3 +21,10 @@ const auth = new AuthApi({
 const company = new CompanyApi({ http });
 
 export { http, storage, auth, company };
+
+const tags = new TagsApi({
+  apiPath: ENV.API_PATH || '',
+  http,
+});
+
+export { tags as TagsApi };
