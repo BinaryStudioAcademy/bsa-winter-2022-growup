@@ -14,11 +14,9 @@ const Ork: React.FC = () => <>
 <div className="tab-container" id="nav-tabContent">
     <div className="tab-pane fade show active p-3" id="nav-my" role="tabpanel"
     aria-labelledby="nav-my-tab">
-            <h2>asfasg</h2>
     </div>
     <div className="tab-pane fade active p-3" id="nav-all" role="tabpanel"
     aria-labelledby="nav-all-tab">
-            <h2>Gaadsas</h2>
     </div>
 </div>
 </div>
