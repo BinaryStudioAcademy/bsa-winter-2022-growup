@@ -1,10 +1,11 @@
+import { Control, useForm, UseFormHandleSubmit } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
 import * as Joi from 'joi';
-import { Control, useForm, UseFormHandleSubmit } from 'react-hook-form';
 
 interface IUseAppForm {
-  control: Control<object, object>;
+  control: Control<object>;
   errors: object;
+  isValid: boolean;
   handleSubmit: UseFormHandleSubmit<object>;
 }
 
@@ -16,7 +17,7 @@ interface IUseAppFormProps {
 const useAppForm = ({ defaultValues, validationSchema }: IUseAppFormProps): IUseAppForm => {
   const {
     control,
-    formState: { errors },
+    formState: { errors, isValid },
     handleSubmit,
   } = useForm({
     defaultValues,
@@ -26,6 +27,7 @@ const useAppForm = ({ defaultValues, validationSchema }: IUseAppFormProps): IUse
   return {
     control,
     errors,
+    isValid,
     handleSubmit,
   };
 };
