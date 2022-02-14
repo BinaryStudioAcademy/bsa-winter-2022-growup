@@ -98,10 +98,14 @@ export const registerUser = async (
   return getUserJWT(user);
 };
 
-export const fetchUser = async (id: User['id']): Promise<User> => {
+export const fetchUser = async (
+  id: User['id'],
+): Promise<Omit<User, 'password'>> => {
   const userRepository = getCustomRepository(UserRepository);
-  const user = await userRepository.findOne(id);
-  return user;
+
+  // eslint-disable-next-line
+  const { password, ...user } = await userRepository.findOne(id);
+  return user as User;
 };
 
 export const updateUserAvatar = async (

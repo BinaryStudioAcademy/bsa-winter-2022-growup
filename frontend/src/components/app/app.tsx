@@ -14,7 +14,7 @@ import Main_Page from 'components/main-page/main-page';
 import './app.scss';
 
 const App: React.FC = () => {
-  const isAdmin = true;
+  const isAdmin = false;
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   return (
