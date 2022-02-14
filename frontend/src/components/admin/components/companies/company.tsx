@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Card } from 'react-bootstrap';
 import type { ICompany } from 'common/interfaces/company/company';
-import AddEditCompany from './add-edit-Company';
+import AddEditCompany from './addedit-Company';
 import CompanyCard from './company-card';
 
 type PropTypes = {

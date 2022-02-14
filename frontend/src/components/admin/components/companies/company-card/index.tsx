@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { Button, Card } from 'react-bootstrap';
 import { ICompany } from 'common/interfaces/company/company';
-import AddEditCompany from '../add-edit-Company';
+import AddEditCompany from '../addedit-Company';
 
 import './styles.scss';
 
