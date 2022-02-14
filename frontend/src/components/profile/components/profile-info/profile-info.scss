@@ -4,7 +4,6 @@
   "p-header"
   "p-tabs"
   "p-main";
-  padding-top: 16px;
   background-color: #F6F7F9;
 }
 
@@ -28,7 +27,7 @@
   grid-area: p-main;
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 1200px) {
   .header-wrapper,
   .main-wrapper {
     padding: 0;
@@ -43,5 +42,9 @@
 
   .profile-container {
     padding: 0;
+  }
+
+  .profile-container_tabs {
+    margin-bottom: 13px;
   }
 }
