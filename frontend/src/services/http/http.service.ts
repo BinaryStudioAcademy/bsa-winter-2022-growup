@@ -1,17 +1,35 @@
-import { HttpError } from 'exceptions/exceptions';
+import { StorageKey } from 'common/enums/app/storage-key.enum';
 import { ContentType, HttpHeader, HttpMethod } from 'common/enums/enums';
 import { HttpOptions } from 'common/types/types';
+import { HttpError } from 'exceptions/exceptions';
+import { stringify } from 'query-string';
+import { Storage } from 'services/storage/storage.service';
+
+interface IResponse {
+  success: string;
+  message: string;
+}
 
 class Http {
-  public async load<T = unknown>(
-    url: string,
-    options: Partial<HttpOptions> = {},
-  ): Promise<T> {
-    try {
-      const { method = HttpMethod.GET, payload = null, contentType } = options;
-      const headers = this.getHeaders(contentType);
+  private _storage: Storage;
 
-      const response = await fetch(url, {
+  constructor({ storage }: { storage: Storage }) {
+    this._storage = storage;
+  }
+
+  public async load<T>(url: string, options: HttpOptions): Promise<T> {
+    try {
+      const {
+        method = HttpMethod.GET,
+        payload = null,
+        hasAuth = true,
+        contentType,
+        query,
+      } = options;
+
+      const headers = this.getHeaders(hasAuth, contentType);
+
+      const response = await fetch(this.getUrl(url, query), {
         method,
         headers,
         body: payload,
@@ -24,19 +42,30 @@ class Http {
     }
   }
 
-  private getHeaders(contentType?: ContentType): Headers {
+  private getUrl(url: string, query?: object): string {
+    return `${url}${query ? `?${stringify(query)}` : ''}`;
+  }
+
+  private getHeaders(hasAuth?: boolean, contentType?: ContentType): Headers {
     const headers = new Headers();
 
     if (contentType) {
       headers.append(HttpHeader.CONTENT_TYPE, contentType);
     }
 
+    if (hasAuth) {
+      const token = this._storage.getItem(StorageKey.TOKEN);
+      headers.append(HttpHeader.AUTHORIZATION, `Bearer ${token}`);
+    }
+
     return headers;
   }
 
-  private checkStatus(response: Response): Response {
+  private async checkStatus(response: Response): Promise<Response> {
     if (!response.ok) {
+      const responseJson: IResponse = await this.parseJSON(response);
       throw new HttpError({
+        message: responseJson.message,
         status: response.status,
       });
     }

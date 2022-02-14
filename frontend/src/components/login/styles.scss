@@ -1,0 +1,40 @@
+.auth-form {
+  max-width: 500px;
+  padding: 0 40px;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.auth-form__checkbox-container {
+  display: flex;
+  align-items: baseline;
+}
+
+.auth-form__btn-link {
+  margin-left: auto;
+}
+
+.auth-form__link {
+  text-decoration: auto;
+}
+
+.auth-form__link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 360px) {
+  .auth-form {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 280px) {
+  .auth-form__checkbox-container {
+    display: table;
+  }
+  .auth-form__btn-link {
+    margin-top: 10px;
+  }
+}
