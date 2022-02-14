@@ -22,8 +22,6 @@ const updateAvatar = createAsyncThunk(
       const result = await profile.updateAvatar(data);
       return result;
     } catch (err) {
-      // eslint-disable-next-line
-      console.log(err);
       return rejectWithValue(err);
     }
   },

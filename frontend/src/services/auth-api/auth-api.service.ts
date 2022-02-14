@@ -21,8 +21,6 @@ class AuthApi {
   }
 
   loginUser(payload: IUserLoginForm): Promise<IToken> {
-    //eslint-disable-next-line
-    console.log(payload);
     return this._http.load(`${this._apiPath}/auth/login`, {
       method: HttpMethod.POST,
       contentType: ContentType.JSON,

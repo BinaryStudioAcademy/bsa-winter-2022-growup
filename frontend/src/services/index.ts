@@ -17,9 +17,6 @@ const auth = new AuthApi({
   http,
 });
 
-// eslint-disable-next-line
-console.log(ENV.API_PATH);
-
 const profile = new ProfileApi({
   apiPath: ENV.API_PATH || '',
   http,
