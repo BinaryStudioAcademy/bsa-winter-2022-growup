@@ -1,5 +1,6 @@
 import { Request } from 'express';
 import { Company } from '../data/entities/company';
+import { HttpCode, HttpError } from 'growup-shared';
 
 export const createCompany = async (data: Request): Promise<Company> => {
   const { name } = data.body;
@@ -14,10 +15,16 @@ export const createCompany = async (data: Request): Promise<Company> => {
       await Company.save(newCompany);
       return Promise.resolve(newCompany);
     }
-    throw Error('Company name is exist!!!');
+    throw new HttpError({
+      status: HttpCode.BAD_REQUEST,
+      message: 'Company name is exist!!!',
+    });
   }
 
-  throw Error('Company name is udefined!!!');
+  throw new HttpError({
+    status: HttpCode.BAD_REQUEST,
+    message: 'Company name is udefined!!!',
+  });
 };
 
 export const editCompany = async (data: Request): Promise<Company> => {
@@ -33,8 +40,15 @@ export const editCompany = async (data: Request): Promise<Company> => {
 
       return Promise.resolve(newCompany);
     }
-    throw Error('Company not found!!!');
+
+    throw new HttpError({
+      status: HttpCode.NOT_FOUND,
+      message: 'Company not found!!!',
+    });
   }
 
-  throw Error('Company id is udefined!!!');
+  throw new HttpError({
+    status: HttpCode.BAD_REQUEST,
+    message: 'Company id is udefined!!!',
+  });
 };
