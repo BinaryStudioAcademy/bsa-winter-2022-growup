@@ -1,5 +1,6 @@
 import { ENV } from 'common/enums/enums';
 import { AuthApi } from './auth-api/auth-api.service';
+import { CompanyApi } from './company-api';
 import { Http } from './http/http.service';
 import { Storage } from './storage/storage.service';
 
@@ -16,4 +17,6 @@ const auth = new AuthApi({
   http,
 });
 
-export { http, storage, auth };
+const company = new CompanyApi({ http });
+
+export { http, storage, auth, company };

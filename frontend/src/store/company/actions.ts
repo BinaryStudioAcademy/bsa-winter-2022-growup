@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { actions } from './slice';
 import { ActionType } from './common';
 import { ICompany } from 'common/interfaces/company/company';
-import { companyApi } from 'services/company-api';
+import { company as companyApi } from 'services';
 
 const add_companyAsync = createAsyncThunk(
   ActionType.ADD_COMPANY,
