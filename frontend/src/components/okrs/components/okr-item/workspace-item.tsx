@@ -11,11 +11,11 @@ interface PropTypes {
 }
 
 const OrkItem: React.FC<PropTypes> = (props) => (
-<div className="okr-container bg-white">
+<div className="okr-container bg-white ms-3 mb-3 py-2 px-3">
     <div className="OKR-name fs-2 mt-2 fw-bold">
       {props.name}
     </div>
-    <div className="reached fs-5 fw-bold">
+    <div className="reached fs-5 fw-bold align-bottom text-end">
       0.85
     </div>
     <div className="objectives fs-6 mb-4 fw-bold">

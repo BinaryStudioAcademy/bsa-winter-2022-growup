@@ -12,6 +12,7 @@ import Header from 'components/header/header';
 import Sidebar from 'components/sidebar/sidebar';
 import Main_Page from 'components/main-page/main-page';
 import './app.scss';
+import ControlledTabs from 'components/okrs/components/tabs-okr/two-tabs';
 
 const App: React.FC = () => {
   const isAdmin = false;
@@ -68,6 +69,7 @@ const App: React.FC = () => {
           </main>
         )}
       </div>
+      <ControlledTabs/>
     </div>
   );
 };

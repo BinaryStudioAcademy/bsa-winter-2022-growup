@@ -1,16 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ReducerName } from 'common/enums/app/reducer-name.enum';
+import { userTypes, okrTypes, objectiveTypes, keyResultTypes } from '../common/interfaces';
 
 type State = {
-    User: any,
-    // {id: number, email:string, password: number, firstname:string, lastname:string,
-    // companyId: number, mentorId: number, domenLevelId: number},
-    OKR: any,
-    // {id: number, name:string, startDate:string, endDate:string, userId:number}[],
-    Objective: any,
-    // {id: number, name:string, skillObjectiveId:number, okrId:number, result:number}[],
-    KeyResult: any,
-    // {id: number, name:string, ObjectiveId:number}[]
+    User: userTypes,
+    OKR: okrTypes[],
+    Objective: objectiveTypes[],
+    KeyResult: keyResultTypes[],
 };
 
 const initialState: State = {
