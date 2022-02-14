@@ -1,10 +1,9 @@
-import { NextFunction, Response } from 'express';
+import { NextFunction, Response, Request } from 'express';
 import { HttpCode, HttpError, RoleType } from 'growup-shared';
 import * as yup from 'yup';
-import { IRequest } from '~/common/models/middlewares/request';
 
-const validatePermissions = (allowedRoles: Array<RoleType>): ((request: IRequest, response: Response, next: NextFunction) => void) => {
-  return (request: IRequest, _response: Response, next: NextFunction) => {
+const validatePermissions = (allowedRoles: Array<RoleType>): ((request: Request, response: Response, next: NextFunction) => void) => {
+  return (request: Request, _response: Response, next: NextFunction) => {
     const userRole = request.userRole;
     if (!allowedRoles.includes(userRole)) {
       throw new HttpError({
@@ -16,8 +15,8 @@ const validatePermissions = (allowedRoles: Array<RoleType>): ((request: IRequest
   };
 };
 
-const validateBody = (schema: yup.BaseSchema): ((request: IRequest, response: Response, next: NextFunction) => void) => {
-  return async (request: IRequest, _response: Response, next: NextFunction) => {
+const validateBody = (schema: yup.BaseSchema): ((request: Request, response: Response, next: NextFunction) => void) => {
+  return async (request: Request, _response: Response, next: NextFunction) => {
     try {
       request.body = await schema.validate(request.body);
     } catch (error: unknown) {
