@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { useAppSelector, useEffect, useAppDispatch } from 'hooks/hooks';
 import { adminActions } from 'store/actions';
 
-import Company from './company';
+import Company from './company-item';
 import Tags from './tags/tags';
 
 const Companies: React.FC = () => {
