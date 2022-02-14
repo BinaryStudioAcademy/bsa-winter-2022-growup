@@ -1,0 +1,22 @@
+.company_card {
+  height: inherit;
+
+  .card_header {
+    display: flex;
+
+    .card_header_left {
+      width: 100%;
+      display: flex;
+      align-items: center;
+
+      .card-img {
+        height: 50px;
+        width: 50px;
+      }
+
+      .card-title {
+        margin-left: 10px;
+      }
+    }
+  }
+}
