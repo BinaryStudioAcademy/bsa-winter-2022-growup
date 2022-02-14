@@ -10,7 +10,7 @@ const initialState: State = {
 };
 
 const { reducer, actions } = createSlice({
-  name: ReducerName.AUTH,
+  name: ReducerName.ADMIN,
   initialState,
   reducers: {},
   extraReducers: adminReducer,

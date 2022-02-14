@@ -1,5 +1,5 @@
 import { FormEvent } from 'react';
-import { useDispatch, useTagList } from 'hooks/hooks';
+import { useAppDispatch, useTagList } from 'hooks/hooks';
 import { adminActions } from 'store/actions';
 
 import { Modal } from 'components/common/common';
@@ -13,10 +13,9 @@ type PropTypes = {
 };
 
 const TagModal: React.FC<PropTypes> = ({ show, onClose }) => {
-  // const { tags } = useSelector((state) => state.admin);
   const { list: tagList, addItem, deleteItem, clearItems } = useTagList();
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const clickHandler = (e: FormEvent): void => {
     e.preventDefault();

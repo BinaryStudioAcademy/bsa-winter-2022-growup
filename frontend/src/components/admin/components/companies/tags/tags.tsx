@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { useState, useCallback, useDispatch } from 'hooks/hooks';
+import { useState, useCallback, useAppDispatch } from 'hooks/hooks';
 import { Card } from 'react-bootstrap';
 import type { ITag } from 'common/interfaces/tag/tag';
 
@@ -14,7 +14,7 @@ type PropTypes = {
 
 const Tags: React.FC<PropTypes> = ({ tagList }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const hideModal = useCallback(() => {
     setIsModalVisible(false);

@@ -9,16 +9,16 @@
     "npm": ">=8 <9"
   },
   "scripts": {
-    "start": "node -r tsconfig-paths/register ./server.js",
+    "start": "node -r tsconfig-paths/register ./src/server.js",
     "start:dev": "nodemon --exec ts-node --files -r tsconfig-paths/register ./src/server.ts",
     "lint": "npx eslint \"./src/**/*.ts\" --fix",
     "typeorm": "ts-node node_modules/typeorm/cli.js",
     "add-migration": "ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:generate -n",
     "migrate": "ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:run",
     "migration-revert": "ts-node node_modules/typeorm/cli.js migration:revert",
-    "generate-seed": "ts-node node_modules/typeorm/cli.js migration:create -d ./src/data/seeders -n",
+    "generate-seed": "ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:create -d ./src/data/seeders -n",
     "seed": "ts-node -r tsconfig-paths/register ./src/data/seeders",
-    "build:ts": "tsc && tscpaths -p tsconfig.json --src . --out build",
+    "build:ts": "tsc && tscpaths -p tsconfig.json --src ./src --out ./build/src",
     "build:copy": "cp -r public package.json package-lock.json build",
     "build": "npm run build:ts && npm run build:copy",
     "prod": "node --max-old-space-size=1024 -r tsconfig-paths/register ./src/server.ts"

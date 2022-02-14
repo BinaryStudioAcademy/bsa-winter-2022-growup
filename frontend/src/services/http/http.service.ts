@@ -1,19 +1,35 @@
-import { HttpError } from 'exceptions/exceptions';
+import { StorageKey } from 'common/enums/app/storage-key.enum';
 import { ContentType, HttpHeader, HttpMethod } from 'common/enums/enums';
 import { HttpOptions } from 'common/types/types';
+import { HttpError } from 'exceptions/exceptions';
+import { stringify } from 'query-string';
+import { Storage } from 'services/storage/storage.service';
 
-import { IHttp } from 'common/interfaces/http/http';
+interface IResponse {
+  success: string;
+  message: string;
+}
 
-class Http implements IHttp {
-  public async load<T = unknown>(
-    url: string,
-    options: Partial<HttpOptions> = {},
-  ): Promise<T> {
+class Http {
+  private _storage: Storage;
+
+  constructor({ storage }: { storage: Storage }) {
+    this._storage = storage;
+  }
+
+  public async load<T>(url: string, options: HttpOptions): Promise<T> {
     try {
-      const { method = HttpMethod.GET, payload = null, contentType } = options;
-      const headers = this.getHeaders(contentType);
+      const {
+        method = HttpMethod.GET,
+        payload = null,
+        hasAuth = true,
+        contentType,
+        query,
+      } = options;
 
-      const response = await fetch(url, {
+      const headers = this.getHeaders(hasAuth, contentType);
+
+      const response = await fetch(this.getUrl(url, query), {
         method,
         headers,
         body: payload,
@@ -26,23 +42,30 @@ class Http implements IHttp {
     }
   }
 
-  private getHeaders(contentType?: ContentType): Headers {
+  private getUrl(url: string, query?: object): string {
+    return `${url}${query ? `?${stringify(query)}` : ''}`;
+  }
+
+  private getHeaders(hasAuth?: boolean, contentType?: ContentType): Headers {
     const headers = new Headers();
 
     if (contentType) {
       headers.append(HttpHeader.CONTENT_TYPE, contentType);
-      headers.append(
-        'Authorization',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyNDBhMjY5Yi1iY2NiLTQ2ZWUtYTI0Mi1iMDUxMDVkNDhmMTkiLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE2NDQ1Njk2MTMsImV4cCI6MTY0NDY1NjAxM30.Wy40ga9XUkwvinXv8KnVWqdmX4qq8vpFzMFU7BUrtyY',
-      );
+    }
+
+    if (hasAuth) {
+      const token = this._storage.getItem(StorageKey.TOKEN);
+      headers.append(HttpHeader.AUTHORIZATION, token);
     }
 
     return headers;
   }
 
-  private checkStatus(response: Response): Response {
+  private async checkStatus(response: Response): Promise<Response> {
     if (!response.ok) {
+      const responseJson: IResponse = await this.parseJSON(response);
       throw new HttpError({
+        message: responseJson.message,
         status: response.status,
       });
     }

@@ -1,13 +1,13 @@
 import { memo } from 'react';
-import { useSelector, useEffect, useDispatch } from 'hooks/hooks';
+import { useAppSelector, useEffect, useAppDispatch } from 'hooks/hooks';
 import { adminActions } from 'store/actions';
 
 import Company from './company';
 import Tags from './tags/tags';
 
 const Companies: React.FC = () => {
-  const { tags } = useSelector((state) => state.admin);
-  const dispatch = useDispatch();
+  const { tags } = useAppSelector((state) => state.admin);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(adminActions.fetchTags());

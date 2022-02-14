@@ -1,0 +1,31 @@
+@import 'assets/css/styles';
+
+.quiz {
+  margin: 20px 0;
+  text-align: center;
+
+  &__title {
+    font-weight: 700;
+  }
+
+  .range {
+    gap: 15px;
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .range {
+    width: 80%;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .range {
+
+    &__end-title, &__start-title{
+      display: none;
+    }
+  }
+}

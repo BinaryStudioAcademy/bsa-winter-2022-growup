@@ -1,0 +1,23 @@
+.card-not-found {
+  height: 100vh;
+
+  .card-body {
+    .card-title {
+      color: var(--bs-gray-700);
+      font-size: 15rem;
+      font-weight: 500;
+      line-height: 1.2;
+      font-family: fantasy;
+    }
+
+    .card-text {
+      color: var(--bs-gray-800);
+      font-weight: 500;
+      line-height: 1.2;
+    }
+
+    .card-text.text2 {
+      font-weight: 400;
+    }
+  }
+}

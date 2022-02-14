@@ -31,6 +31,7 @@ class TagsApi {
       const result = await this.http.load(TagsApiRoutes.FETCH_TAGS, {
         contentType: ContentType.JSON,
         method: HttpMethod.POST,
+        hasAuth: true,
         payload: JSON.stringify({
           tags: tagsPayload,
         }),
@@ -49,6 +50,7 @@ class TagsApi {
         {
           contentType: ContentType.JSON,
           method: HttpMethod.DELETE,
+          hasAuth: true,
         },
       );
 

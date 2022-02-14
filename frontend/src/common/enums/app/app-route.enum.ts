@@ -1,5 +1,4 @@
 enum AppRoute {
-  ROOT = '/',
   ADMIN = '/',
   ADMIN_USERS = '/users',
   ADMIN_CAREER_PATH = '/career-path',
@@ -8,6 +7,13 @@ enum AppRoute {
   ORKS = '/ork',
   PAGES = '/pages',
   SETTINGS_PROFILE = '/settings/profile',
+  HOME = '/',
+  PROFILE ='/profile',
+  CAREER_PATH = '/career-path',
+  OKR = '/okr',
+  OPPORTUNITIES = '/opportunities',
+  MENTEE_PROFILES = '/mentee',
+  EXPLORE ='/explore',
 }
 
 export { AppRoute };

@@ -1,1 +1,1 @@
-export const whitelist: string[] = ['/api/auth/register', '/api/auth/login'];
+export const whitelist: string[] = ['/auth/login', '/auth/register'];
