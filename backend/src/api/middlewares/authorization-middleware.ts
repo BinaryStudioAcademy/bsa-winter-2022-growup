@@ -5,29 +5,34 @@ import { verify } from 'jsonwebtoken';
 import { HttpCode, HttpError } from 'growup-shared';
 import { whitelist } from '~/config/whitelist';
 
-const verifyToken = (request: Request, _response: Response, next: NextFunction): void => {
-    if (whitelist.includes(request.path)) {
-        next();
-    } else {
-        const token = request.headers.authorization;
-        if (!token) {
-            throw new HttpError({
-                status: HttpCode.UNAUTHORIZED,
-                message: 'Required Authorization header not found',
-            });
-        }
-        try {
-            const tokenPayload = <ITokenPayload>verify(token, env.app.secretKey);
-            request.userId = tokenPayload.userId;
-            request.userRole = tokenPayload.userRole;
-            next();
-        } catch {
-            throw new HttpError({
-                status: HttpCode.UNAUTHORIZED,
-                message: 'Invalid Token',
-            });
-        }
+const verifyToken = (
+  request: Request,
+  _response: Response,
+  next: NextFunction,
+): void => {
+  if (whitelist.includes(request.path)) {
+    next();
+  } else {
+    const token = request.headers.authorization;
+    if (!token) {
+      throw new HttpError({
+        status: HttpCode.UNAUTHORIZED,
+        message: 'Required Authorization header not found',
+      });
     }
+    try {
+      const tokenPayload = <ITokenPayload>verify(token, env.app.secretKey);
+      request.userId = tokenPayload.userId;
+      request.userRole = tokenPayload.userRole;
+
+      next();
+    } catch {
+      throw new HttpError({
+        status: HttpCode.UNAUTHORIZED,
+        message: 'Invalid Token',
+      });
+    }
+  }
 };
 
 export default verifyToken;

@@ -2,7 +2,8 @@ import avatarIcon from 'assets/img/icons/header-icons/avatar-icon.svg';
 import notificationIcon from 'assets/img/icons/header-icons/notification-icon.svg';
 import notificationPointer from 'assets/img/icons/header-icons/notification-pointer.svg';
 import searchIcon from 'assets/img/icons/header-icons/search-icon.svg';
-import './header.scss';
+import { BookmarkFill } from 'react-bootstrap-icons';
+import './styles.scss';
 
 const Header: React.FC = () => {
 
@@ -15,6 +16,7 @@ const Header: React.FC = () => {
                 </form>
                 <div className="notification-section position-relative">
                     <img className="notification-section__icon notification-icon me-4" src={notificationIcon} alt="notification icon" />
+                    <BookmarkFill className="notification-section__icon following-opportunities-icon rounded-1 me-4 px-1 py-1" />
                     <img className="notification-section__notification-pointer notification-pointer position-absolute" src={notificationPointer} alt="notification pointer" />
                 </div>
                 <img className="avatar-icon" src={avatarIcon} alt="avatar icon" />
