@@ -3,7 +3,7 @@ import { Http } from '../http/http.service';
 import { HttpMethod } from 'common/enums/http/http';
 import { ContentType } from 'common/enums/file/file';
 
-import baseUrl from 'common/baseUrl';
+import baseUrl from 'common/base-url';
 
 class CompanyApi {
   // eslint-disable-next-line
