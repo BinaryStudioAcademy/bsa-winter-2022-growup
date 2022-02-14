@@ -1,10 +1,9 @@
 import { authReducer as auth } from './auth';
 import { okrReducer as okr } from './okr';
-import { combineReducers } from '@reduxjs/toolkit';
 import { adminReducer as admin } from './admin';
+import { combineReducers } from '@reduxjs/toolkit';
 
-const rootReducer = {
-  counter,
+const rootReducer = combineReducers ({
   admin,
   auth,
   okr,
