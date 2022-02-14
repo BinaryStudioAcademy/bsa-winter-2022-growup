@@ -7,7 +7,7 @@ import { ReactComponent as CareerPathIcon } from 'assets/img/icons/sidebar-icons
 import { ReactComponent as MenteeProfileIcon } from 'assets/img/icons/sidebar-icons/mentee-icon.svg';
 import { AppRoute } from 'common/enums/enums';
 import { Link } from 'components/common/common';
-import './sidebar.scss';
+import './styles.scss';
 
 const Sidebar: React.FC = () => {
     const isMentor = true;

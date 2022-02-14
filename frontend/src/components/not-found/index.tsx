@@ -10,7 +10,7 @@ const NotFound: FC = () => {
   const onClick = (): void => navigate('/');
 
   return (
-    <Card className="w-100 d-flex align-items-center ">
+    <Card className="w-100 d-flex align-items-center not_found">
       <Card.Body className="d-flex flex-column align-items-center justify-content-center">
         <Card.Title className="text-center gu-black">404</Card.Title>
         <Card.Text className="mb-2 text-center mt-0 fs-1">

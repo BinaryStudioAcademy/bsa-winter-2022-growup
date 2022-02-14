@@ -1,9 +1,9 @@
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import { AppRoute } from 'common/enums/enums';
 
-import Companies from './components/companies/companies';
-import Users from './components/users/users';
-import CareerPath from './components/career-path/career-path';
+import Companies from './companies/company-card';
+import Users from './users/users';
+import CareerPath from './career-path/career-path';
 
 import { Link } from 'components/common/common';
 

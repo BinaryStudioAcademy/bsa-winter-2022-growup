@@ -19,11 +19,13 @@ const ProfileInfo: React.FC = () => {
       {!isLoading && user && (
         <>
           <div className="profile-container profile-container_header bg-gu-white">
-            <Header
-              avatar={user!.avatar}
-              firstName={user!.firstName}
-              lastName={user!.lastName}
-            />
+            {user && (
+              <Header
+                avatar={user.avatar!}
+                firstName={user.firstName}
+                lastName={user.lastName}
+              />
+            )}
           </div>
           <div className="profile-container profile-container_tabs">
             <Tabs />

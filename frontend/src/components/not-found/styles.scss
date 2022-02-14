@@ -1,5 +1,5 @@
-.card {
-  height: 100vh;
+.card.not_found {
+  height: 100%;
 
   .card-body {
     .card-title {
@@ -18,6 +18,10 @@
 
     .card-text.text2 {
       font-weight: 400;
+    }
+
+    .btn {
+      background-color: var(--bs-gu-blue);
     }
   }
 }
