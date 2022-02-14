@@ -34,7 +34,7 @@ class Http {
         headers,
         body: payload,
       });
-      await this.checkStatus(response);
+      this.checkStatus(response);
 
       return this.parseJSON<T>(response);
     } catch (err) {
@@ -55,7 +55,7 @@ class Http {
 
     if (hasAuth) {
       const token = this._storage.getItem(StorageKey.TOKEN);
-      headers.append(HttpHeader.AUTHORIZATION, `Bearer ${token}`);
+      headers.append(HttpHeader.AUTHORIZATION, token);
     }
 
     return headers;
