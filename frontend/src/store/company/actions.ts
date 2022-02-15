@@ -13,7 +13,7 @@ const add_companyAsync = createAsyncThunk(
     if (result) {
       const { token, company } = result;
 
-      StorageKey.TOKEN = token;
+      window.localStorage.setItem(StorageKey.TOKEN, token);
       dispatch(actions.add_company(company));
     }
   },
@@ -27,7 +27,7 @@ const edit_companyAsync = createAsyncThunk(
     if (result) {
       const { token, company } = result;
 
-      StorageKey.TOKEN = token;
+      window.localStorage.setItem(StorageKey.TOKEN, token);
       dispatch(actions.edit_company(company));
     }
   },
