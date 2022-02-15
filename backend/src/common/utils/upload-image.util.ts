@@ -1,6 +1,4 @@
 import AWS from 'aws-sdk';
-// import { Express } from 'express';
-// import { UploadedFile } from 'express-fileupload';
 
 type Credentials = {
   secret: string;

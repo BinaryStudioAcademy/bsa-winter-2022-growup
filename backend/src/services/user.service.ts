@@ -1,4 +1,3 @@
-// import { UploadedFile } from 'express-fileupload';
 import { getCustomRepository } from 'typeorm';
 
 import { RoleType, HttpCode, HttpError } from 'growup-shared';

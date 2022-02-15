@@ -1,5 +1,4 @@
 import { Request, Router } from 'express';
-// import { UploadedFile,,,/ } from 'express-fileupload';
 import multer from 'multer';
 import { run } from '~/common/helpers/route.helper';
 import { updateUserAvatar, fetchUser } from '~/services/user.service';
