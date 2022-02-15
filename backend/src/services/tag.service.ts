@@ -48,13 +48,13 @@ export const createTags = async (
   await asyncForEach(async (name) => {
     const tagName = name.toLowerCase();
 
-    if (targetTags.find((tag) => tag.name === tagName)) {
-      existingTags.push(tagName);
+    if (targetTags.find((tag) => tag.name.toLowerCase() === tagName)) {
+      existingTags.push(name);
       return;
     }
 
     const tagInstance = tagsRepository.create({
-      name: tagName.toLowerCase(),
+      name,
       company: companyInstance,
     });
 
