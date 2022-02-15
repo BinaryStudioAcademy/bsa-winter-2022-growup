@@ -14,7 +14,7 @@ import Main_Page from 'components/main-page/main-page';
 import './app.scss';
 
 const App: React.FC = () => {
-  const isAdmin = true;
+  const isAdmin = false;
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   return (
@@ -49,10 +49,10 @@ const App: React.FC = () => {
               <Route path={AppRoute.LOGIN} element={<Login />} />
               <Route path={AppRoute.SIGN_UP} element={<SignUp />} />
               <Route path={AppRoute.ORKS} element={Ork} />
-              <Route path={AppRoute.SETTINGS_PROFILE} element={Profile} />
+              <Route path={AppRoute.SETTINGS_PROFILE} element={<Profile />} />
               <Route path="*" element={<NotFound />} />
               <Route path={AppRoute.HOME} element={<Main_Page />} />
-              <Route path={AppRoute.PROFILE} element={<div>Profile</div>} />
+              <Route path={AppRoute.PROFILE} element={<Profile />} />
               <Route
                 path={AppRoute.CAREER_PATH}
                 element={<div>Career Path</div>}

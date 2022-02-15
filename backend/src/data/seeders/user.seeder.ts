@@ -1,9 +1,11 @@
 import { getCustomRepository } from 'typeorm';
+import { RoleType } from 'growup-shared';
 
 import { users } from '../seed-data/user.data';
 import { companies } from '../seed-data/company.data';
 
 import { User } from '../entities/user';
+import { UserRole } from '../entities/user-role';
 
 import { asyncForEach } from '../../common/helpers/array.helper';
 
@@ -20,10 +22,15 @@ export default class UserSeeder {
     });
 
     await asyncForEach(async (user: User) => {
-      await Object.assign(new User(), {
+      const userInstance = await Object.assign(new User(), {
         ...user,
         password: await hashPassword(user.password),
         company: company,
+      }).save();
+
+      await Object.assign(new UserRole(), {
+        name: RoleType.Admin,
+        user: userInstance,
       }).save();
     }, users as User[]);
   }

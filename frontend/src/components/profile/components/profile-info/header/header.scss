@@ -1,4 +1,6 @@
-.header {
+@import 'assets/css/styles';
+
+.profile-header {
   width: 100%;
   gap: 30px;
   padding: 52px 60px;
@@ -69,7 +71,7 @@
   }
 }
 
-@media screen and (max-width: 576px) {
+@include media-breakpoint-down(sm) {
   .profile__edit {
     visibility: hidden;
   }

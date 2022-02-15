@@ -31,7 +31,6 @@ export const getTags = async (): Promise<Tags[]> => {
 
 export const createTags = async (
   data: Tags['name'][],
-  // company: Company,
 ): Promise<MappedTag[]> => {
   const tagsRepository = getCustomRepository(TagsRepository);
   const companyRepository = getCustomRepository(CompanyRepository);
