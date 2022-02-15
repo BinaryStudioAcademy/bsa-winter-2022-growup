@@ -1,10 +1,11 @@
+@import 'src/assets/css/styles';
+
 .profile-info {
   display: grid;
   grid-template-areas:
   "p-header"
   "p-tabs"
   "p-main";
-  padding-top: 16px;
   background-color: #F6F7F9;
 }
 
@@ -28,12 +29,7 @@
   grid-area: p-main;
 }
 
-@media screen and (max-width: 576px) {
-  .header-wrapper,
-  .main-wrapper {
-    padding: 0;
-  }
-
+@include media-breakpoint-down(xl) {
   .profile-info {
     grid-template-areas:
     "p-tabs"
@@ -43,5 +39,9 @@
 
   .profile-container {
     padding: 0;
+  }
+
+  .profile-container_tabs {
+    margin-bottom: 13px;
   }
 }

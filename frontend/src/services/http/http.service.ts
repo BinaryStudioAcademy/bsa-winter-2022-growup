@@ -29,11 +29,19 @@ class Http {
 
       const headers = this.getHeaders(hasAuth, contentType);
 
-      const response = await fetch(this.getUrl(url, query), {
+      const fetchOptions = {
         method,
         headers,
-        body: payload,
-      });
+      };
+      const response = await fetch(
+        this.getUrl(url, query),
+        payload === null
+          ? fetchOptions
+          : {
+              ...fetchOptions,
+              body: payload,
+            },
+      );
       await this.checkStatus(response);
 
       return this.parseJSON<T>(response);
@@ -46,7 +54,10 @@ class Http {
     return `${url}${query ? `?${stringify(query)}` : ''}`;
   }
 
-  private getHeaders(hasAuth?: boolean, contentType?: ContentType): Headers {
+  private getHeaders(
+    hasAuth?: boolean,
+    contentType?: typeof ContentType[keyof typeof ContentType],
+  ): Headers {
     const headers = new Headers();
 
     if (contentType) {
@@ -55,7 +66,7 @@ class Http {
 
     if (hasAuth) {
       const token = this._storage.getItem(StorageKey.TOKEN);
-      headers.append(HttpHeader.AUTHORIZATION, `Bearer ${token}`);
+      headers.append(HttpHeader.AUTHORIZATION, token);
     }
 
     return headers;
