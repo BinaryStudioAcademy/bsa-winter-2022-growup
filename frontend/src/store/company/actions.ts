@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { actions } from './slice';
 import { ActionType } from './common';
 import { ICompany } from 'common/interfaces/company/company';
+import { StorageKey } from 'common/enums/app/storage-key.enum';
 import { company as companyApi } from 'services';
 
 const add_companyAsync = createAsyncThunk(
@@ -12,7 +13,7 @@ const add_companyAsync = createAsyncThunk(
     if (result) {
       const { token, company } = result;
 
-      window.localStorage.setItem('companytoken', token);
+      StorageKey.TOKEN = token;
       dispatch(actions.add_company(company));
     }
   },
@@ -26,7 +27,7 @@ const edit_companyAsync = createAsyncThunk(
     if (result) {
       const { token, company } = result;
 
-      window.localStorage.setItem('companytoken', token);
+      StorageKey.TOKEN = token;
       dispatch(actions.edit_company(company));
     }
   },

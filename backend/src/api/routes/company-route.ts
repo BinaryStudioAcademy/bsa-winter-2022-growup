@@ -7,14 +7,26 @@ const router: Router = Router();
 
 router.post(
   '/',
-  run((req) => createCompany(req.body)),
+  run((req): Promise<CompanyResponse> => {
+    const { userId, userRole, body } = req;
+    const tokenPayload = {
+      userId,
+      userRole,
+    };
+    const data = { body, tokenPayload };
+    return createCompany(data);
+  }),
 );
 router.patch(
   '/:id',
   run((req): Promise<CompanyResponse> => {
     const { id } = req.params;
-    const { body } = req;
-    return editCompany({ id, body });
+    const { body, userId, userRole } = req;
+    const tokenPayload = {
+      userId,
+      userRole,
+    };
+    return editCompany({ id, body, tokenPayload });
   }),
 );
 

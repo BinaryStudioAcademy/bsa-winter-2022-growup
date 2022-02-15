@@ -3,13 +3,21 @@ import { Company } from '../data/entities/company';
 import { HttpCode, HttpError } from 'growup-shared';
 import { signToken } from '~/common/utils/token.util';
 import { CompanyResponse } from '~/common/models/responses/company';
-
+import { ITokenPayload } from '~/common/models/middlewares/token-payload';
 import CompanyRepository from '~/data/repositories/company.repository';
 
-export const createCompany = async (
-  body: Company,
-): Promise<CompanyResponse> => {
+interface CompanyProps {
+  id?: string;
+  body: Company;
+  tokenPayload: ITokenPayload;
+}
+
+export const createCompany = async ({
+  body,
+  tokenPayload,
+}: CompanyProps): Promise<CompanyResponse> => {
   const { name } = body;
+  const { userId, userRole } = tokenPayload;
 
   const companyRepository = getCustomRepository(CompanyRepository);
 
@@ -22,7 +30,11 @@ export const createCompany = async (
 
       await newCompany.save();
 
-      const token = signToken(newCompany);
+      const token = signToken({
+        userId,
+        role: userRole,
+        companyId: newCompany.id,
+      });
 
       return { token, company: newCompany };
     }
@@ -38,13 +50,13 @@ export const createCompany = async (
   });
 };
 
-export const editCompany = async (data: {
-  id: string;
-  body: Company;
-}): Promise<CompanyResponse> => {
-  const { id, body } = data;
-
+export const editCompany = async ({
+  id,
+  body,
+  tokenPayload,
+}: CompanyProps): Promise<CompanyResponse> => {
   const companyRepository = getCustomRepository(CompanyRepository);
+  const { userId, userRole } = tokenPayload;
 
   if (id) {
     const company = await companyRepository.findOne({ id });
@@ -54,7 +66,11 @@ export const editCompany = async (data: {
 
       await newCompany.save();
 
-      const token = signToken(newCompany);
+      const token = signToken({
+        userId,
+        role: userRole,
+        companyId: newCompany.id,
+      });
 
       return { token, company: newCompany };
     }
