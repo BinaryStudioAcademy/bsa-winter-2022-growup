@@ -29,12 +29,20 @@ class Http {
 
       const headers = this.getHeaders(hasAuth, contentType);
 
-      const response = await fetch(this.getUrl(url, query), {
+      const fetchOptions = {
         method,
         headers,
-        body: payload,
-      });
-      this.checkStatus(response);
+      };
+      const response = await fetch(
+        this.getUrl(url, query),
+        payload === null
+          ? fetchOptions
+          : {
+              ...fetchOptions,
+              body: payload,
+            },
+      );
+      await this.checkStatus(response);
 
       return this.parseJSON<T>(response);
     } catch (err) {
@@ -46,7 +54,10 @@ class Http {
     return `${url}${query ? `?${stringify(query)}` : ''}`;
   }
 
-  private getHeaders(hasAuth?: boolean, contentType?: ContentType): Headers {
+  private getHeaders(
+    hasAuth?: boolean,
+    contentType?: typeof ContentType[keyof typeof ContentType],
+  ): Headers {
     const headers = new Headers();
 
     if (contentType) {
