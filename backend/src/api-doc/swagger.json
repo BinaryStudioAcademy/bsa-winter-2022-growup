@@ -16,6 +16,90 @@
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "paths": {
+    "/company": {
+      "post": {
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true,
+            "description": "Company credentials"
+          }
+        ],
+        "tags": ["Company"],
+        "summary": "Create new company",
+        "responses": {
+          "200": {
+            "description": "Returns token and company if everything is ok.",
+            "schema": {
+              "$ref": "#/definitions/Company"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "body": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true,
+            "description": "Company credentials"
+          }
+        ],
+        "tags": ["Company"],
+        "summary": "Create new company",
+        "responses": {
+          "200": {
+            "description": "Returns token and company if everything is ok.",
+            "schema": {
+              "$ref": "#/definitions/Company"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/api/auth/register": {
       "post": {
         "parameters": [
@@ -208,6 +292,41 @@
     }
   },
   "definitions": {
+    "Company": {
+      "required": ["token"],
+      "properties": {
+        "token": {
+          "type": "string"
+        },
+        "company": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "deletedAt": {
+              "type": "string",
+              "nullable": true,
+              "default": null
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "updatedAt": {
+              "type": "string",
+              "nullable": true,
+              "default": null
+            }
+          }
+        }
+      }
+    },
     "Token": {
       "required": ["token"],
       "properties": {
