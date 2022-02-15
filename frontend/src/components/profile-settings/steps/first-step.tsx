@@ -1,5 +1,8 @@
 import { StepProps } from './common/step-props';
 import TextField from '../../common/text-field/text-field';
+import Experience from './experience';
+import Education from './education';
+import InterestingTags from './interesting-tags';
 import StepControl from './step-control';
 import { useAppForm } from '../../../hooks/app-form/app-form.hook';
 import { profileFirstStep as profileFirstStepValidationSchema } from '../../../validation-schemas/validation-schemas';
@@ -39,24 +42,9 @@ const FirstStep: React.FC<StepProps> = ({ isDisablePrevious, isSubmit, onPreviou
         control={control}
         errors={errors}
       />
-      <TextField
-        name={FirstStepPayloadKey.EXPERIENCE}
-        label="Experience"
-        control={control}
-        errors={errors}
-      />
-      <TextField
-        name={FirstStepPayloadKey.EDUCATION}
-        label="Education"
-        control={control}
-        errors={errors}
-      />
-      <TextField
-        name={FirstStepPayloadKey.INTERESTING_TAGS}
-        label="Interesting tags"
-        control={control}
-        errors={errors}
-      />
+      <Experience />
+      <Education />
+      <InterestingTags />
       <StepControl
         isValid={isValid}
         isSubmit={isSubmit}
