@@ -1,59 +1,336 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "version": "1.0.0",
-        "title": "GrowUP API"
-    },
-    "host": "localhost:8000",
-    "basePath": "/",
-    "tags": [
-        {
-            "name": "Users",
-            "description": "API for users. Example how use Swagger"
-        }
-    ],
-    "schemes": [
-        "https"
-    ],
-    "consumes": [
-        "application/json"
-    ],
-    "produces": [
-        "application/json"
-    ],
-    "paths": {
-        "/users": {
-            "post": {
-                "tags": [
-                    "Users"
-                ],
-                "summary": "Create new user",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/Users"
-                        }
-                    }
-                }
-            }
-        }
-    },
-    "definitions": {
-        "User": {
-            "required": [
-                "id",
-                "name"
-            ],
-            "properties": {
-                "id": {
-                    "type": "integer",
-                    "uniqueItems": true
-                },
-                "name": {
-                    "type": "string"
-                }
-            }
-        }
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "GrowUP API"
+  },
+  "host": "localhost:3001",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Users",
+      "description": "API for users. Example how use Swagger"
     }
+  ],
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/api/auth/register": {
+      "post": {
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true,
+            "description": "User credentials"
+          }
+        ],
+        "tags": ["Users"],
+        "summary": "Create new user",
+        "responses": {
+          "200": {
+            "description": "Returns token if everything is ok. Token contains userId and role. It expires in 24h.",
+            "schema": {
+              "$ref": "#/definitions/Token"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true,
+            "description": "User credentials"
+          }
+        ],
+        "tags": ["Users"],
+        "summary": "Authenticate user",
+        "responses": {
+          "200": {
+            "description": "Returns token if eveeyrthing is ok. Token contains userId and role. It expires in 24h.",
+            "schema": {
+              "$ref": "#/definitions/Token"
+            }
+          },
+          "404": {
+            "description": "Returns error if credentials are invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/api/company/tags": {
+      "get": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          }
+        ],
+        "tags": ["Tags"],
+        "summary": "Fetching tags",
+        "responses": {
+          "200": {
+            "description": "Returns array of tag objects with company id they are related to",
+            "schema": {
+              "$ref": "#/definitions/Tag"
+            }
+          }
+        }
+      },
+      "post": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "body",
+            "name": "Tags",
+            "schema": {
+              "type": "object",
+              "name": "tags",
+              "properties": {
+                "tags": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "required": true,
+            "descsription": "Name of all new tagss"
+          }
+        ],
+        "tags": ["Tags"],
+        "summary": "Creating new tags",
+        "responses": {
+          "200": {
+            "description": "Returns array of tag objects with company id they are related to",
+            "schema": {
+              "$ref": "#/definitions/Tag"
+            }
+          }
+        }
+      }
+    },
+    "/api/company/tags/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "descsription": "Tag id you want to delete"
+          }
+        ],
+        "tags": ["Tags"],
+        "summary": "Delete tag by id",
+        "responses": {
+          "200": {
+            "description": "Return status of deletion",
+            "schema": {
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "default": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "default": "Tag was deleted successfully"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user": {
+      "get": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          }
+        ],
+        "tags": ["Users", "Profile"],
+        "summary": "Gets user info",
+        "responses": {
+          "200": {
+            "description": "Returns user information",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/api/user/avatar": {
+      "put": {
+        "consumes": ["multipart/form-data"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "formData",
+            "name": "avatar",
+            "type": "file",
+            "description": "New avatar"
+          }
+        ],
+        "tags": ["Users", "Profile"],
+        "summary": "Updates user avatar",
+        "responses": {
+          "200": {
+            "description": "Returns updated user",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Token": {
+      "required": ["token"],
+      "properties": {
+        "token": {
+          "type": "string"
+        }
+      }
+    },
+    "Error": {
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "default": "false"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "Tag": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "companyId": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": "string"
+        }
+      }
+    },
+    "User": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": "string"
+        }
+      }
+    }
+  }
 }

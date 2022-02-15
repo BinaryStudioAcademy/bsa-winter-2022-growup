@@ -7,11 +7,12 @@
 @import 'nav';
 @import 'cards';
 @import 'buttons';
+@import 'tag';
 
 body {
   margin: 0;
-  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -31,4 +32,8 @@ a {
   &:hover {
     color: inherit;
   }
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }

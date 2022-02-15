@@ -1,10 +1,22 @@
-import { Router } from 'express';
+import { Request, Router } from 'express';
+import multer from 'multer';
 import { run } from '~/common/helpers/route.helper';
-import { getSomething } from '~/services/user.service';
+import { updateUserAvatar, fetchUser } from '~/services/user.service';
 
-const router: Router = Router();
+const router = Router();
+const upload = multer();
 
-router
-  .get('/', run(req => getSomething(req.query)));
+router.get(
+  '/',
+  run((req: Request) => fetchUser(req.userId)),
+);
+
+router.put(
+  '/avatar',
+  upload.single('avatar'),
+  run((req: Request) => {
+    return updateUserAvatar(req.userId, req.file);
+  }),
+);
 
 export default router;

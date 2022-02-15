@@ -1,0 +1,47 @@
+@import 'assets/css/styles';
+
+.profile-info {
+  display: grid;
+  grid-template-areas:
+  "p-header"
+  "p-tabs"
+  "p-main";
+  background-color: #F6F7F9;
+}
+
+.profile-container {
+  padding: 0 46px;
+}
+
+.profile-container_header {
+  width: 100%;
+  background-color: #fff;
+  grid-area: p-header;
+  padding: 0;
+}
+
+.profile-container_tabs {
+  margin: 13px 0;
+  grid-area: p-tabs;
+}
+
+.profile-container_main{
+  grid-area: p-main;
+}
+
+@include media-breakpoint-down(xl) {
+  .profile-info {
+    grid-template-areas:
+    "p-tabs"
+    "p-header"
+    "p-main";
+  }
+
+  .profile-container {
+    padding: 0;
+  }
+
+  .profile-container_tabs {
+    margin-bottom: 13px;
+  }
+}
