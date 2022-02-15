@@ -1,10 +1,16 @@
 import { getCustomRepository } from 'typeorm';
 import { Company } from '../data/entities/company';
 import { HttpCode, HttpError } from 'growup-shared';
+import { signToken } from '~/common/utils/token.util';
 
 import CompanyRepository from '~/data/repositories/company.repository';
 
-export const createCompany = async (body: Company): Promise<Company> => {
+interface IReturnData {
+  token: string;
+  company: Company;
+}
+
+export const createCompany = async (body: Company): Promise<IReturnData> => {
   const { name } = body;
 
   const companyRepository = getCustomRepository(CompanyRepository);
@@ -17,7 +23,10 @@ export const createCompany = async (body: Company): Promise<Company> => {
       const newCompany = Object.assign(company, body);
 
       await newCompany.save();
-      return newCompany;
+
+      const token = signToken(newCompany);
+
+      return { token, company: newCompany };
     }
     throw new HttpError({
       status: HttpCode.BAD_REQUEST,
@@ -34,7 +43,7 @@ export const createCompany = async (body: Company): Promise<Company> => {
 export const editCompany = async (data: {
   id: string;
   body: Company;
-}): Promise<Company> => {
+}): Promise<IReturnData> => {
   const { id, body } = data;
 
   const companyRepository = getCustomRepository(CompanyRepository);
@@ -47,7 +56,9 @@ export const editCompany = async (data: {
 
       await newCompany.save();
 
-      return newCompany;
+      const token = signToken(newCompany);
+
+      return { token, company: newCompany };
     }
 
     throw new HttpError({

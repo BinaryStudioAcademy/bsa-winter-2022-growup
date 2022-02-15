@@ -6,20 +6,28 @@ import { company as companyApi } from 'services';
 
 const add_companyAsync = createAsyncThunk(
   ActionType.ADD_COMPANY,
-  async (company: ICompany, { dispatch }) => {
-    const result = await companyApi.addCompany(company);
+  async (newCompany: ICompany, { dispatch }) => {
+    const result = await companyApi.addCompany(newCompany);
+
     if (result) {
-      dispatch(actions.add_company(result));
+      const { token, company } = result;
+
+      window.localStorage.setItem('companytoken', token);
+      dispatch(actions.add_company(company));
     }
   },
 );
 
 const edit_companyAsync = createAsyncThunk(
   ActionType.EDIT_COMPANY,
-  async (company: ICompany, { dispatch }) => {
-    const result = await companyApi.editCompany(company);
+  async (newCompany: ICompany, { dispatch }) => {
+    const result = await companyApi.editCompany(newCompany);
+
     if (result) {
-      dispatch(actions.edit_company(result));
+      const { token, company } = result;
+
+      window.localStorage.setItem('companytoken', token);
+      dispatch(actions.edit_company(company));
     }
   },
 );

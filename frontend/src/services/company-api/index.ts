@@ -3,19 +3,22 @@ import { Http } from 'services/http/http.service';
 import { HttpMethod } from 'common/enums/http/http';
 import { ContentType } from 'common/enums/file/file';
 
-interface ICompanyApi {
-  http: Http;
+interface IReturnCompanyData {
+  token: string;
+  company: ICompany;
 }
 
 class CompanyApi {
   // eslint-disable-next-line
   private http: Http;
 
-  constructor({ http }: ICompanyApi) {
+  constructor({ http }: { http: Http }) {
     this.http = http;
   }
 
-  public async addCompany(company: ICompany): Promise<ICompany | null> {
+  public async addCompany(
+    company: ICompany,
+  ): Promise<IReturnCompanyData | null> {
     const options = {
       method: HttpMethod.POST,
       contentType: ContentType.JSON,
@@ -23,7 +26,10 @@ class CompanyApi {
     };
 
     try {
-      const result = await this.http.load<ICompany>('/company', options);
+      const result = await this.http.load<IReturnCompanyData>(
+        '/company',
+        options,
+      );
       return result;
     } catch (e) {
       //passing an error to the handler
@@ -32,7 +38,9 @@ class CompanyApi {
     }
   }
 
-  public async editCompany(company: ICompany): Promise<ICompany | null> {
+  public async editCompany(
+    company: ICompany,
+  ): Promise<IReturnCompanyData | null> {
     const { id } = company;
     delete company.id;
 
@@ -43,7 +51,10 @@ class CompanyApi {
     };
 
     try {
-      const result = await this.http.load<ICompany>('/company/' + id, options);
+      const result = await this.http.load<IReturnCompanyData>(
+        '/company/' + id,
+        options,
+      );
       return result;
     } catch (e) {
       //passing an error to the handler
