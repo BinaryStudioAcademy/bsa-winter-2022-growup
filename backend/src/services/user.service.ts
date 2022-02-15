@@ -126,7 +126,7 @@ export const updateUserAvatar = async (
     ...props,
     file: {
       ...file,
-      filename: `${getCurrentTimeMS()}-${file.filename}`,
+      originalname: `${getCurrentTimeMS()}-${file.originalname}`,
     },
   });
 

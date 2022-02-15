@@ -34,7 +34,7 @@ const uploadImage = ({
   return s3
     .upload({
       Bucket: bucketName,
-      Key: file.filename,
+      Key: file.originalname,
       Body: file.buffer,
       ACL: 'public-read',
     })
