@@ -7,6 +7,7 @@ enum AppRoute {
   ORKS = '/ork',
   PAGES = '/pages',
   PROFILE_SETTINGS = '/profile-settings',
+  PROFILE_SETTINGS_STEP = '/profile-settings/*',
   HOME = '/',
   PROFILE ='/profile',
   CAREER_PATH = '/career-path',

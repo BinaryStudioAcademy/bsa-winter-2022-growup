@@ -1,7 +1,7 @@
-import { AppRoute } from 'common/enums/enums';
+import { AppRoute, ProfileSettingsRoute } from 'common/enums/enums';
 import Login from 'components/login/login';
 import SignUp from 'components/sign-up/sign-up';
-import { Route, Routes } from 'components/common/common';
+import { Route, Routes, Navigate } from 'components/common/common';
 import Ork from 'components/okrs/okrs';
 import { NotFound } from 'components/not-found';
 import Admin from 'components/admin/admin';
@@ -38,7 +38,8 @@ const App: React.FC = () => {
                     <Route path={AppRoute.LOGIN} element={<Login/>} />
                     <Route path={AppRoute.SIGN_UP} element={<SignUp/>} />
                     <Route path={AppRoute.ORKS} element={Ork} />
-                    <Route path={AppRoute.PROFILE_SETTINGS} element={<ProfileSettings/>} />
+                    <Route path={AppRoute.PROFILE_SETTINGS} element={<Navigate to={ProfileSettingsRoute.PROFILE_SETTINGS_STEP_ONE}/>} />
+                    <Route path={AppRoute.PROFILE_SETTINGS_STEP} element={<ProfileSettings/>} />
                     <Route path="*" element={<NotFound />} />
                     <Route path={AppRoute.HOME} element={<Main_Page />} />
                     <Route path={AppRoute.PROFILE} element={<div>Profile</div>} />
