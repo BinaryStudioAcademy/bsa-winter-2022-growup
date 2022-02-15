@@ -158,7 +158,21 @@
           "200": {
             "description": "Returns array of tag objects with company id they are related to",
             "schema": {
-              "$ref": "#/definitions/Tag"
+              "type": "object",
+              "properties": {
+                "tags": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Tag"
+                  }
+                },
+                "existingTags": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
             }
           }
         }
