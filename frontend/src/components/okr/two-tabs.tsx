@@ -4,7 +4,7 @@ import Tab from 'react-bootstrap/Tab';
 import OrkItem from './workspace-item';
 import { useSelector } from 'react-redux';
 import { RootState } from 'common/types/types';
-import { IOkr, IObjective, IKeyResult } from './common/interfaces';
+import { IOkr } from './common/interfaces';
 
 interface PropTypes {
   collection: IOkr[]
@@ -12,21 +12,18 @@ interface PropTypes {
 
 function ControlledTabs():React.ReactElement {
     const [key, setKey] = useState('my-OKR');
-    const user = useSelector((state: RootState) => state.okr.User);
-    const okr = useSelector((state: RootState) => state.okr.OKR);
-    const myOkr = useSelector((state: RootState) => state.okr.OKR.filter(okr => okr.userId === user.id));
-    const objective = useSelector((state: RootState) => state.okr.Objective);
-    const keyResult = useSelector((state: RootState) => state.okr.KeyResult);
+    const user = useSelector((state: RootState) => state.okr.user);
+    const okr = useSelector((state: RootState) => state.okr.okr);
+    const myOkr = useSelector((state: RootState) => state.okr.okr.filter(okr => okr.userId === user.id));
 
     const OkrList: React.FC<PropTypes> = (props) => (
       <div className="OKR-page d-flex flex-row flex-wrap">
         {props.collection.map((okr: IOkr) => {
-            const collection = objective.filter((obj: IObjective) => obj.okrId === okr.id);
+            const collection = okr.objective;
             const objectivesCounter = collection.length;
-            let resultsCounter = 0;
-            collection.forEach((obj) => resultsCounter += keyResult.filter((el: IKeyResult) => el.ObjectiveId === obj.id).length);
+            const resultsCounter = okr.keyResult.length;
             return <OrkItem key={okr.id} name={okr.name} endDate={okr.endDate}
-              startDate={okr.startDate} NumOfObjectives={objectivesCounter} NumOfKeyResults={resultsCounter}/>;
+              startDate={okr.startDate} objectivesCounter={objectivesCounter} resultsCounter={resultsCounter}/>;
         })}
       </div>
     );
