@@ -24,4 +24,9 @@ export const env = {
     enititiesDir: getOsEnv('TYPEORM_ENTITIES'),
     logging: isStringTrue(getOsEnv('TYPEORM_LOGGING')),
   },
+  aws: {
+    access: getOsEnv('AWS_ACCESS_KEY'),
+    secret: getOsEnv('AWS_SECRET_KEY'),
+    bucket: getOsEnv('AWS_BUCKET_NAME'),
+  },
 } as const;

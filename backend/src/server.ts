@@ -2,6 +2,7 @@ import cors from 'cors';
 import path from 'path';
 import express, { Express } from 'express';
 import { createConnection } from 'typeorm';
+
 import * as swaggerUi from 'swagger-ui-express';
 
 import routes from '~/api/routes';
@@ -21,7 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.use('/api',verifyToken);
+app.use('/api', verifyToken);
 
 routes(app);
 

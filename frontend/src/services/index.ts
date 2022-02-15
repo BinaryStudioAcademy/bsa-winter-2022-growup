@@ -1,6 +1,7 @@
 import { ENV } from 'common/enums/enums';
 import { AuthApi } from './auth-api/auth-api.service';
 import { Http } from './http/http.service';
+import { ProfileApi } from './profile-api/profile-api.service';
 import { TagsApi } from './tags-api/tags-api.service';
 import { Storage } from './storage/storage.service';
 
@@ -17,10 +18,14 @@ const auth = new AuthApi({
   http,
 });
 
+const profile = new ProfileApi({
+  apiPath: ENV.API_PATH || '',
+  http,
+});
+
 const tags = new TagsApi({
   apiPath: ENV.API_PATH || '',
   http,
 });
 
-export { tags as TagsApi };
-export { http, storage, auth, tags };
+export { http, storage, auth, tags, profile };
