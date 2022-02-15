@@ -103,8 +103,7 @@ export const fetchUser = async (
 ): Promise<Omit<User, 'password'>> => {
   const userRepository = getCustomRepository(UserRepository);
 
-  // eslint-disable-next-line
-  const { password, ...user } = await userRepository.findOne(id);
+  const { password: _password, ...user } = await userRepository.findOne(id);
   return user as User;
 };
 
