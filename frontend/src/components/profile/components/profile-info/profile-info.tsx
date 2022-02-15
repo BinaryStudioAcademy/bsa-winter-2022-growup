@@ -20,7 +20,7 @@ const ProfileInfo: React.FC = () => {
         <>
           <div className="profile-container profile-container_header bg-gu-white">
             <Header
-              avatar={user.avatar!}
+              avatar={user.avatar}
               firstName={user.firstName}
               lastName={user.lastName}
             />

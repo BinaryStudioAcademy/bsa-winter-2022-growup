@@ -1,7 +1,8 @@
 .career-card {
-  border-color: #E1DBEA;
+  border: #E1DBEA;
   margin: 5px 15px 20px 15px;
   position: relative;
+  height: auto !important;
 
   &::before {
     position: absolute;

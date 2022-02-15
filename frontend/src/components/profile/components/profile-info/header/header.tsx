@@ -18,7 +18,7 @@ const Header: React.FC<Props> = ({ avatar, firstName, lastName }) => {
 
   return (
     <>
-      <div className="header d-flex">
+      <div className="profile-header d-flex">
         <div className="profile">
           {avatar ? (
             <img className="profile__avatar" src={avatar} alt="Avatar" />
@@ -40,13 +40,13 @@ const Header: React.FC<Props> = ({ avatar, firstName, lastName }) => {
             <ShieldFillCheck className="level__icon" />
             <p className="level__text fs-6">Level 2</p>
           </div>
+          <EditAvatar
+            show={isModalVisible}
+            onClose={closeModal}
+            title="Update avatar"
+          />
         </div>
       </div>
-      <EditAvatar
-        show={isModalVisible}
-        onClose={closeModal}
-        title="Update avatar"
-      />
     </>
   );
 };
