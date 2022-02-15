@@ -1,8 +1,10 @@
 import { getCustomRepository } from 'typeorm';
 import { RoleType, HttpCode, HttpError } from 'growup-shared';
-
 import UserRepository from '../data/repositories/user.repository';
 import UserRoleRepository from '~/data/repositories/role.repository';
+import RefreshTokenRepository from '~/data/repositories/refresh-token.repository';
+import { generateRefreshToken, generateAccessToken } from '~/common/helpers/auth.helper';
+import { refreshTokenSchema } from '~/common/models/tokens/refresh-token.model';
 
 import { User } from '../data/entities/user';
 
@@ -19,6 +21,31 @@ import type {
 
 type TokenResponse = {
   token: string;
+};
+
+const updateTokens = (user: User): any => {
+  const accessToken = generateAccessToken(user);
+  const refreshToken = generateRefreshToken(user);
+
+  return {
+    accessToken,
+    refreshToken,
+  };
+};
+
+export const refreshToken = async (
+  data: refreshTokenSchema,
+) : Promise<TokenResponse> => {
+  const refreshTokenRepository = getCustomRepository(RefreshTokenRepository);
+
+  const tokendata = await refreshTokenRepository.findOne({ user: data.user });
+  if (tokendata) {
+    const token = updateTokens({
+      refreshToken: tokendata.token,
+    });
+
+    return { token };
+  }
 };
 
 const getUserJWT = async (user: User): Promise<TokenResponse> => {
@@ -41,6 +68,8 @@ export const authenticateUser = async (
   const user = await userRepository.findOne({
     email: data.email,
   });
+
+  updateTokens(user);
 
   if (!user)
     throw new HttpError({
