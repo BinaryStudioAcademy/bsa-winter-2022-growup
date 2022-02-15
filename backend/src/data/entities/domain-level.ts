@@ -1,4 +1,4 @@
-import { Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 import { AbstractEntity } from '~/data/abstract/abstract.entity';
 import { Domain } from './domain';
 
@@ -14,4 +14,7 @@ export class DomainLevel extends AbstractEntity {
 
   @ManyToOne(() => Domain, (domain) => domain.id)
   domain: Domain;
+
+  @Column({ type: 'varchar', length: 100 })
+  name: string;
 }
