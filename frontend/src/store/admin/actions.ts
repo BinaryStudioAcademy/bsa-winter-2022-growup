@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { TagsApi } from 'services';
+import { tags } from 'services';
 
 import type { TagCreation } from 'common/types/types';
 import { ActionType } from './common';
@@ -9,7 +9,7 @@ const fetchTags = createAsyncThunk(
   ActionType.FETCH_TAGS,
   async (_, { rejectWithValue }) => {
     try {
-      const result = await TagsApi.fetchTags();
+      const result = await tags.fetchTags();
       return result;
     } catch (err) {
       return rejectWithValue(err);
@@ -21,7 +21,7 @@ const createTags = createAsyncThunk(
   ActionType.CREATE_TAGS,
   async (data: TagCreation[], { rejectWithValue }) => {
     try {
-      const result = await TagsApi.createTags(data.map((tag) => tag.name));
+      const result = await tags.createTags(data.map((tag) => tag.name));
       return result;
     } catch (err) {
       return rejectWithValue(err);
@@ -33,7 +33,7 @@ const deleteTag = createAsyncThunk(
   ActionType.DELETE_TAG,
   async (data: ITag['id'], { rejectWithValue }) => {
     try {
-      await TagsApi.deleteTag(data);
+      await tags.deleteTag(data);
       return data;
     } catch (err) {
       return rejectWithValue(err);

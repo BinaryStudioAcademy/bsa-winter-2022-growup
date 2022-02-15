@@ -219,6 +219,61 @@
           }
         }
       }
+    },
+    "/api/user": {
+      "get": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          }
+        ],
+        "tags": ["Users", "Profile"],
+        "summary": "Gets user info",
+        "responses": {
+          "200": {
+            "description": "Returns user information",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/api/user/avatar": {
+      "put": {
+        "consumes": ["multipart/form-data"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "formData",
+            "name": "avatar",
+            "type": "file",
+            "description": "New avatar"
+          }
+        ],
+        "tags": ["Users", "Profile"],
+        "summary": "Updates user avatar",
+        "responses": {
+          "200": {
+            "description": "Returns updated user",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -250,6 +305,34 @@
           "type": "string"
         },
         "companyId": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": "string"
+        }
+      }
+    },
+    "User": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "avatar": {
           "type": "string"
         },
         "createdAt": {

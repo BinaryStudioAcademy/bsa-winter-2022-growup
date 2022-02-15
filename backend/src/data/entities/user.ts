@@ -17,6 +17,9 @@ export class User extends AbstractEntity {
   @Column({ type: 'varchar', length: 250, nullable: true })
   lastName: string;
 
+  @Column({ type: 'varchar', length: 100 })
+  avatar: string;
+
   @ManyToOne(() => Company, (company) => company.id)
   company: Company;
 

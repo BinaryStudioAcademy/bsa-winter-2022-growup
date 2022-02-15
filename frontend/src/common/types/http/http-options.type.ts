@@ -1,8 +1,8 @@
 import { ContentType, HttpMethod } from 'common/enums/enums';
 
 type HttpOptions = {
+  contentType: typeof ContentType[keyof typeof ContentType];
   method: keyof typeof HttpMethod;
-  contentType: ContentType;
   payload: BodyInit | null;
   hasAuth?: boolean;
   query?: object;
