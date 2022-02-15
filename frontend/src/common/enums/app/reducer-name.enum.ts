@@ -1,8 +1,9 @@
 enum ReducerName {
   COUNTER = 'counter',
   AUTH = 'auth',
-  PROFILE = 'profile',
+  OKR = 'okr',
   ADMIN = 'admin',
+  PROFILE = 'profile',
 }
 
 export { ReducerName };
