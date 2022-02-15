@@ -3,8 +3,6 @@ import { Http } from 'services/http/http.service';
 import { HttpMethod } from 'common/enums/http/http';
 import { ContentType } from 'common/enums/file/file';
 
-import baseUrl from 'common/base-url';
-
 interface ICompanyApi {
   http: Http;
 }
@@ -25,10 +23,7 @@ class CompanyApi {
     };
 
     try {
-      const result = await this.http.load<ICompany>(
-        baseUrl + '/company',
-        options,
-      );
+      const result = await this.http.load<ICompany>('/company', options);
       return result;
     } catch (e) {
       //passing an error to the handler
@@ -48,10 +43,7 @@ class CompanyApi {
     };
 
     try {
-      const result = await this.http.load<ICompany>(
-        baseUrl + '/company/' + id,
-        options,
-      );
+      const result = await this.http.load<ICompany>('/company/' + id, options);
       return result;
     } catch (e) {
       //passing an error to the handler

@@ -1,19 +1,23 @@
-import { Request } from 'express';
+import { getCustomRepository } from 'typeorm';
 import { Company } from '../data/entities/company';
 import { HttpCode, HttpError } from 'growup-shared';
 
-export const createCompany = async (data: Request): Promise<Company> => {
-  const { name } = data.body;
+import CompanyRepository from '~/data/repositories/company.repository';
+
+export const createCompany = async (body: Company): Promise<Company> => {
+  const { name } = body;
+
+  const companyRepository = getCustomRepository(CompanyRepository);
 
   if (name) {
-    const isCompanyExist = await Company.find({ name });
+    const isCompanyExist = await companyRepository.findOne({ name });
 
-    if (isCompanyExist.length === 0) {
+    if (!isCompanyExist) {
       const company = new Company();
-      const newCompany = Object.assign(company, data.body);
+      const newCompany = Object.assign(company, body);
 
-      await Company.save(newCompany);
-      return Promise.resolve(newCompany);
+      await newCompany.save();
+      return newCompany;
     }
     throw new HttpError({
       status: HttpCode.BAD_REQUEST,
@@ -27,18 +31,23 @@ export const createCompany = async (data: Request): Promise<Company> => {
   });
 };
 
-export const editCompany = async (data: Request): Promise<Company> => {
-  const { id } = data.params;
+export const editCompany = async (data: {
+  id: string;
+  body: Company;
+}): Promise<Company> => {
+  const { id, body } = data;
+
+  const companyRepository = getCustomRepository(CompanyRepository);
 
   if (id) {
-    const company = await Company.findByIds([id]);
+    const company = await companyRepository.findOne({ id });
 
     if (company) {
-      const newCompany = Object.assign(company[0], data.body);
+      const newCompany = Object.assign(company, body);
 
-      await Company.save(newCompany);
+      await newCompany.save();
 
-      return Promise.resolve(newCompany);
+      return newCompany;
     }
 
     throw new HttpError({
