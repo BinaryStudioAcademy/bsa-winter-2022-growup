@@ -34,36 +34,6 @@ const profileFirstStep = Joi.object({
       'string.min': StepsValidationMessage.POSITION_MIN_LENGTH,
       'string.max': StepsValidationMessage.POSITION_MAX_LENGTH,
     }),
-  [FirstStepPayloadKey.EXPERIENCE]: Joi.string()
-    .trim()
-    .min(StepsValidationRule.EXPERIENCE_MIN_LENGTH)
-    .max(StepsValidationRule.EXPERIENCE_MAX_LENGTH)
-    .required()
-    .messages({
-      'string.empty': StepsValidationMessage.EXPERIENCE_REQUIRE,
-      'string.min': StepsValidationMessage.EXPERIENCE_MIN_LENGTH,
-      'string.max': StepsValidationMessage.EXPERIENCE_MAX_LENGTH,
-    }),
-  [FirstStepPayloadKey.EDUCATION]: Joi.string()
-    .trim()
-    .min(StepsValidationRule.EDUCATION_MIN_LENGTH)
-    .max(StepsValidationRule.EDUCATION_MAX_LENGTH)
-    .required()
-    .messages({
-      'string.empty': StepsValidationMessage.EDUCATION_REQUIRE,
-      'string.min': StepsValidationMessage.EDUCATION_MIN_LENGTH,
-      'string.max': StepsValidationMessage.EDUCATION_MAX_LENGTH,
-    }),
-  [FirstStepPayloadKey.INTERESTING_TAGS]: Joi.string()
-    .trim()
-    .min(StepsValidationRule.INTERESTING_TAGS_MIN_LENGTH)
-    .max(StepsValidationRule.INTERESTING_TAGS_MAX_LENGTH)
-    .required()
-    .messages({
-      'string.empty': StepsValidationMessage.INTERESTING_TAGS_REQUIRE,
-      'string.min': StepsValidationMessage.INTERESTING_TAGS_MIN_LENGTH,
-      'string.max': StepsValidationMessage.INTERESTING_TAGS_MAX_LENGTH,
-    }),
 });
 
 export { profileFirstStep };
