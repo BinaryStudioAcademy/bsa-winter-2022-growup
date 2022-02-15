@@ -8,5 +8,5 @@ export class QuizCategory extends AbstractEntity {
   name: string;
 
   @ManyToOne(() => WorkQuiz, (workQuiz) => workQuiz.id)
-  quiz: WorkQuiz[];
+  quiz: WorkQuiz;
 }

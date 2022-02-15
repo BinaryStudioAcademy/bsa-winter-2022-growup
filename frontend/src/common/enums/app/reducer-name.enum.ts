@@ -4,6 +4,8 @@ enum ReducerName {
   OKR = 'okr',
   ADMIN = 'admin',
   PROFILE = 'profile',
+  USER_QUIZ = 'user-quiz',
+
 }
 
 export { ReducerName };
