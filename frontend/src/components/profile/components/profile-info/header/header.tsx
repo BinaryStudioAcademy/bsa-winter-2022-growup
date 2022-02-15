@@ -3,7 +3,7 @@ import { PencilFill, ShieldFillCheck } from 'react-bootstrap-icons';
 import './header.scss';
 
 const Header: React.FC = () => (
-  <div className="header d-flex">
+  <div className="profile-header d-flex">
     <div className="profile">
       <img className="profile__avatar" src={avatar} alt="Avatar" />
       <div className="profile__edit d-flex align-items-center justify-content-center position-absolute">

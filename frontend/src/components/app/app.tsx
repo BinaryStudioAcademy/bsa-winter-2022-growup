@@ -52,7 +52,7 @@ const App: React.FC = () => {
               <Route path={AppRoute.SETTINGS_PROFILE} element={Profile} />
               <Route path="*" element={<NotFound />} />
               <Route path={AppRoute.HOME} element={<Main_Page />} />
-              <Route path={AppRoute.PROFILE} element={<div>Profile</div>} />
+              <Route path={AppRoute.PROFILE} element={<Profile />} />
               <Route
                 path={AppRoute.CAREER_PATH}
                 element={<div>Career Path</div>}
