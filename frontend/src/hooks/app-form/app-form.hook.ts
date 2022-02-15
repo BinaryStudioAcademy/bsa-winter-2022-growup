@@ -21,6 +21,7 @@ const useAppForm = ({ defaultValues, validationSchema }: IUseAppFormProps): IUse
     handleSubmit,
   } = useForm({
     defaultValues,
+    mode: 'onBlur',
     resolver: validationSchema ? joiResolver(validationSchema) : undefined,
   });
 
