@@ -1,4 +1,5 @@
 import { getCustomRepository } from 'typeorm';
+
 import { RoleType, HttpCode, HttpError } from 'growup-shared';
 
 import UserRepository from '../data/repositories/user.repository';
@@ -11,11 +12,14 @@ import {
   hashPassword,
 } from '~/common/utils/password-hasher.util';
 import { signToken } from '~/common/utils/token.util';
+import { uploadImage, deleteImage } from '~/common/utils/upload-image.util';
+import { getCurrentTimeMS } from '~/common/utils/time.util';
 
 import type {
   UserLoginForm,
   UserRegisterForm,
 } from '~/common/forms/user.forms';
+import { env } from '~/config/env';
 
 type TokenResponse = {
   token: string;
@@ -91,4 +95,44 @@ export const registerUser = async (
   await roleInstance.save();
 
   return getUserJWT(user);
+};
+
+export const fetchUser = async (
+  id: User['id'],
+): Promise<Omit<User, 'password'>> => {
+  const userRepository = getCustomRepository(UserRepository);
+
+  const { password: _password, ...user } = await userRepository.findOne(id);
+  return user as User;
+};
+
+export const updateUserAvatar = async (
+  id: User['id'],
+  file: Express.Multer.File,
+): Promise<User> => {
+  const userRepository = getCustomRepository(UserRepository);
+
+  const user = await userRepository.findOne(id);
+  const props = {
+    secret: env.aws.secret,
+    access: env.aws.access,
+    bucketName: env.aws.bucket,
+  };
+
+  if (user.avatar)
+    await deleteImage({ ...props, fileName: user.avatar.split('/').at(-1) });
+
+  const avatar = await uploadImage({
+    ...props,
+    file: {
+      ...file,
+      originalname: `${getCurrentTimeMS()}-${file.originalname}`,
+    },
+  });
+
+  user.avatar = avatar.Location;
+
+  await user.save();
+
+  return user;
 };

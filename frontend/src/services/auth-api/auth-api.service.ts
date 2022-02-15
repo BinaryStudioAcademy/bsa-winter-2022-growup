@@ -1,5 +1,9 @@
 import { ContentType, HttpMethod } from 'common/enums/enums';
-import { IToken, IUserLoginForm, IUserSignUpForm } from 'common/interfaces/user';
+import {
+  IToken,
+  IUserLoginForm,
+  IUserSignUpForm,
+} from 'common/interfaces/user';
 import { Http } from 'services/http/http.service';
 
 interface IAuthApi {

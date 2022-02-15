@@ -6,7 +6,7 @@ import { ISkill } from './common/interfaces';
 import './styles.scss';
 
 const SkillOverview = ():React.ReactElement => {
-    const User = useSelector((state: RootState) => state.okr.User);
+    const User = useSelector((state: RootState) => state.okr.user);
     const skillList = useSelector((state: RootState) => state.skill.UserSkill);
 
     return (

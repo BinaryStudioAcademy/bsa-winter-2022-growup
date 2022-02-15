@@ -1,11 +1,37 @@
+import { getCustomRepository } from 'typeorm';
+import { RoleType } from 'growup-shared';
+
 import { users } from '../seed-data/user.data';
+import { companies } from '../seed-data/company.data';
+
 import { User } from '../entities/user';
+import { UserRole } from '../entities/user-role';
+
 import { asyncForEach } from '../../common/helpers/array.helper';
+
+import CompanyRepository from '../repositories/company.repository';
+
+import { hashPassword } from '~/common/utils/password-hasher.util';
 
 export default class UserSeeder {
   public static async execute(): Promise<void> {
-    await asyncForEach(async user => {
-      await Object.assign(new User(), { ...user }).save();
-    }, users);
+    const companyRespoitory = getCustomRepository(CompanyRepository);
+
+    const company = await companyRespoitory.findOne({
+      name: companies[0].name,
+    });
+
+    await asyncForEach(async (user: User) => {
+      const userInstance = await Object.assign(new User(), {
+        ...user,
+        password: await hashPassword(user.password),
+        company: company,
+      }).save();
+
+      await Object.assign(new UserRole(), {
+        name: RoleType.Admin,
+        user: userInstance,
+      }).save();
+    }, users as User[]);
   }
 }

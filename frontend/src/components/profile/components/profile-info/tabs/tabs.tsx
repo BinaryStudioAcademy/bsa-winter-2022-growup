@@ -1,7 +1,7 @@
 import  './tabs.scss';
 
 const Tabs: React.FC = () => (
-  <nav className="nav-tabs d-flex">
+  <nav className="nav-tabs profile-nav-tabs d-flex">
     <div className="nav-item">
       <a className="nav-link active text-decoration-none" href="#">Summary</a>
     </div>
