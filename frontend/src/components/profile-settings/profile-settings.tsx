@@ -33,7 +33,7 @@ const ProfileSettings: React.FC = () => {
           <Route path={ProfileSettingsRoute.PROFILE_SETTINGS_ROOT} element={<Outlet />}>
             <Route path={ProfileSettingsRoute.PROFILE_SETTINGS_STEP_ONE} element={<FirstStep onNext={onNext} onPrevious={onPrevious} isDisablePrevious={true} />} />
             <Route path={ProfileSettingsRoute.PROFILE_SETTINGS_STEP_TWO} element={<SecondStep onNext={onNext} onPrevious={onPrevious} />} />
-            <Route path={ProfileSettingsRoute.PROFILE_SETTINGS_STEP_THREE} element={<ThirdStep onNext={onNext} onPrevious={onPrevious} isSubmit={true} />} />
+            <Route path={ProfileSettingsRoute.PROFILE_SETTINGS_STEP_THREE} element={<ThirdStep onNext={onNext} onPrevious={onPrevious} />} />
             <Route path="*" element={<Navigate to={ProfileSettingsRoute.PROFILE_SETTINGS_STEP_ONE} />} />
           </Route>
         </Routes>

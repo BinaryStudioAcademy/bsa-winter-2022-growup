@@ -8,7 +8,6 @@ interface Props extends StepProps {
 const StepControl: React.FC<Props> = ({
                                         isValid,
                                         isDisablePrevious = false,
-                                        isSubmit = false,
                                         onPrevious,
                                         onSubmit,
                                         onNext,
@@ -32,7 +31,7 @@ const StepControl: React.FC<Props> = ({
           }
         }}
       >
-        {isSubmit ? 'Submit' : 'Go to Questionnaire for determining my level'}
+        Go to Questionnaire for determining my level
       </button>
     </div>
   );
