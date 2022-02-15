@@ -3,6 +3,7 @@ enum ReducerName {
   AUTH = 'auth',
   OKR = 'okr',
   ADMIN = 'admin',
+  PROFILE = 'profile',
 }
 
 export { ReducerName };
