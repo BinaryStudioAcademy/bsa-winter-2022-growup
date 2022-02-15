@@ -2,15 +2,13 @@ import { getCustomRepository } from 'typeorm';
 import { Company } from '../data/entities/company';
 import { HttpCode, HttpError } from 'growup-shared';
 import { signToken } from '~/common/utils/token.util';
+import { CompanyResponse } from '~/common/models/responses/company';
 
 import CompanyRepository from '~/data/repositories/company.repository';
 
-interface IReturnData {
-  token: string;
-  company: Company;
-}
-
-export const createCompany = async (body: Company): Promise<IReturnData> => {
+export const createCompany = async (
+  body: Company,
+): Promise<CompanyResponse> => {
   const { name } = body;
 
   const companyRepository = getCustomRepository(CompanyRepository);
@@ -43,7 +41,7 @@ export const createCompany = async (body: Company): Promise<IReturnData> => {
 export const editCompany = async (data: {
   id: string;
   body: Company;
-}): Promise<IReturnData> => {
+}): Promise<CompanyResponse> => {
   const { id, body } = data;
 
   const companyRepository = getCustomRepository(CompanyRepository);
