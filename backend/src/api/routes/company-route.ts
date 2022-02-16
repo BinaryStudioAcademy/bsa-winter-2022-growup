@@ -4,7 +4,11 @@ import { CompanyResponse } from '~/common/models/responses/company';
 import { OKR } from '~/data/entities/okr';
 import { Objective } from '~/data/entities/objective';
 import { createCompany, editCompany } from '~/services/company.service';
-import { createOkr, addNewObjectiveToOkr } from '~/services/okr.service';
+import {
+  getAllOkr,
+  createOkr,
+  addNewObjectiveToOkr,
+} from '~/services/okr.service';
 import { addNewKeyresultToObjective } from '~/services/objective.service';
 
 const router: Router = Router();
@@ -33,6 +37,11 @@ router.patch(
     };
     return editCompany({ id, body, tokenPayload });
   }),
+);
+
+router.get(
+  '/okr',
+  run((req): Promise<OKR[]> => getAllOkr(req.userId)),
 );
 
 router.post(

@@ -6,6 +6,23 @@ import Okrepository from '~/data/repositories/okr.repository';
 import UserRepository from '~/data/repositories/user.repository';
 import ObjectiveRepository from '~/data/repositories/objective.repository';
 
+export const getAllOkr = async (userId: string): Promise<OKR[]> => {
+  const okrRepository = getCustomRepository(Okrepository);
+  const userRepository = getCustomRepository(UserRepository);
+
+  const user = await userRepository.findOne({ id: userId });
+
+  if (user) {
+    const okrs = okrRepository.find({ where: { user: user.id } });
+    return okrs;
+  }
+
+  throw new HttpError({
+    status: HttpCode.BAD_REQUEST,
+    message: 'User isn`t exist!!!',
+  });
+};
+
 export const createOkr = async (userId: string): Promise<OKR> => {
   const okrRepository = getCustomRepository(Okrepository);
   const userRepository = getCustomRepository(UserRepository);
