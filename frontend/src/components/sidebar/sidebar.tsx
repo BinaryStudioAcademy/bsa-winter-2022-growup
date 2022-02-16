@@ -5,7 +5,7 @@ import { ReactComponent as ProfileIcon } from 'assets/img/icons/sidebar-icons/pr
 import { ReactComponent as OkrIcon } from 'assets/img/icons/sidebar-icons/okr-icon.svg';
 import { ReactComponent as CareerPathIcon } from 'assets/img/icons/sidebar-icons/career-path-icon.svg';
 import { ReactComponent as MenteeProfileIcon } from 'assets/img/icons/sidebar-icons/mentee-icon.svg';
-import { AppRoute } from 'common/enums/enums';
+import { MentorMenteeRoute } from 'common/enums/enums';
 import { Link } from 'components/common/common';
 import './styles.scss';
 
@@ -22,7 +22,7 @@ const Sidebar: React.FC = () => {
                 <nav className="navigation-section px-md-3">
                     <ul className="navigation-section__list navigation-list d-flex flex-column m-0 p-0">
                       <li className="navigation-list__item navigation-item mb-4">
-                          <Link to={AppRoute.HOME}>
+                          <Link to={MentorMenteeRoute.HOME}>
                               <span className="navigation-item__link navigation-link d-flex align-items-center p-2 ps-md-4 fs-4 font-weight-normal text-gu-white">
                                   <HomeIcon className="navigation-link__icon me-md-3" />
                                   <span className="navigation-link__title d-none d-md-block">Home</span>
@@ -30,7 +30,7 @@ const Sidebar: React.FC = () => {
                           </Link>
                       </li>
                       <li className="navigation-list__item navigation-item mb-4">
-                        <Link to={AppRoute.OPPORTUNITIES}>
+                        <Link to={MentorMenteeRoute.OPPORTUNITIES}>
                             <span className="navigation-item__link navigation-link d-flex align-items-center p-2 ps-md-4 fs-4 font-weight-normal text-gu-white">
                                 <OpportunitiesIcon className="navigation-link__icon me-md-3" />
                                 <span className="navigation-link__title d-none d-md-block">Opportunities</span>
@@ -38,7 +38,7 @@ const Sidebar: React.FC = () => {
                         </Link>
                       </li>
                       <li className="navigation-list__item navigation-item mb-4">
-                          <Link to={AppRoute.PROFILE}>
+                          <Link to={MentorMenteeRoute.PROFILE}>
                             <span className="navigation-item__link navigation-link d-flex align-items-center p-2 ps-md-4 fs-4 font-weight-normal text-gu-white">
                                 <ProfileIcon className="navigation-link__icon me-md-3" />
                                 <span className="navigation-link__title d-none d-md-block">Profile</span>
@@ -46,7 +46,7 @@ const Sidebar: React.FC = () => {
                           </Link>
                       </li>
                       <li className="navigation-list__item navigation-item mb-4">
-                          <Link to={AppRoute.OKR}>
+                          <Link to={MentorMenteeRoute.OKR}>
                             <span className="navigation-item__link navigation-link d-flex align-items-center p-2 ps-md-4 fs-4 font-weight-normal text-gu-white">
                                 <OkrIcon className="navigation-link__icon me-md-3" />
                                 <span className="navigation-link__title d-none d-md-block">OKR</span>
@@ -54,7 +54,7 @@ const Sidebar: React.FC = () => {
                           </Link>
                       </li>
                       <li className="navigation-list__item navigation-item mb-4">
-                          <Link to={AppRoute.CAREER_PATH}>
+                          <Link to={MentorMenteeRoute.CAREER_PATH}>
                             <span className="navigation-item__link navigation-link d-flex align-items-center p-2 ps-md-4 fs-4 font-weight-normal text-gu-white">
                                 <CareerPathIcon className="navigation-link__icon me-md-3" />
                                 <span className="navigation-link__title d-none d-md-block">Career Path</span>
@@ -63,7 +63,7 @@ const Sidebar: React.FC = () => {
                       </li>
                       {isMentor ?
                         <li className="navigation-list__item navigation-item mb-4">
-                            <Link to={AppRoute.MENTEE_PROFILES}>
+                            <Link to={MentorMenteeRoute.MENTEE_PROFILES}>
                                 <span className="navigation-item__link navigation-link d-flex align-items-center p-2 ps-md-4 fs-4 font-weight-normal text-gu-white">
                                     <MenteeProfileIcon className="navigation-link__icon me-md-3" />
                                     <span className="navigation-link__title d-none d-md-block">Mentee Profiles</span>

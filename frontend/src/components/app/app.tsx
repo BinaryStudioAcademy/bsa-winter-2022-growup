@@ -1,6 +1,6 @@
 import { useAppSelector } from 'hooks/hooks';
 
-import { AppRoute, AdminRoute } from 'common/enums/enums';
+import { AppRoute, AdminRoute, MentorMenteeRoute } from 'common/enums/enums';
 import Login from 'components/login/login';
 import SignUp from 'components/sign-up/sign-up';
 import { Route, Routes } from 'components/common/common';
@@ -48,22 +48,22 @@ const App: React.FC = () => {
             <Routes>
               <Route path={AppRoute.LOGIN} element={<Login />} />
               <Route path={AppRoute.SIGN_UP} element={<SignUp />} />
-              <Route path={AppRoute.ORKS} element={Ork} />
-              <Route path={AppRoute.SETTINGS_PROFILE} element={<Profile />} />
+              <Route path={MentorMenteeRoute.ORKS} element={Ork} />
+              <Route path={MentorMenteeRoute.SETTINGS_PROFILE} element={<Profile />} />
               <Route path="*" element={<NotFound />} />
-              <Route path={AppRoute.HOME} element={<Main_Page />} />
-              <Route path={AppRoute.PROFILE} element={<Profile />} />
+              <Route path={MentorMenteeRoute.HOME} element={<Main_Page />} />
+              <Route path={MentorMenteeRoute.PROFILE} element={<Profile />} />
               <Route
-                path={AppRoute.CAREER_PATH}
+                path={MentorMenteeRoute.CAREER_PATH}
                 element={<div>Career Path</div>}
               />
-              <Route path={AppRoute.OKR} element={<div>OKR</div>} />
+              <Route path={MentorMenteeRoute.OKR} element={<div>OKR</div>} />
               <Route
-                path={AppRoute.OPPORTUNITIES}
+                path={MentorMenteeRoute.OPPORTUNITIES}
                 element={<div>Opportunities</div>}
               />
               <Route
-                path={AppRoute.MENTEE_PROFILES}
+                path={MentorMenteeRoute.MENTEE_PROFILES}
                 element={<div>Mentee Profiles</div>}
               />
             </Routes>

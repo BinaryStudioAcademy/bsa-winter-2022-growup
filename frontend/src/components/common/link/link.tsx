@@ -1,8 +1,8 @@
 import { NavLink as AppLink } from 'react-router-dom';
-import { AppRoute, AdminRoute } from 'common/enums/enums';
+import { AdminRoute, AppRoute, MentorMenteeRoute } from 'common/enums/enums';
 
 type Props = {
-  to: AppRoute | AdminRoute;
+  to: AppRoute | AdminRoute | MentorMenteeRoute;
   className?: string;
 };
 

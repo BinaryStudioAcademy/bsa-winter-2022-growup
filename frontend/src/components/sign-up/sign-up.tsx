@@ -1,4 +1,4 @@
-import { AppRoute, UserPayloadKey } from 'common/enums/enums';
+import { MentorMenteeRoute, UserPayloadKey } from 'common/enums/enums';
 import FormInput from 'components/common/form-input/form-input';
 import { useAppDispatch, useAppForm, useAppSelector, useCallback, useNavigate } from 'hooks/hooks';
 import { Container, FloatingLabel, Form } from 'react-bootstrap';
@@ -27,7 +27,7 @@ const SignUp: React.FC = () => {
     handleSignUp(values)
       .unwrap()
       .then(() => {
-        navigate(AppRoute.HOME);
+        navigate(MentorMenteeRoute.HOME);
       })
       .catch((err: Error) => {
         NotificationManager.error(err.message);
