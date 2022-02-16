@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { run } from '~/common/helpers/route.helper';
 import { CompanyResponse } from '~/common/models/responses/company';
 import { createCompany, editCompany } from '~/services/company.service';
+import { createOkr } from '~/services/okr.service';
 
 const router: Router = Router();
 
@@ -28,6 +29,11 @@ router.patch(
     };
     return editCompany({ id, body, tokenPayload });
   }),
+);
+
+router.post(
+  '/okr',
+  run((req) => createOkr(req.userId)),
 );
 
 export default router;
