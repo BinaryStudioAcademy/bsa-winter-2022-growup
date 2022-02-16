@@ -1,3 +1,3 @@
-export default interface ILabelData{
-    type:string,
+export default interface ILabelData {
+  type: string;
 }

@@ -1,4 +1,4 @@
 export default interface INotificationData {
-    title:string,
-    type:string
+  title: string;
+  type: string;
 }

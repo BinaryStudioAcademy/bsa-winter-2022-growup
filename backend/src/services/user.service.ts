@@ -35,7 +35,9 @@ export const refreshToken = async (
   data: refreshTokenSchema,
 ): Promise<RefreshTokenResponse> => {
   const refreshTokenRepository = getCustomRepository(RefreshTokenRepository);
-  const tokenData = await refreshTokenRepository.findOne({ token: data.refreshToken });
+  const tokenData = await refreshTokenRepository.findOne({
+    token: data.refreshToken,
+  });
   const roleRepository = getCustomRepository(UserRoleRepository);
   const role = await roleRepository.findOne({ user: tokenData.user });
 
@@ -53,7 +55,10 @@ export const refreshToken = async (
     role: role.role,
   });
 
-  const storedRefreshToken = refreshTokenRepository.create({ token: refreshToken, user: tokenData.user });
+  const storedRefreshToken = refreshTokenRepository.create({
+    token: refreshToken,
+    user: tokenData.user,
+  });
   await storedRefreshToken.save();
 
   return { refreshToken, accessToken };
