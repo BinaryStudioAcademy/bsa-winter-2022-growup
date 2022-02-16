@@ -184,6 +184,42 @@
         }
       }
     },
+    "/api/auth/refresh": {
+      "post": {
+        "parameters": [
+          {
+            "name": "refreshToken",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "refreshToken": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true,
+            "description": "The refresh token"
+          }
+        ],
+        "tags": ["Users"],
+        "summary": "Use a refresh token to generate a new JWT token and a new refresh token",
+        "responses": {
+          "200": {
+            "description": "Returns token if everything is ok. Token contains userId and jwt. It expires in 7d.",
+            "schema": {
+              "$ref": "#/definitions/RefreshToken"
+            }
+          },
+          "404": {
+            "description": "Returns error if token are invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/api/company/tags": {
       "get": {
         "parameters": [
@@ -400,6 +436,14 @@
       "required": ["token"],
       "properties": {
         "token": {
+          "type": "string"
+        }
+      }
+    },
+    "RefreshToken": {
+      "required": ["refreshToken"],
+      "properties": {
+        "refreshToken": {
           "type": "string"
         }
       }
