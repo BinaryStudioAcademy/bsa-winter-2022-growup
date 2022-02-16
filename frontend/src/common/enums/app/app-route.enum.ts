@@ -1,7 +1,4 @@
 enum AppRoute {
-  ADMIN = '/',
-  ADMIN_USERS = '/users',
-  ADMIN_CAREER_PATH = '/career-path',
   LOGIN = '/login',
   SIGN_UP = '/signup',
   ORKS = '/ork',

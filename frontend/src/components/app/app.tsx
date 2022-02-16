@@ -1,6 +1,6 @@
 import { useAppSelector } from 'hooks/hooks';
 
-import { AppRoute } from 'common/enums/enums';
+import { AppRoute, AdminRoute } from 'common/enums/enums';
 import Login from 'components/login/login';
 import SignUp from 'components/sign-up/sign-up';
 import { Route, Routes } from 'components/common/common';
@@ -30,15 +30,15 @@ const App: React.FC = () => {
           <div className="w-100">
             <Routes>
               <Route
-                path={AppRoute.ADMIN}
+                path={AdminRoute.ADMIN}
                 element={<Admin variant="company" />}
               />
               <Route
-                path={AppRoute.ADMIN_USERS}
+                path={AdminRoute.ADMIN_USERS}
                 element={<Admin variant="users" />}
               />
               <Route
-                path={AppRoute.ADMIN_CAREER_PATH}
+                path={AdminRoute.ADMIN_CAREER_PATH}
                 element={<Admin variant="career" />}
               />
             </Routes>
