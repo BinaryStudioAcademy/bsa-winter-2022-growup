@@ -1,5 +1,7 @@
-@media screen and (max-width: 576px) {
-  .nav-tabs {
+@import 'assets/css/styles';
+
+@include media-breakpoint-down(sm) {
+  .profile-nav-tabs{
     width: fit-content;
     margin: 0 auto;
   }
