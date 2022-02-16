@@ -8,5 +8,5 @@ export class SkillObjective extends AbstractEntity {
   name: string;
 
   @ManyToOne(() => SkillCategory, (skillCategory) => skillCategory.id)
-  categoty: SkillCategory;
+  category: SkillCategory;
 }
