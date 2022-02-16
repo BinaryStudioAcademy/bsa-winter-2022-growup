@@ -11,7 +11,9 @@ const Reducer = (builder: ActionReducerMapBuilder<State>): void => {
 
   builder.addCase(actions.fetchTags.fulfilled, (state, action) => {
     state.isLoading = false;
-    state.tags = action.payload as State['tags'];
+    if (action.payload) {
+      state.tags = action.payload as State['tags'];
+    }
   });
 
   builder.addCase(actions.deleteTag.fulfilled, (state, action) => {

@@ -16,6 +16,90 @@
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "paths": {
+    "/company": {
+      "post": {
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true,
+            "description": "Company credentials"
+          }
+        ],
+        "tags": ["Company"],
+        "summary": "Create new company",
+        "responses": {
+          "200": {
+            "description": "Returns token and company if everything is ok.",
+            "schema": {
+              "$ref": "#/definitions/Company"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "body": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true,
+            "description": "Company credentials"
+          }
+        ],
+        "tags": ["Company"],
+        "summary": "Create new company",
+        "responses": {
+          "200": {
+            "description": "Returns token and company if everything is ok.",
+            "schema": {
+              "$ref": "#/definitions/Company"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/api/auth/register": {
       "post": {
         "parameters": [
@@ -197,7 +281,21 @@
           "200": {
             "description": "Returns array of tag objects with company id they are related to",
             "schema": {
-              "$ref": "#/definitions/Tag"
+              "type": "object",
+              "properties": {
+                "tags": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Tag"
+                  }
+                },
+                "existingTags": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
             }
           }
         }
@@ -244,9 +342,99 @@
           }
         }
       }
+    },
+    "/api/user": {
+      "get": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          }
+        ],
+        "tags": ["Users", "Profile"],
+        "summary": "Gets user info",
+        "responses": {
+          "200": {
+            "description": "Returns user information",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/api/user/avatar": {
+      "put": {
+        "consumes": ["multipart/form-data"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "formData",
+            "name": "avatar",
+            "type": "file",
+            "description": "New avatar"
+          }
+        ],
+        "tags": ["Users", "Profile"],
+        "summary": "Updates user avatar",
+        "responses": {
+          "200": {
+            "description": "Returns updated user",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
+    "Company": {
+      "required": ["token"],
+      "properties": {
+        "token": {
+          "type": "string"
+        },
+        "company": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "deletedAt": {
+              "type": "string",
+              "nullable": true,
+              "default": null
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "updatedAt": {
+              "type": "string",
+              "nullable": true,
+              "default": null
+            }
+          }
+        }
+      }
+    },
     "Token": {
       "required": ["token"],
       "properties": {
@@ -275,6 +463,34 @@
           "type": "string"
         },
         "companyId": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": "string"
+        }
+      }
+    },
+    "User": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "avatar": {
           "type": "string"
         },
         "createdAt": {
