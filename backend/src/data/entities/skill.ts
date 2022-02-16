@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToOne } from 'typeorm';
 import { AbstractEntity } from '~/data/abstract/abstract.entity';
 import { Company } from './company';
-import { PermissionType } from '../../common/enums/permission-type';
+import { SkillType } from '../../common/enums/skill-type';
 
 @Entity()
 export class Skill extends AbstractEntity {
@@ -10,11 +10,10 @@ export class Skill extends AbstractEntity {
 
   @Column({
     type: 'enum',
-    enum: PermissionType,
-    default: PermissionType.Read,
+    enum: SkillType,
   })
-  name: string;
+  type: SkillType;
 
   @Column({ type: 'varchar', length: 250 })
-  type: PermissionType;
+  name: string;
 }
