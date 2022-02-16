@@ -1,8 +1,10 @@
 import { Router } from 'express';
 import { run } from '~/common/helpers/route.helper';
 import { CompanyResponse } from '~/common/models/responses/company';
+import { OKR } from '~/data/entities/okr';
+import { Objective } from '~/data/entities/objective';
 import { createCompany, editCompany } from '~/services/company.service';
-import { createOkr } from '~/services/okr.service';
+import { createOkr, addNewObjectiveToOkr } from '~/services/okr.service';
 
 const router: Router = Router();
 
@@ -18,6 +20,7 @@ router.post(
     return createCompany(data);
   }),
 );
+
 router.patch(
   '/:id',
   run((req): Promise<CompanyResponse> => {
@@ -33,7 +36,12 @@ router.patch(
 
 router.post(
   '/okr',
-  run((req) => createOkr(req.userId)),
+  run((req): Promise<OKR> => createOkr(req.userId)),
+);
+
+router.post(
+  '/okr/:id/objective',
+  run((req): Promise<Objective> => addNewObjectiveToOkr(req.params.id)),
 );
 
 export default router;
