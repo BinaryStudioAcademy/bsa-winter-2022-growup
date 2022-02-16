@@ -4,8 +4,8 @@
     border: 2px solid #ff9900;
     border-radius: 10px;
     display: grid;
-    grid-template-columns: 1fr, 1fr, 30px;
-    grid-template-rows: 1fr, 1fr, 100px;
+    grid-template-columns: 1fr 1fr 30px;
+    grid-template-rows: 1fr 1fr 100px;
     grid-template-areas:
             "name name reached"
             "obj key ."
