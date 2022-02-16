@@ -1,6 +1,7 @@
-import { Entity, ManyToOne, Column } from 'typeorm';
+import { Entity, ManyToOne, Column, ManyToMany, JoinTable } from 'typeorm';
 import { AbstractEntity } from '~/data/abstract/abstract.entity';
 import { Company } from './company';
+import { Opportunity } from './opportunity';
 
 @Entity()
 export class Tags extends AbstractEntity {
@@ -9,4 +10,11 @@ export class Tags extends AbstractEntity {
 
   @ManyToOne(() => Company, (company) => company.id)
   company: Company;
+
+  @ManyToMany(() => Opportunity, (opportunity) => opportunity.tags)
+  @JoinTable({
+    name: 'tag_opportunity',
+    joinColumn: { name: 'tagId', referencedColumnName: 'id' },
+  })
+  opportunities: Opportunity[];
 }

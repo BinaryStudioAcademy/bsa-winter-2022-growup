@@ -1,7 +1,8 @@
-import { Entity, Column, ManyToOne } from 'typeorm';
+import { Entity, Column, ManyToOne, ManyToMany } from 'typeorm';
 import { AbstractEntity } from '~/data/abstract/abstract.entity';
 import { User } from './user';
 import { Company } from './company';
+import { Tags } from './tags';
 
 @Entity()
 export class Opportunity extends AbstractEntity {
@@ -17,4 +18,6 @@ export class Opportunity extends AbstractEntity {
     user: User;
     @ManyToOne(() => Company, (company) => company.id)
     company: Company;
+    @ManyToMany(() => Tags, (tag) => tag.opportunities)
+    tags: Tags[];
 }
