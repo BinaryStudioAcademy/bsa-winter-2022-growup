@@ -1,5 +1,4 @@
 import { useAppSelector } from 'hooks/hooks';
-
 import { AppRoute } from 'common/enums/enums';
 import Login from 'components/login/login';
 import SignUp from 'components/sign-up/sign-up';
@@ -12,11 +11,11 @@ import Header from 'components/header/header';
 import Sidebar from 'components/sidebar/sidebar';
 import Main_Page from 'components/main-page/main-page';
 import './app.scss';
+import OpprotunitiesPage from 'components/opportunities-page/opportunitiesPage';
 
 const App: React.FC = () => {
   const isAdmin = false;
   const { isAuthenticated } = useAppSelector((state) => state.auth);
-
   return (
     <div>
       {isAdmin || !isAuthenticated ? null : (
@@ -60,7 +59,7 @@ const App: React.FC = () => {
               <Route path={AppRoute.OKR} element={<div>OKR</div>} />
               <Route
                 path={AppRoute.OPPORTUNITIES}
-                element={<div>Opportunities</div>}
+                element={<OpprotunitiesPage />}
               />
               <Route
                 path={AppRoute.MENTEE_PROFILES}

@@ -21,15 +21,5 @@ export default class OpportunityTagSeeder {
     tag.opportunities.push(opportunity);
     await tag.save();
     await opportunity.save();
-    // await asyncForEach(async (oppTag: Opportunity_Tag) => {
-    //   const tag = await opportunityRepository.findOne({name: opporunities[0].name,});
-    //   const opportunity = await opportunityRepository.findOne({name: opporunities[0].name,});
-    //   await Object.assign(new Opportunity_Tag(), {
-    //     ...oppTag,
-    //     opportunityId:opportunitie.id,
-    //     tagsId:tag.id,
-    //     relations:['opportunity','tags'],
-    //   }).save();
-    // },opp_tags as Opportunity_Tag[]);
   }
 }

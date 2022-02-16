@@ -1,11 +1,10 @@
-import './notification.scss';
 import { ReactChild } from 'react';
 import { ArrowDown } from 'react-bootstrap-icons';
-import Notification from './notification';
-import INotificationData from '../interfaces/INotificationData';
-import { NotificationTypes } from '../enums/NotificationTypes';
-
-const Notifications:React.FC = ()=>{
+import NotificationItem from './notificationItem';
+import { INotificationData } from '../common/interfaces';
+import { NotificationTypes } from '../common/enums';
+import './notification.scss';
+const NotificationList:React.FC = ()=>{
     const notificationsData = [
         {
             title:'Notification__item',
@@ -29,8 +28,8 @@ const Notifications:React.FC = ()=>{
         },
         ];
 
-    const notifications:ReactChild[] =  notificationsData.map((item : INotificationData)=>{
-        return <Notification {...item} />;
+    const notifications:ReactChild[] =  notificationsData.map((item : INotificationData,index)=>{
+        return <NotificationItem {...item} key={index}/>;
     });
 
     return(
@@ -47,4 +46,4 @@ const Notifications:React.FC = ()=>{
     );
 };
 
-export default Notifications;
+export default NotificationList;

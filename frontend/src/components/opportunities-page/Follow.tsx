@@ -1,5 +1,18 @@
-const Follow:React.FC =  ()=>{
-    return(<span className="btn btn-gu-purple text-gu-white align-self-start fs-6">Follow</span>);
+import { Bookmark,BookmarkFill } from 'react-bootstrap-icons';
+import { IAddNewOpportunity } from 'store/opportunities/common';
+import { useAppDispatch } from 'hooks/hooks';
+import { subscribeFollow,unSubscribeFollow } from '../../store/opportunities/actions';
+interface Props extends IAddNewOpportunity{}
+
+const Follow:React.FC<Props> = ({ isFollow,id })=>{
+    const dispatch = useAppDispatch();
+    const followHandler = isFollow ?  ():void=>{dispatch(unSubscribeFollow(id));} : ():void=>{dispatch(subscribeFollow(id));};
+    return(
+        <span className="follow px-1 py-1 align-self-start position-relative rounded-1" onClick={():void=>{followHandler();}}>
+            {isFollow ? <BookmarkFill className="text-gu-blue position-absolute top-50 start-50 translate-middle"/> :<Bookmark className="position-absolute top-50 start-50 translate-middle" />}
+        </span>
+    );
 };
 
 export default Follow;
+

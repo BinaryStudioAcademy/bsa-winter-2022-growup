@@ -1,11 +1,11 @@
 import { ReactElement } from 'react';
-import ILabelData from '../interfaces/ILabaleData';
+import { ILabelData } from '../common/interfaces';
 import Label from './label';
 interface Props extends ILabelData {
     title?:string
 }
 
-const Notification=( { title,type } :Props):ReactElement=>{
+const NotificationItem=( { title,type } :Props):ReactElement=>{
     const labelData:ILabelData = {
         type:type,
     };
@@ -26,4 +26,4 @@ const Notification=( { title,type } :Props):ReactElement=>{
     </div>);
 };
 
-export default Notification;
+export default NotificationItem;

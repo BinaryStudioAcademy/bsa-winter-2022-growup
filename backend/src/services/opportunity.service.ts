@@ -25,7 +25,7 @@ export const getOpportunities = async (): Promise<Opportunity[]> => {
   const opportunities = await opportunityRepository.find({
     company: companyInstance,
     user: userInstance,
-    relations: ['company', 'user'],
+    relations: ['company', 'user','tags'],
   } as FindManyOptions);
 
   return opportunities.map((opportunitie) => opportunityMapper(opportunitie));
