@@ -4,7 +4,6 @@ import { RoleType, HttpCode, HttpError } from 'growup-shared';
 import UserRepository from '../data/repositories/user.repository';
 import UserRoleRepository from '~/data/repositories/role.repository';
 import RefreshTokenRepository from '~/data/repositories/refresh-token.repository';
-import { generateRefreshToken, generateAccessToken } from '~/common/helpers/auth.helper';
 import { refreshTokenSchema } from '~/common/models/tokens/refresh-token.model';
 
 import { User } from '../data/entities/user';
@@ -13,9 +12,9 @@ import {
   comparePasswords,
   hashPassword,
 } from '~/common/utils/password-hasher.util';
-import { signToken } from '~/common/utils/token.util';
 import { uploadImage, deleteImage } from '~/common/utils/upload-image.util';
 import { getCurrentTimeMS } from '~/common/utils/time.util';
+import { signToken, generateRefreshToken } from '~/common/utils/token.util';
 
 import type {
   UserLoginForm,
@@ -27,29 +26,37 @@ type TokenResponse = {
   token: string;
 };
 
-const updateTokens = (user: User): any => {
-  const accessToken = generateAccessToken(user);
-  const refreshToken = generateRefreshToken(user);
-
-  return {
-    accessToken,
-    refreshToken,
-  };
+type RefreshTokenResponse = {
+  refreshToken: string;
+  accessToken: string;
 };
 
 export const refreshToken = async (
   data: refreshTokenSchema,
-) : Promise<TokenResponse> => {
+): Promise<RefreshTokenResponse> => {
   const refreshTokenRepository = getCustomRepository(RefreshTokenRepository);
+  const tokenData = await refreshTokenRepository.findOne({ token: data.refreshToken });
+  const roleRepository = getCustomRepository(UserRoleRepository);
+  const role = await roleRepository.findOne({ user: tokenData.user });
 
-  const tokendata = await refreshTokenRepository.findOne({ user: data.user });
-  if (tokendata) {
-    const token = updateTokens({
-      refreshToken: tokendata.token,
+  if (!tokenData) {
+    throw new HttpError({
+      status: HttpCode.NOT_FOUND,
+      message: 'refresh token is not valid',
     });
-
-    return { token };
   }
+
+  await refreshTokenRepository.delete({ token: tokenData.token });
+  const refreshToken = generateRefreshToken({});
+  const accessToken = signToken({
+    userId: tokenData.user.id,
+    role: role.role,
+  });
+
+  const storedRefreshToken = refreshTokenRepository.create({ token: refreshToken, user: tokenData.user });
+  await storedRefreshToken.save();
+
+  return { refreshToken, accessToken };
 };
 
 const getUserJWT = async (user: User): Promise<TokenResponse> => {
@@ -72,8 +79,6 @@ export const authenticateUser = async (
   const user = await userRepository.findOne({
     email: data.email,
   });
-
-  updateTokens(user);
 
   if (!user)
     throw new HttpError({
