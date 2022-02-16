@@ -1,0 +1,17 @@
+import { AdminRoute } from '../../../common/enums/enums';
+import Admin from '../../admin/admin';
+
+export const adminRoutes = [
+  {
+    path: AdminRoute.ADMIN,
+    element: <Admin variant="company" />,
+  },
+  {
+    path: AdminRoute.ADMIN_USERS,
+    element: <Admin variant="users" />,
+  },
+  {
+    path: AdminRoute.ADMIN_CAREER_PATH,
+    element: <Admin variant="career" />,
+  },
+];

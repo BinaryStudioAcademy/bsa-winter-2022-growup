@@ -9,6 +9,7 @@ enum MentorMenteeRoute {
   OPPORTUNITIES = '/opportunities',
   MENTEE_PROFILES = '/mentee',
   EXPLORE = '/explore',
+  ANY = '/*',
 }
 
 export { MentorMenteeRoute };
