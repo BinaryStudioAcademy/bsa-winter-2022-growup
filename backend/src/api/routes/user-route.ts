@@ -1,6 +1,6 @@
 import { Request, Router } from 'express';
 import { run } from '../../common/helpers/route.helper';
-import { authenticateUser, registerUser, refreshToken } from '~/services/user.service';
+import { authenticateUser, registerUser } from '~/services/user.service';
 import multer from 'multer';
 import { updateUserAvatar, fetchUser } from '~/services/user.service';
 
@@ -20,10 +20,6 @@ router
   .post(
     '/register',
     run(async (req: Request) => await registerUser(req.body)),
-  )
-  .post(
-    '/auth/refresh',
-    run(async (req: Request) => await refreshToken(req.body)),
   );
 
 router.put(
