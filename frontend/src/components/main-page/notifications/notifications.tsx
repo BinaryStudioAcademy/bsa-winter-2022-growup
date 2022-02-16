@@ -32,7 +32,8 @@ const Notifications: React.FC = () => {
   ];
 
   const renderNotifications = (): ReactChild[] => {
-    const to = viewAll ? notificationsData.length : 3;
+    const itemsCount = 3;
+    const to = viewAll ? notificationsData.length : itemsCount;
     const data = notificationsData.slice(0, to);
 
     return data.map((item: INotificationData) => <Notification {...item} />);
