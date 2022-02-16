@@ -5,6 +5,7 @@ import { OKR } from '~/data/entities/okr';
 import { Objective } from '~/data/entities/objective';
 import { createCompany, editCompany } from '~/services/company.service';
 import { createOkr, addNewObjectiveToOkr } from '~/services/okr.service';
+import { addNewKeyresultToObjective } from '~/services/objective.service';
 
 const router: Router = Router();
 
@@ -42,6 +43,21 @@ router.post(
 router.post(
   '/okr/:id/objective',
   run((req): Promise<Objective> => addNewObjectiveToOkr(req.params.id)),
+);
+
+router.post(
+  '/company/okr/:id/objective/:id1/keyresult',
+  run((req): Promise<Objective> => {
+    const { id, id1 } = req.params;
+    const { result } = req.body;
+
+    const data = {
+      okrId: id,
+      objectiveId: id1,
+      result,
+    };
+    return addNewKeyresultToObjective(data);
+  }),
 );
 
 export default router;
