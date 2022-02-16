@@ -1,27 +1,35 @@
-.container-progress-bar{
+@use "sass:math";
+// global default
+$defaultSkillLvlCount: 10;
+
+.container-progress-bar {
     max-width: 50px;
     min-height: 50px;
     margin: 0 auto;
 }
 
-.b-progress-bar{
+.b-progress-bar {
     width: 50px;
     height: 50px;
     border-radius: 50%;
 }
 
-.b-progress-bar span{
+.form-control {
+    border-radius: 10px;
+}
+
+.b-progress-bar span {
     background-color: #f6f7f9;
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    top:50%;
+    top: 50%;
     left: 50%;
-    transform:translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     line-height: 2.5;
 }
 
-.b-progress-bar div{
+.b-progress-bar div {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -30,114 +38,46 @@
     transform-origin: 0 -10%;
 }
 
-.activeBlock {
+.button-group {
+    margin-left: 80px;
+}
+
+.rating-control {
+    width: 30px;
+}
+
+.skill-control {
+    width: 35%;
+}
+
+.container-skill-name {
+    width: 470px;
+    height: 67.5px;
+}
+
+.active-block {
     background-color: red;
 }
 
-.passiveBlock {
+.passive-block {
     background-color: silver;
 }
 
-.b-progress-bar div:nth-child(1){
-    transform:rotate(277.5deg)translate(0,-50%);
-}
-.b-progress-bar div:nth-child(2){
-    transform:rotate(287.5deg)translate(0,-50%);
-}
-.b-progress-bar div:nth-child(3){
-    transform:rotate(297.5deg)translate(0,-50%);
-}
-.b-progress-bar div:nth-child(4){
-    transform:rotate(307.5deg)translate(0,-50%);
-}
+$variable: 277.5deg;
+$sizeProgress: math.div(360deg, $defaultSkillLvlCount);
+$sizeProgressOne: math.div($sizeProgress - 15deg, 3);
 
-.b-progress-bar div:nth-child(5){
-    transform:rotate(322.5deg)translate(0,-50%);
-}
-.b-progress-bar div:nth-child(6){
-    transform:rotate(332.5deg)translate(0,-50%);
-}
-.b-progress-bar div:nth-child(7){
-    transform:rotate(342.5deg)translate(0,-50%);
-}
-.b-progress-bar div:nth-child(8){
-    transform:rotate(352.5deg)translate(0,-50%);
-}
-
-.b-progress-bar div:nth-child(9){
-    transform:rotate(7.5deg)translate(0,-50%);
-}
-.b-progress-bar div:nth-child(10){
-    transform:rotate(17.5deg)translate(0,-50%);
-}
-.b-progress-bar div:nth-child(11){
-    transform:rotate(27.5deg)translate(0,-50%);
-}
-.b-progress-bar div:nth-child(12){
-    transform:rotate(37.5deg)translate(0,-50%);
-}
-
-.b-progress-bar div:nth-child(13){
-    transform:rotate(52.5deg)translate(0,-50%);
-}
-.b-progress-bar div:nth-child(14){
-    transform:rotate(62.5deg)translate(0,-50%);
-}
-.b-progress-bar div:nth-child(15){
-    transform:rotate(72.5deg)translate(0,-50%);
-}
-.b-progress-bar div:nth-child(16){
-    transform:rotate(82.5deg)translate(0,-50%);
-}
-
-.b-progress-bar div:nth-child(17){
-    transform:rotate(97.5deg)translate(0,-50%);
-}
-.b-progress-bar div:nth-child(18){
-    transform:rotate(107.5deg)translate(0,-50%);
-}
-.b-progress-bar div:nth-child(19){
-    transform:rotate(117.5deg)translate(0,-50%);
-}
-.b-progress-bar div:nth-child(20){
-    transform:rotate(127.5deg)translate(0,-50%);
-}
-
-.b-progress-bar div:nth-child(21){
-    transform:rotate(142.5deg)translate(0,-50%);
-}
-.b-progress-bar div:nth-child(22){
-    transform:rotate(152.5deg)translate(0,-50%);
-}
-.b-progress-bar div:nth-child(23){
-    transform:rotate(162.5deg)translate(0,-50%);
-}
-.b-progress-bar div:nth-child(24){
-    transform:rotate(172.5deg)translate(0,-50%);
-}
-
-.b-progress-bar div:nth-child(25){
-    transform:rotate(188.5deg)translate(0,-50%);
-}
-.b-progress-bar div:nth-child(26){
-    transform:rotate(197.5deg)translate(0,-50%);
-}
-.b-progress-bar div:nth-child(27){
-    transform:rotate(207.5deg)translate(0,-50%);
-}
-.b-progress-bar div:nth-child(28){
-    transform:rotate(217.5deg)translate(0,-50%);
-}
-
-.b-progress-bar div:nth-child(29){
-    transform:rotate(232.5deg)translate(0,-50%);
-}
-.b-progress-bar div:nth-child(30){
-    transform:rotate(242.5deg)translate(0,-50%);
-}
-.b-progress-bar div:nth-child(31){
-    transform:rotate(252.5deg)translate(0,-50%);
-}
-.b-progress-bar div:nth-child(32){
-    transform:rotate(262.5deg)translate(0,-50%);
+@for $i from 0 through $defaultSkillLvlCount - 1 {
+    .b-progress-bar div:nth-child(#{1 + $i * 4}) {
+        transform: rotate($variable + $i * $sizeProgress) translate(0, -50%);
+    }
+    .b-progress-bar div:nth-child(#{2 + $i * 4}) {
+        transform: rotate($variable + $sizeProgressOne + $i * $sizeProgress) translate(0, -50%);
+    }
+    .b-progress-bar div:nth-child(#{3 + $i * 4}) {
+        transform: rotate($variable + 2 * $sizeProgressOne + $i * $sizeProgress) translate(0, -50%);
+    }
+    .b-progress-bar div:nth-child(#{4 + $i * 4}) {
+        transform: rotate($variable + 3 * $sizeProgressOne + $i * $sizeProgress) translate(0, -50%);
+    }
 }
