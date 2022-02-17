@@ -1,4 +1,4 @@
-@import 'assets/css/styles';
+@import '~assets/scss/utils';
 
 .quiz {
   margin: 20px 0;
@@ -23,8 +23,8 @@
 
 @include media-breakpoint-down(sm) {
   .range {
-
-    &__end-title, &__start-title{
+    &__end-title,
+    &__start-title {
       display: none;
     }
   }

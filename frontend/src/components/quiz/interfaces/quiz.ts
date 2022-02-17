@@ -1,5 +1,5 @@
 export default interface IQuiz {
-  id: string
+  id: string;
   skill: string;
   level: number;
 }

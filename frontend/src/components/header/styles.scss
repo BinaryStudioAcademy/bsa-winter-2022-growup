@@ -1,67 +1,65 @@
-/* stylelint-disable */
-@import "../../assets/css/styles.scss";
-/* stylelint-enable */
+@import '~assets/scss/utils';
 
-$white-blue: #F0F3F9;
+$white-blue: #f0f3f9;
 
 .header-section {
-    z-index: 2;
-    background-color: #fff;
+  z-index: 2;
+  background-color: #fff;
 }
 
 .form-section {
+  &__search-icon {
+    top: 38%;
+  }
+  @include media-breakpoint-up(md) {
     &__search-icon {
-        top: 38%;
+      top: 43%;
     }
-    @include media-breakpoint-up(md) {
-        &__search-icon {
-            top: 43%;
-        }
-    }
+  }
 }
 
 .search-icon {
-    width: 20px;
-    height: 20px;
-    opacity: .4;
-    @include media-breakpoint-up(md) {
-        width: 15px;
-        height: 15px;
-    }
+  width: 20px;
+  height: 20px;
+  opacity: 0.4;
+  @include media-breakpoint-up(md) {
+    width: 15px;
+    height: 15px;
+  }
 }
 
 .search-input {
-    height: 45px;
-    width: 45px;
-    background-color: $white-blue;
-    border-radius: 33%;
-    @include media-breakpoint-up(md) {
-        width: 280px;
-        border-radius: 50px;
-    }
+  height: 45px;
+  width: 45px;
+  background-color: $white-blue;
+  border-radius: 33%;
+  @include media-breakpoint-up(md) {
+    width: 280px;
+    border-radius: 50px;
+  }
 }
 
 .search-input::placeholder {
-    line-height: 1.36em;
-    opacity: .4;
+  line-height: 1.36em;
+  opacity: 0.4;
 }
 
 .notification-section {
-    cursor: pointer;
-    &__notification-pointer {
-        left: 11px;
-        top: 3px;
-    }
+  cursor: pointer;
+  &__notification-pointer {
+    left: 11px;
+    top: 3px;
+  }
 }
 
 .avatar-icon {
-      cursor: pointer;
-      width: 47.64px;
-      height: 47.64px;
+  cursor: pointer;
+  width: 47.64px;
+  height: 47.64px;
 }
 
 .following-opportunities-icon {
-    color: $gu-blue;
-    width: 30px;
-    height: 30px;
+  color: $gu-blue;
+  width: 30px;
+  height: 30px;
 }

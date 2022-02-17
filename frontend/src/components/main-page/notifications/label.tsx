@@ -5,20 +5,18 @@ import { ReactComponent as OKRLogo } from '../../../assets/img/okr-icon.svg';
 import { ReactComponent as ApproveSkillsLogo } from '../../../assets/img/approve-skill.svg';
 import { NotificationTypes } from '../common/enums';
 
-interface Props extends ILabelData{
+interface Props extends ILabelData {}
 
-}
-
-const Label = ( { type } :Props):ReactElement=>{
-    switch(type){
-        case NotificationTypes.approve_skills:
-            return(<ApproveSkillsLogo></ApproveSkillsLogo>);
-        case NotificationTypes.okr:
-            return(<OKRLogo></OKRLogo>);
-        case NotificationTypes.opportunities:
-            return(<OpportunityLogo></OpportunityLogo>);
-        default:
-            return(<div></div>);
-    }
+const Label = ({ type }: Props): ReactElement => {
+  switch (type) {
+    case NotificationTypes.approve_skills:
+      return <ApproveSkillsLogo></ApproveSkillsLogo>;
+    case NotificationTypes.okr:
+      return <OKRLogo></OKRLogo>;
+    case NotificationTypes.opportunities:
+      return <OpportunityLogo></OpportunityLogo>;
+    default:
+      return <div></div>;
+  }
 };
 export default Label;

@@ -5,5 +5,6 @@ const HttpMethod = {
   ...HM,
   POST: 'POST',
   DELETE: 'DELETE',
+  PATCH: 'PATCH',
 } as const;
 export { HttpMethod };

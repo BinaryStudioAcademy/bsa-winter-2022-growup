@@ -1,11 +1,12 @@
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import { AppRoute } from 'common/enums/enums';
 
-import Companies from './companies/company-card';
+import Companies from './companies/companies';
 import Users from './users/users';
 import CareerPath from './career-path/career-path';
 
 import { Link } from 'components/common/common';
+import logo from 'assets/img/logo.svg';
 
 enum Variants {
   company = 'company',
@@ -25,7 +26,14 @@ const Admin: React.FC<PropTypes> = ({ variant }) => (
       bg="growup-navigation"
     >
       <Container>
-        <Navbar.Brand>Growup Logo</Navbar.Brand>
+        <Navbar.Brand>
+          <a className="d-flex align-items-center text-decoration-none" href="">
+            <img className="logo-icon me-md-3" src={logo} alt="logo" />
+            <span className="logo-title fs-1 text-gu-black m-0 d-none d-md-block">
+              Grow Up
+            </span>
+          </a>
+        </Navbar.Brand>
         <Nav>
           <Nav.Item>Admin Profile Img</Nav.Item>
         </Nav>
@@ -34,10 +42,10 @@ const Admin: React.FC<PropTypes> = ({ variant }) => (
     <Container className="d-grid gap-2">
       <div className="row">
         <div className="col col-sm-8 col-md-8 col-lg-8">
-          <Nav variant="tabs" defaultActiveKey="/" >
+          <Nav variant="tabs" defaultActiveKey="/">
             <Nav.Item>
               <Link
-                  className={`nav-link ${
+                className={`nav-link ${
                   variant === Variants.company ? 'active' : ''
                 }`}
                 to={AppRoute.ADMIN}
