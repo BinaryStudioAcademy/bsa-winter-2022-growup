@@ -1,13 +1,8 @@
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';
+@import 'variables';
 
 /* stylelint-disable */
-$gu-blue: #463da8;
-$gu-white: #f6f7f9;
-$gu-black: #1d1d1d;
-$gu-purple: #291965;
-$gu-pink: #ee2a64;
-
 $custom-colors: (
   'gu-white': $gu-white,
   'gu-black': $gu-black,

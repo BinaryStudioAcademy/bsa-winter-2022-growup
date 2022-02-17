@@ -6,7 +6,7 @@ import 'react-notifications/lib/notifications.css';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { store } from 'store/store';
-import './assets/css/styles.scss';
+import './assets/scss/styles.scss';
 
 render(
   <StrictMode>
