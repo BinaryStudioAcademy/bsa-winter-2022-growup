@@ -22,7 +22,7 @@ router.post(
     registerUser(
       createDefaultUser(req.body.email),
       req.body.roleType,
-      req.body.companyId,
+      req.companyId,
     ),
   ),
 );
