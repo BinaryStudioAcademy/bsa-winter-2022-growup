@@ -7,9 +7,9 @@ export const steps = [
     component: <FirstStep />,
   },
   {
-    component: <SecondStep/>,
+    component: <SecondStep />,
   },
   {
-    component: <ThirdStep/>,
+    component: <ThirdStep />,
   },
 ];

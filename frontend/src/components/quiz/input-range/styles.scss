@@ -1,4 +1,4 @@
-@import 'assets/css/styles';
+@import 'src/assets/css/styles';
 
 .range-slider {
   flex-flow: column nowrap;
@@ -61,7 +61,8 @@
   top: 0;
   border: 0;
   border-radius: 50%;
-  box-shadow: -0.3em -0.3em 0.5em #463da8 inset, 0 -0.2em 0.2em 0 rgba(0,0,0,0.2), 0.3em 0.5em 0.8em  rgba(0,0,0,0.3);
+  box-shadow: -0.3em -0.3em 0.5em #463da8 inset,
+    0 -0.2em 0.2em 0 rgba(0, 0, 0, 0.2), 0.3em 0.5em 0.8em rgba(0, 0, 0, 0.3);
 }
 
 @include media-breakpoint-down(md) {

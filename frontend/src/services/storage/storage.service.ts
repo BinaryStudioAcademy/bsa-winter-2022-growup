@@ -6,7 +6,7 @@ interface IStorage {
 }
 
 interface IStorageProps {
-  storage: IStorage
+  storage: IStorage;
 }
 
 class Storage {

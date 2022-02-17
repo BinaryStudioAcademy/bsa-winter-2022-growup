@@ -32,29 +32,20 @@ const { reducer, actions } = createSlice({
   extraReducers: (builder) => {
     builder
       .addMatcher(
-        isAnyOf(
-          loginUser.pending,
-          signUpUser.pending,
-        ),
+        isAnyOf(loginUser.pending, signUpUser.pending),
         (state, _) => {
           state.isLoading = true;
         },
       )
       .addMatcher(
-        isAnyOf(
-          loginUser.fulfilled,
-          signUpUser.fulfilled,
-        ),
+        isAnyOf(loginUser.fulfilled, signUpUser.fulfilled),
         (state) => {
           state.isAuthenticated = true;
           state.isLoading = false;
         },
       )
       .addMatcher(
-        isAnyOf(
-          loginUser.rejected,
-          signUpUser.rejected,
-        ),
+        isAnyOf(loginUser.rejected, signUpUser.rejected),
         (state, _) => {
           state.isLoading = false;
         },

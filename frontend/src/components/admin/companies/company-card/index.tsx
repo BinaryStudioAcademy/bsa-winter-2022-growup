@@ -26,9 +26,7 @@ const CompanyCard: FC<ICompanyCard> = ({ company }) => {
             </div>
             <Button onClick={handleShow}>edit</Button>
           </div>
-          <Card.Text className="mt-2">
-            {company.description}
-          </Card.Text>
+          <Card.Text className="mt-2">{company.description}</Card.Text>
         </Card.Body>
       </Card>
       <AddEditCompany show={show} handleClose={handleClose} company={company} />

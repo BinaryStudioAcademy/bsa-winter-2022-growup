@@ -1,4 +1,8 @@
-import { UserPayloadKey, UserValidationMessage, UserValidationRule } from 'common/enums/enums';
+import {
+  UserPayloadKey,
+  UserValidationMessage,
+  UserValidationRule,
+} from 'common/enums/enums';
 import * as Joi from 'joi';
 
 const login = Joi.object({

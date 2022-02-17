@@ -6,12 +6,12 @@ interface Props extends StepProps {
 }
 
 const StepControl: React.FC<Props> = ({
-                                        isValid,
-                                        isDisablePrevious = false,
-                                        onPrevious,
-                                        onSubmit,
-                                        onNext,
-                                      }) => {
+  isValid,
+  isDisablePrevious = false,
+  onPrevious,
+  onSubmit,
+  onNext,
+}) => {
   return (
     <div className="stepper__actions w-100 mt-4">
       <button

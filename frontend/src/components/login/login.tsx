@@ -1,6 +1,12 @@
 import { MentorMenteeRoute, UserPayloadKey } from 'common/enums/enums';
 import FormInput from 'components/common/form-input/form-input';
-import { useAppDispatch, useAppForm, useAppSelector, useCallback, useNavigate } from 'hooks/hooks';
+import {
+  useAppDispatch,
+  useAppForm,
+  useAppSelector,
+  useCallback,
+  useNavigate,
+} from 'hooks/hooks';
 import { Container, FloatingLabel, Form } from 'react-bootstrap';
 import { Google } from 'react-bootstrap-icons';
 import { NotificationManager } from 'react-notifications';
@@ -12,7 +18,7 @@ import './styles.scss';
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const isLoading = useAppSelector(state => state.auth.isLoading);
+  const isLoading = useAppSelector((state) => state.auth.isLoading);
 
   const { control, errors, handleSubmit } = useAppForm({
     defaultValues: DEFAULT_LOGIN_PAYLOAD,
@@ -20,7 +26,7 @@ const Login: React.FC = () => {
   });
 
   const handleLogin = useCallback(
-    loginPayload => dispatch(loginUser(loginPayload)),
+    (loginPayload) => dispatch(loginUser(loginPayload)),
     [dispatch],
   );
 
@@ -69,10 +75,15 @@ const Login: React.FC = () => {
             />
           </FloatingLabel>
 
-          <Form.Group className="auth-form__checkbox-container mb-4" controlId="authCheckbox">
+          <Form.Group
+            className="auth-form__checkbox-container mb-4"
+            controlId="authCheckbox"
+          >
             <Form.Check type="checkbox" label="Remember me" />
             <p className="auth-form__btn-link">
-              <a className="auth-form__link" href="#">Forgot password?</a>
+              <a className="auth-form__link" href="#">
+                Forgot password?
+              </a>
             </p>
           </Form.Group>
 

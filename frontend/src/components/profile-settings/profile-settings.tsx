@@ -1,6 +1,9 @@
 import { Navigate, Outlet, useLocation, useNavigate } from '../../hooks/hooks';
 import { Route, Routes } from '../common/common';
-import { MentorMenteeRoute, ProfileSettingsRoute } from '../../common/enums/enums';
+import {
+  MentorMenteeRoute,
+  ProfileSettingsRoute,
+} from '../../common/enums/enums';
 import { steps } from './steps/steps';
 import Stepper from './stepper';
 import FirstStep from './steps/first-step';
@@ -30,11 +33,34 @@ const ProfileSettings: React.FC = () => {
       <Stepper steps={steps} activeStep={activeStep - 1} />
       <div className="stepper__actions w-100">
         <Routes>
-          <Route path={ProfileSettingsRoute.PROFILE_SETTINGS_ROOT} element={<Outlet />}>
-            <Route path={ProfileSettingsRoute.PROFILE_SETTINGS_STEP_ONE} element={<FirstStep onNext={onNext} onPrevious={onPrevious} isDisablePrevious={true} />} />
-            <Route path={ProfileSettingsRoute.PROFILE_SETTINGS_STEP_TWO} element={<SecondStep onNext={onNext} onPrevious={onPrevious} />} />
-            <Route path={ProfileSettingsRoute.PROFILE_SETTINGS_STEP_THREE} element={<ThirdStep onNext={onNext} onPrevious={onPrevious} />} />
-            <Route path="*" element={<Navigate to={ProfileSettingsRoute.PROFILE_SETTINGS_STEP_ONE} />} />
+          <Route
+            path={ProfileSettingsRoute.PROFILE_SETTINGS_ROOT}
+            element={<Outlet />}
+          >
+            <Route
+              path={ProfileSettingsRoute.PROFILE_SETTINGS_STEP_ONE}
+              element={
+                <FirstStep
+                  onNext={onNext}
+                  onPrevious={onPrevious}
+                  isDisablePrevious={true}
+                />
+              }
+            />
+            <Route
+              path={ProfileSettingsRoute.PROFILE_SETTINGS_STEP_TWO}
+              element={<SecondStep onNext={onNext} onPrevious={onPrevious} />}
+            />
+            <Route
+              path={ProfileSettingsRoute.PROFILE_SETTINGS_STEP_THREE}
+              element={<ThirdStep onNext={onNext} onPrevious={onPrevious} />}
+            />
+            <Route
+              path="*"
+              element={
+                <Navigate to={ProfileSettingsRoute.PROFILE_SETTINGS_STEP_ONE} />
+              }
+            />
           </Route>
         </Routes>
       </div>

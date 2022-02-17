@@ -1,3 +1,3 @@
 export type refreshTokenSchema = {
-    refreshToken: string,
+  refreshToken: string;
 };
