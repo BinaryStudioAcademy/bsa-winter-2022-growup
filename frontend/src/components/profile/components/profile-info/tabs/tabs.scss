@@ -1,4 +1,4 @@
-@import 'src/assets/css/styles';
+@import '~assets/scss/utils';
 
 @include media-breakpoint-down(sm) {
   .profile-nav-tabs {
