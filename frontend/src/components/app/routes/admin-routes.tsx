@@ -1,5 +1,6 @@
 import { AdminRoute } from '../../../common/enums/enums';
 import Admin from '../../admin/admin';
+import { NotFound } from '../../not-found';
 
 export const adminRoutes = [
   {
@@ -13,5 +14,9 @@ export const adminRoutes = [
   {
     path: AdminRoute.ADMIN_CAREER_PATH,
     element: <Admin variant="career" />,
+  },
+  {
+    path: AdminRoute.ANY,
+    element: <NotFound />,
   },
 ];
