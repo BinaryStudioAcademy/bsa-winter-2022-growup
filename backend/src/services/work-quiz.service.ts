@@ -1,10 +1,14 @@
 import { getCustomRepository } from 'typeorm';
 import { QuizQuestion } from '~/data/entities/quiz-question';
-// import { User_QuizCategory } from '~/data/entities/user-quiz-category';
+import { QuizCategory } from '~/data/entities/quiz-category';
+
 import QuizQuestionRepository from '~/data/repositories/quiz-question.repository';
-// import UserQuizCategoryRepository  from '~/data/repositories/user-quiz-category.repository';
-import QuizCategoryRepository  from '~/data/repositories/quiz-category.repository';
+import UserQuizCategoryRepository from '~/data/repositories/user-quiz-category.repository';
+import QuizCategoryRepository from '~/data/repositories/quiz-category.repository';
+import UserRepository from '~/data/repositories/user.repository';
+
 import { asyncForEach } from '~/common/helpers/array.helper';
+import { ITokenPayload } from '~/common/models/middlewares/token-payload';
 
 interface IAnswer {
   id: string;
@@ -20,64 +24,98 @@ interface IQuestion {
 }
 
 interface ITestSummary {
-  category: string;
-  score: number
+  category: QuizCategory;
+  score: number;
 }
 
-export const getQuestions = async(): Promise<QuizQuestion[]>  => {
-  const quizQuestionRepository = await getCustomRepository(QuizQuestionRepository);
+interface WorkQuizProps {
+  body: IQuestion[];
+  tokenPayload: ITokenPayload;
+}
+
+export const getQuestions = async (): Promise<QuizQuestion[]> => {
+  const quizQuestionRepository = await getCustomRepository(
+    QuizQuestionRepository,
+  );
 
   const questions = await quizQuestionRepository
-                              .createQueryBuilder('root')
-                              .innerJoinAndSelect('root.answers','quizAnswers')
-                              .where('category.name = :name', { name: 'driver' })
-                              .innerJoin('root.category','category')
-                              .getMany();
+    .createQueryBuilder('root')
+    .innerJoinAndSelect('root.answers', 'quizAnswers')
+    .where('category.name = :name', { name: 'driver' })
+    .innerJoin('root.category', 'category')
+    .getMany();
 
   return questions;
 };
 
-export const sendResults = async(questions: IQuestion[]): Promise<void> => {
-
-  // const userQuizCategoryRepository = await getCustomRepository(UserQuizCategoryRepository);
-  const quizCategoryRepository = await getCustomRepository(QuizCategoryRepository);
-  const quizQuestionRepository = await getCustomRepository(QuizQuestionRepository);
+export const sendResults = async ({
+  body,
+  tokenPayload,
+}: WorkQuizProps): Promise<void> => {
+  const { userId, userRole } = tokenPayload;
+  const questions = body;
+  console.warn(userId, userRole);
+  const userQuizCategoryRepository = await getCustomRepository(
+    UserQuizCategoryRepository,
+  );
+  const quizCategoryRepository = await getCustomRepository(
+    QuizCategoryRepository,
+  );
+  const quizQuestionRepository = await getCustomRepository(
+    QuizQuestionRepository,
+  );
 
   const categories = await quizCategoryRepository.find();
 
   const summary: ITestSummary[] = [];
 
-  await asyncForEach((async (category) => {
-    const categorySummary: ITestSummary = { category: category.name, score: 0 };
+  await asyncForEach(async (category) => {
+    const categorySummary: ITestSummary = { category: category, score: 0 };
 
     const categoryQuestions = await quizQuestionRepository
-                                    .createQueryBuilder('root')
-                                    .where('category.id = :id', { id: category.id })
-                                    .innerJoinAndSelect('root.answers','quizAnswers')
-                                    .innerJoin('root.category','category')
-                                    .getMany();
+      .createQueryBuilder('root')
+      .where('category.id = :id', { id: category.id })
+      .innerJoinAndSelect('root.answers', 'quizAnswers')
+      .innerJoin('root.category', 'category')
+      .getMany();
 
-    await asyncForEach(( async(resultQuestion) => {
+    await asyncForEach(async (resultQuestion) => {
       const resultAnswers = resultQuestion.answers;
-      const categoryQuestion = categoryQuestions.find(q => q.question === resultQuestion.question);
+      const categoryQuestion = categoryQuestions.find(
+        (q) => q.question === resultQuestion.question,
+      );
 
       if (categoryQuestion) {
-        resultAnswers.forEach(resultAnswer => {
-          const categoryAnswer = categoryQuestion.answers.find(a => a.answer === resultAnswer.answer);
+        resultAnswers.forEach((resultAnswer) => {
+          const categoryAnswer = categoryQuestion.answers.find(
+            (a) => a.answer === resultAnswer.answer,
+          );
 
-          if (categoryAnswer && resultAnswer.isSelected && categoryAnswer.score) {
+          if (
+            categoryAnswer &&
+            resultAnswer.isSelected &&
+            categoryAnswer.score
+          ) {
             categorySummary.score++;
           }
         });
       }
-
-    }), questions);
+    }, questions);
 
     summary.push(categorySummary);
-  }), categories);
+  }, categories);
 
-  // ADD INSERTING RESULTS INTO QuizCategory TABLE
+  const userRepository = await getCustomRepository(UserRepository);
 
-  // const userQuizCategoryInstance = await userQuizCategoryRepository.create();
-  // return userQuizCategoryInstance;
+  const userInstance = await userRepository.findOne({ id: userId });
+  console.warn(JSON.stringify(summary));
+  await asyncForEach(async (summ) => {
+    const userQuizCategoryInstance = await userQuizCategoryRepository.create({
+      user: userInstance,
+      quizCategory: summ.category,
+      score: summ.score.toString(),
+    });
+
+    userQuizCategoryInstance.save();
+  }, summary);
 };

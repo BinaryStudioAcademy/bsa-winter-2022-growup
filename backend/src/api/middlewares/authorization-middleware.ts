@@ -23,7 +23,8 @@ const verifyToken = (
     try {
       const tokenPayload = <ITokenPayload>verify(token, env.app.secretKey);
       request.userId = tokenPayload.userId;
-      request.userRole = tokenPayload.userRole;
+      request.userRole = tokenPayload.role;
+      request.companyId = tokenPayload.companyId;
 
       next();
     } catch {

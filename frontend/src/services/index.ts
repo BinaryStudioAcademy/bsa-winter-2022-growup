@@ -6,6 +6,7 @@ import { ProfileApi } from './profile-api/profile-api.service';
 import { TagsApi } from './tags-api/tags-api.service';
 import { Storage } from './storage/storage.service';
 import { WorkStyleQuiz } from './work-style-quiz-api/work-style-quiz-api.service';
+import { UsersApi } from './user-api/user-api.service';
 
 const storage = new Storage({
   storage: localStorage,
@@ -37,5 +38,10 @@ const workStyleQuiz = new WorkStyleQuiz({
   http,
 });
 
-export { http, storage, auth, tags, profile, company, workStyleQuiz };
+const users = new UsersApi({
+  apiPath: ENV.API_PATH || '',
+  http,
+});
+
+export { http, storage, auth, tags, profile, company, users, workStyleQuiz };
 export { tags as TagsApi };

@@ -1,14 +1,14 @@
 import { getCustomRepository } from 'typeorm';
-import { RoleType } from 'growup-shared';
+import { RoleType } from '~/common/enums/role-type';
 
 import UserRoleRepository from '../data/repositories/role.repository';
 
 import { User } from '../data/entities/user';
-import { UserRole } from '../data/entities/role';
+import { UserRole } from '../data/entities/user-role';
 
 export const createRole = async (
   user: User,
-  roleType: RoleType,
+  roleType: typeof RoleType[keyof typeof RoleType],
 ): Promise<UserRole> => {
   const roleRepository = getCustomRepository(UserRoleRepository);
 
