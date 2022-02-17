@@ -55,7 +55,12 @@ router.post(
 
 router.post(
   '/okr/:id/objective',
-  run((req): Promise<Objective> => addNewObjectiveToOkr(req.params.id)),
+  run((req): Promise<Objective> => {
+    const { body } = req;
+    const { id } = req.params;
+    const data = { okrId: id, body };
+    return addNewObjectiveToOkr(data);
+  }),
 );
 
 router.post(

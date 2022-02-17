@@ -43,7 +43,7 @@ export const createOkr = async ({
   if (isOkrExist) {
     throw new HttpError({
       status: HttpCode.BAD_REQUEST,
-      message: `Okr with ${body.name} is exist!!!`,
+      message: `Okr with name ${body.name} is exist!!!`,
     });
   }
 
@@ -63,26 +63,36 @@ export const createOkr = async ({
   });
 };
 
-export const addNewObjectiveToOkr = async (
-  okrId: string,
-): Promise<Objective> => {
+export const addNewObjectiveToOkr = async ({
+  okrId,
+  body,
+}: {
+  okrId: string;
+  body: {
+    name: string;
+    skillObjective?: string;
+  };
+}): Promise<Objective> => {
   const okrRepository = getCustomRepository(Okrepository);
   const objectiveRepository = getCustomRepository(ObjectiveRepository);
 
   const okr = await okrRepository.findOne({ id: okrId });
+  const isObjectiveExist = okrRepository.findOne({ name: body.name });
+
+  if (isObjectiveExist) {
+    throw new HttpError({
+      status: HttpCode.BAD_REQUEST,
+      message: `Objective with name ${body.name} is exist!!!`,
+    });
+  }
 
   if (okr) {
     const objective = objectiveRepository.create();
+    Object.assign(objective, body);
     objective.okr = okr;
-    objective.result = '';
+    objective.result = '0';
 
-    objective.save();
-
-    const newObjectives = [...okr.objectives];
-    newObjectives.push(objective);
-    okr.objectives = newObjectives;
-
-    await okr.save();
+    await objective.save();
 
     return objective;
   }
