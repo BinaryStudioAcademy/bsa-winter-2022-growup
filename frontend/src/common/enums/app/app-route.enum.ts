@@ -15,7 +15,7 @@ enum AppRoute {
   OPPORTUNITIES = '/opportunities',
   MENTEE_PROFILES = '/mentee',
   EXPLORE = '/explore',
-  SKILL = '/skill',
+  SKILLS = '/skills',
 }
 
 export { AppRoute };

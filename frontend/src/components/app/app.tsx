@@ -79,7 +79,7 @@ const App: React.FC = () => {
                 path={AppRoute.MENTEE_PROFILES}
                 element={<div>Mentee Profiles</div>}
               />
-              <Route path={AppRoute.SKILL} element={<SkillOverview />} />
+              <Route path={AppRoute.SKILLS} element={<SkillOverview />} />
             </Routes>
           </main>
         )}

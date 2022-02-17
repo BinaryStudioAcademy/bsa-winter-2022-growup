@@ -2,7 +2,7 @@ enum ReducerName {
   AUTH = 'auth',
   COMPANIES = 'companies',
   OKR = 'okr',
-  SKILL = 'skill',
+  SKILLS = 'skills',
   ADMIN = 'admin',
   PROFILE = 'profile',
 }
