@@ -14,7 +14,7 @@ import ProfileSettings from '../profile-settings/profile-settings';
 import './app.scss';
 
 const App: React.FC = () => {
-  const isAdmin = false;
+  const isAdmin = true;
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   return (
@@ -49,8 +49,18 @@ const App: React.FC = () => {
               <Route path={AppRoute.LOGIN} element={<Login />} />
               <Route path={AppRoute.SIGN_UP} element={<SignUp />} />
               <Route path={AppRoute.ORKS} element={Ork} />
-              <Route path={AppRoute.PROFILE_SETTINGS} element={<Navigate to={ProfileSettingsRoute.PROFILE_SETTINGS_STEP_ONE}/>} />
-              <Route path={AppRoute.PROFILE_SETTINGS_STEP} element={<ProfileSettings/>} />
+              <Route
+                path={AppRoute.PROFILE_SETTINGS}
+                element={
+                  <Navigate
+                    to={ProfileSettingsRoute.PROFILE_SETTINGS_STEP_ONE}
+                  />
+                }
+              />
+              <Route
+                path={AppRoute.PROFILE_SETTINGS_STEP}
+                element={<ProfileSettings />}
+              />
               <Route path="*" element={<NotFound />} />
               <Route path={AppRoute.HOME} element={<Main_Page />} />
               <Route path={AppRoute.PROFILE} element={<Profile />} />

@@ -1,12 +1,12 @@
-@import 'src/assets/css/styles';
+@import '~assets/scss/utils';
 
 .profile-info {
   display: grid;
   grid-template-areas:
-  "p-header"
-  "p-tabs"
-  "p-main";
-  background-color: #F6F7F9;
+    'p-header'
+    'p-tabs'
+    'p-main';
+  background-color: #f6f7f9;
 }
 
 .profile-container {
@@ -25,16 +25,16 @@
   grid-area: p-tabs;
 }
 
-.profile-container_main{
+.profile-container_main {
   grid-area: p-main;
 }
 
 @include media-breakpoint-down(xl) {
   .profile-info {
     grid-template-areas:
-    "p-tabs"
-    "p-header"
-    "p-main";
+      'p-tabs'
+      'p-header'
+      'p-main';
   }
 
   .profile-container {

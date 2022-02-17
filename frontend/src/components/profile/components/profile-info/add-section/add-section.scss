@@ -1,4 +1,4 @@
-@import 'src/assets/css/styles';
+@import '~assets/scss/utils';
 
 .add-section {
   border-radius: 10px;
@@ -28,7 +28,6 @@
   padding: 50px 40px 40px 40px;
 }
 
-
 @include media-breakpoint-down(lg) {
   .add-section {
     margin: 0;
@@ -36,7 +35,7 @@
     border-bottom-right-radius: 0;
   }
 
-  .add-section  + .add-section {
+  .add-section + .add-section {
     border-radius: 0;
   }
 

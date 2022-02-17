@@ -1,14 +1,19 @@
 import { useEffect, useState } from 'react';
 import './styles.scss';
 
-type Props  = {
+type Props = {
   value?: number;
   min?: number;
   max?: number;
   onChange: (n: number) => void;
 };
 
-const InputRange: React.FC<Props> = ({ value = 0, min = 0, max = 10, onChange }) => {
+const InputRange: React.FC<Props> = ({
+  value = 0,
+  min = 0,
+  max = 10,
+  onChange,
+}) => {
   const [tickPositionStyle, setTickPositionStyle] = useState('');
 
   const getRangePercent = (): number => {
@@ -36,7 +41,7 @@ const InputRange: React.FC<Props> = ({ value = 0, min = 0, max = 10, onChange })
   const getTicksArray = (): number[] => {
     const ticks: number[] = [];
 
-    for (let i = min; i <= max; i++ ){
+    for (let i = min; i <= max; i++) {
       ticks.push(i);
     }
 
@@ -44,7 +49,7 @@ const InputRange: React.FC<Props> = ({ value = 0, min = 0, max = 10, onChange })
   };
 
   return (
-  <div className="range-slider d-flex fs-1">
+    <div className="range-slider d-flex fs-1">
       <div className="range-item position-relative">
         <input
           className="range-input position-relative d-block"
@@ -63,10 +68,13 @@ const InputRange: React.FC<Props> = ({ value = 0, min = 0, max = 10, onChange })
         </div>
         <div
           className="data-range position-absolute d-flex align-items-center justify-content-center bg-gu-blue text-gu-white"
-          style={{ left: tickPositionStyle }}>{value}
+          style={{ left: tickPositionStyle }}
+        >
+          {value}
         </div>
       </div>
-  </div>
-);};
+    </div>
+  );
+};
 
 export default InputRange;

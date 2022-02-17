@@ -10,11 +10,14 @@ interface IUseAppForm {
 }
 
 interface IUseAppFormProps {
-  defaultValues: object,
-  validationSchema: Joi.Schema
+  defaultValues: object;
+  validationSchema: Joi.Schema;
 }
 
-const useAppForm = ({ defaultValues, validationSchema }: IUseAppFormProps): IUseAppForm => {
+const useAppForm = ({
+  defaultValues,
+  validationSchema,
+}: IUseAppFormProps): IUseAppForm => {
   const {
     control,
     formState: { errors, isValid },

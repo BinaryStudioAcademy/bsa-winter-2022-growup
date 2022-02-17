@@ -1,7 +1,12 @@
 import { Request, Router } from 'express';
 
 import { run } from '../../common/helpers/route.helper';
-import { authenticateUser, registerUser, refreshToken } from '~/services/user.service';
+import {
+  authenticateUser,
+  registerUser,
+  refreshToken,
+} from '~/services/user.service';
+import { RoleType } from 'growup-shared';
 
 const router: Router = Router();
 
@@ -12,7 +17,10 @@ router
   )
   .post(
     '/register',
-    run(async (req: Request) => await registerUser(req.body)),
+    run(
+      async (req: Request) =>
+        await registerUser(req.body, RoleType.Admin, req.companyId),
+    ),
   )
   .post(
     '/auth/refresh',

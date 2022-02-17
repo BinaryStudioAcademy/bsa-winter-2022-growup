@@ -1,4 +1,4 @@
-@import 'src/assets/css/styles';
+@import '~assets/scss/utils';
 
 .profile-header {
   width: 100%;
@@ -16,7 +16,7 @@
   }
 
   &__edit {
-    border: 1px solid #EE2A64;
+    border: 1px solid #ee2a64;
     border-radius: 100%;
     width: 26px;
     height: 26px;
@@ -27,7 +27,7 @@
 
   .edit-button {
     width: 10px;
-    color: #EE2A64;
+    color: #ee2a64;
     cursor: pointer;
   }
 }
@@ -48,7 +48,7 @@
     line-height: 22px;
     text-align: left;
     margin: 0;
-    color: #1D1D1D;
+    color: #1d1d1d;
   }
 }
 
@@ -61,11 +61,11 @@
     line-height: 19px;
     text-align: left;
     margin: 0;
-    color: #5C5D5F;
+    color: #5c5d5f;
   }
 
   &__icon {
-    color: #4F00B5;
+    color: #4f00b5;
     height: 14px;
     width: 13px;
   }
