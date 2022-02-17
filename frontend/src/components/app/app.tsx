@@ -1,9 +1,8 @@
 import { useAppSelector } from 'hooks/hooks';
-
-import { AppRoute } from 'common/enums/enums';
+import { AppRoute, ProfileSettingsRoute } from 'common/enums/enums';
 import Login from 'components/login/login';
 import SignUp from 'components/sign-up/sign-up';
-import { Route, Routes } from 'components/common/common';
+import { Route, Routes, Navigate } from 'components/common/common';
 import Ork from 'components/okr/okr';
 import Profile from 'components/profile/profile';
 import { NotFound } from 'components/not-found';
@@ -12,6 +11,7 @@ import Header from 'components/header/header';
 import Sidebar from 'components/sidebar/sidebar';
 import Main_Page from 'components/main-page/main-page';
 import SkillOverview from 'components/skills/skill-overview';
+import ProfileSettings from '../profile-settings/profile-settings';
 import './app.scss';
 
 const App: React.FC = () => {
@@ -50,7 +50,18 @@ const App: React.FC = () => {
               <Route path={AppRoute.LOGIN} element={<Login />} />
               <Route path={AppRoute.SIGN_UP} element={<SignUp />} />
               <Route path={AppRoute.ORKS} element={Ork} />
-              <Route path={AppRoute.SETTINGS_PROFILE} element={<Profile />} />
+              <Route
+                path={AppRoute.PROFILE_SETTINGS}
+                element={
+                  <Navigate
+                    to={ProfileSettingsRoute.PROFILE_SETTINGS_STEP_ONE}
+                  />
+                }
+              />
+              <Route
+                path={AppRoute.PROFILE_SETTINGS_STEP}
+                element={<ProfileSettings />}
+              />
               <Route path="*" element={<NotFound />} />
               <Route path={AppRoute.HOME} element={<Main_Page />} />
               <Route path={AppRoute.PROFILE} element={<Profile />} />

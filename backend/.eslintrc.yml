@@ -6,8 +6,8 @@ extends:
 
 overrides:
   - files:
-    - config/**/*
-    - src/data/migrations/**/*
+      - config/**/*
+      - src/data/migrations/**/*
     rules:
       '@typescript-eslint/no-var-requires':
         - off

@@ -16,6 +16,90 @@
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "paths": {
+    "/company": {
+      "post": {
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true,
+            "description": "Company credentials"
+          }
+        ],
+        "tags": ["Company"],
+        "summary": "Create new company",
+        "responses": {
+          "200": {
+            "description": "Returns token and company if everything is ok.",
+            "schema": {
+              "$ref": "#/definitions/Company"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "body": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true,
+            "description": "Company credentials"
+          }
+        ],
+        "tags": ["Company"],
+        "summary": "Create new company",
+        "responses": {
+          "200": {
+            "description": "Returns token and company if everything is ok.",
+            "schema": {
+              "$ref": "#/definitions/Company"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/api/auth/register": {
       "post": {
         "parameters": [
@@ -100,6 +184,42 @@
         }
       }
     },
+    "/api/auth/refresh": {
+      "post": {
+        "parameters": [
+          {
+            "name": "refreshToken",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "refreshToken": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true,
+            "description": "The refresh token"
+          }
+        ],
+        "tags": ["Users"],
+        "summary": "Use a refresh token to generate a new JWT token and a new refresh token",
+        "responses": {
+          "200": {
+            "description": "Returns token if everything is ok. Token contains userId and jwt. It expires in 7d.",
+            "schema": {
+              "$ref": "#/definitions/RefreshToken"
+            }
+          },
+          "404": {
+            "description": "Returns error if token are invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/api/company/tags": {
       "get": {
         "parameters": [
@@ -158,7 +278,21 @@
           "200": {
             "description": "Returns array of tag objects with company id they are related to",
             "schema": {
-              "$ref": "#/definitions/Tag"
+              "type": "object",
+              "properties": {
+                "tags": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Tag"
+                  }
+                },
+                "existingTags": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
             }
           }
         }
@@ -263,10 +397,53 @@
     }
   },
   "definitions": {
+    "Company": {
+      "required": ["token"],
+      "properties": {
+        "token": {
+          "type": "string"
+        },
+        "company": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "deletedAt": {
+              "type": "string",
+              "nullable": true,
+              "default": null
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "updatedAt": {
+              "type": "string",
+              "nullable": true,
+              "default": null
+            }
+          }
+        }
+      }
+    },
     "Token": {
       "required": ["token"],
       "properties": {
         "token": {
+          "type": "string"
+        }
+      }
+    },
+    "RefreshToken": {
+      "required": ["refreshToken"],
+      "properties": {
+        "refreshToken": {
           "type": "string"
         }
       }

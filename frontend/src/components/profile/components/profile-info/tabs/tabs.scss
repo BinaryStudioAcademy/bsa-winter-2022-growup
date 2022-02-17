@@ -1,9 +1,8 @@
-@import 'assets/css/styles';
+@import 'src/assets/css/styles';
 
 @include media-breakpoint-down(sm) {
-  .profile-nav-tabs{
+  .profile-nav-tabs {
     width: fit-content;
     margin: 0 auto;
   }
 }
-
