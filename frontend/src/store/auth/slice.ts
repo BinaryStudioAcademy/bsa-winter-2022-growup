@@ -4,6 +4,7 @@ import { IUser } from 'common/interfaces/user';
 import { loginUser, signUpUser } from './actions';
 import { ActionType } from './common';
 import { storage } from '../../services';
+import { StorageKey } from '../../common/enums/app/storage-key.enum';
 
 type State = {
   user: IUser | null;
@@ -14,7 +15,7 @@ type State = {
 const initialState: State = {
   user: null,
   isLoading: false,
-  isAuthenticated: !!storage.getItem('token'),
+  isAuthenticated: !!storage.getItem(StorageKey.TOKEN),
 };
 
 const { reducer, actions } = createSlice({
