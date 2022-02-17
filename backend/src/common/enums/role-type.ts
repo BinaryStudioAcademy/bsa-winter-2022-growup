@@ -1,9 +1,9 @@
 import { RoleType as DefaultRoleType } from 'growup-shared/common/enums';
 
 const RoleType = {
-  ...DefaultRoleType,
+  Admin: DefaultRoleType.Admin,
   Mentor: 'Mentor',
-  Mentee: 'Menteee',
+  Mentee: 'Mentee',
 } as const;
 
 export { RoleType };

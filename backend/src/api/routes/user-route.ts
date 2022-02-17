@@ -19,7 +19,11 @@ router.put(
 router.post(
   '/',
   run((req: Request) =>
-    registerUser(createDefaultUser(req.body.email), req.body.role),
+    registerUser(
+      createDefaultUser(req.body.email),
+      req.body.roleType,
+      req.body.companyId,
+    ),
   ),
 );
 

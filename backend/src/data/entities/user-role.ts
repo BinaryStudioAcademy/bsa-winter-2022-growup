@@ -8,7 +8,6 @@ export class UserRole extends AbstractEntity {
   @Column({
     type: 'enum',
     enum: RoleType,
-    default: RoleType.User,
   })
   role: typeof RoleType[keyof typeof RoleType];
 

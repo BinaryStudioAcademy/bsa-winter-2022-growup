@@ -1,5 +1,5 @@
 import { getCustomRepository } from 'typeorm';
-import { RoleType } from 'growup-shared';
+import { RoleType } from '~/common/enums/role-type';
 
 import { users } from '../seed-data/user.data';
 import { companies } from '../seed-data/company.data';
@@ -28,8 +28,10 @@ export default class UserSeeder {
         company: company,
       }).save();
 
+      console.log();
+
       await Object.assign(new UserRole(), {
-        name: RoleType.Admin,
+        role: RoleType.Admin,
         user: userInstance,
       }).save();
     }, users as User[]);
