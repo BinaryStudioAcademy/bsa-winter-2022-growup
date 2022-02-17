@@ -14,7 +14,7 @@ import ProfileSettings from '../profile-settings/profile-settings';
 import './app.scss';
 
 const App: React.FC = () => {
-  const isAdmin = true;
+  const isAdmin = false;
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   return (
