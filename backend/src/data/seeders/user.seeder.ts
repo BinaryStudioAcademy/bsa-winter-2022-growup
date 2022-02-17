@@ -28,8 +28,6 @@ export default class UserSeeder {
         company: company,
       }).save();
 
-      console.log();
-
       await Object.assign(new UserRole(), {
         role: RoleType.Admin,
         user: userInstance,

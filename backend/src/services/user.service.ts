@@ -140,7 +140,6 @@ export const registerUser = async (
 
   const user = await userInstance.save();
 
-  console.log(role);
   const roleInstance = roleRepository.create({ user, role });
   await roleInstance.save();
 
