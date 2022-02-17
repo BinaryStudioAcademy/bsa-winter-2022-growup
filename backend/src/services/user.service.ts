@@ -105,6 +105,7 @@ export const authenticateUser = async (
 
 export const registerUser = async (
   data: UserRegisterForm,
+  role: RoleType,
 ): Promise<TokenResponse> => {
   const userRepository = getCustomRepository(UserRepository);
   const roleRepository = getCustomRepository(UserRoleRepository);
@@ -130,7 +131,7 @@ export const registerUser = async (
 
   const user = await userInstance.save();
 
-  const roleInstance = roleRepository.create({ user, role: RoleType.Admin });
+  const roleInstance = roleRepository.create({ user, role });
   await roleInstance.save();
 
   return getUserJWT(user);

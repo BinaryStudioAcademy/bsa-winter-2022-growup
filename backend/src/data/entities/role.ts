@@ -10,7 +10,7 @@ export class UserRole extends AbstractEntity {
     enum: RoleType,
     default: RoleType.User,
   })
-  role: RoleType;
+  role: typeof RoleType[keyof typeof RoleType];
 
   @ManyToOne(() => User, (user) => user.id)
   user: User;
