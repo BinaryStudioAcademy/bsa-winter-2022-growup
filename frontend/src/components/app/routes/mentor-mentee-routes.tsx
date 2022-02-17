@@ -1,19 +1,19 @@
-import { MentorMenteeRoute, ProfileSettingsRoute } from '../../../common/enums/enums';
 import { Navigate } from '../../../hooks/hooks';
-import Ork from '../../okr/okr';
+import { AppRoute, MentorMenteeRoute, ProfileSettingsRoute } from '../../../common/enums/enums';
+import Okr from '../../okr/okr';
 import Profile from '../../profile/profile';
-import Main_Page from '../../main-page/main-page';
+import MainPage from '../../main-page/main-page';
 import { NotFound } from '../../not-found';
 import ProfileSettings from '../../profile-settings/profile-settings';
 
 export const mentorMenteeRoutes = [
   {
-    path: MentorMenteeRoute.ORKS,
-    element: <Ork />,
+    path: MentorMenteeRoute.OKR,
+    element: <Okr />,
   },
   {
     path: MentorMenteeRoute.SETTINGS_PROFILE,
-    element: <Navigate to={ProfileSettingsRoute.PROFILE_SETTINGS_STEP_ONE}/>,
+    element: <Navigate to={ProfileSettingsRoute.PROFILE_SETTINGS_STEP_ONE} />,
   },
   {
     path: MentorMenteeRoute.SETTINGS_PROFILE_STEP,
@@ -21,7 +21,7 @@ export const mentorMenteeRoutes = [
   },
   {
     path: MentorMenteeRoute.HOME,
-    element: <Main_Page />,
+    element: <MainPage />,
   },
   {
     path: MentorMenteeRoute.PROFILE,
@@ -30,10 +30,6 @@ export const mentorMenteeRoutes = [
   {
     path: MentorMenteeRoute.CAREER_PATH,
     element: <div>Career Path</div>,
-  },
-  {
-    path: MentorMenteeRoute.OKR,
-    element: <div>OKR</div>,
   },
   {
     path: MentorMenteeRoute.OPPORTUNITIES,
@@ -46,5 +42,13 @@ export const mentorMenteeRoutes = [
   {
     path: MentorMenteeRoute.ANY,
     element: <NotFound />,
+  },
+  {
+    path: AppRoute.LOGIN,
+    element: <Navigate to={MentorMenteeRoute.HOME} />,
+  },
+  {
+    path: AppRoute.SIGN_UP,
+    element: <Navigate to={MentorMenteeRoute.HOME} />,
   },
 ];
