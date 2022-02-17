@@ -5,6 +5,11 @@ import EditSection from '../edit-section/edit-section';
 import EducationCard from '../education-card/education-card';
 import Tag from '../tag/tag';
 import  './profile-main.scss';
+import { useState, useCallback, useEffect } from 'hooks/hooks';
+import TagModal from './tags/modal/tag-modal';
+import { PencilFill } from 'react-bootstrap-icons';
+import { adminActions } from 'store/actions';
+import { useAppDispatch } from 'hooks/store/store.hooks';
 
 // FROM DB
 const careerJourneyData: CareerJourney[] = [
@@ -60,9 +65,25 @@ const interestsData: Interests[] = [
     id: '2',
     name: 'Remote',
   },
+  {
+    id: '3',
+    name: 'JS Developer',
+  },
 ];
 
-const ProfileMain: React.FC = () => (
+const ProfileMain: React.FC = () => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const dispatch = useAppDispatch();
+
+  const hideModal = useCallback(() => {
+    setIsModalVisible(false);
+  }, []);
+  const showModal = (): void => setIsModalVisible(true);
+  useEffect(() => {
+    dispatch(adminActions.fetchTags());
+  }, [dispatch]);
+
+  return (
   <main className="profile-main">
     <div className="left-side">
       <AddSection title="Career journey">
@@ -104,15 +125,30 @@ const ProfileMain: React.FC = () => (
           <Tag>French</Tag>
         </div>
       </EditSection>
-      <EditSection title="Interests">
-        <div className="group fw-bold fs-7">
-          {interestsData.map((item, i) =>
-            <Tag key={i}>{item.name}</Tag>,
-          )}
+      <TagModal show={isModalVisible} onClose={hideModal} />
+      <div className="edit-section bg-white">
+        <div className="edit-section-header d-flex justify-content-between align-items-center">
+          <h3 className="edit-section-header__title m-0 fw-bold fs-4">Interests</h3>
+          <button
+            className="edit-section-header__edit bg-transparent fw-bold d-flex align-items-center fs-5"
+            onClick={showModal}>
+              <PencilFill className="edit-section-header__edit-icon me-2"/>
+              <span>Edit</span>
+          </button>
         </div>
-      </EditSection>
+        <div className="edit-section-content d-flex flex-wrap align-items-start">
+            <div className="group fw-bold fs-7">
+              {interestsData.map((item, i) =>
+                  <Tag key={i}>{item.name}</Tag>,
+                )}
+                <div className="d-flex flex-wrap gap-2">
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
 );
+};
 
 export default ProfileMain;
