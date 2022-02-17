@@ -5,11 +5,14 @@ import { SkillCategory } from '~/data/entities/skill-category';
 
 type SkillCategoryProps = Pick<SkillCategory, 'level' | 'skill'>;
 
-export const createDomainLevel = async ({
+export const createSkillCategory = async ({
   level,
   skill,
 }: SkillCategoryProps): Promise<SkillCategory> => {
   const skillCategoryRepository = getCustomRepository(SkillCategoryRepository);
+
+  const target = await skillCategoryRepository.findOne({ level, skill });
+  if (target) return target;
 
   const skillCategory = await skillCategoryRepository
     .create({

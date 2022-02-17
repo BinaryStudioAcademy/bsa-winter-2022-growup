@@ -1,16 +1,22 @@
-import { Column, Entity, ManyToOne } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  Tree,
+  TreeChildren,
+  TreeParent,
+} from 'typeorm';
 import { AbstractEntity } from '~/data/abstract/abstract.entity';
 import { Domain } from './domain';
 
 @Entity()
+@Tree('closure-table')
 export class DomainLevel extends AbstractEntity {
-  @ManyToOne(() => DomainLevel, (domain) => domain.id, { nullable: true })
-  nextLevel: DomainLevel;
-
-  @ManyToOne(() => DomainLevel, (domainLevel) => domainLevel.id, {
-    nullable: true,
-  })
+  @TreeParent()
   prevLevel: DomainLevel;
+
+  @TreeChildren()
+  nextLevel: DomainLevel[];
 
   @ManyToOne(() => Domain, (domain) => domain.id)
   domain: Domain;

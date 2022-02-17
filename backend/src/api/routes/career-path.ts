@@ -1,13 +1,25 @@
-// import { Request, Router } from 'express';
-// import { run } from '~/common/helpers/route.helper';
+import { Request, Router } from 'express';
+import { run } from '~/common/helpers/route.helper';
+import { getCompany } from '~/services/company.service';
 
-// import { createCareerPath } from '../controllers/career-path.controller';
+import {
+  createCareerPath,
+  getDomainAndLevels,
+} from '../controllers/career-path.controller';
 
-// const router = Router();
+const router = Router();
 
-// router.get(
-//   '/',
-//   run((req: Request) => createCareerPath()),
-// );
+router.post(
+  '/',
+  run(async (req: Request) => {
+    const company = await getCompany();
+    return createCareerPath(req.body, company);
+  }),
+);
 
-// export default router;
+router.get(
+  '/:id',
+  run(async (req: Request) => getDomainAndLevels(req.params.id)),
+);
+
+export default router;

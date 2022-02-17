@@ -12,6 +12,10 @@ export const createSkill = async ({
   type,
 }: SkillProps): Promise<Skill> => {
   const skillRepository = getCustomRepository(SkillRepository);
+
+  const target = await skillRepository.findOne({ company, name, type });
+  if (target) return target;
+
   const skill = await skillRepository
     .create({
       company,

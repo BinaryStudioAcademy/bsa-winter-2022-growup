@@ -358,6 +358,95 @@
           }
         }
       }
+    },
+    "/api/career-path": {
+      "post": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "body",
+            "name": "Career Path",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "domain": {
+                  "type": "string"
+                },
+                "level": {
+                  "$ref": "#/definitions/RequestLevel"
+                }
+              }
+            }
+          }
+        ],
+        "tags": ["Career path"],
+        "summary": "Creating new career path",
+        "responses": {
+          "200": {
+            "description": "Returns domain name and nested levels",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "domain": {
+                  "$ref": "#/definitions/Domain"
+                },
+                "level": {
+                  "$ref": "#/definitions/ResponseLevel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/career-path/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "descsription": "Career id you want to retrieve"
+          }
+        ],
+        "tags": ["Career path"],
+        "summary": "Returns domain name and domain levels",
+        "responses": {
+          "200": {
+            "description": "Returns domain name and nested levels",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "domain": {
+                  "$ref": "#/definitions/Domain"
+                },
+                "level": {
+                  "$ref": "#/definitions/ResponseLevel"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -464,6 +553,90 @@
           "type": "string"
         }
       }
+    },
+    "Domain": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "uuid"
+        },
+        "name": {
+          "type": "string",
+          "description": "Domain name",
+          "example": "Fullstack Developer"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Time the object was created at"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Time the object was updated at. By default it is the same as the creation time"
+        },
+        "deletedAt": {
+          "type": "string",
+          "description": "Time the object was deletedAt"
+        }
+      }
+    },
+    "ResponseLevel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "uuid"
+        },
+        "name": {
+          "type": "string",
+          "description": "Domain name",
+          "example": "Fullstack Developer"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Time the object was created at"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Time the object was updated at. By default it is the same as the creation time"
+        },
+        "deletedAt": {
+          "type": "string",
+          "description": "Time the object was deletedAt"
+        },
+        "nextLevel": {
+          "$ref": "#/definitions/ResponseLevel",
+          "description": "Next level of the current one"
+        }
+      }
+    },
+    "RequestLevel": {
+      "type": "object",
+      "properties": {
+        "YOUR LEVEL NAME": {
+          "type": "object",
+          "properties": {
+            "YOUR CATEGORY NAME": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "$ref": "#/definitions/Career Path Type"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Career Path Type": {
+      "type": "string",
+      "enum": ["Hard skills", "Soft skills", "Language"]
     }
   }
 }
