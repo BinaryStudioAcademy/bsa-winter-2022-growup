@@ -6,10 +6,17 @@ import InterestingTags from './interesting-tags';
 import StepControl from './step-control';
 import { useAppForm } from '../../../hooks/app-form/app-form.hook';
 import { profileFirstStep as profileFirstStepValidationSchema } from '../../../validation-schemas/validation-schemas';
-import { FirstStepPayloadKey, UserPayloadKey } from '../../../common/enums/enums';
+import {
+  FirstStepPayloadKey,
+  UserPayloadKey,
+} from '../../../common/enums/enums';
 import { DEFAULT_FIRST_STEP_PAYLOAD } from './common/constants';
 
-const FirstStep: React.FC<StepProps> = ({ isDisablePrevious, onPrevious, onNext }) => {
+const FirstStep: React.FC<StepProps> = ({
+  isDisablePrevious,
+  onPrevious,
+  onNext,
+}) => {
   const { control, errors, isValid, handleSubmit } = useAppForm({
     defaultValues: DEFAULT_FIRST_STEP_PAYLOAD,
     validationSchema: profileFirstStepValidationSchema,

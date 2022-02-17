@@ -1,42 +1,43 @@
 .education-card {
-  border-color: #E1DBEA;
+  border-color: #e1dbea;
   margin: 5px 15px 20px 15px;
   height: auto !important;
 }
 
 .education-card-info {
   &__title {
-    color: #1D1D1D;
+    color: #1d1d1d;
     line-height: 25px;
   }
 
   &__universitet {
-    color: #5C5D5F;
+    color: #5c5d5f;
   }
 
   &__degree {
-    color: #1D1D1D;
+    color: #1d1d1d;
   }
 
-  &__universitet, &__degree {
+  &__universitet,
+  &__degree {
     font-weight: 600;
     line-height: 19px;
     text-align: left;
 
     span {
-      color: #808C9C;
+      color: #808c9c;
       margin-right: 10px;
     }
   }
 }
 
 .education-footer {
-  border-top: 1px solid #E1DBEA;
+  border-top: 1px solid #e1dbea;
 
   &__duration {
     font-size: 12px;
     font-weight: 400;
-    color: #808C9C;
+    color: #808c9c;
   }
 }
 

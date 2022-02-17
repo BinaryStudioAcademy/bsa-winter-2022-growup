@@ -10,7 +10,13 @@ interface Props {
   type?: string;
 }
 
-const TextField = ({ label, name, control, errors, type = 'text' }: Props): JSX.Element => {
+const TextField = ({
+  label,
+  name,
+  control,
+  errors,
+  type = 'text',
+}: Props): JSX.Element => {
   return (
     <FloatingLabel label={label} className="mb-3">
       <FormInput

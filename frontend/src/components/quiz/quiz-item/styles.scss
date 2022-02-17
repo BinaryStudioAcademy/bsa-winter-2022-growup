@@ -23,8 +23,8 @@
 
 @include media-breakpoint-down(sm) {
   .range {
-
-    &__end-title, &__start-title{
+    &__end-title,
+    &__start-title {
       display: none;
     }
   }

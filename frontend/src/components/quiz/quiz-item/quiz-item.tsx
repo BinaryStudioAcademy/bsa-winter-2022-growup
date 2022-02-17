@@ -10,7 +10,7 @@ type Props = {
 const QuizItem: React.FC<Props> = ({ title, level }) => {
   const [levelValue, setLevelValue] = useState(level);
 
-  const handleChangeLevel = (level: number):void => {
+  const handleChangeLevel = (level: number): void => {
     setLevelValue(level);
   };
 
@@ -18,7 +18,7 @@ const QuizItem: React.FC<Props> = ({ title, level }) => {
     <div className="quiz">
       <h2 className="quiz__title">{title}</h2>
       <div className="range d-flex align-items-center justify-content-center">
-      <span className="range__start-title fs-5">Beginner</span>
+        <span className="range__start-title fs-5">Beginner</span>
         <InputRange
           value={levelValue}
           onChange={(level: number): void => handleChangeLevel(level)}
