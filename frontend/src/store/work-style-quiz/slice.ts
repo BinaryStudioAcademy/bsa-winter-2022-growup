@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ReducerName } from 'common/enums/app/reducer-name.enum';
 import { State } from './common';
-import userQuizReducer from './reducer';
+import workStyleQuizReducer from './reducer';
 
 const initialState: State = {
   questions: null,
@@ -11,8 +11,8 @@ const initialState: State = {
 const { reducer, actions } = createSlice({
   name: ReducerName.USER_QUIZ,
   initialState,
-  reducers: {},
-  extraReducers: userQuizReducer,
+  reducers: {  },
+  extraReducers: workStyleQuizReducer,
 });
 
 export { reducer, actions };

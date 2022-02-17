@@ -6,8 +6,9 @@ type State = {
 };
 
 enum ActionType {
-  FETCH = 'fetch',
-  CREATE = 'create',
+  FETCH = 'FETCH',
+  UPDATE_QUESTION = 'UPDATE_QUESTION',
+  SEND = 'SEND',
 }
 
 export type { State };

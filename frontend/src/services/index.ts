@@ -4,7 +4,7 @@ import { Http } from './http/http.service';
 import { ProfileApi } from './profile-api/profile-api.service';
 import { TagsApi } from './tags-api/tags-api.service';
 import { Storage } from './storage/storage.service';
-import { UserQuiz } from './user-quiz-api/user-quiz-api.service';
+import { WorkStyleQuiz } from './work-style-quiz-api/work-style-quiz-api.service';
 
 const storage = new Storage({
   storage: localStorage,
@@ -29,9 +29,9 @@ const tags = new TagsApi({
   http,
 });
 
-const userQuiz = new UserQuiz({
+const workStyleQuiz = new WorkStyleQuiz({
   apiPath: ENV.API_PATH || '',
   http,
 });
 
-export { http, storage, auth, tags, profile, userQuiz };
+export { http, storage, auth, tags, profile, workStyleQuiz };

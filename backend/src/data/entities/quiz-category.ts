@@ -1,5 +1,6 @@
-import { Entity, Column, ManyToOne } from 'typeorm';
+import { Entity, Column, ManyToOne, OneToMany } from 'typeorm';
 import { AbstractEntity } from '~/data/abstract/abstract.entity';
+import { QuizQuestion } from './quiz-question';
 import { WorkQuiz } from './work-quiz';
 
 @Entity()
@@ -9,4 +10,7 @@ export class QuizCategory extends AbstractEntity {
 
   @ManyToOne(() => WorkQuiz, (workQuiz) => workQuiz.id)
   quiz: WorkQuiz;
+
+  @OneToMany(() => QuizQuestion, question => question.category)
+  questions: QuizQuestion[];
 }

@@ -5,16 +5,14 @@ import authenticationRoute from './authentication-route';
 import userRoute from './user-route';
 import tagsRoute from './tags-route';
 import companyRoute from './company-route';
-import questionRoute from './question-route';
-import answerRoute from './answer-route';
+import workQuizRoute from './work-quiz';
 
 const routes = (app: Express): void => {
   app.use('/api/auth', authenticationRoute);
   app.use('/api/user', userRoute);
   app.use('/api/company/tags', tagsRoute);
   app.use('/api/company', companyRoute);
-  app.use('/api/question', questionRoute);
-  app.use('/api/answer', answerRoute);
+  app.use('/api/work-quiz', workQuizRoute);
 
   app.use(errorHandlerMiddleware);
 };

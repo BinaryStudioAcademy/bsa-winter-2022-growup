@@ -2,7 +2,7 @@ import { authReducer as auth } from './auth';
 import { okrReducer as okr } from './okr';
 import { adminReducer as admin } from './admin';
 import { profileReducer as profile } from './profile';
-import { userQuizReducer  as userQuiz } from './user-quiz';
+import { workStyleQuizReducer  as workStyleQuiz } from './work-style-quiz';
 import { combineReducers } from '@reduxjs/toolkit';
 
 const rootReducer = combineReducers ({
@@ -10,7 +10,7 @@ const rootReducer = combineReducers ({
   auth,
   okr,
   profile,
-  userQuiz,
+  workStyleQuiz,
 });
 
 export { rootReducer };

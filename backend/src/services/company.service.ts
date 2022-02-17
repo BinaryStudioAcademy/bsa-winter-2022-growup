@@ -11,6 +11,7 @@ import { asyncForEach } from '~/common/helpers/array.helper';
 interface IAnswer {
   id: number;
   answer: string;
+  score: number;
 }
 
 interface IQuestion {
@@ -20,12 +21,19 @@ interface IQuestion {
 }
 
 interface ICategory {
-  name: string;
+  id: number;
+  category: string;
   questions: IQuestion[];
+}
+
+interface IQuiz {
+  categories: ICategory[];
 }
 
 import styleQuizJSON from '~/data/local/style-quiz.json';
 import QuizQuestionRepository from '~/data/repositories/quiz-question.repository';
+import { QuizQuestion } from '~/data/entities/quiz-question';
+// import { QuizCategory } from '~/data/entities/quiz-category';
 
 export const createCompany = async(data: Company): Promise<Company> => {
   const companyRepository = await getCustomRepository(CompanyRepository);
@@ -39,47 +47,61 @@ export const createCompany = async(data: Company): Promise<Company> => {
   const workQuizInstance = await workQuizRepository.create({ company });
   const workQuiz = await workQuizInstance.save();
 
-  // Get json of Q/A
-  const styleCategory: ICategory  =  styleQuizJSON;
+  // Get json
+  const quiz: IQuiz  =  styleQuizJSON;
 
-  // Create and set Category
+  // Create and set Categories
   const quizCategoryRepository = await getCustomRepository(QuizCategoryRepository);
-  const quizCategoryInstance = await quizCategoryRepository.create({
-    name: styleCategory.name,
-    quiz: workQuiz,
-  });
-  const quizCategory = await quizCategoryInstance.save();
-
-  // Create and set Questions
-  const quizQuestions = styleCategory.questions;
-  const quizQuestionRepository = await getCustomRepository(QuizQuestionRepository);
-  const quizAnswerRepository = await getCustomRepository(QuizAnswerRepository);
-
-  await asyncForEach(async (question) => {
-    const quizQuestionInstance = await quizQuestionRepository.create({
-      question: question.question,
-      category: quizCategory,
+  await asyncForEach(async (category) => {
+    const quizCategoryInstance = await quizCategoryRepository.create({
+      name: category.category,
+      quiz: workQuiz,
     });
 
-    await quizQuestionInstance.save();
-  }, quizQuestions);
+    await quizCategoryInstance.save();
+  }, quiz.categories);
 
-  // Find created Questions and set Answers for each one / Would be better do it inside of prev loop
-  const questions = await quizQuestionRepository.find({ category: quizCategory });
+  // Create and set Questions
+  const createdQuesitons: QuizQuestion[] = [];
+  const quizQuestionRepository = await getCustomRepository(QuizQuestionRepository);
+  const categories = await quizCategoryRepository.find({ quiz: workQuiz });
 
-  questions.forEach( async (question) => {
-    const quizCurrentQuestion: IQuestion = styleCategory.questions.find(q => q.question === question.question);
-    const quizCurrentAnswer: IAnswer[] = quizCurrentQuestion.answers;
+  await asyncForEach((async (category) => {
+    const quizCurrentCategory: ICategory = quiz.categories.find(c => c.category === category.name);
+    const quizCurrentQuestions: IQuestion[] = quizCurrentCategory.questions;
 
-    await asyncForEach( async (answer) => {
-      const quizAnswerInstance = await quizAnswerRepository.create({
-        answer: answer.answer,
-        score: '0',
-        question,
+    await asyncForEach( async (question) => {
+      const quizQuestionInstance = await quizQuestionRepository.create({
+        question: question.question,
+        category,
       });
-      await quizAnswerInstance.save();
-    }, quizCurrentAnswer);
-  });
+      const created = await quizQuestionInstance.save();
+      createdQuesitons.push(created);
+    }, quizCurrentQuestions);
+  }), categories);
+
+  //  Create and set Answers
+  const quizAnswerRepository = await getCustomRepository(QuizAnswerRepository);
+
+  await asyncForEach((async (category) => {
+    const questions = await quizQuestionRepository.find({ category } );
+    const quizCurrentCategory = quiz.categories.find(c => c.category === category.name);
+
+    await asyncForEach((async (question) => {
+        const quizCurrentQuestion: IQuestion = quizCurrentCategory.questions.find(q => q.question === question.question);
+        const quizCurrentAnswer: IAnswer[] = quizCurrentQuestion.answers;
+
+        await asyncForEach( async (answer) => {
+          const quizAnswerInstance = await quizAnswerRepository.create({
+            answer: answer.answer,
+            score: answer.score.toString(),
+            question,
+          });
+
+          await quizAnswerInstance.save();
+        }, quizCurrentAnswer);
+      }), questions);
+  }), categories);
 
   return company;
 };

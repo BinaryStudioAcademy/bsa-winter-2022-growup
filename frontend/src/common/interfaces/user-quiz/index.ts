@@ -1,15 +1,17 @@
-export interface IQuizAnswer {
+export interface IAnswer {
   id: string;
   answer: string;
+  score: number;
+  isSelected: boolean;
 }
 
 export interface IQuestion {
   id: string;
   question: string;
-  answers: IQuizAnswer[];
+  answers: IAnswer[];
 }
 
-export interface IQuizCategory {
+export interface ICategory {
   id: string;
   name: string;
   questions: IQuestion[];
