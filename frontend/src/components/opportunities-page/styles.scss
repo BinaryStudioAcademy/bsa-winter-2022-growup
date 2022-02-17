@@ -1,50 +1,41 @@
-.opportunities{
-    // &__block{
-    //     cursor: pointer;
-    //     transition: all 0.5s ease-in-out;
-    //     &:hover{
-    //         background-color: rgb(190, 190, 190) !important;
-    //     }
-    // }
-}
-.opportunity-modal{
-    width:80%;
-    max-width:840px;
-    &--item{
-        border-bottom: 1px solid rgba(145, 145, 145, 0.582) !important;
-        transition: all 0.5s ease-in-out;
-        outline: none;
-        &:focus{
-            border-bottom: 1px solid rgb(70, 61, 168) !important;
-        }
+.opportunity-modal {
+  width: 80%;
+  max-width: 840px;
+  &--item {
+    border-bottom: 1px solid rgba(145, 145, 145, 0.582) !important;
+    transition: all 0.5s ease-in-out;
+    outline: none;
+    &:focus {
+      border-bottom: 1px solid rgb(70, 61, 168) !important;
     }
-    &__close-btn{
-        right:5px;
-        cursor: pointer;
-        svg{
-            width:23px;
-            height:23px;
-        }
-    }
-}
-
-.follow{
+  }
+  &__close-btn {
+    right: 5px;
     cursor: pointer;
-    background-color:rgba(70, 61, 168, 0.2);
-    width:30px;
-    height:30px;
-    svg{
-        width:20px;
-        height:20px;
+    svg {
+      width: 23px;
+      height: 23px;
     }
-    &:hover{
-        svg{
-            color:#4F00B5;
-        }
-    }
+  }
 }
 
-.opportunity-modal-wrapper{
-    background-color: rgba(136, 136, 136, 0.432);
-    z-index:1000;
+.follow {
+  cursor: pointer;
+  background-color: rgba(70, 61, 168, 0.2);
+  width: 30px;
+  height: 30px;
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+  &:hover {
+    svg {
+      color: #4f00b5;
+    }
+  }
+}
+
+.opportunity-modal-wrapper {
+  background-color: rgba(136, 136, 136, 0.432);
+  z-index: 1000;
 }

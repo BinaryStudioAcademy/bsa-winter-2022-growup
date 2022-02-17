@@ -6,9 +6,9 @@ import CompanySeeder from './company.seeder';
 import UserSeeder from './user.seeder';
 import OpportunitySeeder from './opportunity.seeder';
 import TagsSeeder from './tags.seeder';
-import OpportunityTagSeeder from './opportunity_tags.seeder';
+import OpportunityTagSeeder from './opportunity-tags.seeder';
 
-async function Connection():Promise<void>{
+async function Connection(): Promise<void> {
   await createConnection(ormconfig);
   await CompanySeeder.execute();
   await UserSeeder.execute();
