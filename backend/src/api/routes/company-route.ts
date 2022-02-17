@@ -3,6 +3,7 @@ import { run } from '~/common/helpers/route.helper';
 import { CompanyResponse } from '~/common/models/responses/company';
 import { OKR } from '~/data/entities/okr';
 import { Objective } from '~/data/entities/objective';
+import { KeyResult } from '~/data/entities/key-result';
 import { createCompany, editCompany } from '~/services/company.service';
 import {
   getAllOkr,
@@ -65,14 +66,13 @@ router.post(
 
 router.post(
   '/company/okr/:id/objective/:id1/keyresult',
-  run((req): Promise<Objective> => {
+  run((req): Promise<KeyResult> => {
     const { id, id1 } = req.params;
-    const { result } = req.body;
 
     const data = {
       okrId: id,
       objectiveId: id1,
-      result,
+      body: req.body,
     };
     return addNewKeyresultToObjective(data);
   }),
