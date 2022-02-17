@@ -2,5 +2,6 @@ import { RoleType } from 'growup-shared';
 
 export interface ITokenPayload {
   userId: string;
-  userRole: RoleType;
+  role: RoleType;
+  companyId: string | null;
 }

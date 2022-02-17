@@ -1,1 +1,1 @@
-export { PermissionType } from 'growup-shared/common/enums';
+export { PermissionType } from 'growup-shared';
