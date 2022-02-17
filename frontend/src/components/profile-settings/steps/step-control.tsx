@@ -13,7 +13,7 @@ const StepControl: React.FC<Props> = ({
   onNext,
 }) => {
   return (
-    <div className="stepper__actions w-100 mt-4">
+    <div className="stepper__actions stepper__buttons w-100 mt-4">
       <button
         className="btn btn-gu-pink text-gu-white"
         onClick={(): void => onPrevious?.()}

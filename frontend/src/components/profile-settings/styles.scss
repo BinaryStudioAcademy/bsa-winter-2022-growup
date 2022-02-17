@@ -43,6 +43,10 @@
   align-items: center;
 }
 
+.stepper__buttons {
+  justify-content: space-between;
+}
+
 .stepper__form {
   width: 500px;
 }

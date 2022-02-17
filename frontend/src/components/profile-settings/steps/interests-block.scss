@@ -1,0 +1,74 @@
+@import 'src/assets/css/styles';
+
+.interests {
+  border-radius: 10px;
+  margin: 12px 0;
+}
+
+.interests-header {
+  border-radius: 10px 10px 0 0;
+  background-color: #463da8;
+  padding: 26px 38px;
+  border-bottom: 1px solid #e1dbea;
+
+  &__title {
+    line-height: 25px;
+  }
+
+  &__edit {
+    padding: 6px 23px;
+    color: #f6f7f9;
+    border: 2px solid #f6f7f9;
+    border-radius: 30px;
+    line-height: 22px;
+  }
+
+  &__edit-icon {
+    margin-right: 10px;
+    width: 15px;
+  }
+}
+
+.interests-content {
+  padding: 20px 28px 38px 34px;
+}
+
+@include media-breakpoint-down(xl) {
+  .interests {
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .interests-header {
+    background-color: #463da8;
+
+    &__edit {
+      color: #f6f7f9;
+      border: 2px solid #f6f7f9;
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .interests-header {
+    color: #f6f7f9;
+
+    &__edit {
+      position: relative;
+      width: 50px;
+      height: 50px;
+      border-radius: 100%;
+
+      & > span {
+        display: none;
+      }
+    }
+
+    &__edit-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
