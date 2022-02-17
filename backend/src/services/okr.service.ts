@@ -23,18 +23,37 @@ export const getAllOkr = async (userId: string): Promise<OKR[]> => {
   });
 };
 
-export const createOkr = async (userId: string): Promise<OKR> => {
+export const createOkr = async ({
+  userId,
+  body,
+}: {
+  userId: string;
+  body: {
+    name: string;
+    endDate: string;
+    startDate: string;
+  };
+}): Promise<OKR> => {
   const okrRepository = getCustomRepository(Okrepository);
   const userRepository = getCustomRepository(UserRepository);
 
   const user = await userRepository.findOne({ id: userId });
+  const isOkrExist = okrRepository.findOne({ name: body.name });
+
+  if (isOkrExist) {
+    throw new HttpError({
+      status: HttpCode.BAD_REQUEST,
+      message: `Okr with ${body.name} is exist!!!`,
+    });
+  }
 
   if (user) {
     const okr = okrRepository.create();
+    Object.assign(okr, body);
     okr.user = user;
 
     await okr.save();
-
+    console.warn(okr);
     return okr;
   }
 

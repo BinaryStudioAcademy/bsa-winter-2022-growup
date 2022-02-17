@@ -46,7 +46,11 @@ router.get(
 
 router.post(
   '/okr',
-  run((req): Promise<OKR> => createOkr(req.userId)),
+  run((req): Promise<OKR> => {
+    const { userId, body } = req;
+    const data = { userId, body };
+    return createOkr(data);
+  }),
 );
 
 router.post(
