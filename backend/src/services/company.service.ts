@@ -17,7 +17,7 @@ export const createCompany = async ({
   tokenPayload,
 }: CompanyProps): Promise<CompanyResponse> => {
   const { name } = body;
-  const { userId, userRole } = tokenPayload;
+  const { userId, role } = tokenPayload;
 
   const companyRepository = getCustomRepository(CompanyRepository);
 
@@ -32,7 +32,7 @@ export const createCompany = async ({
 
       const token = signToken({
         userId,
-        role: userRole,
+        role,
         companyId: newCompany.id,
       });
 
@@ -56,7 +56,7 @@ export const editCompany = async ({
   tokenPayload,
 }: CompanyProps): Promise<CompanyResponse> => {
   const companyRepository = getCustomRepository(CompanyRepository);
-  const { userId, userRole } = tokenPayload;
+  const { userId, role } = tokenPayload;
 
   if (id) {
     const company = await companyRepository.findOne({ id });
@@ -68,7 +68,7 @@ export const editCompany = async ({
 
       const token = signToken({
         userId,
-        role: userRole,
+        role,
         companyId: newCompany.id,
       });
 

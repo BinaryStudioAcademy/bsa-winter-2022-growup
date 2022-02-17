@@ -10,3 +10,4 @@ export {
   UserValidationRule,
 } from './validation/validation';
 export { FirstStepPayloadKey } from './steps/steps';
+export { RoleType } from './user/roles.enum';

@@ -5,6 +5,7 @@ import { Http } from './http/http.service';
 import { ProfileApi } from './profile-api/profile-api.service';
 import { TagsApi } from './tags-api/tags-api.service';
 import { Storage } from './storage/storage.service';
+import { UsersApi } from './user-api/user-api.service';
 
 const storage = new Storage({
   storage: localStorage,
@@ -31,5 +32,9 @@ const tags = new TagsApi({
   http,
 });
 
-export { tags as TagsApi };
-export { http, storage, auth, tags, profile, company };
+const users = new UsersApi({
+  apiPath: ENV.API_PATH || '',
+  http,
+});
+
+export { http, storage, auth, tags, profile, company, users };
