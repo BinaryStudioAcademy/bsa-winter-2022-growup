@@ -14,7 +14,7 @@
   @extend %growup-card;
 
   .card-header {
-    background: $purple-dark;
+    background: $gu-blue;
     color: $white;
   }
 }
@@ -24,9 +24,9 @@
 
   .card-header {
     background: $white;
-    color: $purple-dark;
+    color: $gu-blue;
 
-    border-bottom: 1px solid $card-header-boder !important;
+    border-bottom: 1px solid $card-header-border !important;
   }
 }
 
