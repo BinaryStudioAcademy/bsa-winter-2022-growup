@@ -52,9 +52,8 @@ export const sendResults = async ({
   body,
   tokenPayload,
 }: WorkQuizProps): Promise<void> => {
-  const { userId, userRole } = tokenPayload;
+  const { userId } = tokenPayload;
   const questions = body;
-  console.warn(userId, userRole);
   const userQuizCategoryRepository = await getCustomRepository(
     UserQuizCategoryRepository,
   );
@@ -108,7 +107,7 @@ export const sendResults = async ({
   const userRepository = await getCustomRepository(UserRepository);
 
   const userInstance = await userRepository.findOne({ id: userId });
-  console.warn(JSON.stringify(summary));
+
   await asyncForEach(async (summ) => {
     const userQuizCategoryInstance = await userQuizCategoryRepository.create({
       user: userInstance,

@@ -3,8 +3,17 @@ import { Company } from '../data/entities/company';
 import { HttpCode, HttpError } from 'growup-shared';
 import { signToken } from '~/common/utils/token.util';
 import { CompanyResponse } from '~/common/models/responses/company';
+
 import { ITokenPayload } from '~/common/models/middlewares/token-payload';
 import CompanyRepository from '~/data/repositories/company.repository';
+import WorkQuizRepository from '~/data/repositories/work-quiz.repository';
+import QuizCategoryRepository from '~/data/repositories/quiz-category.repository';
+import QuizAnswerRepository from '~/data/repositories/quiz-answer.repository';
+
+import { asyncForEach } from '~/common/helpers/array.helper';
+import styleQuizJSON from '~/data/local/style-quiz.json';
+import QuizQuestionRepository from '~/data/repositories/quiz-question.repository';
+import { QuizQuestion } from '~/data/entities/quiz-question';
 
 interface IAnswer {
   id: number;
@@ -33,14 +42,6 @@ interface CompanyProps {
   body: Company;
   tokenPayload: ITokenPayload;
 }
-import WorkQuizRepository from '~/data/repositories/work-quiz.repository';
-import QuizCategoryRepository from '~/data/repositories/quiz-category.repository';
-import QuizAnswerRepository from '~/data/repositories/quiz-answer.repository';
-
-import { asyncForEach } from '~/common/helpers/array.helper';
-import styleQuizJSON from '~/data/local/style-quiz.json';
-import QuizQuestionRepository from '~/data/repositories/quiz-question.repository';
-import { QuizQuestion } from '~/data/entities/quiz-question';
 
 const createQuiz = async (companyInstance: Company): Promise<void> => {
   // Create Work Quiz
