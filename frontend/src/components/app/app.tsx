@@ -12,6 +12,7 @@ import Sidebar from 'components/sidebar/sidebar';
 import Main_Page from 'components/main-page/main-page';
 import SkillOverview from 'components/skills/skill-overview';
 import ProfileSettings from '../profile-settings/profile-settings';
+import ControlledTabs from 'components/okr/tabs/two-tabs';
 import './app.scss';
 
 const App: React.FC = () => {
@@ -69,7 +70,7 @@ const App: React.FC = () => {
                 path={AppRoute.CAREER_PATH}
                 element={<div>Career Path</div>}
               />
-              <Route path={AppRoute.OKR} element={<div>OKR</div>} />
+              <Route path={AppRoute.OKR} element={<ControlledTabs />} />
               <Route
                 path={AppRoute.OPPORTUNITIES}
                 element={<div>Opportunities</div>}
