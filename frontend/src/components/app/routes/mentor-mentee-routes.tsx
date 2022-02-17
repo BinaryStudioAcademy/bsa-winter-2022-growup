@@ -1,8 +1,10 @@
-import { MentorMenteeRoute } from '../../../common/enums/enums';
+import { MentorMenteeRoute, ProfileSettingsRoute } from '../../../common/enums/enums';
+import { Navigate } from '../../../hooks/hooks';
 import Ork from '../../okr/okr';
 import Profile from '../../profile/profile';
 import Main_Page from '../../main-page/main-page';
 import { NotFound } from '../../not-found';
+import ProfileSettings from '../../profile-settings/profile-settings';
 
 export const mentorMenteeRoutes = [
   {
@@ -11,7 +13,11 @@ export const mentorMenteeRoutes = [
   },
   {
     path: MentorMenteeRoute.SETTINGS_PROFILE,
-    element: <Profile />,
+    element: <Navigate to={ProfileSettingsRoute.PROFILE_SETTINGS_STEP_ONE}/>,
+  },
+  {
+    path: MentorMenteeRoute.SETTINGS_PROFILE_STEP,
+    element: <ProfileSettings />,
   },
   {
     path: MentorMenteeRoute.HOME,

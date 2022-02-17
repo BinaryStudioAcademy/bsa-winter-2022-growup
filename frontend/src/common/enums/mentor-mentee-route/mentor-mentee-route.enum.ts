@@ -1,6 +1,7 @@
 enum MentorMenteeRoute {
   ORKS = '/ork',
   PAGES = '/pages',
+  SETTINGS_PROFILE_STEP = '/settings/profile/*',
   SETTINGS_PROFILE = '/settings/profile',
   HOME = '/',
   PROFILE = '/profile',

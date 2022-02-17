@@ -1,6 +1,6 @@
 import { Navigate, Outlet, useLocation, useNavigate } from '../../hooks/hooks';
 import { Route, Routes } from '../common/common';
-import { AppRoute, ProfileSettingsRoute } from '../../common/enums/enums';
+import { MentorMenteeRoute, ProfileSettingsRoute } from '../../common/enums/enums';
 import { steps } from './steps/steps';
 import Stepper from './stepper';
 import FirstStep from './steps/first-step';
@@ -17,12 +17,12 @@ const ProfileSettings: React.FC = () => {
     if (activeStep === steps.length) {
       navigate(ProfileSettingsRoute.PROFILE_SETTINGS_ROOT);
     } else {
-      navigate(`${AppRoute.PROFILE_SETTINGS}/${activeStep + 1}`);
+      navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/${activeStep + 1}`);
     }
   };
 
   const onPrevious = (): void => {
-    navigate(`${AppRoute.PROFILE_SETTINGS}/${activeStep - 1}`);
+    navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/${activeStep - 1}`);
   };
 
   return (
