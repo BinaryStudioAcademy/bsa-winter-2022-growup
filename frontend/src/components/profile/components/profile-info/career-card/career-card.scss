@@ -1,18 +1,18 @@
 .career-card {
-  border: #E1DBEA;
+  border: #e1dbea;
   margin: 5px 15px 20px 15px;
   position: relative;
   height: auto !important;
 
   &::before {
     position: absolute;
-    content: "";
+    content: '';
     display: block;
     height: calc(100% + 30px);
     width: 1px;
-    background-color: #E1DBEA;
+    background-color: #e1dbea;
     margin-left: -15px;
-    top: -30px
+    top: -30px;
   }
 }
 
@@ -20,18 +20,18 @@
   font-weight: 400;
   line-height: 16px;
   text-align: left;
-  color:#4F00B5;
+  color: #4f00b5;
   position: absolute;
   top: -18px;
 
   &::before {
-    content: "";
+    content: '';
     display: block;
     position: absolute;
     border-radius: 100%;
     width: 8px;
     height: 8px;
-    background-color: #463DA8;
+    background-color: #463da8;
     margin-left: calc(-15px);
     transform: translateX(-45%);
     top: 8px;
@@ -39,12 +39,12 @@
 }
 
 .career-card:first-child {
-  border-color: #E1DBEA;
+  border-color: #e1dbea;
   margin: 5px 15px 20px 15px;
 
   &::before {
     height: calc(100% + 7px);
-    top: -7px
+    top: -7px;
   }
 }
 
@@ -55,24 +55,25 @@
     line-height: 25px;
   }
 
-  &__role, &__company {
+  &__role,
+  &__company {
     font-weight: 600;
     line-height: 19px;
 
     span {
-      color: #808C9C;
+      color: #808c9c;
       margin-right: 10px;
     }
   }
 }
 
 .career-card-footer {
-  border-top: 1px solid #E1DBEA;
+  border-top: 1px solid #e1dbea;
 
   &__duration {
     font-weight: 400;
     line-height: 16px;
-    color: #808C9C;
+    color: #808c9c;
   }
 
   &__calendar-icon {

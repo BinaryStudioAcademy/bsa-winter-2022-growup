@@ -1,34 +1,34 @@
 .okr-container {
-    width: 285px;
-    height: 175px;
-    border: 2px solid #ff9900;
-    border-radius: 10px;
-    display: grid;
-    grid-template-columns: 1fr, 1fr, 30px;
-    grid-template-rows: 1fr, 1fr, 100px;
-    grid-template-areas:
-            "name name reached"
-            "obj key ."
-            "time time time";
+  width: 285px;
+  height: 175px;
+  border: 2px solid #ff9900;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 30px;
+  grid-template-rows: 1fr 1fr 100px;
+  grid-template-areas:
+    'name name reached'
+    'obj key .'
+    'time time time';
 }
 
 .OKR-name {
-    grid-area: name;
+  grid-area: name;
 }
 
 .reached {
-    grid-area: reached;
+  grid-area: reached;
 }
 
 .objectives {
-    grid-area: obj;
+  grid-area: obj;
 }
 
 .key-result {
-    grid-area: key;
+  grid-area: key;
 }
 
 .timestamp {
-    grid-area: time;
-    color: silver;
+  grid-area: time;
+  color: silver;
 }

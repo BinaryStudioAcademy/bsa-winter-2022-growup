@@ -1,8 +1,8 @@
-import { Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { BaseEntity, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
 import { User } from './user';
 
 @Entity()
-export class RefreshToken {
+export class RefreshToken extends BaseEntity {
   @PrimaryColumn({ type: 'varchar', length: 255 })
   token: string;
 

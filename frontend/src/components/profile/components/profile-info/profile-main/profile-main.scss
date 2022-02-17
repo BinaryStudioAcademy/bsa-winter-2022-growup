@@ -1,4 +1,4 @@
-@import 'assets/css/styles';
+@import 'src/assets/css/styles';
 
 .profile-main {
   display: flex;
@@ -7,7 +7,7 @@
 }
 
 .left-side {
-  width: 59%
+  width: 59%;
 }
 
 .right-side {
@@ -21,7 +21,7 @@
   &__title {
     line-height: 17px;
     text-align: left;
-    color:  #808C9C;
+    color: #808c9c;
     width: 100%;
   }
 }

@@ -7,3 +7,10 @@ export const signToken = <T extends object>(data: T): string => {
   });
   return token;
 };
+
+export const generateRefreshToken = <T extends object>(data: T): string => {
+  const token = jwt.sign(data, env.app.secretKey, {
+    expiresIn: '7d',
+  });
+  return token;
+};

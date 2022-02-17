@@ -3,8 +3,8 @@ import { errorHandlerMiddleware } from '../middlewares/error-handler-middleware'
 
 import authenticationRoute from './authentication-route';
 import userRoute from './user-route';
-import tagsRoute from './tags-route';
 import companyRoute from './company-route';
+import tagsRoute from './tags-route';
 import workQuizRoute from './work-quiz';
 
 const routes = (app: Express): void => {
