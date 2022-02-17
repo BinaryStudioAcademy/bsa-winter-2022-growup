@@ -1,4 +1,4 @@
-@import 'assets/css/styles';
+@import 'src/assets/css/styles';
 
 .edit-section {
   border-radius: 10px;
@@ -7,9 +7,9 @@
 
 .edit-section-header {
   border-radius: 10px 10px 0 0;
-  color: #463DA8;
+  color: #463da8;
   padding: 26px 38px;
-  border-bottom: 1px solid #E1DBEA;
+  border-bottom: 1px solid #e1dbea;
 
   &__title {
     line-height: 25px;
@@ -18,7 +18,7 @@
   &__edit {
     padding: 6px 23px;
     color: #ee2a64;
-    border: 2px solid #EE2A64;
+    border: 2px solid #ee2a64;
     border-radius: 30px;
     line-height: 22px;
   }
@@ -40,7 +40,7 @@
   }
 
   .edit-section-header {
-    background-color: #463DA8;
+    background-color: #463da8;
 
     &__edit {
       color: #fff;

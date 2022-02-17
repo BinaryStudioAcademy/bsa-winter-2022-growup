@@ -2,13 +2,12 @@ name: GrowUp CI
 
 on:
   push:
-    branches: [ master, develop ]
+    branches: [master, develop]
   pull_request:
-    branches: [ master, develop ]
+    branches: [master, develop]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:

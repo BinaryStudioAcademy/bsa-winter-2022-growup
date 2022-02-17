@@ -1,6 +1,6 @@
 export const companies = [
   {
     name: 'Test Company #1',
-    description: 'Test company description',
+    description: 'Test Company description',
   },
 ];

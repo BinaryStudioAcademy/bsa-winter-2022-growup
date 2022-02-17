@@ -6,14 +6,15 @@ enum AppRoute {
   SIGN_UP = '/signup',
   ORKS = '/ork',
   PAGES = '/pages',
-  SETTINGS_PROFILE = '/settings/profile',
+  PROFILE_SETTINGS = '/profile-settings',
+  PROFILE_SETTINGS_STEP = '/profile-settings/*',
   HOME = '/',
-  PROFILE ='/profile',
+  PROFILE = '/profile',
   CAREER_PATH = '/career-path',
   OKR = '/okr',
   OPPORTUNITIES = '/opportunities',
   MENTEE_PROFILES = '/mentee',
-  EXPLORE ='/explore',
+  EXPLORE = '/explore',
 }
 
 export { AppRoute };
