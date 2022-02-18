@@ -12,9 +12,9 @@ import {
   comparePasswords,
   hashPassword,
 } from '~/common/utils/password-hasher.util';
-import { uploadImage, deleteImage } from '~/common/utils/upload-image.util';
+import { deleteImage, uploadImage } from '~/common/utils/upload-image.util';
 import { getCurrentTimeMS } from '~/common/utils/time.util';
-import { signToken, generateRefreshToken } from '~/common/utils/token.util';
+import { generateRefreshToken, signToken } from '~/common/utils/token.util';
 
 import { RoleType } from '~/common/enums/role-type';
 
@@ -150,8 +150,11 @@ export const fetchUser = async (
   id: User['id'],
 ): Promise<Omit<User, 'password'>> => {
   const userRepository = getCustomRepository(UserRepository);
+  const roleRepository = getCustomRepository(UserRoleRepository);
 
   const { password: _password, ...user } = await userRepository.findOne(id);
+  user.role = await roleRepository.findOne({ user });
+
   return user as User;
 };
 

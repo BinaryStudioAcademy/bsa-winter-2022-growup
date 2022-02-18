@@ -3,29 +3,6 @@ import { ReducerName } from 'common/enums/app/reducer-name.enum';
 import { IUser } from 'common/interfaces/user';
 import { loginUser, signUpUser } from './actions';
 import { ActionType } from './common';
-import { RoleType } from '../../common/enums/user/roles.enum';
-
-type PartialUserType = Partial<IUser> & {
-  roleType: typeof RoleType[keyof typeof RoleType];
-};
-
-const createUser = (userShape: PartialUserType): IUser => {
-  return Object.assign(
-    {
-      firstName: '',
-      lastName: '',
-      avatar: '',
-      companyId: '',
-      createdAt: '',
-      updatedAt: '',
-      deletedAt: '',
-      id: '',
-      fullName: '',
-      email: '',
-    },
-    userShape,
-  );
-};
 
 type State = {
   user: IUser | null;
@@ -63,7 +40,9 @@ const { reducer, actions } = createSlice({
         (state, action) => {
           state.isAuthenticated = true;
           state.isLoading = false;
-          state.user = createUser({ roleType: action.payload.role });
+
+          const { user } = action.payload;
+          state.user = user;
         },
       )
       .addMatcher(
