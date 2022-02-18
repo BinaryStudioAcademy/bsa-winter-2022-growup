@@ -18,11 +18,15 @@ const App: React.FC = () => {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   return (
-    <div>
+    <div className="wrapper">
       {isAdmin || !isAuthenticated ? null : (
         <>
-          <Sidebar />
-          <Header />
+          <div className="sidebar-wrapper">
+            <Sidebar />
+          </div>
+          <div className="header-wrapper">
+            <Header />
+          </div>
         </>
       )}
       <div className="d-flex">
@@ -44,7 +48,7 @@ const App: React.FC = () => {
             </Routes>
           </div>
         ) : (
-          <main className="main-container w-100 px-5 pt-3 pb-5">
+          <main className="main-wrapper w-100 px-4 pt-3 pb-3">
             <Routes>
               <Route path={AppRoute.LOGIN} element={<Login />} />
               <Route path={AppRoute.SIGN_UP} element={<SignUp />} />
