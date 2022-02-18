@@ -9,6 +9,7 @@ import {
   getAllOkr,
   createOkr,
   getOkrById,
+  updateOkrById,
   addNewObjectiveToOkr,
 } from '~/services/okr.service';
 import { addNewKeyresultToObjective } from '~/services/objective.service';
@@ -57,6 +58,20 @@ router.post(
     const { userId, body } = req;
     const data = { userId, body };
     return createOkr(data);
+  }),
+);
+
+router.put(
+  '/okr/:id',
+  run((req): Promise<OKR> => {
+    const { id } = req.params;
+    const { body } = req;
+
+    const data = {
+      okrId: id,
+      data: body,
+    };
+    return updateOkrById(data);
   }),
 );
 
