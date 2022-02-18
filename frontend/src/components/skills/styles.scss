@@ -1,66 +1,63 @@
-@use "sass:math";
+@use 'sass:math';
+@import '../../../src/assets/scss/variables';
 // global default
 $defaultSkillLvlCount: 10;
 
 .container-progress-bar {
-    max-width: 50px;
-    min-height: 50px;
-    margin: 0 auto;
+  max-width: 50px;
+  min-height: 50px;
+  margin: 0 auto;
 }
 
 .b-progress-bar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }
 
 .form-control {
-    border-radius: 10px;
+  border-radius: 10px;
 }
 
 .b-progress-bar span {
-    background-color: #f6f7f9;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    line-height: 2.5;
+  background-color: #f6f7f9;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 2.5;
 }
 
 .b-progress-bar div {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 25px;
-    height: 4px;
-    transform-origin: 0 -10%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 25px;
+  height: 4px;
+  transform-origin: 0 -10%;
 }
 
 .button-group {
-    margin-left: 80px;
+  margin-left: 80px;
 }
 
 .rating-control {
-    width: 30px;
+  width: 30px;
 }
 
 .skill-control {
-    width: 35%;
+  width: 35%;
 }
 
 .container-skill-name {
-    width: 470px;
-    height: 67.5px;
-}
-
-.active-block {
-    background-color: red;
+  width: 470px;
+  height: 67.5px;
 }
 
 .passive-block {
-    background-color: silver;
+  background-color: rgba($gu-black, 0.2);
 }
 
 $variable: 277.5deg;
@@ -68,16 +65,19 @@ $sizeProgress: math.div(360deg, $defaultSkillLvlCount);
 $sizeProgressOne: math.div($sizeProgress - 15deg, 3);
 
 @for $i from 0 through $defaultSkillLvlCount - 1 {
-    .b-progress-bar div:nth-child(#{1 + $i * 4}) {
-        transform: rotate($variable + $i * $sizeProgress) translate(0, -50%);
-    }
-    .b-progress-bar div:nth-child(#{2 + $i * 4}) {
-        transform: rotate($variable + $sizeProgressOne + $i * $sizeProgress) translate(0, -50%);
-    }
-    .b-progress-bar div:nth-child(#{3 + $i * 4}) {
-        transform: rotate($variable + 2 * $sizeProgressOne + $i * $sizeProgress) translate(0, -50%);
-    }
-    .b-progress-bar div:nth-child(#{4 + $i * 4}) {
-        transform: rotate($variable + 3 * $sizeProgressOne + $i * $sizeProgress) translate(0, -50%);
-    }
+  .b-progress-bar div:nth-child(#{1 + $i * 4}) {
+    transform: rotate($variable + $i * $sizeProgress) translate(0, -50%);
+  }
+  .b-progress-bar div:nth-child(#{2 + $i * 4}) {
+    transform: rotate($variable + $sizeProgressOne + $i * $sizeProgress)
+      translate(0, -50%);
+  }
+  .b-progress-bar div:nth-child(#{3 + $i * 4}) {
+    transform: rotate($variable + 2 * $sizeProgressOne + $i * $sizeProgress)
+      translate(0, -50%);
+  }
+  .b-progress-bar div:nth-child(#{4 + $i * 4}) {
+    transform: rotate($variable + 3 * $sizeProgressOne + $i * $sizeProgress)
+      translate(0, -50%);
+  }
 }
