@@ -1,15 +1,13 @@
-@import '~assets/scss/utils';
+@import 'src/assets/scss/utils';
 
-.edit-section {
-  border-radius: 10px;
+.interests {
   margin: 12px 0;
 }
 
-.edit-section-header {
+.interests-header {
   border-radius: 10px 10px 0 0;
-  color: #463da8;
   padding: 26px 38px;
-  border-bottom: 1px solid #e1dbea;
+  border-bottom: 1px solid $gu-white;
 
   &__title {
     line-height: 25px;
@@ -17,8 +15,7 @@
 
   &__edit {
     padding: 6px 23px;
-    color: #ee2a64;
-    border: 2px solid #ee2a64;
+    border: 2px solid $gu-white;
     border-radius: 30px;
     line-height: 22px;
   }
@@ -29,32 +26,21 @@
   }
 }
 
-.edit-section-content {
+.interests-content {
   padding: 20px 28px 38px 34px;
 }
 
 @include media-breakpoint-down(xl) {
-  .edit-section {
-    margin: 0;
-    border-radius: 0;
-  }
-
-  .edit-section-header {
-    background-color: #463da8;
-
+  .interests-header {
     &__edit {
-      color: #fff;
-      border: 2px solid #fff;
+      border: 2px solid $gu-white;
     }
   }
 }
 
 @include media-breakpoint-down(lg) {
-  .edit-section-header {
-    color: #fff;
-
+  .interests-header {
     &__edit {
-      position: relative;
       width: 50px;
       height: 50px;
       border-radius: 100%;

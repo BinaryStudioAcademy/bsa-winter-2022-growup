@@ -1,4 +1,4 @@
-import { AppRoute, UserPayloadKey } from 'common/enums/enums';
+import { MentorMenteeRoute, UserPayloadKey } from 'common/enums/enums';
 import FormInput from 'components/common/form-input/form-input';
 import {
   useAppDispatch,
@@ -34,7 +34,7 @@ const Login: React.FC = () => {
     handleLogin(values)
       .unwrap()
       .then(() => {
-        navigate(AppRoute.HOME);
+        navigate(MentorMenteeRoute.HOME);
       })
       .catch((err: Error) => {
         NotificationManager.error(err.message);
