@@ -31,7 +31,7 @@ router.get(
 );
 
 router.post(
-  '/',
+  '/users',
   run((req) =>
     registerCommonUsers(
       createDefaultUser(req.body.email),

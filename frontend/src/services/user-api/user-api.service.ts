@@ -21,7 +21,7 @@ class UsersApi {
     payload: Pick<IUser, 'email' | 'roleType'>,
   ): Promise<IUser | null> {
     try {
-      const result = await this.http.load(`${this.apiPath}/user`, {
+      const result = await this.http.load(`${this.apiPath}/company/users`, {
         contentType: ContentType.JSON,
         method: HttpMethod.POST,
         hasAuth: true,
