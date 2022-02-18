@@ -4,7 +4,6 @@
     "version": "1.0.0",
     "title": "GrowUP API"
   },
-  "host": "localhost:3001",
   "basePath": "/",
   "tags": [
     {
@@ -12,7 +11,7 @@
       "description": "API for users. Example how use Swagger"
     }
   ],
-  "schemes": ["http"],
+  "schemes": ["http", "https"],
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "paths": {
