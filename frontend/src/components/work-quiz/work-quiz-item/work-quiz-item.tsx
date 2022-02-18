@@ -1,10 +1,15 @@
 import { Form } from 'react-bootstrap';
 import { IAnswer, IQuestion } from 'common/interfaces/user-quiz';
+import './styles.scss';
 
 type Props = {
   answer: IAnswer;
   question: IQuestion;
-  onCheckboxClick: (e: React.ChangeEvent<HTMLInputElement>, question: IQuestion, answer: IAnswer) => void;
+  onCheckboxClick: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    question: IQuestion,
+    answer: IAnswer,
+  ) => void;
 };
 
 const TestItem: React.FC<Props> = ({ answer, question, onCheckboxClick }) => {
