@@ -1,0 +1,1900 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "category": "driver",
+      "questions": [
+        {
+          "id": 1,
+          "question": "When talking to a customer or co-worker…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I maintain eye contact the whole time.",
+              "score": 1
+            },
+            {
+              "id": 2,
+              "answer": "I alternate between looking at the person and looking down.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I look around the room a good deal of the time.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I try to maintain eye contact, but look away from time to time.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "question": "If I have an important decision to make…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I think it through completely before deciding.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I go with my gut instincts.",
+              "score": 1
+            },
+            {
+              "id": 3,
+              "answer": "I consider the impact it will have on other people before deciding.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I run it by someone whose opinion I respect before deciding.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "question": "My office or work area mostly has…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "family photos and sentimental items displayed.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "inspirational posters, awards, and art displayed.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "graphs and charts displayed.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "calendars and project outlines displayed.",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "question": "If I am having a conflict with a co-worker or customer…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I try to help the situation along by focusing on the positive.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I stay calm and try to understand the cause of the conflict.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I try to avoid discussing the issue causing the conflict.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I confront it right away so that it can get resolved as soon as possible.",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "question": "When I talk on the phone at work…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I keep the conversation focused on the purpose of the call.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I spend a few minutes chatting before getting down to business.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I am in no hurry to get off the phone and do not mind chatting about personal things, the weather, and so on.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I try to keep the conversation as brief as possible.",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "question": "If a co-worker is upset…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I ask if I can do anything to help.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I leave him alone because I do not want to intrude on his privacy.",
+              "score": 1
+            },
+            {
+              "id": 3,
+              "answer": "I try to cheer him up and help him to see the bright side.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I feel uncomfortable and hope he gets over it soon.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "question": "When I attend meetings at work…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I sit back and think about what is being said before offering my opinion.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I put all my cards on the table so my opinion is well known.",
+              "score": 1
+            },
+            {
+              "id": 3,
+              "answer": "I express my opinion enthusiastically, but listen to others’ ideas as well.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I try to support the ideas of the other people in the meeting.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "question": "When I make a presentation in front of a group…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I am entertaining and often humorous.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I am clear and concise.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I speak relatively quietly.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I am direct, specific, and sometimes loud.",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": 9,
+          "question": "When a customer is explaining a problem to me…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I try to understand and empathize with how she is feeling.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I look for the specific facts pertaining to the situation.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I listen carefully for the main issue so that I can find a solution.",
+              "score": 1
+            },
+            {
+              "id": 4,
+              "answer": "I use body language and tone of voice to show him/her that I understand.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 10,
+          "question": "When I attend training programs or presentations…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I get bored if the person moves too slowly.",
+              "score": 1
+            },
+            {
+              "id": 2,
+              "answer": "I try to be supportive of the speaker, knowing how hard the job is.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I want it to be entertaining as well as informative.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I look for the logic behind what the speaker is saying.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 11,
+          "question": "When I want to get my point across to customers or co-workers…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I listen to their point of view first and then express my ideas gently.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I strongly state my opinion so that they know where I stand.",
+              "score": 1
+            },
+            {
+              "id": 3,
+              "answer": "I try to persuade them without being too forceful.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I explain the thinking and logic behind what I am saying.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "question": "When I am late for a meeting or appointment…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I do not panic but call ahead to say that I will be a few minutes late.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I feel bad about keeping the other person waiting.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I get very upset and rush to get there as soon as possible.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I apologize profusely once I arrive.",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": 13,
+          "question": "I set goals and objectives at work that…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I think I can realistically attain.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I feel are challenging and would be exciting to achieve.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I need to achieve as part of a bigger objective.",
+              "score": 1
+            },
+            {
+              "id": 4,
+              "answer": "Will make me feel good when I achieve them.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 14,
+          "question": "When explaining a problem to a co-worker whom I need help from…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I explain the problem in as much detail as possible.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I sometimes exaggerate to make my point.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I try to explain how the problem makes me feel.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I explain how I would like the problem to be solved.",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": 15,
+          "question": "If customers or co-workers are late for a meeting with me in my office…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I keep myself busy by making phone calls or working until they arrive.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I assume they were delayed a bit and do not get upset.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I call to make sure that I have the correct information (date, time, etc.).",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I get upset that the person is wasting my time.",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": 16,
+          "question": "When I am behind on a project and feel pressure to get it done…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I make a list of everything I need to do, in what order, by when.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I block out everything else and focus 100 percent on the work I need to do.",
+              "score": 1
+            },
+            {
+              "id": 3,
+              "answer": "I become anxious and have a hard time focusing on my work.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I set a date to get the project done by and go for it.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 17,
+          "question": "When I feel verbally attacked by a customer or a co-worker…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I tell her to stop it.",
+              "score": 1
+            },
+            {
+              "id": 2,
+              "answer": "I feel hurt but usually do not say anything about it to her.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I ignore her anger and try to focus on the facts of the situation.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I let her know in strong terms that I do not like her behavior.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 18,
+          "question": "When I see a co-worker or customer whom I like and haven’t seen recently…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I give him/her a friendly hug.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I greet him/her but don’t shake his/her hand.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I give him/her a firm but quick handshake.",
+              "score": 1
+            },
+            {
+              "id": 4,
+              "answer": "I give him/her an enthusiastic handshake that lasts a few moments.",
+              "score": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "category": "amiable",
+      "questions": [
+        {
+          "id": 1,
+          "question": "When talking to a customer or co-worker…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I maintain eye contact the whole time.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I alternate between looking at the person and looking down.",
+              "score": 1
+            },
+            {
+              "id": 3,
+              "answer": "I look around the room a good deal of the time.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I try to maintain eye contact, but look away from time to time.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "question": "If I have an important decision to make…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I think it through completely before deciding.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I go with my gut instincts.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I consider the impact it will have on other people before deciding.",
+              "score": 1
+            },
+            {
+              "id": 4,
+              "answer": "I run it by someone whose opinion I respect before deciding.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "question": "My office or work area mostly has…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "family photos and sentimental items displayed.",
+              "score": 1
+            },
+            {
+              "id": 2,
+              "answer": "inspirational posters, awards, and art displayed.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "graphs and charts displayed.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "calendars and project outlines displayed.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "question": "If I am having a conflict with a co-worker or customer…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I try to help the situation along by focusing on the positive.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I stay calm and try to understand the cause of the conflict.",
+              "score": 1
+            },
+            {
+              "id": 3,
+              "answer": "I try to avoid discussing the issue causing the conflict.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I confront it right away so that it can get resolved as soon as possible.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "question": "When I talk on the phone at work…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I keep the conversation focused on the purpose of the call.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I spend a few minutes chatting before getting down to business.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I am in no hurry to get off the phone and do not mind chatting about personal things, the weather, and so on.",
+              "score": 1
+            },
+            {
+              "id": 4,
+              "answer": "I try to keep the conversation as brief as possible.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "question": "If a co-worker is upset…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I ask if I can do anything to help.",
+              "score": 1
+            },
+            {
+              "id": 2,
+              "answer": "I leave him alone because I do not want to intrude on his privacy.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I try to cheer him up and help him to see the bright side.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I feel uncomfortable and hope he gets over it soon.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "question": "When I attend meetings at work…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I sit back and think about what is being said before offering my opinion.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I put all my cards on the table so my opinion is well known.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I express my opinion enthusiastically, but listen to others’ ideas as well.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I try to support the ideas of the other people in the meeting.",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "question": "When I make a presentation in front of a group…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I am entertaining and often humorous.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I am clear and concise.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I speak relatively quietly.",
+              "score": 1
+            },
+            {
+              "id": 4,
+              "answer": "I am direct, specific, and sometimes loud.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 9,
+          "question": "When a customer is explaining a problem to me…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I try to understand and empathize with how she is feeling.",
+              "score": 1
+            },
+            {
+              "id": 2,
+              "answer": "I look for the specific facts pertaining to the situation.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I listen carefully for the main issue so that I can find a solution.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I use body language and tone of voice to show him/her that I understand.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 10,
+          "question": "When I attend training programs or presentations…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I get bored if the person moves too slowly.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I try to be supportive of the speaker, knowing how hard the job is.",
+              "score": 2
+            },
+            {
+              "id": 3,
+              "answer": "I want it to be entertaining as well as informative.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I look for the logic behind what the speaker is saying.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 11,
+          "question": "When I want to get my point across to customers or co-workers…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I listen to their point of view first and then express my ideas gently.",
+              "score": 1
+            },
+            {
+              "id": 2,
+              "answer": "I strongly state my opinion so that they know where I stand.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I try to persuade them without being too forceful.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I explain the thinking and logic behind what I am saying.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "question": "When I am late for a meeting or appointment…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I do not panic but call ahead to say that I will be a few minutes late.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I feel bad about keeping the other person waiting.",
+              "score": 1
+            },
+            {
+              "id": 3,
+              "answer": "I get very upset and rush to get there as soon as possible.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I apologize profusely once I arrive.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 13,
+          "question": "I set goals and objectives at work that…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I think I can realistically attain.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I feel are challenging and would be exciting to achieve.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I need to achieve as part of a bigger objective.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "Will make me feel good when I achieve them.",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": 14,
+          "question": "When explaining a problem to a co-worker whom I need help from…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I explain the problem in as much detail as possible.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I sometimes exaggerate to make my point.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I try to explain how the problem makes me feel.",
+              "score": 1
+            },
+            {
+              "id": 4,
+              "answer": "I explain how I would like the problem to be solved.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 15,
+          "question": "If customers or co-workers are late for a meeting with me in my office…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I keep myself busy by making phone calls or working until they arrive.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I assume they were delayed a bit and do not get upset.",
+              "score": 1
+            },
+            {
+              "id": 3,
+              "answer": "I call to make sure that I have the correct information (date, time, etc.).",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I get upset that the person is wasting my time.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 16,
+          "question": "When I am behind on a project and feel pressure to get it done…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I make a list of everything I need to do, in what order, by when.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I block out everything else and focus 100 percent on the work I need to do.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I become anxious and have a hard time focusing on my work.",
+              "score": 1
+            },
+            {
+              "id": 4,
+              "answer": "I set a date to get the project done by and go for it.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 17,
+          "question": "When I feel verbally attacked by a customer or a co-worker…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I tell her to stop it.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I feel hurt but usually do not say anything about it to her.",
+              "score": 1
+            },
+            {
+              "id": 3,
+              "answer": "I ignore her anger and try to focus on the facts of the situation.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I let her know in strong terms that I do not like her behavior.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 18,
+          "question": "When I see a co-worker or customer whom I like and haven’t seen recently…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I give him/her a friendly hug.",
+              "score": 1
+            },
+            {
+              "id": 2,
+              "answer": "I greet him/her but don’t shake his/her hand.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I give him/her a firm but quick handshake.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I give him/her an enthusiastic handshake that lasts a few moments.",
+              "score": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "category": "analytical",
+      "questions": [
+        {
+          "id": 1,
+          "question": "When talking to a customer or co-worker…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I maintain eye contact the whole time.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I alternate between looking at the person and looking down.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I look around the room a good deal of the time.",
+              "score": 1
+            },
+            {
+              "id": 4,
+              "answer": "I try to maintain eye contact, but look away from time to time.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "question": "If I have an important decision to make…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I think it through completely before deciding.",
+              "score": 1
+            },
+            {
+              "id": 2,
+              "answer": "I go with my gut instincts.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I consider the impact it will have on other people before deciding.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I run it by someone whose opinion I respect before deciding.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "question": "My office or work area mostly has…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "family photos and sentimental items displayed.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "inspirational posters, awards, and art displayed.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "graphs and charts displayed.",
+              "score": 1
+            },
+            {
+              "id": 4,
+              "answer": "calendars and project outlines displayed.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "question": "If I am having a conflict with a co-worker or customer…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I try to help the situation along by focusing on the positive.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I stay calm and try to understand the cause of the conflict.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I try to avoid discussing the issue causing the conflict.",
+              "score": 1
+            },
+            {
+              "id": 4,
+              "answer": "I confront it right away so that it can get resolved as soon as possible.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "question": "When I talk on the phone at work…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I keep the conversation focused on the purpose of the call.",
+              "score": 1
+            },
+            {
+              "id": 2,
+              "answer": "I spend a few minutes chatting before getting down to business.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I am in no hurry to get off the phone and do not mind chatting about personal things, the weather, and so on.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I try to keep the conversation as brief as possible.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "question": "If a co-worker is upset…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I ask if I can do anything to help.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I leave him alone because I do not want to intrude on his privacy.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I try to cheer him up and help him to see the bright side.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I feel uncomfortable and hope he gets over it soon.",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "question": "When I attend meetings at work…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I sit back and think about what is being said before offering my opinion.",
+              "score": 1
+            },
+            {
+              "id": 2,
+              "answer": "I put all my cards on the table so my opinion is well known.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I express my opinion enthusiastically, but listen to others’ ideas as well.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I try to support the ideas of the other people in the meeting.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "question": "When I make a presentation in front of a group…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I am entertaining and often humorous.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I am clear and concise.",
+              "score": 1
+            },
+            {
+              "id": 3,
+              "answer": "I speak relatively quietly.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I am direct, specific, and sometimes loud.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 9,
+          "question": "When a customer is explaining a problem to me…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I try to understand and empathize with how she is feeling.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I look for the specific facts pertaining to the situation.",
+              "score": 1
+            },
+            {
+              "id": 3,
+              "answer": "I listen carefully for the main issue so that I can find a solution.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I use body language and tone of voice to show him/her that I understand.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 10,
+          "question": "When I attend training programs or presentations…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I get bored if the person moves too slowly.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I try to be supportive of the speaker, knowing how hard the job is.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I want it to be entertaining as well as informative.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I look for the logic behind what the speaker is saying.",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": 11,
+          "question": "When I want to get my point across to customers or co-workers…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I listen to their point of view first and then express my ideas gently.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I strongly state my opinion so that they know where I stand.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I try to persuade them without being too forceful.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I explain the thinking and logic behind what I am saying.",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "question": "When I am late for a meeting or appointment…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I do not panic but call ahead to say that I will be a few minutes late.",
+              "score": 1
+            },
+            {
+              "id": 2,
+              "answer": "I feel bad about keeping the other person waiting.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I get very upset and rush to get there as soon as possible.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I apologize profusely once I arrive.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 13,
+          "question": "I set goals and objectives at work that…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I think I can realistically attain.",
+              "score": 1
+            },
+            {
+              "id": 2,
+              "answer": "I feel are challenging and would be exciting to achieve.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I need to achieve as part of a bigger objective.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "Will make me feel good when I achieve them.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 14,
+          "question": "When explaining a problem to a co-worker whom I need help from…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I explain the problem in as much detail as possible.",
+              "score": 1
+            },
+            {
+              "id": 2,
+              "answer": "I sometimes exaggerate to make my point.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I try to explain how the problem makes me feel.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I explain how I would like the problem to be solved.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 15,
+          "question": "If customers or co-workers are late for a meeting with me in my office…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I keep myself busy by making phone calls or working until they arrive.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I assume they were delayed a bit and do not get upset.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I call to make sure that I have the correct information (date, time, etc.).",
+              "score": 1
+            },
+            {
+              "id": 4,
+              "answer": "I get upset that the person is wasting my time.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 16,
+          "question": "When I am behind on a project and feel pressure to get it done…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I make a list of everything I need to do, in what order, by when.",
+              "score": 1
+            },
+            {
+              "id": 2,
+              "answer": "I block out everything else and focus 100 percent on the work I need to do.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I become anxious and have a hard time focusing on my work.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I set a date to get the project done by and go for it.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 17,
+          "question": "When I feel verbally attacked by a customer or a co-worker…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I tell her to stop it.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I feel hurt but usually do not say anything about it to her.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I ignore her anger and try to focus on the facts of the situation.",
+              "score": 1
+            },
+            {
+              "id": 4,
+              "answer": "I let her know in strong terms that I do not like her behavior.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 18,
+          "question": "When I see a co-worker or customer whom I like and haven’t seen recently…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I give him/her a friendly hug.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I greet him/her but don’t shake his/her hand.",
+              "score": 1
+            },
+            {
+              "id": 3,
+              "answer": "I give him/her a firm but quick handshake.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I give him/her an enthusiastic handshake that lasts a few moments.",
+              "score": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "category": "expressive",
+      "questions": [
+        {
+          "id": 1,
+          "question": "When talking to a customer or co-worker…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I maintain eye contact the whole time.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I alternate between looking at the person and looking down.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I look around the room a good deal of the time.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I try to maintain eye contact, but look away from time to time.",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "question": "If I have an important decision to make…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I think it through completely before deciding.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I go with my gut instincts.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I consider the impact it will have on other people before deciding.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I run it by someone whose opinion I respect before deciding.",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "question": "My office or work area mostly has…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "family photos and sentimental items displayed.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "inspirational posters, awards, and art displayed.",
+              "score": 1
+            },
+            {
+              "id": 3,
+              "answer": "graphs and charts displayed.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "calendars and project outlines displayed.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "question": "If I am having a conflict with a co-worker or customer…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I try to help the situation along by focusing on the positive.",
+              "score": 1
+            },
+            {
+              "id": 2,
+              "answer": "I stay calm and try to understand the cause of the conflict.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I try to avoid discussing the issue causing the conflict.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I confront it right away so that it can get resolved as soon as possible.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "question": "When I talk on the phone at work…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I keep the conversation focused on the purpose of the call.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I spend a few minutes chatting before getting down to business.",
+              "score": 1
+            },
+            {
+              "id": 3,
+              "answer": "I am in no hurry to get off the phone and do not mind chatting about personal things, the weather, and so on.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I try to keep the conversation as brief as possible.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "question": "If a co-worker is upset…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I ask if I can do anything to help.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I leave him alone because I do not want to intrude on his privacy.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I try to cheer him up and help him to see the bright side.",
+              "score": 1
+            },
+            {
+              "id": 4,
+              "answer": "I feel uncomfortable and hope he gets over it soon.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "question": "When I attend meetings at work…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I sit back and think about what is being said before offering my opinion.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I put all my cards on the table so my opinion is well known.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I express my opinion enthusiastically, but listen to others’ ideas as well.",
+              "score": 1
+            },
+            {
+              "id": 4,
+              "answer": "I try to support the ideas of the other people in the meeting.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "question": "When I make a presentation in front of a group…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I am entertaining and often humorous.",
+              "score": 1
+            },
+            {
+              "id": 2,
+              "answer": "I am clear and concise.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I speak relatively quietly.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I am direct, specific, and sometimes loud.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 9,
+          "question": "When a customer is explaining a problem to me…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I try to understand and empathize with how she is feeling.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I look for the specific facts pertaining to the situation.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I listen carefully for the main issue so that I can find a solution.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I use body language and tone of voice to show him/her that I understand.",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": 10,
+          "question": "When I attend training programs or presentations…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I get bored if the person moves too slowly.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I try to be supportive of the speaker, knowing how hard the job is.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I want it to be entertaining as well as informative.",
+              "score": 1
+            },
+            {
+              "id": 4,
+              "answer": "I look for the logic behind what the speaker is saying.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 11,
+          "question": "When I want to get my point across to customers or co-workers…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I listen to their point of view first and then express my ideas gently.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I strongly state my opinion so that they know where I stand.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I try to persuade them without being too forceful.",
+              "score": 1
+            },
+            {
+              "id": 4,
+              "answer": "I explain the thinking and logic behind what I am saying.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "question": "When I am late for a meeting or appointment…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I do not panic but call ahead to say that I will be a few minutes late.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I feel bad about keeping the other person waiting.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I get very upset and rush to get there as soon as possible.",
+              "score": 1
+            },
+            {
+              "id": 4,
+              "answer": "I apologize profusely once I arrive.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 13,
+          "question": "I set goals and objectives at work that…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I think I can realistically attain.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I feel are challenging and would be exciting to achieve.",
+              "score": 1
+            },
+            {
+              "id": 3,
+              "answer": "I need to achieve as part of a bigger objective.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "Will make me feel good when I achieve them.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 14,
+          "question": "When explaining a problem to a co-worker whom I need help from…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I explain the problem in as much detail as possible.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I sometimes exaggerate to make my point.",
+              "score": 1
+            },
+            {
+              "id": 3,
+              "answer": "I try to explain how the problem makes me feel.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I explain how I would like the problem to be solved.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 15,
+          "question": "If customers or co-workers are late for a meeting with me in my office…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I keep myself busy by making phone calls or working until they arrive.",
+              "score": 1
+            },
+            {
+              "id": 2,
+              "answer": "I assume they were delayed a bit and do not get upset.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I call to make sure that I have the correct information (date, time, etc.).",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I get upset that the person is wasting my time.",
+              "score": 0
+            }
+          ]
+        },
+        {
+          "id": 16,
+          "question": "When I am behind on a project and feel pressure to get it done…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I make a list of everything I need to do, in what order, by when.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I block out everything else and focus 100 percent on the work I need to do.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I become anxious and have a hard time focusing on my work.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I set a date to get the project done by and go for it.",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": 17,
+          "question": "When I feel verbally attacked by a customer or a co-worker…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I tell her to stop it.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I feel hurt but usually do not say anything about it to her.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I ignore her anger and try to focus on the facts of the situation.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I let her know in strong terms that I do not like her behavior.",
+              "score": 1
+            }
+          ]
+        },
+        {
+          "id": 18,
+          "question": "When I see a co-worker or customer whom I like and haven’t seen recently…",
+          "answers": [
+            {
+              "id": 1,
+              "answer": "I give him/her a friendly hug.",
+              "score": 0
+            },
+            {
+              "id": 2,
+              "answer": "I greet him/her but don’t shake his/her hand.",
+              "score": 0
+            },
+            {
+              "id": 3,
+              "answer": "I give him/her a firm but quick handshake.",
+              "score": 0
+            },
+            {
+              "id": 4,
+              "answer": "I give him/her an enthusiastic handshake that lasts a few moments.",
+              "score": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

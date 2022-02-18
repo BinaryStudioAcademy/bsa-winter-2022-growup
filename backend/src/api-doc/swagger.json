@@ -4,7 +4,6 @@
     "version": "1.0.0",
     "title": "GrowUP API"
   },
-  "host": "localhost:3001",
   "basePath": "/",
   "tags": [
     {
@@ -12,7 +11,7 @@
       "description": "API for users. Example how use Swagger"
     }
   ],
-  "schemes": ["http"],
+  "schemes": ["http", "https"],
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "paths": {
@@ -232,7 +231,7 @@
             "description": "JWT Token"
           }
         ],
-        "tags": ["Tags"],
+        "tags": ["Tags", "Admin"],
         "summary": "Fetching tags",
         "responses": {
           "200": {
@@ -272,7 +271,7 @@
             "descsription": "Name of all new tagss"
           }
         ],
-        "tags": ["Tags"],
+        "tags": ["Tags", "Admin"],
         "summary": "Creating new tags",
         "responses": {
           "200": {
@@ -319,7 +318,7 @@
             "descsription": "Tag id you want to delete"
           }
         ],
-        "tags": ["Tags"],
+        "tags": ["Tags", "Admin"],
         "summary": "Delete tag by id",
         "responses": {
           "200": {
@@ -390,6 +389,103 @@
             "description": "Returns updated user",
             "schema": {
               "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/api/company/users": {
+      "get": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          }
+        ],
+        "tags": ["Users", "Admin"],
+        "summary": "Retrieves list of non-admin users",
+        "responses": {
+          "200": {
+            "description": "Returns list of users",
+            "schema": {
+              "type": "array",
+              "items": {
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/User"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "role": {
+                        "type": "string",
+                        "enum": ["Mentor", "Mentee", "Admin"]
+                      },
+                      "company": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "body",
+            "name": "Body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "roleType": {
+                  "type": "string",
+                  "enum": ["Mentor", "Mentee", "Admin"]
+                }
+              }
+            }
+          }
+        ],
+        "tags": ["Users", "Admin"],
+        "summary": "Invites non-admin user",
+        "responses": {
+          "200": {
+            "description": "Returns new user",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/User"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "role": {
+                      "type": "string",
+                      "enum": ["Mentor", "Mentee", "Admin"]
+                    },
+                    "company": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
             }
           }
         }

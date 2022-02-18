@@ -9,6 +9,11 @@ type Props = {
   http: IHttp;
 };
 
+type CreateTagResponse = {
+  tags: ITag[];
+  existingTags: string[];
+};
+
 class TagsApi {
   private http: IHttp;
   private apiPath: string;
@@ -31,7 +36,7 @@ class TagsApi {
 
   public async createTags(
     tagsPayload: TagCreation['name'][],
-  ): Promise<ITag[] | null> {
+  ): Promise<CreateTagResponse | null> {
     try {
       const result = await this.http.load(`${this.apiPath}/company/tags`, {
         contentType: ContentType.JSON,
@@ -42,7 +47,7 @@ class TagsApi {
         }),
       });
 
-      return result as ITag[];
+      return result as CreateTagResponse;
     } catch {
       return null;
     }

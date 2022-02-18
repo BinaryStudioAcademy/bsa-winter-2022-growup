@@ -1,4 +1,4 @@
-const Ork: React.FC = () => (
+const Okr: React.FC = () => (
   <div className="container p-4">
     <nav>
       <div className="nav nav-tabs" id="nav-tab" role="tablist">
@@ -46,4 +46,4 @@ const Ork: React.FC = () => (
   </div>
 );
 
-export default Ork;
+export default Okr;

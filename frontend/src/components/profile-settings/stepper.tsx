@@ -9,16 +9,18 @@ interface Props {
 
 const Stepper: React.FC<Props> = ({ steps, activeStep }) => {
   return (
-    <div className="stepper__panel w-100">
+    <div className="stepper__panel position-relative d-table w-100">
       {steps.map((step, i) => (
         <div
           key={i}
-          className={`stepper__step ${activeStep === i && 'is-active'} ${
-            activeStep > i && 'is-complete'
-          }`}
+          className={`stepper__step position-relative d-table-cell ${
+            activeStep === i && 'is-active'
+          } ${activeStep > i && 'is-complete'}`}
         >
-          <div className="stepper__indicator">
-            <span className="stepper__info">{i + 1}</span>
+          <div className="position-relative d-block">
+            <span className="stepper__info position-relative d-inline-block fs-2">
+              {i + 1}
+            </span>
           </div>
         </div>
       ))}

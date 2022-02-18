@@ -1,8 +1,7 @@
 import { StepProps } from './common/step-props';
 import StepControl from './step-control';
-
+import WorkQuiz from 'components/work-quiz/work-quiz';
 const SecondStep: React.FC<StepProps> = ({
-  children,
   isDisablePrevious,
   onPrevious,
   onNext,
@@ -14,7 +13,7 @@ const SecondStep: React.FC<StepProps> = ({
 
   return (
     <div className="stepper__form">
-      second step {children}
+      <WorkQuiz />
       <StepControl
         isValid={true}
         isDisablePrevious={isDisablePrevious}
