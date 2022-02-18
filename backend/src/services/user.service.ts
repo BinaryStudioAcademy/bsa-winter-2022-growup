@@ -58,7 +58,7 @@ const getUserJWT = async (user: User): Promise<TokenResponse> => {
   return { token };
 };
 
-export const registerUser = async (
+const registerUser = async (
   data: UserRegisterForm,
   role: typeof RoleType[keyof typeof RoleType],
   companyId: User['company']['id'],
