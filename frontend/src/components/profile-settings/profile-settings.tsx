@@ -29,9 +29,9 @@ const ProfileSettings: React.FC = () => {
   };
 
   return (
-    <div className="stepper">
+    <div className="stepper position-relative">
       <Stepper steps={steps} activeStep={activeStep - 1} />
-      <div className="stepper__actions w-100">
+      <div className="stepper__actions d-flex justify-content-center w-100">
         <Routes>
           <Route
             path={ProfileSettingsRoute.PROFILE_SETTINGS_ROOT}
