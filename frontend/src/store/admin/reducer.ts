@@ -6,7 +6,7 @@ import * as actions from './actions';
 const Reducer = (builder: ActionReducerMapBuilder<State>): void => {
   builder.addCase(actions.createTags.fulfilled, (state, action) => {
     state.isLoading = false;
-    state.tags.push(...(action.payload as State['tags']));
+    state.tags.push(...(action.payload?.tags as State['tags']));
   });
 
   builder.addCase(actions.fetchTags.fulfilled, (state, action) => {
