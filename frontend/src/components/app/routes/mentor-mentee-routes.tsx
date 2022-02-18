@@ -4,16 +4,17 @@ import {
   MentorMenteeRoute,
   ProfileSettingsRoute,
 } from '../../../common/enums/enums';
-import Okr from '../../okr/okr';
 import Profile from '../../profile/profile';
 import MainPage from '../../main-page/main-page';
 import { NotFound } from '../../not-found';
 import ProfileSettings from '../../profile-settings/profile-settings';
+import ControlledTabs from 'components/okr/tabs/two-tabs';
+import SkillOverview from 'components/skills/skill-overview';
 
 export const mentorMenteeRoutes = [
   {
     path: MentorMenteeRoute.OKR,
-    element: <Okr />,
+    element: <ControlledTabs />,
   },
   {
     path: MentorMenteeRoute.SETTINGS_PROFILE,
@@ -54,5 +55,9 @@ export const mentorMenteeRoutes = [
   {
     path: AppRoute.SIGN_UP,
     element: <Navigate to={MentorMenteeRoute.HOME} />,
+  },
+  {
+    path: AppRoute.SKILLS,
+    element: <SkillOverview />,
   },
 ];
