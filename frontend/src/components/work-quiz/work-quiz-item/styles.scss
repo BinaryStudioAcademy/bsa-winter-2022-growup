@@ -1,9 +1,11 @@
+@import 'assets/scss/utils.scss';
+
 .test-item__checkbox {
-  border-color: #463da8 !important;
+  border-color: $gu-blue !important;
   cursor: pointer;
 }
 
 .test-item__checkbox:checked {
-  background-color: #463da8 !important;
+  background-color: $gu-blue !important;
   border: none;
 }
