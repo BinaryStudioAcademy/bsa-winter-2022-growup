@@ -1,18 +1,25 @@
-import { Entity, PrimaryColumn, Column, OneToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+  BaseEntity,
+} from 'typeorm';
 import { QuizCategory } from './quiz-category';
 import { User } from './user';
 
 @Entity()
-export class User_QuizCategory {
+export class User_QuizCategory extends BaseEntity {
   @PrimaryColumn()
   quizCaregoryId: number;
-  @OneToOne(() => QuizCategory, (quizCategory) => quizCategory.id)
+  @ManyToOne(() => QuizCategory, (quizCategory) => quizCategory.id)
   @JoinColumn({ name: 'quizCaregoryId' })
   quizCategory: QuizCategory;
 
   @PrimaryColumn()
   userId: number;
-  @OneToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.id)
   @JoinColumn({ name: 'userId' })
   user: User;
 
