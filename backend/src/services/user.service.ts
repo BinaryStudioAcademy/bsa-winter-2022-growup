@@ -19,7 +19,11 @@ import {
   comparePasswords,
   hashPassword,
 } from '~/common/utils/password-hasher.util';
-import { uploadImage, deleteImage } from '~/common/utils/upload-image.util';
+import {
+  uploadImage,
+  deleteImage,
+  changeFileName,
+} from '~/common/utils/upload-image.util';
 import { getCurrentTimeMS } from '~/common/utils/time.util';
 import { signToken, generateRefreshToken } from '~/common/utils/token.util';
 import { convertForUserList } from '~/common/utils/user.util';
@@ -232,13 +236,12 @@ export const updateUserAvatar = async (
       fileName: userInstance.avatar.split('/').at(-1),
     });
 
-  const avatar = await uploadImage({
-    ...props,
-    file: {
-      ...file,
-      originalname: `${getCurrentTimeMS()}-${file.originalname}`,
-    },
-  });
+  const userFile = changeFileName(
+    file,
+    `${getCurrentTimeMS()}-${userInstance.id}`,
+  );
+
+  const avatar = await uploadImage({ ...props, file: userFile });
 
   userInstance.avatar = avatar.Location;
 

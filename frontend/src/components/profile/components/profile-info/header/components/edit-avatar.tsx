@@ -36,6 +36,7 @@ const EditAvatar: React.FC<Props> = (props) => {
           placeholder="Image"
           type="file"
           onChange={changeHandler}
+          accept="image/*"
         />
         <div className="d-flex">
           <button className="btn btn-outline-gu-purple flex-fill fw-bold border-2 mt-4">
