@@ -146,16 +146,21 @@ export const registerUser = async (
   return getUserJWT(user);
 };
 
-export const fetchUser = async (
-  id: User['id'],
-): Promise<Omit<User, 'password'>> => {
+type IUserResponse = Omit<Omit<User, 'password'>, 'role'> & {
+  role: typeof RoleType[keyof typeof RoleType];
+};
+
+export const fetchUser = async (id: User['id']): Promise<IUserResponse> => {
   const userRepository = getCustomRepository(UserRepository);
   const roleRepository = getCustomRepository(UserRoleRepository);
 
   const { password: _password, ...user } = await userRepository.findOne(id);
-  user.role = await roleRepository.findOne({ user });
+  const { role } = await roleRepository.findOne({ user });
 
-  return user as User;
+  return {
+    ...user,
+    role,
+  } as IUserResponse;
 };
 
 export const updateUserAvatar = async (

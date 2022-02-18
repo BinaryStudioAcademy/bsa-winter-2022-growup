@@ -11,7 +11,7 @@ interface IUser extends IUserDefault {
   updatedAt: string;
   deletedAt: string | null;
 
-  roleType: typeof RoleType[keyof typeof RoleType];
+  role: typeof RoleType[keyof typeof RoleType];
 }
 
 export type { IUser };

@@ -22,7 +22,7 @@ const UserForm: React.FC = () => {
     dispatch(
       adminActions.inviteUser({
         email,
-        roleType: role,
+        role,
       }),
     );
   };

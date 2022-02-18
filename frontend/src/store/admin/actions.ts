@@ -44,7 +44,7 @@ const deleteTag = createAsyncThunk(
 
 const inviteUser = createAsyncThunk(
   ActionType.INVITE_USER,
-  async (data: Pick<IUser, 'email' | 'roleType'>, { rejectWithValue }) => {
+  async (data: Pick<IUser, 'email' | 'role'>, { rejectWithValue }) => {
     try {
       await users.inviteUser(data);
     } catch (err) {

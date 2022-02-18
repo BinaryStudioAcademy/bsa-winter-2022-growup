@@ -1,8 +1,8 @@
 import { useAppSelector } from 'hooks/hooks';
-import { AppRoute, ProfileSettingsRoute } from 'common/enums/enums';
+import { AppRoute, ProfileSettingsRoute, RoleType } from 'common/enums/enums';
 import Login from 'components/login/login';
 import SignUp from 'components/sign-up/sign-up';
-import { Route, Routes, Navigate } from 'components/common/common';
+import { Navigate, Route, Routes } from 'components/common/common';
 import Ork from 'components/okr/okr';
 import Profile from 'components/profile/profile';
 import { NotFound } from 'components/not-found';
@@ -14,7 +14,9 @@ import ProfileSettings from '../profile-settings/profile-settings';
 import './app.scss';
 
 const App: React.FC = () => {
-  const isAdmin = false;
+  const isAdmin = useAppSelector(
+    (state) => state.auth.user?.role === RoleType.ADMIN,
+  );
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   return (

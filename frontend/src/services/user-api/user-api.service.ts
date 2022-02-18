@@ -18,7 +18,7 @@ class UsersApi {
   }
 
   public async inviteUser(
-    payload: Pick<IUser, 'email' | 'roleType'>,
+    payload: Pick<IUser, 'email' | 'role'>,
   ): Promise<void | null> {
     try {
       await this.http.load(`${this.apiPath}/user`, {
