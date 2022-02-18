@@ -1,11 +1,27 @@
+import { Dropdown } from 'react-bootstrap';
+import { BookmarkFill } from 'react-bootstrap-icons';
+
+import { useAppDispatch } from 'hooks/store/store.hooks';
+import { actions } from 'store/auth/slice';
+
 import avatarIcon from 'assets/img/icons/header-icons/avatar-icon.svg';
 import notificationIcon from 'assets/img/icons/header-icons/notification-icon.svg';
 import notificationPointer from 'assets/img/icons/header-icons/notification-pointer.svg';
 import searchIcon from 'assets/img/icons/header-icons/search-icon.svg';
-import { BookmarkFill } from 'react-bootstrap-icons';
+
 import './styles.scss';
+import { useNavigate } from 'react-router-dom';
+import { AppRoute } from 'common/enums/enums';
 
 const Header: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const onClick = (): void => {
+    dispatch(actions.LOGOUT_USER());
+    navigate(AppRoute.LOGIN);
+  };
+
   return (
     <header className="header-section w-100 position-fixed">
       <div className="header-container d-flex align-items-center justify-content-end pe-4 py-2 pe-md-5 py-md-3">
@@ -29,13 +45,21 @@ const Header: React.FC = () => {
             alt="notification icon"
           />
           <BookmarkFill className="notification-section__icon following-opportunities-icon rounded-1 me-4 px-1 py-1" />
+
           <img
             className="notification-section__notification-pointer notification-pointer position-absolute"
             src={notificationPointer}
             alt="notification pointer"
           />
         </div>
-        <img className="avatar-icon" src={avatarIcon} alt="avatar icon" />
+        <Dropdown>
+          <Dropdown.Toggle id="user-menu">
+            <img className="avatar-icon" src={avatarIcon} alt="avatar icon" />
+          </Dropdown.Toggle>
+          <Dropdown.Menu>
+            <Dropdown.Item onClick={onClick}>Log out</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       </div>
     </header>
   );

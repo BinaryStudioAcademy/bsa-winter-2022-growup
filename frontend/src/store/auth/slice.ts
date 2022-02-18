@@ -29,6 +29,11 @@ const { reducer, actions } = createSlice({
     [ActionType.REMOVE_USER]: (state) => {
       state.user = null;
     },
+    [ActionType.LOGOUT_USER]: (state) => {
+      state.user = null;
+      state.isAuthenticated = false;
+      storage.removeItem(StorageKey.TOKEN);
+    },
   },
   extraReducers: (builder) => {
     builder
