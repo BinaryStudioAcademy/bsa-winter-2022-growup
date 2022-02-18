@@ -1,0 +1,12 @@
+@import 'assets/scss/utils';
+
+.test-submit {
+  background-color: $gu-blue !important;
+  border: none !important;
+  padding: 0.5em 3em !important;
+}
+
+.test-submit_disabled {
+  background-color: $gu-blue !important;
+  border: none !important;
+}

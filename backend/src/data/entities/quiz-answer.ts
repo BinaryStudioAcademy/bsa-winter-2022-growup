@@ -11,5 +11,5 @@ export class QuizAnswer extends AbstractEntity {
   score: string;
 
   @ManyToOne(() => QuizQuestion, (quizQuestion) => quizQuestion.id)
-  question: QuizQuestion[];
+  question: QuizQuestion;
 }
