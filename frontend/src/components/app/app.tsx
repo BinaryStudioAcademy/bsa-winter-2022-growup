@@ -48,7 +48,7 @@ const App: React.FC = () => {
             </Routes>
           </div>
         ) : (
-          <main className="main-wrapper w-100 px-4 pt-3 pb-3">
+          <main className="main-wrapper w-100 px-3 px-md-4 pt-3 pb-3">
             <Routes>
               <Route path={AppRoute.LOGIN} element={<Login />} />
               <Route path={AppRoute.SIGN_UP} element={<SignUp />} />
