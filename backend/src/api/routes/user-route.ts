@@ -2,7 +2,11 @@ import { Request, Router } from 'express';
 import multer from 'multer';
 
 import { run } from '../../common/helpers/route.helper';
-import { updateUserAvatar, registerUser } from '~/services/user.service';
+import {
+  updateUserAvatar,
+  registerCommonUsers,
+  getCommonUserList,
+} from '~/services/user.service';
 import { createDefaultUser } from '~/common/utils/default-user.util';
 
 const router = Router();
@@ -19,12 +23,17 @@ router.put(
 router.post(
   '/',
   run((req: Request) =>
-    registerUser(
+    registerCommonUsers(
       createDefaultUser(req.body.email),
       req.body.roleType,
       req.companyId,
     ),
   ),
+);
+
+router.get(
+  '/',
+  run((req: Request) => getCommonUserList(req.companyId)),
 );
 
 export default router;

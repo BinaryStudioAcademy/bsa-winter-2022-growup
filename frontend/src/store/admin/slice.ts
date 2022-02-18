@@ -7,6 +7,7 @@ import adminReducer from './reducer';
 const initialState: State = {
   tags: [],
   isLoading: false,
+  users: [],
 };
 
 const { reducer, actions } = createSlice({

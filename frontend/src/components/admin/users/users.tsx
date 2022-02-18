@@ -1,20 +1,29 @@
 import { memo } from 'react';
 import { Card } from 'react-bootstrap';
 
-import { useState, useCallback } from 'hooks/hooks';
-
-import type { IUser } from 'common/interfaces/user/index';
+import {
+  useState,
+  useCallback,
+  useAppDispatch,
+  useAppSelector,
+  useEffect,
+} from 'hooks/hooks';
+import { adminActions } from 'store/actions';
 
 import UserModal from './modal/user-modal';
+import UserList from './list/user-list';
 
-type PropTypes = {
-  userList: IUser[];
-};
-
-const Users: React.FC<PropTypes> = ({ userList }) => {
+const Users: React.FC = () => {
   const [show, setShow] = useState(false);
   const closeWindow = useCallback(() => setShow(false), []);
   const showWindow = (): void => setShow(true);
+
+  const dispatch = useAppDispatch();
+  const { users } = useAppSelector((state) => state.admin);
+
+  useEffect(() => {
+    dispatch(adminActions.fetchUsers());
+  }, []);
 
   return (
     <>
@@ -29,11 +38,7 @@ const Users: React.FC<PropTypes> = ({ userList }) => {
             </button>
           </Card.Header>
           <Card.Body>
-            {userList.length ? (
-              userList.map((user) => <p>{user.fullName}</p>)
-            ) : (
-              <p className="m-0 text-center">No users here...</p>
-            )}
+            <UserList list={users} />
           </Card.Body>
         </Card>
       </div>

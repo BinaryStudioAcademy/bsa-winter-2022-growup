@@ -20,6 +20,14 @@ const Reducer = (builder: ActionReducerMapBuilder<State>): void => {
     state.tags = state.tags.filter((tag) => tag.id !== action.payload);
   });
 
+  builder.addCase(actions.fetchUsers.fulfilled, (state, action) => {
+    state.users = action.payload || [];
+  });
+
+  builder.addCase(actions.inviteUser.fulfilled, (state, action) => {
+    if (action.payload) state.users.push(action.payload);
+  });
+
   builder.addMatcher(
     isAnyOf(actions.createTags.pending, actions.fetchTags.pending),
     (state, _) => {
