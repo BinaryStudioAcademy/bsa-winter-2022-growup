@@ -1,10 +1,10 @@
 import { getCustomRepository } from 'typeorm';
-import { HttpCode, HttpError } from 'growup-shared';
 import { OKR } from '~/data/entities/okr';
 import { Objective } from '~/data/entities/objective';
 import Okrepository from '~/data/repositories/okr.repository';
 import UserRepository from '~/data/repositories/user.repository';
 import ObjectiveRepository from '~/data/repositories/objective.repository';
+import { badRequestError } from '~/common/errors';
 
 export const getAllOkr = async (userId: string): Promise<OKR[]> => {
   const okrRepository = getCustomRepository(Okrepository);
@@ -17,10 +17,7 @@ export const getAllOkr = async (userId: string): Promise<OKR[]> => {
     return okrs;
   }
 
-  throw new HttpError({
-    status: HttpCode.BAD_REQUEST,
-    message: 'User isn`t exist!!!',
-  });
+  throw badRequestError('User isn`t exist!!!');
 };
 
 export const getOkrById = async (okrId: string): Promise<OKR> => {
@@ -45,10 +42,7 @@ export const getOkrById = async (okrId: string): Promise<OKR> => {
     return okr;
   }
 
-  throw new HttpError({
-    status: HttpCode.BAD_REQUEST,
-    message: 'Okr isn`t exist!!!',
-  });
+  throw badRequestError('Okr isn`t exist!!!');
 };
 
 export const createOkr = async ({
@@ -65,15 +59,14 @@ export const createOkr = async ({
   const okrRepository = getCustomRepository(Okrepository);
   const userRepository = getCustomRepository(UserRepository);
 
+  if (!body.name) throw badRequestError('Okr name is undefined!!!');
+  if (!body.startDate) throw badRequestError('Okr startDate is undefined!!!');
+  if (!body.endDate) badRequestError('Okr endDate is undefined!!!');
+
   const user = await userRepository.findOne({ id: userId });
   const isOkrExist = await okrRepository.findOne({ name: body.name });
 
-  if (isOkrExist) {
-    throw new HttpError({
-      status: HttpCode.BAD_REQUEST,
-      message: `Okr with name ${body.name} is exist!!!`,
-    });
-  }
+  if (isOkrExist) badRequestError(`Okr with name ${body.name} is exist!!!`);
 
   if (user) {
     const okr = okrRepository.create();
@@ -84,10 +77,7 @@ export const createOkr = async ({
     return okr;
   }
 
-  throw new HttpError({
-    status: HttpCode.BAD_REQUEST,
-    message: 'User isn`t exist!!!',
-  });
+  throw badRequestError('User isn`t exist!!!');
 };
 
 export const updateOkrById = async ({
@@ -113,10 +103,7 @@ export const updateOkrById = async ({
     return okr;
   }
 
-  throw new HttpError({
-    status: HttpCode.BAD_REQUEST,
-    message: 'Okr isn`t exist!!!',
-  });
+  throw badRequestError('Okr isn`t exist!!!');
 };
 
 export const addNewObjectiveToOkr = async ({
@@ -129,6 +116,8 @@ export const addNewObjectiveToOkr = async ({
     skillObjective?: string;
   };
 }): Promise<Objective> => {
+  if (!body.name) throw badRequestError('Objective name is undefined!!!');
+
   const okrRepository = getCustomRepository(Okrepository);
   const objectiveRepository = getCustomRepository(ObjectiveRepository);
 
@@ -137,12 +126,8 @@ export const addNewObjectiveToOkr = async ({
     name: body.name,
   });
 
-  if (isObjectiveExist) {
-    throw new HttpError({
-      status: HttpCode.BAD_REQUEST,
-      message: `Objective with name ${body.name} is exist!!!`,
-    });
-  }
+  if (isObjectiveExist)
+    badRequestError(`Objective with name ${body.name} is exist!!!`);
 
   if (okr) {
     const objective = objectiveRepository.create();
@@ -155,10 +140,7 @@ export const addNewObjectiveToOkr = async ({
     return objective;
   }
 
-  throw new HttpError({
-    status: HttpCode.BAD_REQUEST,
-    message: 'Okr isn`t exist!!!',
-  });
+  throw badRequestError('Okr isn`t exist!!!');
 };
 
 export const updateObjectiveById = async ({
@@ -178,19 +160,8 @@ export const updateObjectiveById = async ({
     id: objectiveId,
   });
 
-  if (!okr) {
-    throw new HttpError({
-      status: HttpCode.BAD_REQUEST,
-      message: 'Okr isn`t exist!!!',
-    });
-  }
-
-  if (!objective) {
-    throw new HttpError({
-      status: HttpCode.BAD_REQUEST,
-      message: 'Objective isn`t exist!!!',
-    });
-  }
+  if (!okr) badRequestError('Okr isn`t exist!!!');
+  if (!objective) badRequestError('Objective isn`t exist!!!');
 
   if (data.id) delete data.id;
   if (data.okr) delete data.okr;

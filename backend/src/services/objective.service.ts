@@ -1,9 +1,9 @@
 import { getCustomRepository } from 'typeorm';
-import { HttpCode, HttpError } from 'growup-shared';
 import { KeyResult } from '~/data/entities/key-result';
 import Okrepository from '~/data/repositories/okr.repository';
 import ObjectiveRepository from '~/data/repositories/objective.repository';
 import KeyResultRepository from '~/data/repositories/key-result.repository';
+import { badRequestError } from '~/common/errors';
 
 export const addNewKeyresultToObjective = async ({
   okrId,
@@ -14,6 +14,8 @@ export const addNewKeyresultToObjective = async ({
   objectiveId: string;
   body: { name: string };
 }): Promise<KeyResult> => {
+  if (!body.name) throw badRequestError('Keyresult name is undefined!!!');
+
   const okrRepository = getCustomRepository(Okrepository);
   const objectiveRepository = getCustomRepository(ObjectiveRepository);
   const keyResultRepository = getCustomRepository(KeyResultRepository);
@@ -21,19 +23,8 @@ export const addNewKeyresultToObjective = async ({
   const okr = await okrRepository.findOne({ id: okrId });
   const objective = await objectiveRepository.findOne({ id: objectiveId });
 
-  if (!okr) {
-    throw new HttpError({
-      status: HttpCode.BAD_REQUEST,
-      message: 'Okr isn`t exist!!!',
-    });
-  }
-
-  if (!objective) {
-    throw new HttpError({
-      status: HttpCode.BAD_REQUEST,
-      message: 'Objective isn`t exist!!!',
-    });
-  }
+  if (!okr) throw badRequestError('Okr isn`t exist!!!');
+  if (!objective) throw badRequestError('Objective isn`t exist!!!');
 
   const keyResult = keyResultRepository.create();
   Object.assign(keyResult, body);
