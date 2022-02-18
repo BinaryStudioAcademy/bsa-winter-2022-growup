@@ -35,7 +35,7 @@ class UsersApi {
 
   public async fetchUsers(): Promise<IUser[] | null> {
     try {
-      const result = await this.http.load(`${this.apiPath}/user`, {
+      const result = await this.http.load(`${this.apiPath}/company/users`, {
         contentType: ContentType.JSON,
         method: HttpMethod.GET,
         hasAuth: true,

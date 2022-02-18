@@ -1,6 +1,6 @@
 import { Request, Router } from 'express';
 
-import { run } from '../../common/helpers/route.helper';
+import { run } from '~/common/helpers/route.helper';
 import {
   authenticateUser,
   registerUserAdmin,
