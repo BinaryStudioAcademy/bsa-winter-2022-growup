@@ -29,7 +29,6 @@ import type {
   UserRegisterForm,
 } from '~/common/forms/user.forms';
 import { env } from '~/config/env';
-// import { Company } from '~/data/entities/company';
 
 type TokenResponse = {
   token: string;
