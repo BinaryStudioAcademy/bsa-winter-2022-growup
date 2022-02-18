@@ -1,6 +1,6 @@
 interface IRoute {
-  path: string,
-  element: JSX.Element
+  path: string;
+  element: JSX.Element;
 }
 
 export type { IRoute };
