@@ -100,6 +100,311 @@
         }
       }
     },
+    "/company/okr": {
+      "get": {
+        "tags": ["Okr"],
+        "summary": "Get all okrs by logined user",
+        "responses": {
+          "200": {
+            "description": "Returns array of okrs if everything is ok.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Okr"
+              }
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Okr"],
+        "summary": "Create new okr by logined user",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "startDate": {
+                  "type": "string"
+                },
+                "endDate": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true,
+            "description": "Company credentials"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns created okr if everything is ok.",
+            "schema": {
+              "$ref": "#/definitions/Okr"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/company/okr/{id}": {
+      "get": {
+        "tags": ["Okr"],
+        "summary": "Get okr by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID of the okr to get"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns okr if everything is ok.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Okr"
+              }
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Okr"],
+        "summary": "Update okr by logined user",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID of the okr to get"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "startDate": {
+                  "type": "string"
+                },
+                "endDate": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true,
+            "description": "Okr credentials"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns created okr if everything is ok.",
+            "schema": {
+              "$ref": "#/definitions/Okr"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/company/okr/{id}/objective": {
+      "post": {
+        "tags": ["Okr"],
+        "summary": "Add new objective to the okr",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID of the okr to get"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "number"
+                }
+              }
+            },
+            "required": true,
+            "description": "Okr credentials"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns created objective if everything is ok.",
+            "schema": {
+              "$ref": "#/definitions/Objective"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/company/okr/{id}/objective/{id1}": {
+      "put": {
+        "tags": ["Okr"],
+        "summary": "Update objective to the okr",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID of the okr"
+          },
+          {
+            "in": "path",
+            "name": "id1",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID of the objective"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "number"
+                }
+              }
+            },
+            "required": true,
+            "description": "Okr credentials"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns created objective if everything is ok.",
+            "schema": {
+              "$ref": "#/definitions/Objective"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/company/okr/{id}/objective/{id}/keyresult": {
+      "post": {
+        "tags": ["Okr"],
+        "summary": "Add new keyresult to the objective",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID of the okr"
+          },
+          {
+            "in": "path",
+            "name": "id1",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID of the objective"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true,
+            "description": "Okr credentials"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns created objective if everything is ok.",
+            "schema": {
+              "$ref": "#/definitions/keyResult"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/api/auth/register": {
       "post": {
         "parameters": [
@@ -361,6 +666,91 @@
     }
   },
   "definitions": {
+    "keyResult": {
+      "required": ["token"],
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": "string",
+          "nullable": true,
+          "default": null
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string",
+          "nullable": true,
+          "default": null
+        }
+      }
+    },
+    "Objective": {
+      "required": ["token"],
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "result": {
+          "type": "number"
+        },
+        "deletedAt": {
+          "type": "string",
+          "nullable": true,
+          "default": null
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string",
+          "nullable": true,
+          "default": null
+        }
+      }
+    },
+    "Okr": {
+      "required": ["token"],
+
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": "string",
+          "nullable": true,
+          "default": null
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string",
+          "nullable": true,
+          "default": null
+        }
+      }
+    },
     "Company": {
       "required": ["token"],
       "properties": {
