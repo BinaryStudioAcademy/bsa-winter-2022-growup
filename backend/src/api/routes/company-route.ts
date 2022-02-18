@@ -8,6 +8,7 @@ import { createCompany, editCompany } from '~/services/company.service';
 import {
   getAllOkr,
   createOkr,
+  getOkrById,
   addNewObjectiveToOkr,
 } from '~/services/okr.service';
 import { addNewKeyresultToObjective } from '~/services/objective.service';
@@ -45,6 +46,11 @@ router.get(
   run((req): Promise<OKR[]> => getAllOkr(req.userId)),
 );
 
+router.get(
+  '/okr/:id',
+  run((req): Promise<OKR> => getOkrById(req.params.id)),
+);
+
 router.post(
   '/okr',
   run((req): Promise<OKR> => {
@@ -65,7 +71,7 @@ router.post(
 );
 
 router.post(
-  '/company/okr/:id/objective/:id1/keyresult',
+  '/okr/:id/objective/:id1/keyresult',
   run((req): Promise<KeyResult> => {
     const { id, id1 } = req.params;
 

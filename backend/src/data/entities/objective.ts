@@ -1,7 +1,8 @@
-import { Entity, Column, ManyToOne } from 'typeorm';
+import { Entity, Column, ManyToOne, OneToMany } from 'typeorm';
 import { AbstractEntity } from '~/data/abstract/abstract.entity';
 import { OKR } from './okr';
 import { SkillObjective } from './skill-objective';
+import { KeyResult } from './key-result';
 
 @Entity()
 export class Objective extends AbstractEntity {
@@ -16,6 +17,9 @@ export class Objective extends AbstractEntity {
   })
   skillObjective: SkillObjective;
 
+  @OneToMany(() => KeyResult, (keyResult) => keyResult.objective)
+  keyResults: KeyResult[];
+
   @Column({ type: 'integer' })
-  result: string;
+  result: number;
 }

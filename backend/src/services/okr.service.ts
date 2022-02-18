@@ -23,6 +23,34 @@ export const getAllOkr = async (userId: string): Promise<OKR[]> => {
   });
 };
 
+export const getOkrById = async (okrId: string): Promise<OKR> => {
+  const okrRepository = getCustomRepository(Okrepository);
+
+  const okr = await okrRepository.findOne({ id: okrId });
+
+  if (okr) {
+    const okr = okrRepository
+      .createQueryBuilder('okr')
+      .leftJoinAndSelect(
+        'okr.objectives',
+        'objective',
+        'okr.id = objective.okr',
+      )
+      .leftJoinAndSelect(
+        'objective.keyResults',
+        'keyresult',
+        'objective.id = keyresult.objective',
+      )
+      .getOne();
+    return okr;
+  }
+
+  throw new HttpError({
+    status: HttpCode.BAD_REQUEST,
+    message: 'Okr isn`t exist!!!',
+  });
+};
+
 export const createOkr = async ({
   userId,
   body,
@@ -38,7 +66,7 @@ export const createOkr = async ({
   const userRepository = getCustomRepository(UserRepository);
 
   const user = await userRepository.findOne({ id: userId });
-  const isOkrExist = okrRepository.findOne({ name: body.name });
+  const isOkrExist = await okrRepository.findOne({ name: body.name });
 
   if (isOkrExist) {
     throw new HttpError({
@@ -53,7 +81,6 @@ export const createOkr = async ({
     okr.user = user;
 
     await okr.save();
-    console.warn(okr);
     return okr;
   }
 
@@ -77,7 +104,7 @@ export const addNewObjectiveToOkr = async ({
   const objectiveRepository = getCustomRepository(ObjectiveRepository);
 
   const okr = await okrRepository.findOne({ id: okrId });
-  const isObjectiveExist = okrRepository.findOne({ name: body.name });
+  const isObjectiveExist = await objectiveRepository.findOne({ name: body.name });
 
   if (isObjectiveExist) {
     throw new HttpError({
@@ -90,7 +117,7 @@ export const addNewObjectiveToOkr = async ({
     const objective = objectiveRepository.create();
     Object.assign(objective, body);
     objective.okr = okr;
-    objective.result = '0';
+    objective.result = 0;
 
     await objective.save();
 
