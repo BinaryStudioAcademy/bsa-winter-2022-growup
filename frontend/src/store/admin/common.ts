@@ -1,8 +1,10 @@
 import { ITag } from 'common/interfaces/tag/tag';
+import { IUser } from 'common/interfaces/user/user';
 
 export type State = {
   tags: ITag[];
   isLoading: boolean;
+  users: IUser[];
 };
 
 enum ActionType {
@@ -11,6 +13,7 @@ enum ActionType {
   DELETE_TAG = 'delete-tag',
 
   INVITE_USER = 'invite-user',
+  FETCH_USERS = 'fetch-users',
 }
 
 export { ActionType };

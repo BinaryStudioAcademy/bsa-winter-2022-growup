@@ -78,7 +78,7 @@ const Admin: React.FC<PropTypes> = ({ variant }) => (
       </div>
       <div className="row">
         {variant === Variants.company && <Companies />}
-        {variant === Variants.users && <Users userList={[]} />}
+        {variant === Variants.users && <Users />}
         {variant === Variants.career && <CareerPath />}
       </div>
     </Container>
