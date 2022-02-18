@@ -5,7 +5,11 @@ import { RoleType } from 'common/enums/enums';
 
 import { adminActions } from 'store/admin';
 
-const UserForm: React.FC = () => {
+type Props = {
+  onSubmit: () => void;
+};
+
+const UserForm: React.FC<Props> = ({ onSubmit: submit }) => {
   const [email, setEmail] = useState('');
   const [role, setRole] = useState(RoleType.MENTOR);
   const dispatch = useAppDispatch();
@@ -25,6 +29,10 @@ const UserForm: React.FC = () => {
         role,
       }),
     );
+
+    setEmail('');
+    setRole(RoleType.MENTOR);
+    submit();
   };
 
   return (

@@ -46,11 +46,22 @@ const inviteUser = createAsyncThunk(
   ActionType.INVITE_USER,
   async (data: Pick<IUser, 'email' | 'role'>, { rejectWithValue }) => {
     try {
-      await users.inviteUser(data);
+      return await users.inviteUser(data);
     } catch (err) {
       return rejectWithValue(err);
     }
   },
 );
 
-export { fetchTags, createTags, deleteTag, inviteUser };
+const fetchUsers = createAsyncThunk(
+  ActionType.FETCH_USERS,
+  async (data, { rejectWithValue }) => {
+    try {
+      return await users.fetchUsers();
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
+export { fetchTags, createTags, deleteTag, inviteUser, fetchUsers };

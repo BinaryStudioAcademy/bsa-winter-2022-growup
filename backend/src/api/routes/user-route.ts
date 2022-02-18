@@ -1,13 +1,13 @@
 import { Request, Router } from 'express';
 import multer from 'multer';
 
-import { run } from '../../common/helpers/route.helper';
 import {
   fetchUser,
   registerUser,
   updateUserAvatar,
 } from '~/services/user.service';
 import { createDefaultUser } from '~/common/utils/default-user.util';
+import { run } from '~/common/helpers/route.helper';
 
 const router = Router();
 const upload = multer();
