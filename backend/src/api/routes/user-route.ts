@@ -1,9 +1,8 @@
 import { Request, Router } from 'express';
 import multer from 'multer';
 
-import { run } from '../../common/helpers/route.helper';
-import { updateUserAvatar, registerUser } from '~/services/user.service';
-import { createDefaultUser } from '~/common/utils/default-user.util';
+import { run } from '~/common/helpers/route.helper';
+import { fetchUser, updateUserAvatar } from '~/services/user.service';
 
 const router = Router();
 const upload = multer();
@@ -16,15 +15,9 @@ router.put(
   }),
 );
 
-router.post(
+router.get(
   '/',
-  run((req: Request) =>
-    registerUser(
-      createDefaultUser(req.body.email),
-      req.body.roleType,
-      req.companyId,
-    ),
-  ),
+  run((req: Request) => fetchUser(req.userId)),
 );
 
 export default router;

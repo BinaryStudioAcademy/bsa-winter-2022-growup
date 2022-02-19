@@ -1,4 +1,1 @@
-export enum RoleType {
-  MENTOR = 'Mentor',
-  MENTEE = 'Mentee',
-}
+export { RoleType } from 'growup-shared';
