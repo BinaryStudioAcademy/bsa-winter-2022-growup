@@ -8,7 +8,7 @@ import './styles.scss';
 const Header: React.FC = () => {
   return (
     <header className="header-section w-100 position-fixed">
-      <div className="header-container d-flex align-items-center justify-content-end pe-4 py-2 pe-md-5 py-md-3">
+      <div className="header-container d-flex align-items-center justify-content-end pe-4 py-2 pe-md-4 py-md-3">
         <form className="form-section" method="get" action="#">
           <img
             className="form-section__search-icon search-icon ms-3 ms-md-4 position-absolute"

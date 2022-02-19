@@ -13,25 +13,29 @@ class WorkStyleQuiz {
 
   constructor({ apiPath, http }: IWorkStyleQuizApi) {
     this.apiPath = apiPath;
-    this.http  = http;
+    this.http = http;
   }
 
-  async fetchWorkStyleQuiz(): Promise<IQuestion[] | null > {
+  async fetchWorkStyleQuiz(): Promise<IQuestion[] | null> {
     try {
-      const result = await this.http.load(`${this.apiPath}/work-quiz/question`, {
-        contentType: ContentType.JSON,
-        method: HttpMethod.GET,
-        payload: null,
-      });
+      const result = await this.http.load(
+        `${this.apiPath}/work-quiz/question`,
+        {
+          contentType: ContentType.JSON,
+          method: HttpMethod.GET,
+          payload: null,
+        },
+      );
 
       return result as IQuestion[];
-
     } catch {
       return null;
     }
   }
 
-  async sendWorkStyleResults(results: IQuestion[]): Promise<IQuestion[] | null > {
+  async sendWorkStyleResults(
+    results: IQuestion[],
+  ): Promise<IQuestion[] | null> {
     try {
       const result = await this.http.load(`${this.apiPath}/work-quiz/result`, {
         contentType: ContentType.JSON,
@@ -40,7 +44,6 @@ class WorkStyleQuiz {
       });
 
       return result as IQuestion[];
-
     } catch {
       return null;
     }
