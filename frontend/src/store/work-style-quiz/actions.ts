@@ -38,4 +38,8 @@ const sendWorkStyleQuizResults = createAsyncThunk(
   },
 );
 
-export { fetchWorkStyleQuiz, updateWorkStyleQuizQuestion, sendWorkStyleQuizResults };
+export {
+  fetchWorkStyleQuiz,
+  updateWorkStyleQuizQuestion,
+  sendWorkStyleQuizResults,
+};

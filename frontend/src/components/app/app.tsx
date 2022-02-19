@@ -11,13 +11,13 @@ const App: React.FC = () => {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   return (
-    <>
+    <div className="wrapper">
       {isAdmin ? (
         <AdminRouting isAuthenticated={isAuthenticated} />
       ) : (
         <UserRouting isAuthenticated={isAuthenticated} />
       )}
-    </>
+    </div>
   );
 };
 
