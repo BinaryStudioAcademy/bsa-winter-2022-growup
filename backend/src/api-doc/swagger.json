@@ -15,7 +15,7 @@
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "paths": {
-    "/company": {
+    "/api/company": {
       "post": {
         "parameters": [
           {
@@ -52,33 +52,45 @@
             }
           }
         }
-      },
+      }
+    },
+    "/api/company/{id}": {
       "patch": {
         "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Company id"
+          },
           {
             "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
               "properties": {
-                "id": {
+                "name": {
                   "type": "string"
                 },
-                "body": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "description": {
-                      "type": "string"
-                    }
-                  }
+                "description": {
+                  "type": "string"
                 }
               }
             },
             "required": true,
-            "description": "Company credentials"
+            "description": "Company new data"
           }
         ],
         "tags": ["Company"],

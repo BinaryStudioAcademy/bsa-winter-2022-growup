@@ -21,10 +21,10 @@ const Companies: React.FC = () => {
 
   return (
     <>
-      <div className="col col-sm-8 col-md-8 col-lg-8">
+      <div className="col col-12 col-sm-12 col-md-8 col-lg-8 ">
         <Company companyList={companies} />
       </div>
-      <div className="col col-sm-4 col-md-4 col-lg-4">
+      <div className="col col-12 col-sm-12 col-md-4 col-lg-4 ">
         <Tags tagList={tags} />
       </div>
     </>

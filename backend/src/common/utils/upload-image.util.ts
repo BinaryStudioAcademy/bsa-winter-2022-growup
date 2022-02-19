@@ -24,6 +24,14 @@ const getS3 = ({ secret, access }: Credentials): AWS.S3 => {
   });
 };
 
+const changeFileName = (
+  file: Express.Multer.File,
+  name: string,
+): Express.Multer.File => ({
+  ...file,
+  originalname: name,
+});
+
 const uploadImage = ({
   bucketName,
   file,
@@ -56,4 +64,4 @@ const deleteImage = ({
     .promise();
 };
 
-export { uploadImage, deleteImage };
+export { uploadImage, deleteImage, changeFileName };
