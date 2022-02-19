@@ -1,5 +1,5 @@
 import type { IUser as IUserDefault } from 'growup-shared/common/interfaces';
-import { RoleType } from 'common/enums/enums';
+import { RoleType } from 'common/enums/user/roles.enum';
 
 interface IUser extends IUserDefault {
   firstName: string;
@@ -11,7 +11,7 @@ interface IUser extends IUserDefault {
   updatedAt: string;
   deletedAt: string | null;
 
-  roleType: typeof RoleType[keyof typeof RoleType];
+  roleType: RoleType;
 }
 
 export type { IUser };

@@ -45,9 +45,12 @@ const { reducer, actions } = createSlice({
       )
       .addMatcher(
         isAnyOf(loginUser.fulfilled, signUpUser.fulfilled),
-        (state) => {
+        (state, action) => {
           state.isAuthenticated = true;
           state.isLoading = false;
+
+          const { user } = action.payload;
+          state.user = user;
         },
       )
       .addMatcher(

@@ -29,7 +29,7 @@ export default class UserSeeder {
       }).save();
 
       await Object.assign(new UserRole(), {
-        role: RoleType.Admin,
+        role: RoleType.ADMIN,
         user: userInstance,
       }).save();
     }, users as User[]);

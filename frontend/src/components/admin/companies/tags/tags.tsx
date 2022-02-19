@@ -1,6 +1,9 @@
 import { memo } from 'react';
-import { useState, useCallback, useAppDispatch } from 'hooks/hooks';
 import { Card } from 'react-bootstrap';
+// import { Plus } from 'react-bootstrap-icons';
+
+import { useState, useCallback, useAppDispatch } from 'hooks/hooks';
+
 import type { ITag } from 'common/interfaces/tag/tag';
 
 import { adminActions } from 'store/actions';
@@ -36,10 +39,10 @@ const Tags: React.FC<PropTypes> = ({ tagList }) => {
             </div>
             <div className="col d-flex align-items-center justify-content-end">
               <button
-                className="btn btn-outline-gu-pink btn-hover-gu-white fw-bold fs-5 border-2"
+                className="btn btn-outline-gu-pink btn-responsive btn-hover-gu-white fw-bold fs-5 border-2"
                 onClick={showModal}
               >
-                + Add Tag
+                + <span>Add Tag</span>
               </button>
             </div>
           </div>
