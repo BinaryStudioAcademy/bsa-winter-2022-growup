@@ -1,7 +1,8 @@
-import { Entity, Column, ManyToOne } from 'typeorm';
+import { Entity, Column, ManyToOne, OneToMany } from 'typeorm';
 import { AbstractEntity } from '~/data/abstract/abstract.entity';
 import { DomainLevel } from './domain-level';
 import { Company } from './company';
+import { UserRole } from './user-role';
 
 @Entity()
 export class User extends AbstractEntity {
@@ -17,7 +18,7 @@ export class User extends AbstractEntity {
   @Column({ type: 'varchar', length: 250, nullable: true })
   lastName: string;
 
-  @Column({ type: 'varchar', length: 100, nullable: true })
+  @Column({ type: 'varchar', length: 150, nullable: true })
   avatar: string;
 
   @ManyToOne(() => Company, (company) => company.id)
@@ -28,4 +29,7 @@ export class User extends AbstractEntity {
 
   @ManyToOne(() => DomainLevel, (domainLevel) => domainLevel.id)
   domain: DomainLevel;
+
+  @OneToMany(() => UserRole, (userRole) => userRole.id)
+  role: UserRole;
 }

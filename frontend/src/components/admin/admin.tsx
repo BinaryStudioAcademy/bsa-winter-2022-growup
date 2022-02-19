@@ -8,6 +8,8 @@ import CareerPath from './career-path/career-path';
 import { Link } from 'components/common/common';
 import logo from 'assets/img/logo.svg';
 
+import './styles.scss';
+
 enum Variants {
   company = 'company',
   users = 'users',
@@ -76,7 +78,7 @@ const Admin: React.FC<PropTypes> = ({ variant }) => (
           </Nav>
         </div>
       </div>
-      <div className="row">
+      <div className="row gy-4">
         {variant === Variants.company && <Companies />}
         {variant === Variants.users && <Users />}
         {variant === Variants.career && <CareerPath />}

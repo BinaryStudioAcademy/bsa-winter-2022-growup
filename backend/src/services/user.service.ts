@@ -9,9 +9,7 @@ import RefreshTokenRepository from '~/data/repositories/refresh-token.repository
 
 import { refreshTokenSchema } from '~/common/models/tokens/refresh-token.model';
 import { IListUser } from '~/common/models/user/user';
-
 import { RoleType } from '~/common/enums/role-type';
-
 import { User } from '~/data/entities/user';
 import { UserRole } from '~/data/entities/user-role';
 
@@ -19,7 +17,11 @@ import {
   comparePasswords,
   hashPassword,
 } from '~/common/utils/password-hasher.util';
-import { uploadImage, deleteImage } from '~/common/utils/upload-image.util';
+import {
+  uploadImage,
+  deleteImage,
+  changeFileName,
+} from '~/common/utils/upload-image.util';
 import { getCurrentTimeMS } from '~/common/utils/time.util';
 import { signToken, generateRefreshToken } from '~/common/utils/token.util';
 import { convertForUserList } from '~/common/utils/user.util';
@@ -42,6 +44,10 @@ type RefreshTokenResponse = {
 type UserRegistrationType = {
   user: User;
   role: UserRole;
+};
+
+type UserWithRole = Omit<User, 'password'> & {
+  roleType: RoleType;
 };
 
 const getUserJWT = async (user: User): Promise<TokenResponse> => {
@@ -166,7 +172,7 @@ export const getCommonUserList = async (
   const roleList = await roleRepository.find({
     relations: ['user', 'user.company'],
     where: {
-      role: Not(RoleType.Admin),
+      role: Not(RoleType.ADMIN),
       user: {
         company: {
           id: companyId,
@@ -187,7 +193,7 @@ export const registerUserAdmin = async (
   data: UserRegisterForm,
   companyId: User['company']['id'],
 ): Promise<TokenResponse> => {
-  const { user } = await registerUser(data, RoleType.Admin, companyId);
+  const { user } = await registerUser(data, RoleType.ADMIN, companyId);
   return getUserJWT(user);
 };
 
@@ -204,13 +210,17 @@ export const registerCommonUsers = async (
   return convertForUserList(user, roleInstance);
 };
 
-export const fetchUser = async (
-  id: User['id'],
-): Promise<Omit<User, 'password'>> => {
+export const fetchUser = async (id: User['id']): Promise<UserWithRole> => {
   const userRepository = getCustomRepository(UserRepository);
+  const roleRepository = getCustomRepository(UserRoleRepository);
 
   const { password: _password, ...user } = await userRepository.findOne(id);
-  return user as User;
+  const { role } = await roleRepository.findOne({ user });
+
+  return {
+    ...user,
+    roleType: role,
+  } as UserWithRole;
 };
 
 export const updateUserAvatar = async (
@@ -232,13 +242,12 @@ export const updateUserAvatar = async (
       fileName: userInstance.avatar.split('/').at(-1),
     });
 
-  const avatar = await uploadImage({
-    ...props,
-    file: {
-      ...file,
-      originalname: `${getCurrentTimeMS()}-${file.originalname}`,
-    },
-  });
+  const userFile = changeFileName(
+    file,
+    `${getCurrentTimeMS()}-${userInstance.id}`,
+  );
+
+  const avatar = await uploadImage({ ...props, file: userFile });
 
   userInstance.avatar = avatar.Location;
 
