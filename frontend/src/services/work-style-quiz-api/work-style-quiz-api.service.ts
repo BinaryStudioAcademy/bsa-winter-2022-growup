@@ -1,6 +1,6 @@
 import { ContentType, HttpMethod } from 'common/enums/enums';
 import { Http } from 'services/http/http.service';
-import { IQuestion } from 'common/interfaces/user-quiz';
+import { IQuestion, IUserQuizResult } from 'common/interfaces/user-quiz';
 
 interface IWorkStyleQuizApi {
   apiPath: string;
@@ -13,25 +13,29 @@ class WorkStyleQuiz {
 
   constructor({ apiPath, http }: IWorkStyleQuizApi) {
     this.apiPath = apiPath;
-    this.http  = http;
+    this.http = http;
   }
 
-  async fetchWorkStyleQuiz(): Promise<IQuestion[] | null > {
+  async fetchWorkStyleQuiz(): Promise<IQuestion[] | null> {
     try {
-      const result = await this.http.load(`${this.apiPath}/work-quiz/question`, {
-        contentType: ContentType.JSON,
-        method: HttpMethod.GET,
-        payload: null,
-      });
+      const result = await this.http.load(
+        `${this.apiPath}/work-quiz/question`,
+        {
+          contentType: ContentType.JSON,
+          method: HttpMethod.GET,
+          payload: null,
+        },
+      );
 
       return result as IQuestion[];
-
     } catch {
       return null;
     }
   }
 
-  async sendWorkStyleResults(results: IQuestion[]): Promise<IQuestion[] | null > {
+  async sendWorkStyleResults(
+    results: IQuestion[],
+  ): Promise<IUserQuizResult[] | null> {
     try {
       const result = await this.http.load(`${this.apiPath}/work-quiz/result`, {
         contentType: ContentType.JSON,
@@ -39,8 +43,7 @@ class WorkStyleQuiz {
         payload: JSON.stringify(results),
       });
 
-      return result as IQuestion[];
-
+      return result as IUserQuizResult[];
     } catch {
       return null;
     }

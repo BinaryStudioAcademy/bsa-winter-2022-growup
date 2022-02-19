@@ -1,8 +1,9 @@
-import { IQuestion } from 'common/interfaces/user-quiz';
+import { IQuestion, IUserQuizResult } from 'common/interfaces/user-quiz';
 
 type State = {
   questions: IQuestion[] | null;
   isLoading: boolean;
+  result: IUserQuizResult[] | null;
 };
 
 enum ActionType {
