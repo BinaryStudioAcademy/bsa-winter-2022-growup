@@ -11,9 +11,9 @@ import { IUser } from 'common/interfaces/user';
 import { AppRoute } from 'common/enums/enums';
 
 type Props = {
-  avatar: IUser['avatar'];
-  firstName: IUser['firstName'];
-  lastName: IUser['lastName'];
+  avatar?: IUser['avatar'];
+  firstName?: IUser['firstName'];
+  lastName?: IUser['lastName'];
   size: string;
 };
 
