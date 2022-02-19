@@ -8,7 +8,7 @@ import { UserRole } from '../data/entities/user-role';
 
 export const createRole = async (
   user: User,
-  roleType: typeof RoleType[keyof typeof RoleType],
+  roleType: RoleType,
 ): Promise<UserRole> => {
   const roleRepository = getCustomRepository(UserRoleRepository);
 
