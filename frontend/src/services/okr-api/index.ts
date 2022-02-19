@@ -46,7 +46,7 @@ class OkrApi {
     }
   }
 
-  public async addOkr(okrBody: IOkr): Promise<IOkr | null> {
+  public async createOkr(okrBody: IOkr): Promise<IOkr | null> {
     const options = {
       method: HttpMethod.POST,
       contentType: ContentType.JSON,

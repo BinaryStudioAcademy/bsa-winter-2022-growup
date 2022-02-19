@@ -1,9 +1,10 @@
+import { IOkr } from 'common/interfaces/okr';
 import { IObjective } from 'common/interfaces/objective';
 import { Http } from 'services/http/http.service';
 import { HttpMethod } from 'common/enums/http/http';
 import { ContentType } from 'common/enums/file/file';
 
-class OkrApi {
+class ObjectiveApi {
   private http: Http;
 
   constructor({ http }: { http: Http }) {
@@ -16,7 +17,7 @@ class OkrApi {
   }: {
     okrId: string;
     objectiveBody: IObjective;
-  }): Promise<IObjective | null> {
+  }): Promise<IOkr | null> {
     const options = {
       method: HttpMethod.POST,
       contentType: ContentType.JSON,
@@ -24,7 +25,7 @@ class OkrApi {
     };
 
     try {
-      const result = await this.http.load<IObjective>(
+      const result = await this.http.load<IOkr>(
         `/company/okr/${okrId}/objective`,
         options,
       );
@@ -44,7 +45,7 @@ class OkrApi {
     okrId: string;
     objectivId: string;
     objectiveBody: IObjective;
-  }): Promise<IObjective | null> {
+  }): Promise<IOkr | null> {
     const options = {
       method: HttpMethod.PUT,
       contentType: ContentType.JSON,
@@ -52,7 +53,7 @@ class OkrApi {
     };
 
     try {
-      const result = await this.http.load<IObjective>(
+      const result = await this.http.load<IOkr>(
         `/company/okr/${okrId}/objective/${objectivId}`,
         options,
       );
@@ -65,4 +66,4 @@ class OkrApi {
   }
 }
 
-export { OkrApi };
+export { ObjectiveApi };
