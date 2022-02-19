@@ -2,17 +2,18 @@ import { Router } from 'express';
 import { run } from '~/common/helpers/route.helper';
 import { CompanyResponse } from '~/common/models/responses/company';
 import { OKR } from '~/data/entities/okr';
-import { Objective } from '~/data/entities/objective';
-import { KeyResult } from '~/data/entities/key-result';
 import { createCompany, editCompany } from '~/services/company.service';
 import {
   getAllOkr,
   createOkr,
   getOkrById,
   updateOkrById,
-  addNewObjectiveToOkr,
 } from '~/services/okr.service';
-import { addNewKeyresultToObjective } from '~/services/objective.service';
+import {
+  createObjectiveToOkr,
+  updateObjectiveById,
+} from '~/services/objective.service';
+import { addNewKeyresultToObjective } from '~/services/key-result.service';
 
 const router: Router = Router();
 
@@ -77,17 +78,31 @@ router.put(
 
 router.post(
   '/okr/:id/objective',
-  run((req): Promise<Objective> => {
+  run((req): Promise<OKR> => {
     const { body } = req;
     const { id } = req.params;
     const data = { okrId: id, body };
-    return addNewObjectiveToOkr(data);
+    return createObjectiveToOkr(data);
+  }),
+);
+
+router.put(
+  '/okr/:id/objective/:id1',
+  run((req): Promise<OKR> => {
+    const { id, id1 } = req.params;
+    const { body } = req;
+    const data = {
+      okrId: id,
+      objectiveId: id1,
+      body,
+    };
+    return updateObjectiveById(data);
   }),
 );
 
 router.post(
   '/okr/:id/objective/:id1/keyresult',
-  run((req): Promise<KeyResult> => {
+  run((req): Promise<OKR> => {
     const { id, id1 } = req.params;
 
     const data = {

@@ -1,36 +1,75 @@
 import { getCustomRepository } from 'typeorm';
-import { KeyResult } from '~/data/entities/key-result';
+import { Objective } from '~/data/entities/objective';
+import { OKR } from '~/data/entities/okr';
 import Okrepository from '~/data/repositories/okr.repository';
 import ObjectiveRepository from '~/data/repositories/objective.repository';
-import KeyResultRepository from '~/data/repositories/key-result.repository';
 import { badRequestError } from '~/common/errors';
+import { getOkrWithAllItems } from './helpers.service';
 
-export const addNewKeyresultToObjective = async ({
+export const createObjectiveToOkr = async ({
+  okrId,
+  body,
+}: {
+  okrId: string;
+  body: Objective;
+}): Promise<OKR> => {
+  if (!body.name) throw badRequestError('Objective name is undefined!!!');
+
+  const okrRepository = getCustomRepository(Okrepository);
+  const objectiveRepository = getCustomRepository(ObjectiveRepository);
+
+  const okr = await okrRepository.findOne({ id: okrId });
+  const isObjectiveExist = await objectiveRepository.findOne({
+    name: body.name,
+  });
+
+  if (isObjectiveExist)
+    badRequestError(`Objective with name ${body.name} is exist!!!`);
+
+  if (okr) {
+    const objective = objectiveRepository.create();
+    Object.assign(objective, body);
+    objective.okr = okr;
+    objective.result = 0;
+
+    await objective.save();
+
+    const responceOkr = getOkrWithAllItems(okrRepository);
+    return responceOkr;
+  }
+
+  throw badRequestError('Okr isn`t exist!!!');
+};
+
+export const updateObjectiveById = async ({
   okrId,
   objectiveId,
   body,
 }: {
   okrId: string;
   objectiveId: string;
-  body: { name: string };
-}): Promise<KeyResult> => {
-  if (!body.name) throw badRequestError('Keyresult name is undefined!!!');
-
+  body: Objective;
+}): Promise<OKR> => {
   const okrRepository = getCustomRepository(Okrepository);
   const objectiveRepository = getCustomRepository(ObjectiveRepository);
-  const keyResultRepository = getCustomRepository(KeyResultRepository);
 
   const okr = await okrRepository.findOne({ id: okrId });
-  const objective = await objectiveRepository.findOne({ id: objectiveId });
+  const objective = await objectiveRepository.findOne({
+    id: objectiveId,
+  });
 
-  if (!okr) throw badRequestError('Okr isn`t exist!!!');
-  if (!objective) throw badRequestError('Objective isn`t exist!!!');
+  if (!okr) badRequestError('Okr isn`t exist!!!');
+  if (!objective) badRequestError('Objective isn`t exist!!!');
 
-  const keyResult = keyResultRepository.create();
-  Object.assign(keyResult, body);
-  keyResult.objective = objective;
+  if (body.id) delete body.id;
+  if (body.okr) delete body.okr;
+  if (body.createdAt) delete body.createdAt;
+  if (body.deletedAt) delete body.deletedAt;
 
-  await keyResult.save();
+  Object.assign(objective, body);
+  objective.updatedAt = new Date();
+  await objective.save();
 
-  return keyResult;
+  const responceOkr = getOkrWithAllItems(okrRepository);
+  return responceOkr;
 };
