@@ -1,0 +1,17 @@
+@import '~assets/scss/utils';
+
+@include media-breakpoint-down(lg) {
+  .btn-responsive {
+    & > span {
+      display: none;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .btn-responsive {
+    & > span {
+      display: inline-block !important;
+    }
+  }
+}
