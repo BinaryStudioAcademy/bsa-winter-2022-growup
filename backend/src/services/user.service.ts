@@ -47,7 +47,7 @@ type UserRegistrationType = {
 };
 
 type UserWithRole = Omit<User, 'password'> & {
-  roleType: RoleType;
+  roleType: typeof RoleType[keyof typeof RoleType];
 };
 
 const getUserJWT = async (user: User): Promise<TokenResponse> => {
@@ -172,7 +172,7 @@ export const getCommonUserList = async (
   const roleList = await roleRepository.find({
     relations: ['user', 'user.company'],
     where: {
-      role: Not(RoleType.ADMIN),
+      role: Not(RoleType.Admin),
       user: {
         company: {
           id: companyId,
@@ -193,7 +193,7 @@ export const registerUserAdmin = async (
   data: UserRegisterForm,
   companyId: User['company']['id'],
 ): Promise<TokenResponse> => {
-  const { user } = await registerUser(data, RoleType.ADMIN, companyId);
+  const { user } = await registerUser(data, RoleType.Admin, companyId);
   return getUserJWT(user);
 };
 

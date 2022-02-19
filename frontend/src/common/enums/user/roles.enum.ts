@@ -1,1 +1,5 @@
-export { RoleType } from 'growup-shared';
+export enum RoleType {
+  ADMIN = 'Admin',
+  MENTOR = 'Mentor',
+  MENTEE = 'Mentee',
+}
