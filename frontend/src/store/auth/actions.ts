@@ -31,4 +31,11 @@ const signUpUser = createAsyncThunk<IReturnType, IUserSignUpForm, ThunkApiType>(
   },
 );
 
-export { loginUser, signUpUser };
+const getCurrentUser = createAsyncThunk<IUser, void, ThunkApiType>(
+  ActionType.GET_USER,
+  async (request, { extra: { services } }) => {
+    return services.profile.fetchProfile();
+  },
+);
+
+export { getCurrentUser, loginUser, signUpUser };
