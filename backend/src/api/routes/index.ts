@@ -5,6 +5,7 @@ import authenticationRoute from './authentication-route';
 import userRoute from './user-route';
 import companyRoute from './company-route';
 import adminRoute from './admin-route';
+import skillRoute from './skill-route';
 import workQuizRoute from './work-quiz';
 
 const routes = (app: Express): void => {
@@ -13,6 +14,7 @@ const routes = (app: Express): void => {
   app.use('/api/company', companyRoute);
   app.use('/api/company', adminRoute);
   app.use('/api/work-quiz', workQuizRoute);
+  app.use('/api/skills', skillRoute);
 
   app.use(errorHandlerMiddleware);
 };
