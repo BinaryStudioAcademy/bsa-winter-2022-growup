@@ -6,7 +6,7 @@ import * as actions from './actions';
 const Reducer = (builder: ActionReducerMapBuilder<State>): void => {
   builder.addCase(actions.createTags.fulfilled, (state, action) => {
     state.isLoading = false;
-    state.tags.push(...(action.payload as State['tags']));
+    state.tags.push(...(action.payload?.tags as State['tags']));
   });
 
   builder.addCase(actions.fetchTags.fulfilled, (state, action) => {
@@ -18,6 +18,14 @@ const Reducer = (builder: ActionReducerMapBuilder<State>): void => {
 
   builder.addCase(actions.deleteTag.fulfilled, (state, action) => {
     state.tags = state.tags.filter((tag) => tag.id !== action.payload);
+  });
+
+  builder.addCase(actions.fetchUsers.fulfilled, (state, action) => {
+    state.users = action.payload || [];
+  });
+
+  builder.addCase(actions.inviteUser.fulfilled, (state, action) => {
+    if (action.payload) state.users.push(action.payload);
   });
 
   builder.addMatcher(

@@ -2,7 +2,7 @@ import './styles.scss';
 import Notifications from './notifications/notificationList';
 import OpportunityList from './opportunities/opportunityList';
 
-const Main_Page: React.FC = () => {
+const MainPage: React.FC = () => {
   return (
     <>
       <section className="w-100 main-page d-flex flex-column ">
@@ -13,4 +13,4 @@ const Main_Page: React.FC = () => {
   );
 };
 
-export default Main_Page;
+export default MainPage;

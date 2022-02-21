@@ -1,5 +1,5 @@
 import { Navbar, Container, Nav } from 'react-bootstrap';
-import { AppRoute } from 'common/enums/enums';
+import { AdminRoute } from 'common/enums/enums';
 
 import Companies from './companies/companies';
 import Users from './users/users';
@@ -7,6 +7,8 @@ import CareerPath from './career-path/career-path';
 
 import { Link } from 'components/common/common';
 import logo from 'assets/img/logo.svg';
+
+import './styles.scss';
 
 enum Variants {
   company = 'company',
@@ -48,7 +50,7 @@ const Admin: React.FC<PropTypes> = ({ variant }) => (
                 className={`nav-link ${
                   variant === Variants.company ? 'active' : ''
                 }`}
-                to={AppRoute.ADMIN}
+                to={AdminRoute.ADMIN}
               >
                 Your Company
               </Link>
@@ -58,7 +60,7 @@ const Admin: React.FC<PropTypes> = ({ variant }) => (
                 className={`nav-link ${
                   variant === Variants.users ? 'active' : ''
                 }`}
-                to={AppRoute.ADMIN_USERS}
+                to={AdminRoute.ADMIN_USERS}
               >
                 Users
               </Link>
@@ -68,7 +70,7 @@ const Admin: React.FC<PropTypes> = ({ variant }) => (
                 className={`nav-link ${
                   variant === Variants.career ? 'active' : ''
                 }`}
-                to={AppRoute.ADMIN_CAREER_PATH}
+                to={AdminRoute.ADMIN_CAREER_PATH}
               >
                 Career path
               </Link>
@@ -76,9 +78,9 @@ const Admin: React.FC<PropTypes> = ({ variant }) => (
           </Nav>
         </div>
       </div>
-      <div className="row">
+      <div className="row gy-4">
         {variant === Variants.company && <Companies />}
-        {variant === Variants.users && <Users userList={[]} />}
+        {variant === Variants.users && <Users />}
         {variant === Variants.career && <CareerPath />}
       </div>
     </Container>

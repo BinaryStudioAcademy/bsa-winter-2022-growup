@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Modal } from 'components/common/common';
 import UserForm from './user-form';
 
@@ -6,7 +7,7 @@ type PropTypes = {
   onClose: () => void;
 };
 
-const UserModal: React.FC<PropTypes> = ({ show, onClose }) => {
+const UserModal: React.FC<PropTypes> = memo(({ show, onClose }) => {
   return (
     <Modal
       show={show}
@@ -14,9 +15,9 @@ const UserModal: React.FC<PropTypes> = ({ show, onClose }) => {
       title="Add Tags"
       className="d-flex flex-column gap-4"
     >
-      <UserForm />
+      <UserForm onSubmit={onClose} />
     </Modal>
   );
-};
+});
 
 export default UserModal;
