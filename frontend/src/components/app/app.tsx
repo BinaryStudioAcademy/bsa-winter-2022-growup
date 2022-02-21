@@ -57,7 +57,7 @@ const App: React.FC = () => {
                 path={AppRoute.CAREER_PATH}
                 element={<div>Career Path</div>}
               />
-              <Route path={AppRoute.OKR} element={<div>OKR</div>} />
+              <Route path={AppRoute.OKR} element={<Ork />} />
               <Route
                 path={AppRoute.OPPORTUNITIES}
                 element={<div>Opportunities</div>}

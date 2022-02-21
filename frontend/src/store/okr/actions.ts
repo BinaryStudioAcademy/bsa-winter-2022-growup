@@ -16,7 +16,7 @@ const getAllOkrs_async = createAsyncThunk(
     const result = await okrApi.getAllOkr();
 
     if (result) {
-      dispatch(actions.get_all_by_user);
+      dispatch(actions.get_all_by_user(result));
     }
   },
 );

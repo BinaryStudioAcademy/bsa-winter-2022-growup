@@ -19,7 +19,7 @@ class OkrApi {
     };
 
     try {
-      const result = await this.http.load<IOkr[]>('/okr', options);
+      const result = await this.http.load<IOkr[]>('/company/okr', options);
       return result;
     } catch (e) {
       //passing an error to the handler
@@ -37,7 +37,7 @@ class OkrApi {
     };
 
     try {
-      const result = await this.http.load<IOkr>(`/okr/${okrId}`, options);
+      const result = await this.http.load<IOkr>(`/company/okr/${okrId}`, options);
       return result;
     } catch (e) {
       //passing an error to the handler
@@ -54,7 +54,7 @@ class OkrApi {
     };
 
     try {
-      const result = await this.http.load<IOkr>('/okr', options);
+      const result = await this.http.load<IOkr>('/company/okr', options);
       return result;
     } catch (e) {
       //passing an error to the handler
@@ -77,7 +77,7 @@ class OkrApi {
     };
 
     try {
-      const result = await this.http.load<IOkr>(`/okr/${okrId}`, options);
+      const result = await this.http.load<IOkr>(`/company/okr/${okrId}`, options);
       return result;
     } catch (e) {
       //passing an error to the handler

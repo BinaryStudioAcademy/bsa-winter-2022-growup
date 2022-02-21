@@ -12,7 +12,19 @@ export const getAllOkr = async (userId: string): Promise<OKR[]> => {
   const user = await userRepository.findOne({ id: userId });
 
   if (user) {
-    const okrs = okrRepository.find({ where: { user: user.id } });
+    const okrs = okrRepository
+      .createQueryBuilder('okr')
+      .leftJoinAndSelect(
+        'okr.objectives',
+        'objective',
+        'okr.id = objective.okr',
+      )
+      .leftJoinAndSelect(
+        'objective.keyResults',
+        'keyresult',
+        'objective.id = keyresult.objective',
+      )
+      .getMany();
     return okrs;
   }
 
