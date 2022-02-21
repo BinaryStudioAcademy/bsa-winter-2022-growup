@@ -15,19 +15,21 @@ const Sidebar: React.FC = () => {
   return (
     <aside className="sidebar-section position-fixed h-100 bg-gu-blue">
       <div className="sidebar-container d-flex flex-column pt-2 pt-md-3">
-        <a
-          className="logo-section d-flex align-items-center text-decoration-none px-2 ps-md-4"
-          href=""
-        >
-          <img
-            className="logo-section__icon logo-icon me-md-3"
-            src={logo}
-            alt="logo"
-          />
-          <span className="logo-section__title logo-title fs-1 text-gu-white m-0 d-none d-md-block">
-            Grow Up
-          </span>
-        </a>
+        <Link to={MentorMenteeRoute.HOME}>
+          <a
+            className="logo-section d-flex align-items-center text-decoration-none px-2 ps-md-4"
+            href=""
+          >
+            <img
+              className="logo-section__icon logo-icon me-md-3"
+              src={logo}
+              alt="logo"
+            />
+            <span className="logo-section__title logo-title fs-1 text-gu-white m-0 d-none d-md-block">
+              Grow Up
+            </span>
+          </a>
+        </Link>
         <nav className="navigation-section px-md-3">
           <ul className="navigation-section__list navigation-list d-flex flex-column m-0 p-0">
             <li className="navigation-list__item navigation-item mb-4">
