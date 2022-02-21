@@ -3,7 +3,6 @@ import { OKR } from '~/data/entities/okr';
 import Okrepository from '~/data/repositories/okr.repository';
 import UserRepository from '~/data/repositories/user.repository';
 import { badRequestError } from '~/common/errors';
-import { getOkrWithAllItems } from './helpers.service';
 
 export const getAllOkr = async (userId: string): Promise<OKR[]> => {
   const okrRepository = getCustomRepository(Okrepository);
@@ -12,19 +11,7 @@ export const getAllOkr = async (userId: string): Promise<OKR[]> => {
   const user = await userRepository.findOne({ id: userId });
 
   if (user) {
-    const okrs = okrRepository
-      .createQueryBuilder('okr')
-      .leftJoinAndSelect(
-        'okr.objectives',
-        'objective',
-        'okr.id = objective.okr',
-      )
-      .leftJoinAndSelect(
-        'objective.keyResults',
-        'keyresult',
-        'objective.id = keyresult.objective',
-      )
-      .getMany();
+    const okrs = okrRepository.getAllByUserId();
     return okrs;
   }
 
@@ -37,7 +24,7 @@ export const getOkrById = async (okrId: string): Promise<OKR> => {
   const okr = await okrRepository.findOne({ id: okrId });
 
   if (okr) {
-    const okr = getOkrWithAllItems(okrRepository);
+    const okr = okrRepository.getOneByUserId();
     return okr;
   }
 
@@ -99,7 +86,7 @@ export const updateOkrById = async ({
     okr.updatedAt = new Date();
     await okr.save();
 
-    const responceOkr = getOkrWithAllItems(okrRepository);
+    const responceOkr = okrRepository.getOneByUserId();
     return responceOkr;
   }
 

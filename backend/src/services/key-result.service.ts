@@ -4,7 +4,6 @@ import Okrepository from '~/data/repositories/okr.repository';
 import ObjectiveRepository from '~/data/repositories/objective.repository';
 import KeyResultRepository from '~/data/repositories/key-result.repository';
 import { badRequestError } from '~/common/errors';
-import { getOkrWithAllItems } from './helpers.service';
 
 export const addNewKeyresultToObjective = async ({
   okrId,
@@ -33,6 +32,6 @@ export const addNewKeyresultToObjective = async ({
 
   await keyResult.save();
 
-  const responceOkr = getOkrWithAllItems(okrRepository);
+  const responceOkr = okrRepository.getOneByUserId();
   return responceOkr;
 };

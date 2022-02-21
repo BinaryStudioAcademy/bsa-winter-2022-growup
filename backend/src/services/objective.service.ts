@@ -4,7 +4,6 @@ import { OKR } from '~/data/entities/okr';
 import Okrepository from '~/data/repositories/okr.repository';
 import ObjectiveRepository from '~/data/repositories/objective.repository';
 import { badRequestError } from '~/common/errors';
-import { getOkrWithAllItems } from './helpers.service';
 
 export const createObjectiveToOkr = async ({
   okrId,
@@ -34,7 +33,7 @@ export const createObjectiveToOkr = async ({
 
     await objective.save();
 
-    const responceOkr = getOkrWithAllItems(okrRepository);
+    const responceOkr = okrRepository.getOneByUserId();
     return responceOkr;
   }
 
@@ -70,6 +69,6 @@ export const updateObjectiveById = async ({
   objective.updatedAt = new Date();
   await objective.save();
 
-  const responceOkr = getOkrWithAllItems(okrRepository);
+  const responceOkr = okrRepository.getOneByUserId();
   return responceOkr;
 };
