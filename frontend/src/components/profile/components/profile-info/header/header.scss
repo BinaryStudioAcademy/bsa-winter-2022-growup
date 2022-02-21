@@ -11,8 +11,7 @@
   position: relative;
 
   &__avatar {
-    width: 148px;
-    height: 148px;
+    background-size: contain;
   }
 
   &__edit {

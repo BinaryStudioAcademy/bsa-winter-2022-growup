@@ -2,6 +2,7 @@
 @import '../../assets/scss/styles.scss';
 /* stylelint-enable */
 
+// FIX: This breaks admin page!
 .wrapper {
   display: grid;
   grid-template-columns: minmax(273px, auto) 1fr;
