@@ -33,15 +33,17 @@ const Admin: React.FC<Props> = ({ variant }) => {
       >
         <Container>
           <Navbar.Brand>
-            <a
-              className="d-flex align-items-center text-decoration-none"
-              href=""
-            >
-              <img className="logo-icon me-md-3" src={logo} alt="logo" />
-              <span className="logo-title fs-1 text-gu-black m-0 d-none d-md-block">
-                Grow Up
-              </span>
-            </a>
+            <Link to={AdminRoute.ADMIN}>
+              <a
+                className="d-flex align-items-center text-decoration-none"
+                href=""
+              >
+                <img className="logo-icon me-md-3" src={logo} alt="logo" />
+                <span className="logo-title fs-1 text-gu-black m-0 d-none d-md-block">
+                  Grow Up
+                </span>
+              </a>
+            </Link>
           </Navbar.Brand>
           <Nav>
             <Nav.Item className="cursor-pointer">

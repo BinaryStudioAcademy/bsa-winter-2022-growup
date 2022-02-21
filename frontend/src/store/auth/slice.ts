@@ -3,6 +3,8 @@ import { ReducerName } from 'common/enums/app/reducer-name.enum';
 import { IUser } from 'common/interfaces/user';
 import { getCurrentUser, loginUser, signUpUser } from './actions';
 import { ActionType } from './common';
+import { StorageKey } from '../../common/enums/app/storage-key.enum';
+import { storage } from '../../services';
 
 type State = {
   user: IUser | null;
