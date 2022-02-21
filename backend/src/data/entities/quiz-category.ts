@@ -11,6 +11,6 @@ export class QuizCategory extends AbstractEntity {
   @ManyToOne(() => WorkQuiz, (workQuiz) => workQuiz.id)
   quiz: WorkQuiz;
 
-  @OneToMany(() => QuizQuestion, question => question.category)
+  @OneToMany(() => QuizQuestion, (question) => question.category)
   questions: QuizQuestion[];
 }

@@ -11,7 +11,7 @@ const initialState: State = {
 const { reducer, actions } = createSlice({
   name: ReducerName.USER_QUIZ,
   initialState,
-  reducers: {  },
+  reducers: {},
   extraReducers: workStyleQuizReducer,
 });
 
