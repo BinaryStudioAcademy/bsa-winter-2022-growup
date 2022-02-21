@@ -1,5 +1,5 @@
 import { PencilFill } from 'react-bootstrap-icons';
-import './interests-block.scss';
+import './styles.scss';
 
 const InterestsBlock: React.FC = ({ children }) => {
   return (

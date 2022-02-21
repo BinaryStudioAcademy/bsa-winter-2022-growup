@@ -1,5 +1,6 @@
-import './add-section.scss';
+import './styles.scss';
 import { Plus } from 'react-bootstrap-icons';
+
 type Props = {
   title: string;
 };

@@ -1,4 +1,4 @@
-import './main-page.scss';
+import './styles.scss';
 import Notifications from './notifications/notifications';
 import Opportunities from './opportunities/opportunities';
 

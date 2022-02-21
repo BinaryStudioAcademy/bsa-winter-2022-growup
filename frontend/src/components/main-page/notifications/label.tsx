@@ -1,9 +1,9 @@
 import { ReactElement } from 'react';
-import ILabelData from '../interfaces/ILabaleData';
+import { ILabelData } from '../common/interfaces';
 import { ReactComponent as OpportunityLogo } from '../icons/opportunity-icon.svg';
 import { ReactComponent as OKRLogo } from '../icons/okr-icon.svg';
 import { ReactComponent as ApproveSkillsLogo } from '../icons/approve-skill.svg';
-import { NotificationTypes } from '../enums/NotificationTypes';
+import { NotificationTypes } from '../common/enums';
 
 interface Props extends ILabelData {}
 

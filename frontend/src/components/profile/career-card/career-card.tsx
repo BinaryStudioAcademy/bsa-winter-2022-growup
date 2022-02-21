@@ -1,8 +1,8 @@
-import './career-card.scss';
+import './styles.scss';
 import { Calendar, PencilFill, TrashFill } from 'react-bootstrap-icons';
-import { CareerJourney } from '../interfaces';
+import { ICareerJourney } from '../common/interfaces';
 
-type Props = Omit<CareerJourney, 'id'>;
+type Props = Omit<ICareerJourney, 'id'>;
 
 const CareerCard: React.FC<Props> = ({
   title,

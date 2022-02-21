@@ -4,9 +4,9 @@ import { useState, useCallback } from 'hooks/hooks';
 import { IUser } from 'common/interfaces/user';
 import { UserAvatar } from 'components/common/common';
 
-import EditAvatar from './components/edit-avatar';
+import EditAvatar from './edit-avatar';
 
-import './header.scss';
+import './styles.scss';
 
 type Props = Pick<IUser, 'avatar' | 'firstName' | 'lastName'>;
 

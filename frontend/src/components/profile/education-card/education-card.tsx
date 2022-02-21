@@ -1,8 +1,8 @@
+import './styles.scss';
 import { Calendar, PencilFill, TrashFill } from 'react-bootstrap-icons';
-import './education-card.scss';
-import { Education } from '../interfaces';
+import { IEducation } from '../common/interfaces';
 
-type Props = Omit<Education, 'id'>;
+type Props = Omit<IEducation, 'id'>;
 
 const EducationCard: React.FC<Props> = ({
   title,

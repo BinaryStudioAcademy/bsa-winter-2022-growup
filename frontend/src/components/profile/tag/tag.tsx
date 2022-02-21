@@ -1,4 +1,4 @@
-import './tag.scss';
+import './styles.scss';
 
 const Tag: React.FC = ({ children }) => (
   <label className="tag bg-gu-white text-gu-blue fs-6">{children}</label>

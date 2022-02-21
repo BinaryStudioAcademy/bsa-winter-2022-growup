@@ -1,4 +1,4 @@
-import './opportunities.scss';
+import './styles.scss';
 import OpportunitieCart from './opportunitieCart';
 
 const Opportunities: React.FC = () => {

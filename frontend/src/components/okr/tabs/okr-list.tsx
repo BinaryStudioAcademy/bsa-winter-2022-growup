@@ -1,11 +1,11 @@
 import { IOkr } from '../common/interfaces';
 import OrkItem from '../workspace-item';
 
-interface PropTypes {
+interface Props {
   collection: IOkr[];
 }
 
-const OkrList: React.FC<PropTypes> = (props) => (
+const OkrList: React.FC<Props> = (props) => (
   <div className="OKR-page d-flex flex-row flex-wrap">
     {props.collection.map((okr: IOkr) => {
       const collection = okr.objective;

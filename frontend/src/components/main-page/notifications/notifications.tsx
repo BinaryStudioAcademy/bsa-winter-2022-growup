@@ -1,9 +1,9 @@
-import './notification.scss';
+import './styles.scss';
 import { ReactChild, useState } from 'react';
 import { ArrowDown, ArrowUp } from 'react-bootstrap-icons';
 import Notification from './notification';
-import INotificationData from '../interfaces/INotificationData';
-import { NotificationTypes } from '../enums/NotificationTypes';
+import { INotificationData } from '../common/interfaces';
+import { NotificationTypes } from '../common/enums';
 
 const Notifications: React.FC = () => {
   const [viewAll, setViewAll] = useState<boolean>(false);

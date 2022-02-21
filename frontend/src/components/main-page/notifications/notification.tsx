@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
-import ILabelData from '../interfaces/ILabaleData';
+import { ILabelData } from '../common/interfaces';
 import Label from './label';
+
 interface Props extends ILabelData {
   title?: string;
 }

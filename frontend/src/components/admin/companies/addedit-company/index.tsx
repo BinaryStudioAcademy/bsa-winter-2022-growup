@@ -6,13 +6,13 @@ import { companyActions } from 'store/company/actions';
 
 import './styles.scss';
 
-interface IAddCompany {
+interface Props {
   show: boolean;
   company?: ICompany;
   handleClose: () => void;
 }
 
-const AddEditCompany: FC<IAddCompany> = ({ show, handleClose, company }) => {
+const AddEditCompany: FC<Props> = ({ show, handleClose, company }) => {
   const [name, setName] = useState<string>(company ? company.name : '');
   const [description, setDescription] = useState<string>(
     company?.description ? company.description : '',

@@ -1,7 +1,8 @@
-import { StepProps } from './common/step-props';
+import { StepProps as Props } from './common/interfaces';
 import StepControl from './step-control';
 import WorkQuiz from 'components/work-quiz/work-quiz';
-const SecondStep: React.FC<StepProps> = ({
+
+const SecondStep: React.FC<Props> = ({
   isDisablePrevious,
   onPrevious,
   onNext,

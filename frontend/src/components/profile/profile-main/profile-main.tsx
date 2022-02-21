@@ -1,13 +1,18 @@
-import { CareerJourney, Education, Interests, Skill } from '../interfaces';
+import './styles.scss';
+import {
+  ICareerJourney,
+  IEducation,
+  IInterests,
+  ISkill,
+} from '../common/interfaces';
 import AddSection from '../add-section/add-section';
 import CareerCard from '../career-card/career-card';
 import EditSection from '../edit-section/edit-section';
 import EducationCard from '../education-card/education-card';
 import Tag from '../tag/tag';
-import './profile-main.scss';
 
 // FROM DB
-const careerJourneyData: CareerJourney[] = [
+const careerJourneyData: ICareerJourney[] = [
   {
     id: '1',
     title: 'Fullstack JS Developer',
@@ -27,7 +32,7 @@ const careerJourneyData: CareerJourney[] = [
 ];
 
 // FROM DB
-const educationData: Education[] = [
+const educationData: IEducation[] = [
   {
     id: '1',
     title: 'Computer Science',
@@ -39,7 +44,7 @@ const educationData: Education[] = [
 ];
 
 // FROM DB
-const skillData: Skill[] = [
+const skillData: ISkill[] = [
   {
     id: '1',
     name: 'HTML',
@@ -51,7 +56,7 @@ const skillData: Skill[] = [
 ];
 
 // FROM DB
-const interestsData: Interests[] = [
+const interestsData: IInterests[] = [
   {
     id: '1',
     name: 'Lviv',

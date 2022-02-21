@@ -1,4 +1,4 @@
-import './edit-section.scss';
+import './styles.scss';
 import { PencilFill } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 

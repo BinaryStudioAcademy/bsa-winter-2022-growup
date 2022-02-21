@@ -3,12 +3,12 @@ import * as Icon from 'react-bootstrap-icons';
 
 import type { TagVisibleInfo } from 'common/types/types';
 
-type PropTypes = {
+type Props = {
   tag: TagVisibleInfo;
   onDelete: (id: TagVisibleInfo['id']) => void;
 };
 
-const Tag: React.FC<PropTypes> = ({ tag, onDelete }) => {
+const Tag: React.FC<Props> = ({ tag, onDelete }) => {
   return (
     <div className="row tag g-0">
       <div className="col">

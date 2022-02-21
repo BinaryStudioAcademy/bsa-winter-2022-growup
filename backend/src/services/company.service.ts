@@ -37,7 +37,7 @@ interface IQuiz {
   categories: ICategory[];
 }
 
-interface CompanyProps {
+interface ICompanyProps {
   id?: string;
   body: Company;
   tokenPayload: ITokenPayload;
@@ -122,7 +122,7 @@ const createQuiz = async (companyInstance: Company): Promise<void> => {
 export const createCompany = async ({
   body,
   tokenPayload,
-}: CompanyProps): Promise<CompanyResponse> => {
+}: ICompanyProps): Promise<CompanyResponse> => {
   const { name } = body;
   const { userId, role } = tokenPayload;
 
@@ -136,6 +136,7 @@ export const createCompany = async ({
       const newCompany = Object.assign(company, body);
 
       const companyInstance = await newCompany.save();
+
       await createQuiz(companyInstance);
 
       const token = signToken({
@@ -162,7 +163,7 @@ export const editCompany = async ({
   id,
   body,
   tokenPayload,
-}: CompanyProps): Promise<CompanyResponse> => {
+}: ICompanyProps): Promise<CompanyResponse> => {
   const companyRepository = getCustomRepository(CompanyRepository);
   const { userId, role } = tokenPayload;
 

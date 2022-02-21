@@ -2,7 +2,7 @@ import { useAppSelector } from 'hooks/hooks';
 import AdminRouting from './admin-routing';
 import UserRouting from './user-routing';
 import { RoleType } from 'common/enums/enums';
-import './app.scss';
+import './styles.scss';
 
 const App: React.FC = () => {
   const isAdmin = useAppSelector(
@@ -12,7 +12,7 @@ const App: React.FC = () => {
 
   return (
     <div className="wrapper">
-      {isAdmin ? (
+      {!isAdmin ? (
         <AdminRouting isAuthenticated={isAuthenticated} />
       ) : (
         <UserRouting isAuthenticated={isAuthenticated} />

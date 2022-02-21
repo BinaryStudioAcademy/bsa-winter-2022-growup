@@ -1,6 +1,6 @@
 import { Modal as ModalWindow } from 'react-bootstrap';
 
-type PropTypes = {
+type Props = {
   show: boolean;
   onClose: () => void;
 
@@ -8,7 +8,7 @@ type PropTypes = {
   className?: string;
 };
 
-const Modal: React.FC<PropTypes> = ({
+const Modal: React.FC<Props> = ({
   show,
   onClose,
   title,

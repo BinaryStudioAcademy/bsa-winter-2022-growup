@@ -1,4 +1,4 @@
-import './tabs.scss';
+import './styles.scss';
 
 const Tabs: React.FC = () => (
   <nav className="nav-tabs profile-nav-tabs d-flex">

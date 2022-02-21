@@ -4,11 +4,11 @@ import { Form } from 'react-bootstrap';
 
 import type { UseTagList } from 'hooks/common';
 
-type PropTypes = {
+type Props = {
   onSubmit: UseTagList['addItem'];
 };
 
-const TagForm: React.FC<PropTypes> = ({ onSubmit }) => {
+const TagForm: React.FC<Props> = ({ onSubmit }) => {
   const [value, setValue] = useState('');
 
   const submitHandler = (e: FormEvent): void => {

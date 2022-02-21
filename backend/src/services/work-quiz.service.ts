@@ -28,7 +28,7 @@ interface ITestSummary {
   score: number;
 }
 
-interface WorkQuizProps {
+interface IWorkQuizProps {
   body: IQuestion[];
   tokenPayload: ITokenPayload;
 }
@@ -51,7 +51,7 @@ export const getQuestions = async (): Promise<QuizQuestion[]> => {
 export const sendResults = async ({
   body,
   tokenPayload,
-}: WorkQuizProps): Promise<void> => {
+}: IWorkQuizProps): Promise<void> => {
   const { userId } = tokenPayload;
   const questions = body;
   const userQuizCategoryRepository = await getCustomRepository(
