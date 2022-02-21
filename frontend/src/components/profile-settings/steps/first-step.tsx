@@ -1,5 +1,5 @@
 import { StepProps } from './common/step-props';
-import TextField from '../../common/text-field/text-field';
+import { TextField } from '../../common/common';
 import Experience from './experience';
 import Education from './education';
 import InterestingTags from './interesting-tags';
