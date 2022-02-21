@@ -1,4 +1,4 @@
-import { Navbar, Container, Nav } from 'react-bootstrap';
+import { Container, Nav, Navbar } from 'react-bootstrap';
 import { AdminRoute } from 'common/enums/enums';
 
 import Companies from './companies/companies';
@@ -29,15 +29,17 @@ const Admin: React.FC<PropTypes> = ({ variant }) => (
     >
       <Container>
         <Navbar.Brand>
-          <a
-            className="d-flex align-items-center text-decoration-none"
-            href={AdminRoute.ADMIN}
-          >
-            <img className="logo-icon me-md-3" src={logo} alt="logo" />
-            <span className="logo-title fs-1 text-gu-black m-0 d-none d-md-block">
-              Grow Up
-            </span>
-          </a>
+          <Link to={AdminRoute.ADMIN}>
+            <a
+              className="d-flex align-items-center text-decoration-none"
+              href=""
+            >
+              <img className="logo-icon me-md-3" src={logo} alt="logo" />
+              <span className="logo-title fs-1 text-gu-black m-0 d-none d-md-block">
+                Grow Up
+              </span>
+            </a>
+          </Link>
         </Navbar.Brand>
         <Nav>
           <Nav.Item>Admin Profile Img</Nav.Item>
