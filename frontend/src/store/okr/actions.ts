@@ -10,7 +10,7 @@ import {
   keyResult as keyResultApi,
 } from 'services';
 
-const getAllOkrs_async = createAsyncThunk(
+const getAllOkrsByUser_async = createAsyncThunk(
   ActionType.GET_ALL_OKRS,
   async (_, { dispatch }) => {
     const result = await okrApi.getAllOkr();
@@ -118,7 +118,7 @@ const createKeyResult_async = createAsyncThunk(
 );
 const okrActions = {
   ...actions,
-  getAllOkrs_async,
+  getAllOkrsByUser_async,
   getOkrById_async,
   createOkr_async,
   updateOkrById_async,

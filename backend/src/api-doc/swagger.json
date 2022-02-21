@@ -182,10 +182,7 @@
           "200": {
             "description": "Returns okr if everything is ok.",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Okr"
-              }
+              "$ref": "#/definitions/Okr"
             }
           },
           "404": {
@@ -282,7 +279,7 @@
           "200": {
             "description": "Returns created objective if everything is ok.",
             "schema": {
-              "$ref": "#/definitions/Objective"
+              "$ref": "#/definitions/Okr"
             }
           },
           "404": {
@@ -339,7 +336,7 @@
           "200": {
             "description": "Returns created objective if everything is ok.",
             "schema": {
-              "$ref": "#/definitions/Objective"
+              "$ref": "#/definitions/Okr"
             }
           },
           "404": {
@@ -393,7 +390,7 @@
           "200": {
             "description": "Returns created objective if everything is ok.",
             "schema": {
-              "$ref": "#/definitions/keyResult"
+              "$ref": "#/definitions/Okr"
             }
           },
           "404": {
@@ -666,7 +663,7 @@
     }
   },
   "definitions": {
-    "keyResult": {
+    "KeyResult": {
       "required": ["token"],
       "type": "object",
       "properties": {
@@ -716,6 +713,14 @@
           "type": "string",
           "nullable": true,
           "default": null
+        },
+        "keyResults": {
+          "type": "array",
+          "nullable": true,
+          "default": null,
+          "items": {
+            "$ref": "#/definitions/KeyResult"
+          }
         }
       }
     },
@@ -748,6 +753,14 @@
           "type": "string",
           "nullable": true,
           "default": null
+        },
+        "objectives": {
+          "type": "array",
+          "nullable": true,
+          "default": null,
+          "items": {
+            "$ref": "#/definitions/Objective"
+          }
         }
       }
     },

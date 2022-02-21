@@ -6,7 +6,7 @@ const Ork: React.FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(okrActions.getAllOkrs_async());
+    dispatch(okrActions.getAllOkrsByUser_async());
   }, [dispatch]);
 
   return <ControlledTabs />;
