@@ -29,7 +29,10 @@ const Admin: React.FC<PropTypes> = ({ variant }) => (
     >
       <Container>
         <Navbar.Brand>
-          <a className="d-flex align-items-center text-decoration-none" href="">
+          <a
+            className="d-flex align-items-center text-decoration-none"
+            href={AdminRoute.ADMIN}
+          >
             <img className="logo-icon me-md-3" src={logo} alt="logo" />
             <span className="logo-title fs-1 text-gu-black m-0 d-none d-md-block">
               Grow Up

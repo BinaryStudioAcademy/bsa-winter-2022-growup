@@ -17,7 +17,7 @@ const Sidebar: React.FC = () => {
       <div className="sidebar-container d-flex flex-column pt-2 pt-md-3">
         <a
           className="logo-section d-flex align-items-center text-decoration-none px-2 ps-md-4"
-          href=""
+          href={MentorMenteeRoute.HOME}
         >
           <img
             className="logo-section__icon logo-icon me-md-3"
