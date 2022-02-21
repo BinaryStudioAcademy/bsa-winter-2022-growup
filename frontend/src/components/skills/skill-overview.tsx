@@ -7,7 +7,8 @@ import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { actions } from '../../store/skill/slice';
 import { validSkillName } from './validations/skill-name';
-// import { sortSkillNames, sortSelfRating } from './rating/sort/sort-skills';
+import { ReactComponent as SortUp } from '../../assets/img/icons/skill-icons/sortUp-icon.svg';
+import { ReactComponent as SortDown } from '../../assets/img/icons/skill-icons/sortDown-icon.svg';
 
 const SkillOverview = (): React.ReactElement => {
   const user = useAppSelector((state: RootState) => state.okr.user);
@@ -16,10 +17,10 @@ const SkillOverview = (): React.ReactElement => {
   );
   const [textFind, setTextFind] = useState('');
   const [textAdd, setTextAdd] = useState('');
-  const [isSortSelf, setIsSortSelf] = useState(true);
   const [isManager, setIsManager] = useState(true);
   const [isSkillReview, setIsSkillReview] = useState(true);
   const [isSortName, setIsSortName] = useState(true);
+  const [isSortSelf, setIsSortSelf] = useState(true);
   const dispatch = useAppDispatch();
 
   function isFind(text: string): boolean {
@@ -144,31 +145,39 @@ const SkillOverview = (): React.ReactElement => {
         <thead>
           <tr>
             <th scope="col">
-              Skill{' '}
-              <button type="button" onClick={(): void => sortSkillNames()}>
-                {' '}
-                s{' '}
+              Skill
+              <button
+                className="border-0 bg-gu-white sort-button"
+                onClick={(): void => sortSkillNames()}
+              >
+                {isSortName ? <SortDown /> : <SortUp />}
               </button>
             </th>
             <th scope="col" className="text-center">
               Self Rating
-              <button type="button" onClick={(): void => sortSelfRating()}>
-                {' '}
-                r{' '}
+              <button
+                className="border-0 bg-gu-white sort-button"
+                onClick={(): void => sortSelfRating()}
+              >
+                {isSortSelf ? <SortDown /> : <SortUp />}
               </button>
             </th>
             <th scope="col" className="text-center">
               Manager Rating
-              <button type="button" onClick={(): void => sortManagerRating()}>
-                {' '}
-                r{' '}
+              <button
+                className="border-0 bg-gu-white sort-button"
+                onClick={(): void => sortManagerRating()}
+              >
+                {isManager ? <SortDown /> : <SortUp />}
               </button>
             </th>
             <th scope="col" className="text-center">
               Skill Review
-              <button type="button" onClick={(): void => sortSkillReview()}>
-                {' '}
-                r{' '}
+              <button
+                className="border-0 bg-gu-white sort-button"
+                onClick={(): void => sortSkillReview()}
+              >
+                {isSkillReview ? <SortDown /> : <SortUp />}
               </button>
             </th>
           </tr>
