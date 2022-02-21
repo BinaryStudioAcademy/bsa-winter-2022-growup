@@ -1,7 +1,6 @@
 import { ChangeEvent, memo, FormEvent } from 'react';
 import { useState } from 'hooks/hooks';
 import { Form } from 'react-bootstrap';
-
 import type { UseTagList } from 'hooks/common';
 
 type PropTypes = {
