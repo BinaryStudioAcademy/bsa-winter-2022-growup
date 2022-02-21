@@ -1,4 +1,4 @@
-import { PencilFill } from 'react-bootstrap-icons';
+import { Plus } from 'react-bootstrap-icons';
 import './styles.scss';
 
 const InterestsBlock: React.FC = ({ children }) => {
@@ -9,8 +9,8 @@ const InterestsBlock: React.FC = ({ children }) => {
           Interests
         </p>
         <button className="interests-header__edit fw-bold bg-transparent d-flex align-items-center fs-5 position-relative">
-          <PencilFill className="interests-header__edit-icon text-gu-white" />
-          <span className="text-gu-white">Edit</span>
+          <Plus className="interests-header__edit-icon text-gu-white" />
+          <span className="text-gu-white">Add</span>
         </button>
       </div>
       <div className="interests-content position-relative">{children}</div>

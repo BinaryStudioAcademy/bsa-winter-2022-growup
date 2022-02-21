@@ -31,7 +31,7 @@ const StepControl: React.FC<Props> = ({
           }
         }}
       >
-        Go to Questionnaire for determining my level
+        Go to Questionnaire
       </button>
     </div>
   );
