@@ -10,8 +10,6 @@ import { skillsMapper } from '~/common/mappers/skills.mapper';
 import { SkillsCreationResponse } from '~/common/models/skills/skills';
 import { asyncForEach } from '~/common/helpers/array.helper';
 
-import { companies } from '~/data/seed-data/company.data';
-
 export const getSkills = async (id: string): Promise<Skill[]> => {
   const skillRepository = getCustomRepository(SkillRepository);
   const companyRepository = getCustomRepository(CompanyRepository);
@@ -19,24 +17,27 @@ export const getSkills = async (id: string): Promise<Skill[]> => {
   const companyInstance: Company = await companyRepository.findOne({
     id: id,
   });
-  console.log(companyInstance);
+
   const skills: Skill[] = await skillRepository.find({
     company: companyInstance,
   } as FindManyOptions);
-  console.log(skills);
+
   return skills.map((skill) => skillsMapper(skill));
 };
 
 export const createSkills = async (
   data: any,
+  _userId: string,
+  companyId: string,
 ): Promise<SkillsCreationResponse> => {
   const skillRepository = getCustomRepository(SkillRepository);
   const companyRepository = getCustomRepository(CompanyRepository);
 
   const companyInstance: Company = await companyRepository.findOne({
-    name: companies[0].name,
+    id: companyId,
   });
-
+  console.log(companyInstance);
+  console.log(companyId);
   const skills: any = [];
   await asyncForEach(async ({ name, type }: any) => {
     const skillInstance = skillRepository.create({

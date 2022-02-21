@@ -7,15 +7,14 @@ const router: Router = Router();
 router.get(
   '/',
   run((req) => {
-    return getSkills(req.body.userId);
+    return getSkills(req.companyId);
   }),
 );
 
 router.post(
   '/',
   run((req) => {
-    console.log(req.body);
-    return createSkills(req.body);
+    return createSkills(req.body, req.userId, req.companyId);
   }),
 );
 
