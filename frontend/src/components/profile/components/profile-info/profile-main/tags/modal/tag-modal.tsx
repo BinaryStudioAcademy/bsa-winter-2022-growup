@@ -1,9 +1,7 @@
 import { FormEvent } from 'react';
 import { useAppDispatch, useTagList } from 'hooks/hooks';
-import { adminActions } from 'store/actions';
-
+import { tagsActions } from 'store/actions';
 import { Modal } from 'components/common/common';
-
 import TagForm from './form';
 import TagList from './tag-list';
 
@@ -14,15 +12,12 @@ type PropTypes = {
 
 const TagModal: React.FC<PropTypes> = ({ show, onClose }) => {
   const { list: tagList, addItem, deleteItem, clearItems } = useTagList();
-
   const dispatch = useAppDispatch();
-
   const clickHandler = (e: FormEvent): void => {
     e.preventDefault();
-
     onClose();
     clearItems();
-    dispatch(adminActions.createTags(tagList));
+    dispatch(tagsActions.createTags(tagList));
   };
 
   return (
@@ -34,7 +29,6 @@ const TagModal: React.FC<PropTypes> = ({ show, onClose }) => {
     >
       <TagForm onSubmit={addItem} />
       <TagList tagList={tagList} onDelete={deleteItem} />
-
       <button
         className="btn btn-outline-gu-purple btn-hover-gu-white fw-bold fs-5 border-2"
         onClick={clickHandler}
