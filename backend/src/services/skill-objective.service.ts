@@ -8,7 +8,7 @@ type SkillObjectiveProps = Pick<SkillObjective, 'category' | 'name'>;
 export const upsertObjectives = async (
   category: SkillObjective['category'],
   data: SkillObjectiveProps[],
-) => {
+): Promise<SkillObjective[]> => {
   const skillObjectiveRepository = getCustomRepository(
     SkillObjectiveRepository,
   );
