@@ -1,14 +1,14 @@
 import Follow from './Follow';
 import OpportunityItem from 'components/main-page/opportunities/opportunityItem';
-import { IAddNewOpportunity } from 'store/opportunities/common';
+import { IOpportunity } from 'store/opportunities/common';
 
-interface Props extends IAddNewOpportunity {}
+interface Props extends IOpportunity {}
 
 const OpportunityPageItem: React.FC<Props> = ({
   name,
   organization,
-  startData,
-  tags,
+  startDate,
+  tagsData,
   isFollow,
   id,
   type,
@@ -19,8 +19,8 @@ const OpportunityPageItem: React.FC<Props> = ({
         isOpportunitiesPage={true}
         name={name}
         organization={organization}
-        startData={startData}
-        tags={tags}
+        startDate={startDate}
+        tagsData={tagsData}
         type={type}
       />
       <Follow isFollow={isFollow} id={id}></Follow>

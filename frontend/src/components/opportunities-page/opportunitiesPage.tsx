@@ -1,20 +1,21 @@
 import OpportunityPageItem from './opportunitiesPageItem';
 import OpportunityModal from './OpportunityModal';
 import { useAppSelector, useAppDispatch, useEffect } from 'hooks/hooks';
-import { fetchLoadOpp, showModal } from '../../store/opportunities/actions';
+import * as opportunityActions from '../../store/opportunities/actions';
 import './styles.scss';
+import { IOpportunity } from 'store/opportunities/common';
 
 const OpprotunitiesPage: React.FC = () => {
   const opportunities = useAppSelector(
-    (state) => state.opportunityReducer.opportunities,
+    (state) => state.opportunities.opportunities,
   );
   const dispatch = useAppDispatch();
   const isShowModal = useAppSelector(
-    (state) => state.opportunityReducer.isShowModal,
+    (state) => state.opportunities.isShowModal,
   );
-  const isLoaded = useAppSelector((state) => state.opportunityReducer.isLoaded);
+  const isLoaded = useAppSelector((state) => state.opportunities.isLoaded);
   useEffect(() => {
-    isLoaded ? null : dispatch(fetchLoadOpp());
+    isLoaded ? null : dispatch(opportunityActions.fetchLoadOpp());
   }, []);
   return (
     <section className="d-flex flex-column">
@@ -25,24 +26,24 @@ const OpprotunitiesPage: React.FC = () => {
         <span
           className="btn btn-outline-gu-white fs-7 "
           onClick={(): void => {
-            dispatch(showModal());
+            dispatch(opportunityActions.showModal());
           }}
         >
           + Add Opportunity
         </span>
       </div>
       <div className="oppotunities__list">
-        {opportunities.map((item, index) => {
+        {opportunities.map((item: IOpportunity, index: number) => {
           return (
             <OpportunityPageItem
               name={item.name}
               organization={item.organization}
-              startData={item.startDate}
+              startDate={item.startDate}
               type={item.type}
               isFollow={item.isFollow}
               id={item.id}
               key={index}
-              tags={item.tags}
+              tagsData={item.tagsData}
             />
           );
         })}

@@ -1,7 +1,7 @@
 import { useAppDispatch } from 'hooks/hooks';
 import { useRef } from 'react';
 import { X } from 'react-bootstrap-icons';
-import { closeModal, fetchNewOpp } from 'store/opportunities/actions';
+import * as opportunitiesActions from 'store/opportunities/actions';
 
 const OpportunityModal: React.FC = () => {
   const opportunityName = useRef<HTMLInputElement>(null);
@@ -25,7 +25,7 @@ const OpportunityModal: React.FC = () => {
         <span
           className="opportunity-modal__close-btn position-absolute text-gu-white top-0"
           onClick={(): void => {
-            dispatch(closeModal());
+            dispatch(opportunitiesActions.closeModal());
           }}
         >
           <X />
@@ -80,7 +80,7 @@ const OpportunityModal: React.FC = () => {
           className="btn btn-gu-blue align-self-center mb-2"
           onClick={(): void => {
             dispatch(
-              fetchNewOpp({
+              opportunitiesActions.fetchNewOpp({
                 name: opportunityName.current?.value,
                 type: type.current?.value,
                 organization: organizationName.current?.value,

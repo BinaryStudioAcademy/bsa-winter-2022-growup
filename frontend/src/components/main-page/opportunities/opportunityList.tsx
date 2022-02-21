@@ -1,18 +1,29 @@
 import OpportunityItem from './opportunityItem';
-import { useAppDispatch, useAppSelector, useEffect } from 'hooks/hooks';
-import { fetchRecomendedOpp } from 'store/recomended-opportunities/actions';
 import './opportunities.scss';
 const OpportunityList: React.FC = () => {
-  const opportunities = useAppSelector(
-    (state) => state.recomededOpportunitiesReducer.opportunities,
-  );
-  const isLoaded = useAppSelector(
-    (state) => state.recomededOpportunitiesReducer.isLoaded,
-  );
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    isLoaded ? null : dispatch(fetchRecomendedOpp());
-  }, []);
+  const opportunities = [
+    {
+      name: 'Learning JS',
+      organization: 'Data System Opp',
+      startDate: 'March 20 2022',
+      type: 'Project/Lecture',
+      tags: ['Programming'],
+    },
+    {
+      name: 'QA Testing Like God',
+      organization: 'Company Query',
+      startDate: 'May 02 2022',
+      type: 'Lectury/HomeWork',
+      tags: ['Testing'],
+    },
+    {
+      name: 'How to improve your bussiness skills',
+      organization: 'Imporove Yourself',
+      startDate: 'June 12 2022',
+      type: 'Lecture',
+      tags: ['Bussiness'],
+    },
+  ];
   return (
     <section className="opportunities mt-5 text-start d-flex flex-column ">
       <div className=" d-flex align-items-center px-3 py-3 rounded-top bg-gu-blue text-gu-white">
@@ -24,14 +35,14 @@ const OpportunityList: React.FC = () => {
         </span>
       </div>
       <div className="oppotunities__list">
-        {opportunities.map((item, index) => {
+        {opportunities.map((item, index: number) => {
           return (
             <OpportunityItem
               name={item.name}
               organization={item.organization}
-              startData={item.startDate}
+              startDate={item.startDate}
               key={index}
-              tags={item.tags}
+              tagsData={item.tags}
               type={item.type}
             />
           );

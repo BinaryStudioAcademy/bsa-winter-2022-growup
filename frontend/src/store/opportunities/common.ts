@@ -1,11 +1,6 @@
-export interface IAddNewOpportunity {
-  name?: string;
-  organization?: string;
-  startData?: string;
+export interface IOpportunity extends OpportunitiesProps {
   isFollow?: boolean;
-  id?: string;
-  tags?: string[];
-  type?: string;
+  tagsData?: string[];
 }
 
 export enum OpportunityActions {
@@ -17,18 +12,44 @@ export enum OpportunityActions {
   LOAD_OPPORTUNITIES = 'LOAD_OPPORTUNITIES',
 }
 
-export interface opportunitiesAction {
-  type: string;
-  payload?: any;
+export interface IPostOppData extends OpportunitiesProps {
+  createdAt: string;
+  updatedAt: string;
+  deletedAt?: null | string;
 }
+
 export interface OpportunitiesProps {
   id?: string;
   name?: string;
   organization?: string;
   startDate?: string;
-  isFollow?: string;
-  tags?: string[];
+  tags?: ITagsData[];
+  type?: string;
 }
-export interface loadAction extends opportunitiesAction {
-  payload: OpportunitiesProps[];
+
+export interface State {
+  opportunities: IOpportunity[];
+  isShowModal: boolean;
+  isLoaded: boolean;
+}
+
+export interface ITagsData {
+  id: string;
+  name: string;
+  createdAt: string;
+  deletedAt: null | string;
+  updateAt: string;
+}
+
+interface ILoadAction {
+  payload: {
+    opportunities: IOpportunity[];
+  };
+}
+
+export interface opportunitiesAction {
+  type: string;
+  isLoaded: boolean;
+  isShowModal: boolean;
+  payload?: ILoadAction;
 }

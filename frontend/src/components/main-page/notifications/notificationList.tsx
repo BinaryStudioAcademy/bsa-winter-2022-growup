@@ -36,7 +36,9 @@ const Notifications: React.FC = () => {
     const to = viewAll ? notificationsData.length : itemsCount;
     const data = notificationsData.slice(0, to);
 
-    return data.map((item: INotificationData) => <Notification {...item} />);
+    return data.map((item: INotificationData, index: number) => (
+      <Notification {...item} key={index} />
+    ));
   };
   const onClick = (): void => setViewAll(!viewAll);
 

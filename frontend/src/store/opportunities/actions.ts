@@ -1,132 +1,158 @@
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { ContentType } from 'common/enums/enums';
 import { http } from 'services';
-import { opportunitiesAction, OpportunityActions } from './common';
-interface tagProps {
-  name: string;
-}
-export interface OpportunitiesProps {
-  id?: string;
-  name?: string;
-  organization?: string;
-  startDate?: string;
-  isFollow?: string;
-  tags?: string[];
-  type?: string;
-}
-export const loadAllOpportunities = (
-  opportunitiesData: any[],
-): opportunitiesAction => {
-  const opportunities = opportunitiesData.map((item) => {
-    const tags = item.tags.map((tag: tagProps) => tag.name);
+import { IOpportunity, IPostOppData, OpportunityActions } from './common';
+import { OpportunitiesProps } from './common';
+
+const fetchLoadOpp = createAsyncThunk(
+  OpportunityActions.LOAD_OPPORTUNITIES,
+  async (_, { rejectWithValue }) => {
+    try {
+      const result: OpportunitiesProps[] = await http.load(
+        'http://localhost:3001/company/opportunities',
+        {
+          method: 'GET',
+          payload: null,
+          contentType: ContentType.JSON,
+        },
+      );
+      const opportunities = result.map((item) => {
+        const tags = item.tags?.map((item) => item.name);
+        return {
+          id: item.id,
+          name: item.name,
+          organization: item.organization,
+          startDate: item.startDate,
+          isFollow: false,
+          tagsData: tags,
+          type: item.type,
+        };
+      });
+      return opportunities;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+const fetchNewOpp = createAsyncThunk(
+  OpportunityActions.ADD_OPPORTUNITY,
+  async (data: IOpportunity, { rejectWithValue }) => {
+    try {
+      const oppData = {
+        opportunities: [
+          {
+            name: data.name,
+            organization: data.organization,
+            type: data.type,
+            startDate: data.startDate,
+          },
+        ],
+      };
+      const res: IPostOppData[] = await http.post(
+        'http://localhost:3001/company/opportunities',
+        {
+          method: 'POST',
+          payload: JSON.stringify(oppData),
+          contentType: ContentType.JSON,
+        },
+      );
+
+      const newOpp = {
+        name: res[0].name,
+        organization: res[0].organization,
+        type: res[0].type,
+        startDate: res[0].startDate,
+        id: res[0].id,
+        tags: [],
+        isFollow: false,
+      };
+      return newOpp;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
+const showModal = createAction(OpportunityActions.SHOW_MODAL);
+const closeModal = createAction(OpportunityActions.CLOSE_MODAL);
+const subscribeFollow = createAction(
+  OpportunityActions.SUBSCRIBE_FOLLOW,
+  (id?: string) => {
     return {
-      id: item.id,
-      name: item.name,
-      organization: item.organization,
-      startDate: item.startDate,
-      isFollow: false,
-      tags: tags,
-      type: item.type,
+      payload: {
+        id,
+      },
     };
-  });
-  return {
-    type: OpportunityActions.LOAD_OPPORTUNITIES,
-    payload: {
-      opportunities: opportunities,
-    },
-  };
-};
-
-export const fetchLoadOpp = (): any => {
-  return async (dispatch: any): Promise<void> => {
-    const res: any[] = await http.load(
-      'http://localhost:3001/company/opportunities',
-      {
-        method: 'GET',
-        payload: null,
-        contentType: ContentType.JSON,
+  },
+);
+const unSubscribeFollow = createAction(
+  OpportunityActions.UNSUBSCRIBE_FOLLOW,
+  (id?: string) => {
+    return {
+      payload: {
+        id,
       },
-    );
-    dispatch(loadAllOpportunities(res));
-  };
-};
-export const addNewOpp = ({
-  name,
-  organization,
-  type,
-  startDate,
-  id,
-}: OpportunitiesProps): any => {
-  const newOpp = {
-    name: name,
-    organization: organization,
-    type: type,
-    startDate: startDate,
-    id: id,
-    tags: [],
-    isFollow: false,
-  };
-  return {
-    type: OpportunityActions.ADD_OPPORTUNITY,
-    payload: {
-      newOpp: newOpp,
-    },
-  };
-};
-export const fetchNewOpp = ({
-  name,
-  organization,
-  type,
-  startDate,
-}: OpportunitiesProps): any => {
-  const data = {
-    opportunities: [
-      {
-        name: name,
-        organization: organization,
-        type: type,
-        startDate: startDate,
-      },
-    ],
-  };
-  return async (dispatch: any): Promise<void> => {
-    const res: any[] = await http.post(
-      'http://localhost:3001/company/opportunities',
-      {
-        method: 'POST',
-        payload: JSON.stringify(data),
-        contentType: ContentType.JSON,
-      },
-    );
-    dispatch(addNewOpp(res[0]));
-  };
-};
-export const closeModal = (): opportunitiesAction => {
-  document.body.style.overflow = '';
-  return {
-    type: OpportunityActions.CLOSE_MODAL,
-  };
-};
+    };
+  },
+);
 
-export const showModal = (): opportunitiesAction => {
-  document.body.style.overflow = 'hidden';
-  return {
-    type: OpportunityActions.SHOW_MODAL,
-  };
-};
+// const addNewOpp = ({
+//   name,
+//   organization,
+//   type,
+//   startDate,
+//   id,
+// }: OpportunitiesProps): any => {
+//   const newOpp = {
+//     name: name,
+//     organization: organization,
+//     type: type,
+//     startDate: startDate,
+//     id: id,
+//     tags: [],
+//     isFollow: false,
+//   };
+//   return {
+//     type: OpportunityActions.ADD_OPPORTUNITY,
+//     payload: {
+//       newOpp: newOpp,
+//     },
+//   };
+// };
+// const fetchNewOpp = ({
+//   name,
+//   organization,
+//   type,
+//   startDate,
+// }: OpportunitiesProps): any => {
+//   const data = {
+//     opportunities: [
+//       {
+//         name: name,
+//         organization: organization,
+//         type: type,
+//         startDate: startDate,
+//       },
+//     ],
+//   };
+//   return async (dispatch: any): Promise<void> => {
+//     const res: any[] = await http.post(
+//       'http://localhost:3001/company/opportunities',
+//       {
+//         method: 'POST',
+//         payload: JSON.stringify(data),
+//         contentType: ContentType.JSON,
+//       },
+//     );
+//     dispatch(addNewOpp(res[0]));
+//   };
+// };
 
-export const subscribeFollow = (id?: string): opportunitiesAction => {
-  return {
-    type: OpportunityActions.SUBSCRIBE_FOLLOW,
-    payload: {
-      id: id,
-    },
-  };
-};
-export const unSubscribeFollow = (id?: string): opportunitiesAction => {
-  return {
-    type: OpportunityActions.UNSUBSCRIBE_FOLLOW,
-    payload: {
-      id: id,
-    },
-  };
+export {
+  subscribeFollow,
+  unSubscribeFollow,
+  showModal,
+  closeModal,
+  fetchNewOpp,
+  fetchLoadOpp,
 };

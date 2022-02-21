@@ -1,8 +1,8 @@
 import { ReactElement } from 'react';
-import { IAddNewOpportunity } from 'store/opportunities/common';
+import { IOpportunity } from 'store/opportunities/common';
 import Tag from './tag';
 
-interface Props extends IAddNewOpportunity {
+interface Props extends IOpportunity {
   isOpportunitiesPage?: boolean;
 }
 
@@ -10,12 +10,12 @@ const OpportunityItem: React.FC<Props> = ({
   isOpportunitiesPage,
   name,
   organization,
-  startData,
-  tags,
+  startDate,
+  tagsData,
   type,
 }): ReactElement => {
-  const tagsComponents = tags?.map((tag) => {
-    return <Tag title={tag} />;
+  const tagsComponents = tagsData?.map((tag, index: number) => {
+    return <Tag title={tag} key={index} />;
   });
   return (
     <div
@@ -33,7 +33,7 @@ const OpportunityItem: React.FC<Props> = ({
           <span className="opportunities__type">Org:</span> {organization}{' '}
         </span>
         <span className="opportunities__cart--text-item mb-1 overflow-hidden">
-          <span className="opportunities__type">Start:</span> {startData}{' '}
+          <span className="opportunities__type">Start:</span> {startDate}{' '}
         </span>
         <span className="opportunities__cart--text-item mb-1 overflow-hidden">
           <span className="opportunities__type">Type:</span> {type}{' '}

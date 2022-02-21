@@ -6,6 +6,7 @@ enum ReducerName {
   ADMIN = 'admin',
   PROFILE = 'profile',
   USER_QUIZ = 'user-quiz',
+  OPPORTUNITY = 'opportunity',
 }
 
 export { ReducerName };
