@@ -2,8 +2,16 @@ import { Router } from 'express';
 import { run } from '~/common/helpers/route.helper';
 import { CompanyResponse } from '~/common/models/responses/company';
 import verifyToken from '~/api/middlewares/authorization-middleware';
+import { validateBody } from '~/api/middlewares/validation-middleware';
 import { OKR } from '~/data/entities/okr';
 import { createCompany, editCompany } from '~/services/company.service';
+import {
+  createOkrSchema,
+  updateOkrSchema,
+  createObjectiveSchema,
+  updateObjectiveSchema,
+  createKeyResultSchema,
+} from '~/common/validations';
 import {
   getAllOkr,
   createOkr,
@@ -61,6 +69,7 @@ router.get(
 router.post(
   '/okr',
   verifyToken,
+  validateBody(createOkrSchema),
   run((req): Promise<OKR> => {
     const { userId, body } = req;
     const data = { userId, body };
@@ -71,6 +80,7 @@ router.post(
 router.put(
   '/okr/:id',
   verifyToken,
+  validateBody(updateOkrSchema),
   run((req): Promise<OKR> => {
     const { id } = req.params;
     const { body } = req;
@@ -86,6 +96,7 @@ router.put(
 router.post(
   '/okr/:id/objective',
   verifyToken,
+  validateBody(createObjectiveSchema),
   run((req): Promise<OKR> => {
     const { body } = req;
     const { id } = req.params;
@@ -97,6 +108,7 @@ router.post(
 router.put(
   '/okr/:id/objective/:id1',
   verifyToken,
+  validateBody(updateObjectiveSchema),
   run((req): Promise<OKR> => {
     const { id, id1 } = req.params;
     const { body } = req;
@@ -112,6 +124,7 @@ router.put(
 router.post(
   '/okr/:id/objective/:id1/keyresult',
   verifyToken,
+  validateBody(createKeyResultSchema),
   run((req): Promise<OKR> => {
     const { id, id1 } = req.params;
 
