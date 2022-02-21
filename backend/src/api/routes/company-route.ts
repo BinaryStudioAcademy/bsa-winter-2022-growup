@@ -1,10 +1,13 @@
 import { Router } from 'express';
 import { run } from '~/common/helpers/route.helper';
 import { CompanyResponse } from '~/common/models/responses/company';
-import verifyToken from '~/api/middlewares/authorization-middleware';
-import { validateBody } from '~/api/middlewares/validation-middleware';
+import {
+  validateBody,
+  validatePermissions,
+} from '~/api/middlewares/validation-middleware';
 import { OKR } from '~/data/entities/okr';
 import { createCompany, editCompany } from '~/services/company.service';
+import { RoleType } from '~/common/enums/role-type';
 import {
   createOkrSchema,
   updateOkrSchema,
@@ -28,7 +31,7 @@ const router: Router = Router();
 
 router.post(
   '/',
-  verifyToken,
+  validatePermissions([RoleType.Admin, RoleType.User]),
   run((req): Promise<CompanyResponse> => {
     const { userId, userRole, body } = req;
     const tokenPayload = {
@@ -42,7 +45,7 @@ router.post(
 
 router.patch(
   '/:id',
-  verifyToken,
+  validatePermissions([RoleType.Admin, RoleType.User]),
   run((req): Promise<CompanyResponse> => {
     const { id } = req.params;
     const { body, userId, userRole } = req;
@@ -56,19 +59,19 @@ router.patch(
 
 router.get(
   '/okr',
-  verifyToken,
+  validatePermissions([RoleType.Admin, RoleType.User]),
   run((req): Promise<OKR[]> => getAllOkr(req.userId)),
 );
 
 router.get(
   '/okr/:id',
-  verifyToken,
+  validatePermissions([RoleType.Admin, RoleType.User]),
   run((req): Promise<OKR> => getOkrById(req.params.id)),
 );
 
 router.post(
   '/okr',
-  verifyToken,
+  validatePermissions([RoleType.Admin, RoleType.User]),
   validateBody(createOkrSchema),
   run((req): Promise<OKR> => {
     const { userId, body } = req;
@@ -79,7 +82,7 @@ router.post(
 
 router.put(
   '/okr/:id',
-  verifyToken,
+  validatePermissions([RoleType.Admin, RoleType.User]),
   validateBody(updateOkrSchema),
   run((req): Promise<OKR> => {
     const { id } = req.params;
@@ -95,7 +98,7 @@ router.put(
 
 router.post(
   '/okr/:id/objective',
-  verifyToken,
+  validatePermissions([RoleType.Admin, RoleType.User]),
   validateBody(createObjectiveSchema),
   run((req): Promise<OKR> => {
     const { body } = req;
@@ -107,7 +110,7 @@ router.post(
 
 router.put(
   '/okr/:id/objective/:id1',
-  verifyToken,
+  validatePermissions([RoleType.Admin, RoleType.User]),
   validateBody(updateObjectiveSchema),
   run((req): Promise<OKR> => {
     const { id, id1 } = req.params;
@@ -123,7 +126,7 @@ router.put(
 
 router.post(
   '/okr/:id/objective/:id1/keyresult',
-  verifyToken,
+  validatePermissions([RoleType.Admin, RoleType.User]),
   validateBody(createKeyResultSchema),
   run((req): Promise<OKR> => {
     const { id, id1 } = req.params;
