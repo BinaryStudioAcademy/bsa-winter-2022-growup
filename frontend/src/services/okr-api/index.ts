@@ -37,7 +37,10 @@ class OkrApi {
     };
 
     try {
-      const result = await this.http.load<IOkr>(`/company/okr/${okrId}`, options);
+      const result = await this.http.load<IOkr>(
+        `/company/okr/${okrId}`,
+        options,
+      );
       return result;
     } catch (e) {
       //passing an error to the handler
@@ -46,7 +49,11 @@ class OkrApi {
     }
   }
 
-  public async createOkr(okrBody: IOkr): Promise<IOkr | null> {
+  public async createOkr(okrBody: {
+    name: string;
+    endDate: Date;
+    startDate: Date;
+  }): Promise<IOkr | null> {
     const options = {
       method: HttpMethod.POST,
       contentType: ContentType.JSON,
@@ -63,21 +70,18 @@ class OkrApi {
     }
   }
 
-  public async updateOkr({
-    okrId,
-    okrBody,
-  }: {
-    okrId: string;
-    okrBody: IOkr;
-  }): Promise<IOkr | null> {
+  public async updateOkr(okr: IOkr): Promise<IOkr | null> {
     const options = {
       method: HttpMethod.PUT,
       contentType: ContentType.JSON,
-      payload: JSON.stringify(okrBody),
+      payload: JSON.stringify(okr),
     };
 
     try {
-      const result = await this.http.load<IOkr>(`/company/okr/${okrId}`, options);
+      const result = await this.http.load<IOkr>(
+        `/company/okr/${okr.id}`,
+        options,
+      );
       return result;
     } catch (e) {
       //passing an error to the handler

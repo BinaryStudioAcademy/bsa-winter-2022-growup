@@ -34,7 +34,10 @@ const getOkrById_async = createAsyncThunk(
 
 const createOkr_async = createAsyncThunk(
   ActionType.UPDATE_OKR_BY_ID,
-  async (okrBody: IOkr, { dispatch }) => {
+  async (
+    okrBody: { name: string; endDate: Date; startDate: Date },
+    { dispatch },
+  ) => {
     const result = await okrApi.createOkr(okrBody);
 
     if (result) {
@@ -45,11 +48,8 @@ const createOkr_async = createAsyncThunk(
 
 const updateOkrById_async = createAsyncThunk(
   ActionType.UPDATE_OKR_BY_ID,
-  async (
-    { okrId, okrBody }: { okrId: string; okrBody: IOkr },
-    { dispatch },
-  ) => {
-    const result = await okrApi.updateOkr({ okrId, okrBody });
+  async (okr: IOkr, { dispatch }) => {
+    const result = await okrApi.updateOkr(okr);
 
     if (result) {
       dispatch(actions.update_okr_by_id(result));
