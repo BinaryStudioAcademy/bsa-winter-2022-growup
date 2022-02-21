@@ -60,10 +60,13 @@ const updateOkrById_async = createAsyncThunk(
 const createObjective_async = createAsyncThunk(
   ActionType.UPDATE_OKR_BY_ID,
   async (
-    { okrId, objectiveBody }: { okrId: string; objectiveBody: IObjective },
+    {
+      okrId,
+      objectiveBody,
+    }: { okrId: string; objectiveBody: { name: string; result: number } },
     { dispatch },
   ) => {
-    const result = await objectiveApi.addObjective({ okrId, objectiveBody });
+    const result = await objectiveApi.createObjective({ okrId, objectiveBody });
 
     if (result) {
       dispatch(actions.update_okr_by_id(result));
@@ -74,17 +77,12 @@ const createObjective_async = createAsyncThunk(
 const updateObjective_async = createAsyncThunk(
   ActionType.UPDATE_OKR_BY_ID,
   async (
-    {
-      okrId,
-      objectivId,
-      objectiveBody,
-    }: { okrId: string; objectivId: string; objectiveBody: IObjective },
+    { okrId, objective }: { okrId: string; objective: IObjective },
     { dispatch },
   ) => {
     const result = await objectiveApi.updateObjective({
       okrId,
-      objectivId,
-      objectiveBody,
+      objective,
     });
 
     if (result) {

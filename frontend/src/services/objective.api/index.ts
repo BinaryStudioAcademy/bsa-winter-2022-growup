@@ -11,12 +11,12 @@ class ObjectiveApi {
     this.http = http;
   }
 
-  public async addObjective({
+  public async createObjective({
     okrId,
     objectiveBody,
   }: {
     okrId: string;
-    objectiveBody: IObjective;
+    objectiveBody: { name: string; result: number };
   }): Promise<IOkr | null> {
     const options = {
       method: HttpMethod.POST,
@@ -39,22 +39,20 @@ class ObjectiveApi {
 
   public async updateObjective({
     okrId,
-    objectivId,
-    objectiveBody,
+    objective,
   }: {
     okrId: string;
-    objectivId: string;
-    objectiveBody: IObjective;
+    objective: IObjective;
   }): Promise<IOkr | null> {
     const options = {
       method: HttpMethod.PUT,
       contentType: ContentType.JSON,
-      payload: JSON.stringify(objectiveBody),
+      payload: JSON.stringify(objective),
     };
 
     try {
       const result = await this.http.load<IOkr>(
-        `/company/okr/${okrId}/objective/${objectivId}`,
+        `/company/okr/${okrId}/objective/${objective.id}`,
         options,
       );
       return result;
