@@ -1,95 +1,104 @@
-import { Container, Nav, Navbar } from 'react-bootstrap';
-import { AdminRoute } from 'common/enums/enums';
-
-import Companies from './companies/companies';
-import Users from './users/users';
-import CareerPath from './career-path/career-path';
-
-import { Link } from 'components/common/common';
 import logo from 'assets/img/logo.svg';
-
+import { ReactComponent as HomeIcon } from 'assets/img/icons/sidebar-icons/home-icon.svg';
+import { ReactComponent as OpportunitiesIcon } from 'assets/img/icons/sidebar-icons/opportunities-icon.svg';
+import { ReactComponent as ProfileIcon } from 'assets/img/icons/sidebar-icons/profile-icon.svg';
+import { ReactComponent as OkrIcon } from 'assets/img/icons/sidebar-icons/okr-icon.svg';
+import { ReactComponent as CareerPathIcon } from 'assets/img/icons/sidebar-icons/career-path-icon.svg';
+import { ReactComponent as MenteeProfileIcon } from 'assets/img/icons/sidebar-icons/mentee-icon.svg';
+import { MentorMenteeRoute } from 'common/enums/enums';
+import { Link } from 'components/common/common';
 import './styles.scss';
 
-enum Variants {
-  company = 'company',
-  users = 'users',
-  career = 'career',
-}
+const Sidebar: React.FC = () => {
+  const isMentor = true;
 
-type PropTypes = {
-  variant: keyof typeof Variants;
+  return (
+    <aside className="sidebar-section position-fixed h-100 bg-gu-blue">
+      <div className="sidebar-container d-flex flex-column pt-2 pt-md-3">
+        <Link to={MentorMenteeRoute.HOME}>
+          <a
+            className="logo-section d-flex align-items-center text-decoration-none px-2 ps-md-4"
+            href=""
+          >
+            <img
+              className="logo-section__icon logo-icon me-md-3"
+              src={logo}
+              alt="logo"
+            />
+            <span className="logo-section__title logo-title fs-1 text-gu-white m-0 d-none d-md-block">
+              Grow Up
+            </span>
+          </a>
+        </Link>
+        <nav className="navigation-section px-md-3">
+          <ul className="navigation-section__list navigation-list d-flex flex-column m-0 p-0">
+            <li className="navigation-list__item navigation-item mb-4">
+              <Link to={MentorMenteeRoute.HOME}>
+                <span className="navigation-item__link navigation-link d-flex align-items-center p-2 ps-md-4 fs-4 font-weight-normal text-gu-white">
+                  <HomeIcon className="navigation-link__icon me-md-3" />
+                  <span className="navigation-link__title d-none d-md-block">
+                    Home
+                  </span>
+                </span>
+              </Link>
+            </li>
+            <li className="navigation-list__item navigation-item mb-4">
+              <Link to={MentorMenteeRoute.OPPORTUNITIES}>
+                <span className="navigation-item__link navigation-link d-flex align-items-center p-2 ps-md-4 fs-4 font-weight-normal text-gu-white">
+                  <OpportunitiesIcon className="navigation-link__icon me-md-3" />
+                  <span className="navigation-link__title d-none d-md-block">
+                    Opportunities
+                  </span>
+                </span>
+              </Link>
+            </li>
+            <li className="navigation-list__item navigation-item mb-4">
+              <Link to={MentorMenteeRoute.PROFILE}>
+                <span className="navigation-item__link navigation-link d-flex align-items-center p-2 ps-md-4 fs-4 font-weight-normal text-gu-white">
+                  <ProfileIcon className="navigation-link__icon me-md-3" />
+                  <span className="navigation-link__title d-none d-md-block">
+                    Profile
+                  </span>
+                </span>
+              </Link>
+            </li>
+            <li className="navigation-list__item navigation-item mb-4">
+              <Link to={MentorMenteeRoute.OKR}>
+                <span className="navigation-item__link navigation-link d-flex align-items-center p-2 ps-md-4 fs-4 font-weight-normal text-gu-white">
+                  <OkrIcon className="navigation-link__icon me-md-3" />
+                  <span className="navigation-link__title d-none d-md-block">
+                    OKR
+                  </span>
+                </span>
+              </Link>
+            </li>
+            <li className="navigation-list__item navigation-item mb-4">
+              <Link to={MentorMenteeRoute.CAREER_PATH}>
+                <span className="navigation-item__link navigation-link d-flex align-items-center p-2 ps-md-4 fs-4 font-weight-normal text-gu-white">
+                  <CareerPathIcon className="navigation-link__icon me-md-3" />
+                  <span className="navigation-link__title d-none d-md-block">
+                    Career Path
+                  </span>
+                </span>
+              </Link>
+            </li>
+            {isMentor ? (
+              <li className="navigation-list__item navigation-item mb-4">
+                <Link to={MentorMenteeRoute.MENTEE_PROFILES}>
+                  <span className="navigation-item__link navigation-link d-flex align-items-center p-2 ps-md-4 fs-4 font-weight-normal text-gu-white">
+                    <MenteeProfileIcon className="navigation-link__icon me-md-3" />
+                    <span className="navigation-link__title d-none d-md-block">
+                      Mentee Profiles
+                    </span>
+                  </span>
+                </Link>
+              </li>
+            ) : null}
+          </ul>
+        </nav>
+      </div>
+    </aside>
+  );
 };
 
-const Admin: React.FC<PropTypes> = ({ variant }) => (
-  <>
-    <Navbar
-      expand="lg"
-      className="growup-navigation mb-5"
-      bg="growup-navigation"
-    >
-      <Container>
-        <Navbar.Brand>
-          <Link to={AdminRoute.ADMIN}>
-            <a
-              className="d-flex align-items-center text-decoration-none"
-              href=""
-            >
-              <img className="logo-icon me-md-3" src={logo} alt="logo" />
-              <span className="logo-title fs-1 text-gu-black m-0 d-none d-md-block">
-                Grow Up
-              </span>
-            </a>
-          </Link>
-        </Navbar.Brand>
-        <Nav>
-          <Nav.Item>Admin Profile Img</Nav.Item>
-        </Nav>
-      </Container>
-    </Navbar>
-    <Container className="d-grid gap-2">
-      <div className="row">
-        <div className="col col-sm-8 col-md-8 col-lg-8">
-          <Nav variant="tabs" defaultActiveKey="/">
-            <Nav.Item>
-              <Link
-                className={`nav-link ${
-                  variant === Variants.company ? 'active' : ''
-                }`}
-                to={AdminRoute.ADMIN}
-              >
-                Your Company
-              </Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Link
-                className={`nav-link ${
-                  variant === Variants.users ? 'active' : ''
-                }`}
-                to={AdminRoute.ADMIN_USERS}
-              >
-                Users
-              </Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Link
-                className={`nav-link ${
-                  variant === Variants.career ? 'active' : ''
-                }`}
-                to={AdminRoute.ADMIN_CAREER_PATH}
-              >
-                Career path
-              </Link>
-            </Nav.Item>
-          </Nav>
-        </div>
-      </div>
-      <div className="row gy-4">
-        {variant === Variants.company && <Companies />}
-        {variant === Variants.users && <Users />}
-        {variant === Variants.career && <CareerPath />}
-      </div>
-    </Container>
-  </>
-);
-
-export default Admin;
+export default Sidebar;

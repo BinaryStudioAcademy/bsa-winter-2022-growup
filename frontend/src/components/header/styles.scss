@@ -65,3 +65,14 @@ $white-blue: #f0f3f9;
   width: 30px;
   height: 30px;
 }
+
+#user-menu {
+  background: none;
+  border: 0px;
+  outline: none;
+  box-shadow: none;
+}
+
+#user-menu::after {
+  display: none;
+}

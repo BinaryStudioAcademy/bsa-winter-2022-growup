@@ -65,7 +65,7 @@ const getUserJWT = async (user: User): Promise<TokenResponse> => {
 
 const registerUser = async (
   data: UserRegisterForm,
-  role: typeof RoleType[keyof typeof RoleType],
+  role: RoleType,
   companyId: User['company']['id'],
 ): Promise<UserRegistrationType> => {
   const userRepository = getCustomRepository(UserRepository);
@@ -199,7 +199,7 @@ export const registerUserAdmin = async (
 
 export const registerCommonUsers = async (
   data: UserRegisterForm,
-  role: typeof RoleType[keyof typeof RoleType],
+  role: RoleType,
   companyId: User['company']['id'],
 ): Promise<IListUser> => {
   const { user, role: roleInstance } = await registerUser(
