@@ -96,58 +96,6 @@ const unSubscribeFollow = createAction(
   },
 );
 
-// const addNewOpp = ({
-//   name,
-//   organization,
-//   type,
-//   startDate,
-//   id,
-// }: OpportunitiesProps): any => {
-//   const newOpp = {
-//     name: name,
-//     organization: organization,
-//     type: type,
-//     startDate: startDate,
-//     id: id,
-//     tags: [],
-//     isFollow: false,
-//   };
-//   return {
-//     type: OpportunityActions.ADD_OPPORTUNITY,
-//     payload: {
-//       newOpp: newOpp,
-//     },
-//   };
-// };
-// const fetchNewOpp = ({
-//   name,
-//   organization,
-//   type,
-//   startDate,
-// }: OpportunitiesProps): any => {
-//   const data = {
-//     opportunities: [
-//       {
-//         name: name,
-//         organization: organization,
-//         type: type,
-//         startDate: startDate,
-//       },
-//     ],
-//   };
-//   return async (dispatch: any): Promise<void> => {
-//     const res: any[] = await http.post(
-//       'http://localhost:3001/company/opportunities',
-//       {
-//         method: 'POST',
-//         payload: JSON.stringify(data),
-//         contentType: ContentType.JSON,
-//       },
-//     );
-//     dispatch(addNewOpp(res[0]));
-//   };
-// };
-
 export {
   subscribeFollow,
   unSubscribeFollow,
