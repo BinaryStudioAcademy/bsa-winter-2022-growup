@@ -1,11 +1,10 @@
 import { createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
 import { ReducerName } from 'common/enums/app/reducer-name.enum';
 import { IUser } from 'common/interfaces/user';
-import { loginUser, signUpUser } from './actions';
+import { getCurrentUser, loginUser, signUpUser } from './actions';
 import { ActionType } from './common';
-import { storage } from '../../services';
 import { StorageKey } from '../../common/enums/app/storage-key.enum';
-import { isValidToken } from '../../helpers/token/is-valid-token';
+import { storage } from '../../services';
 
 type State = {
   user: IUser | null;
@@ -16,7 +15,7 @@ type State = {
 const initialState: State = {
   user: null,
   isLoading: false,
-  isAuthenticated: isValidToken(storage.getItem(StorageKey.TOKEN)),
+  isAuthenticated: false,
 };
 
 const { reducer, actions } = createSlice({
@@ -29,11 +28,22 @@ const { reducer, actions } = createSlice({
     [ActionType.REMOVE_USER]: (state) => {
       state.user = null;
     },
+    [ActionType.LOGOUT_USER]: (state) => {
+      state.user = null;
+      state.isAuthenticated = false;
+      storage.removeItem(StorageKey.TOKEN);
+    },
   },
   extraReducers: (builder) => {
+    builder.addCase(getCurrentUser.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.isAuthenticated = true;
+      state.user = action.payload;
+    });
+
     builder
       .addMatcher(
-        isAnyOf(loginUser.pending, signUpUser.pending),
+        isAnyOf(loginUser.pending, signUpUser.pending, getCurrentUser.pending),
         (state, _) => {
           state.isLoading = true;
         },
@@ -49,7 +59,11 @@ const { reducer, actions } = createSlice({
         },
       )
       .addMatcher(
-        isAnyOf(loginUser.rejected, signUpUser.rejected),
+        isAnyOf(
+          loginUser.rejected,
+          signUpUser.rejected,
+          getCurrentUser.rejected,
+        ),
         (state, _) => {
           state.isLoading = false;
         },

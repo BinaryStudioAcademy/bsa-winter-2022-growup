@@ -1,10 +1,10 @@
-import Avatar from 'react-avatar';
 import { PencilFill, ShieldFillCheck } from 'react-bootstrap-icons';
 import { useState, useCallback } from 'hooks/hooks';
 
-import EditAvatar from './components/edit-avatar';
-
 import { IUser } from 'common/interfaces/user';
+import { UserAvatar } from 'components/common/common';
+
+import EditAvatar from './components/edit-avatar';
 
 import './header.scss';
 
@@ -20,11 +20,12 @@ const Header: React.FC<Props> = ({ avatar, firstName, lastName }) => {
     <>
       <div className="profile-header d-flex">
         <div className="profile">
-          {avatar ? (
-            <img className="profile__avatar" src={avatar} alt="Avatar" />
-          ) : (
-            <Avatar name={`${firstName} ${lastName}`} size="148" />
-          )}
+          <UserAvatar
+            avatar={avatar}
+            firstName={firstName}
+            lastName={lastName}
+            size="148"
+          />
           <div className="profile__edit d-flex align-items-center justify-content-center position-absolute">
             <PencilFill className="edit-button" onClick={showModal} />
           </div>
