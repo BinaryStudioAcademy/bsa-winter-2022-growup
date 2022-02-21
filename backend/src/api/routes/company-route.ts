@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { run } from '~/common/helpers/route.helper';
 import { CompanyResponse } from '~/common/models/responses/company';
+import verifyToken from '~/api/middlewares/authorization-middleware';
 import { OKR } from '~/data/entities/okr';
 import { createCompany, editCompany } from '~/services/company.service';
 import {
@@ -19,6 +20,7 @@ const router: Router = Router();
 
 router.post(
   '/',
+  verifyToken,
   run((req): Promise<CompanyResponse> => {
     const { userId, userRole, body } = req;
     const tokenPayload = {
@@ -32,6 +34,7 @@ router.post(
 
 router.patch(
   '/:id',
+  verifyToken,
   run((req): Promise<CompanyResponse> => {
     const { id } = req.params;
     const { body, userId, userRole } = req;
@@ -45,16 +48,19 @@ router.patch(
 
 router.get(
   '/okr',
+  verifyToken,
   run((req): Promise<OKR[]> => getAllOkr(req.userId)),
 );
 
 router.get(
   '/okr/:id',
+  verifyToken,
   run((req): Promise<OKR> => getOkrById(req.params.id)),
 );
 
 router.post(
   '/okr',
+  verifyToken,
   run((req): Promise<OKR> => {
     const { userId, body } = req;
     const data = { userId, body };
@@ -64,6 +70,7 @@ router.post(
 
 router.put(
   '/okr/:id',
+  verifyToken,
   run((req): Promise<OKR> => {
     const { id } = req.params;
     const { body } = req;
@@ -78,6 +85,7 @@ router.put(
 
 router.post(
   '/okr/:id/objective',
+  verifyToken,
   run((req): Promise<OKR> => {
     const { body } = req;
     const { id } = req.params;
@@ -88,6 +96,7 @@ router.post(
 
 router.put(
   '/okr/:id/objective/:id1',
+  verifyToken,
   run((req): Promise<OKR> => {
     const { id, id1 } = req.params;
     const { body } = req;
@@ -102,6 +111,7 @@ router.put(
 
 router.post(
   '/okr/:id/objective/:id1/keyresult',
+  verifyToken,
   run((req): Promise<OKR> => {
     const { id, id1 } = req.params;
 

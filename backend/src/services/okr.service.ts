@@ -6,16 +6,8 @@ import { badRequestError } from '~/common/errors';
 
 export const getAllOkr = async (userId: string): Promise<OKR[]> => {
   const okrRepository = getCustomRepository(Okrepository);
-  const userRepository = getCustomRepository(UserRepository);
-
-  const user = await userRepository.findOne({ id: userId });
-
-  if (user) {
-    const okrs = okrRepository.getAllByUserId(userId);
-    return okrs;
-  }
-
-  throw badRequestError('User isn`t exist!!!');
+  const okrs = okrRepository.getAllByUserId(userId);
+  return okrs;
 };
 
 export const getOkrById = async (okrId: string): Promise<OKR> => {
@@ -54,16 +46,12 @@ export const createOkr = async ({
 
   if (isOkrExist) badRequestError(`Okr with name ${body.name} is exist!!!`);
 
-  if (user) {
-    const okr = okrRepository.create();
-    Object.assign(okr, body);
-    okr.user = user;
+  const okr = okrRepository.create();
+  Object.assign(okr, body);
+  okr.user = user;
 
-    await okr.save();
-    return okr;
-  }
-
-  throw badRequestError('User isn`t exist!!!');
+  await okr.save();
+  return okr;
 };
 
 export const updateOkrById = async ({
