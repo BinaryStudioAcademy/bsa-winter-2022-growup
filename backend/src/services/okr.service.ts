@@ -11,7 +11,7 @@ export const getAllOkr = async (userId: string): Promise<OKR[]> => {
   const user = await userRepository.findOne({ id: userId });
 
   if (user) {
-    const okrs = okrRepository.getAllByUserId();
+    const okrs = okrRepository.getAllByUserId(userId);
     return okrs;
   }
 

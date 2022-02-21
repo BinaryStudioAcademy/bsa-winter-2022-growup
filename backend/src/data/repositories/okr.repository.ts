@@ -3,7 +3,7 @@ import { OKR } from '../entities/okr';
 
 @EntityRepository(OKR)
 class OkrRepository extends Repository<OKR> {
-  getAllByUserId(): Promise<OKR[]> {
+  getAllByUserId(userId: string): Promise<OKR[]> {
     return this.createQueryBuilder('okr')
       .leftJoinAndSelect(
         'okr.objectives',
@@ -15,6 +15,7 @@ class OkrRepository extends Repository<OKR> {
         'keyresult',
         'objective.id = keyresult.objective',
       )
+      .where({ user: userId })
       .getMany();
   }
 
