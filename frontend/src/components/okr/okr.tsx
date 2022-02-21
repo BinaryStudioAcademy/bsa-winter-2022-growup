@@ -2,7 +2,7 @@ import { useEffect, useAppDispatch } from 'hooks/hooks';
 import { okrActions } from 'store/actions';
 import ControlledTabs from './tabs/two-tabs';
 
-const Ork: React.FC = () => {
+const Okr: React.FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -12,4 +12,4 @@ const Ork: React.FC = () => {
   return <ControlledTabs />;
 };
 
-export default Ork;
+export default Okr;

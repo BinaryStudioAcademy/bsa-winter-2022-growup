@@ -1,77 +1,75 @@
-/* stylelint-disable */
-@import "../../assets/css/styles.scss";
-/* stylelint-enable */
+@import '~assets/scss/utils';
 
 .sidebar-section {
-    z-index: 3;
+  z-index: 3;
 }
 
 .sidebar-container {
-    width: 273px;
-    @include media-breakpoint-down(md) {
-        width: 65px;
-    }
+  width: 273px;
+  @include media-breakpoint-down(md) {
+    width: 65px;
+  }
 }
 
 .logo-section {
-    margin-bottom: 3em;
-    @include media-breakpoint-up(md) {
-        margin-bottom: 6.2em;
-    }
+  margin-bottom: 3em;
+  @include media-breakpoint-up(md) {
+    margin-bottom: 6.2em;
+  }
 }
 
 .logo-icon {
-    width: 47.82px;
-    height: 47.82px;
+  width: 47.82px;
+  height: 47.82px;
 }
 
 .logo-title {
-    line-height: 1.38em;
-    font-weight: bold;
+  line-height: 1.38em;
+  font-weight: bold;
 }
 
 .navigation-section__list {
-    @include media-breakpoint-down(md) {
-        align-items: center;
-    }
+  @include media-breakpoint-down(md) {
+    align-items: center;
+  }
 }
 
 .navigation-link {
-    line-height: 1.38em;
+  line-height: 1.38em;
+  &__icon {
+    width: 27px;
+    height: 27px;
+  }
+  @include media-breakpoint-up(md) {
     &__icon {
-        width: 27px;
-        height: 27px;
+      max-width: 20px;
+      max-height: 20px;
     }
-    @include media-breakpoint-up(md) {
-        &__icon {
-            max-width: 20px;
-            max-height: 20px;
-        }
-    }
+  }
 }
 
 .navigation-item .active {
-    display: flex;
-    align-items: center;
-    height: 41px;
-    width: 41px;
-    background-color: #fff;
-    border-radius: 33%;
-    @include media-breakpoint-up(md) {
-        height: 45px;
-        width: 100%;
-        border-radius: 10px;
-    }
+  display: flex;
+  align-items: center;
+  height: 41px;
+  width: 41px;
+  background-color: #fff;
+  border-radius: 33%;
+  @include media-breakpoint-up(md) {
+    height: 45px;
+    width: 100%;
+    border-radius: 10px;
+  }
 }
 
 .active .navigation-link * {
-    display: flex;
-    width: 100%;
-    font-weight: bold;
-    color: $gu-blue;
-    fill: $gu-pink;
+  display: flex;
+  width: 100%;
+  font-weight: bold;
+  color: $gu-blue;
+  fill: $gu-pink;
 }
 
 .navigation-item {
-    list-style-type: none;
+  list-style-type: none;
 }

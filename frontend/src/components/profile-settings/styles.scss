@@ -1,0 +1,120 @@
+@import 'src/assets/scss/utils';
+
+.stepper {
+  margin: 5%;
+}
+
+.stepper__panel {
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin-bottom: 10%;
+}
+
+.stepper__step {
+  text-align: center;
+}
+
+.stepper__info {
+  width: 75px;
+  height: 75px;
+  line-height: 75px;
+  border-radius: 50%;
+  background-color: $gray-500;
+  text-align: center;
+  z-index: 1;
+}
+
+.stepper__actions {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.stepper__form {
+  width: 500px;
+}
+
+.stepper .stepper__step:after {
+  content: ' ';
+  position: absolute;
+  top: 38px;
+  width: 100%;
+  height: 1px;
+  background-color: $gray-500;
+}
+
+.stepper__step:last-child:after {
+  display: none;
+}
+
+.stepper__step.is-complete .stepper__info,
+.stepper__step.is-active .stepper__info {
+  background-color: $gu-blue;
+  color: $gu-white;
+}
+
+@media (max-width: 1200px) {
+  .stepper__form {
+    width: 400px;
+  }
+}
+
+@media (max-width: 992px) {
+  .stepper__info {
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    font-size: 20px;
+  }
+  .stepper .stepper__step:after {
+    top: 30px;
+  }
+  .stepper__form {
+    width: 300px;
+  }
+}
+
+@media (max-width: 576px) {
+  .stepper__info {
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    font-size: 18px;
+  }
+  .stepper .stepper__step:after {
+    top: 22px;
+  }
+  .stepper__form {
+    width: 250px;
+  }
+}
+
+@media (max-width: 360px) {
+  .stepper__info {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+  }
+  .stepper .stepper__step:after {
+    top: 20px;
+  }
+  .stepper__form {
+    width: 200px;
+  }
+}
+
+@media (max-width: 280px) {
+  .stepper__info {
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    font-size: 14px;
+  }
+  .stepper .stepper__step:after {
+    top: 16px;
+  }
+  .stepper__form {
+    width: 150px;
+    font-size: 14px;
+  }
+}

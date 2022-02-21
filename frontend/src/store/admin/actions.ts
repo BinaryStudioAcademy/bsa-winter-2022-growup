@@ -1,9 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { tags } from 'services';
+import { tags, users } from 'services';
 
 import type { TagCreation } from 'common/types/types';
 import { ActionType } from './common';
 import { ITag } from 'common/interfaces/tag/tag';
+import { IUser } from 'common/interfaces/user';
 
 const fetchTags = createAsyncThunk(
   ActionType.FETCH_TAGS,
@@ -41,4 +42,26 @@ const deleteTag = createAsyncThunk(
   },
 );
 
-export { fetchTags, createTags, deleteTag };
+const inviteUser = createAsyncThunk(
+  ActionType.INVITE_USER,
+  async (data: Pick<IUser, 'email' | 'roleType'>, { rejectWithValue }) => {
+    try {
+      return await users.inviteUser(data);
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
+const fetchUsers = createAsyncThunk(
+  ActionType.FETCH_USERS,
+  async (data, { rejectWithValue }) => {
+    try {
+      return await users.fetchUsers();
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
+export { fetchTags, createTags, deleteTag, inviteUser, fetchUsers };

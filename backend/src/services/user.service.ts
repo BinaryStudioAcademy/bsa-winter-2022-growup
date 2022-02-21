@@ -1,19 +1,30 @@
-import { getCustomRepository } from 'typeorm';
+import { getCustomRepository, Not } from 'typeorm';
 
-import { RoleType, HttpCode, HttpError } from 'growup-shared';
+import { HttpCode, HttpError } from 'growup-shared';
 
 import UserRepository from '../data/repositories/user.repository';
 import UserRoleRepository from '~/data/repositories/role.repository';
+import CompanyRepository from '~/data/repositories/company.repository';
+import RefreshTokenRepository from '~/data/repositories/refresh-token.repository';
 
-import { User } from '../data/entities/user';
+import { refreshTokenSchema } from '~/common/models/tokens/refresh-token.model';
+import { IListUser } from '~/common/models/user/user';
+import { RoleType } from '~/common/enums/role-type';
+import { User } from '~/data/entities/user';
+import { UserRole } from '~/data/entities/user-role';
 
 import {
   comparePasswords,
   hashPassword,
 } from '~/common/utils/password-hasher.util';
-import { signToken } from '~/common/utils/token.util';
-import { uploadImage, deleteImage } from '~/common/utils/upload-image.util';
+import {
+  uploadImage,
+  deleteImage,
+  changeFileName,
+} from '~/common/utils/upload-image.util';
 import { getCurrentTimeMS } from '~/common/utils/time.util';
+import { signToken, generateRefreshToken } from '~/common/utils/token.util';
+import { convertForUserList } from '~/common/utils/user.util';
 
 import type {
   UserLoginForm,
@@ -25,6 +36,20 @@ type TokenResponse = {
   token: string;
 };
 
+type RefreshTokenResponse = {
+  refreshToken: string;
+  accessToken: string;
+};
+
+type UserRegistrationType = {
+  user: User;
+  role: UserRole;
+};
+
+type UserWithRole = Omit<User, 'password'> & {
+  roleType: RoleType;
+};
+
 const getUserJWT = async (user: User): Promise<TokenResponse> => {
   const roleRepository = getCustomRepository(UserRoleRepository);
   const role = await roleRepository.findOne({ user });
@@ -32,9 +57,81 @@ const getUserJWT = async (user: User): Promise<TokenResponse> => {
   const token = signToken({
     userId: user.id,
     role: role.role,
+    companyId: user.company ? user.company.id : null,
   });
 
   return { token };
+};
+
+const registerUser = async (
+  data: UserRegisterForm,
+  role: RoleType,
+  companyId: User['company']['id'],
+): Promise<UserRegistrationType> => {
+  const userRepository = getCustomRepository(UserRepository);
+  const roleRepository = getCustomRepository(UserRoleRepository);
+  const companyRepository = getCustomRepository(CompanyRepository);
+
+  // Check if user with this email already exists
+  // If it does, return null
+  const targetUser = await userRepository.findOne({
+    email: data.email,
+  });
+
+  if (targetUser)
+    throw new HttpError({
+      status: HttpCode.NOT_FOUND,
+      message: 'User with this email already exists',
+    });
+
+  const hashedPassword = await hashPassword(data.password);
+  const company = await companyRepository.findOne(companyId);
+
+  const userInstance = userRepository.create({
+    ...data,
+    password: hashedPassword,
+    company,
+  });
+
+  const user = await userInstance.save();
+
+  const roleInstance = await roleRepository.create({ user, role }).save();
+
+  return { user, role: roleInstance };
+};
+
+export const refreshToken = async (
+  data: refreshTokenSchema,
+): Promise<RefreshTokenResponse> => {
+  const refreshTokenRepository = getCustomRepository(RefreshTokenRepository);
+  const tokenData = await refreshTokenRepository.findOne({
+    token: data.refreshToken,
+  });
+  const roleRepository = getCustomRepository(UserRoleRepository);
+  const role = await roleRepository.findOne({ user: tokenData.user });
+
+  if (!tokenData) {
+    throw new HttpError({
+      status: HttpCode.NOT_FOUND,
+      message: 'refresh token is not valid',
+    });
+  }
+
+  await refreshTokenRepository.delete({ token: tokenData.token });
+  const refreshToken = generateRefreshToken({});
+  const accessToken = signToken({
+    userId: tokenData.user.id,
+    role: role.role,
+    companyId: tokenData.user.company ? tokenData.user.company.id : null,
+  });
+
+  const storedRefreshToken = refreshTokenRepository.create({
+    token: refreshToken,
+    user: tokenData.user,
+  });
+  await storedRefreshToken.save();
+
+  return { refreshToken, accessToken };
 };
 
 export const authenticateUser = async (
@@ -43,7 +140,10 @@ export const authenticateUser = async (
   const userRepository = getCustomRepository(UserRepository);
 
   const user = await userRepository.findOne({
-    email: data.email,
+    relations: ['company'],
+    where: {
+      email: data.email,
+    },
   });
 
   if (!user)
@@ -64,75 +164,94 @@ export const authenticateUser = async (
   return getUserJWT(user);
 };
 
-export const registerUser = async (
-  data: UserRegisterForm,
-): Promise<TokenResponse> => {
-  const userRepository = getCustomRepository(UserRepository);
+export const getCommonUserList = async (
+  companyId: User['company']['id'],
+): Promise<IListUser[]> => {
   const roleRepository = getCustomRepository(UserRoleRepository);
 
-  // Check if user with this email already exists
-  // If it does, return null
-  const targetUser = await userRepository.findOne({
-    email: data.email,
+  const roleList = await roleRepository.find({
+    relations: ['user', 'user.company'],
+    where: {
+      role: Not(RoleType.ADMIN),
+      user: {
+        company: {
+          id: companyId,
+        },
+      },
+    },
   });
 
-  if (targetUser)
-    throw new HttpError({
-      status: HttpCode.NOT_FOUND,
-      message: 'User with this email already exists',
-    });
+  const userList = roleList.map((role) => ({
+    ...role.user,
+    roleType: role.role,
+  }));
 
-  const hashedPassword = await hashPassword(data.password);
+  return userList as unknown as IListUser[];
+};
 
-  const userInstance = userRepository.create({
-    ...data,
-    password: hashedPassword,
-  });
-
-  const user = await userInstance.save();
-
-  const roleInstance = roleRepository.create({ user, role: RoleType.Admin });
-  await roleInstance.save();
-
+export const registerUserAdmin = async (
+  data: UserRegisterForm,
+  companyId: User['company']['id'],
+): Promise<TokenResponse> => {
+  const { user } = await registerUser(data, RoleType.ADMIN, companyId);
   return getUserJWT(user);
 };
 
-export const fetchUser = async (
-  id: User['id'],
-): Promise<Omit<User, 'password'>> => {
+export const registerCommonUsers = async (
+  data: UserRegisterForm,
+  role: RoleType,
+  companyId: User['company']['id'],
+): Promise<IListUser> => {
+  const { user, role: roleInstance } = await registerUser(
+    data,
+    role,
+    companyId,
+  );
+  return convertForUserList(user, roleInstance);
+};
+
+export const fetchUser = async (id: User['id']): Promise<UserWithRole> => {
   const userRepository = getCustomRepository(UserRepository);
+  const roleRepository = getCustomRepository(UserRoleRepository);
 
   const { password: _password, ...user } = await userRepository.findOne(id);
-  return user as User;
+  const { role } = await roleRepository.findOne({ user });
+
+  return {
+    ...user,
+    roleType: role,
+  } as UserWithRole;
 };
 
 export const updateUserAvatar = async (
   id: User['id'],
   file: Express.Multer.File,
-): Promise<User> => {
+): Promise<Omit<User, 'password'>> => {
   const userRepository = getCustomRepository(UserRepository);
 
-  const user = await userRepository.findOne(id);
+  const userInstance = await userRepository.findOne(id);
   const props = {
     secret: env.aws.secret,
     access: env.aws.access,
     bucketName: env.aws.bucket,
   };
 
-  if (user.avatar)
-    await deleteImage({ ...props, fileName: user.avatar.split('/').at(-1) });
+  if (userInstance.avatar)
+    await deleteImage({
+      ...props,
+      fileName: userInstance.avatar.split('/').at(-1),
+    });
 
-  const avatar = await uploadImage({
-    ...props,
-    file: {
-      ...file,
-      originalname: `${getCurrentTimeMS()}-${file.originalname}`,
-    },
-  });
+  const userFile = changeFileName(
+    file,
+    `${getCurrentTimeMS()}-${userInstance.id}`,
+  );
 
-  user.avatar = avatar.Location;
+  const avatar = await uploadImage({ ...props, file: userFile });
 
-  await user.save();
+  userInstance.avatar = avatar.Location;
 
-  return user;
+  const { password: _password, ...user } = await userInstance.save();
+
+  return user as User;
 };

@@ -1,6 +1,12 @@
-import { AppRoute, UserPayloadKey } from 'common/enums/enums';
+import { MentorMenteeRoute, UserPayloadKey } from 'common/enums/enums';
 import FormInput from 'components/common/form-input/form-input';
-import { useAppDispatch, useAppForm, useAppSelector, useCallback, useNavigate } from 'hooks/hooks';
+import {
+  useAppDispatch,
+  useAppForm,
+  useAppSelector,
+  useCallback,
+  useNavigate,
+} from 'hooks/hooks';
 import { Container, FloatingLabel, Form } from 'react-bootstrap';
 import { NotificationManager } from 'react-notifications';
 import { signUpUser } from 'store/auth/actions';
@@ -11,7 +17,7 @@ import { DEFAULT_SIGN_UP_PAYLOAD } from './common/constants';
 const SignUp: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const isLoading = useAppSelector(state => state.auth.isLoading);
+  const isLoading = useAppSelector((state) => state.auth.isLoading);
 
   const { control, errors, handleSubmit } = useAppForm({
     defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
@@ -19,7 +25,7 @@ const SignUp: React.FC = () => {
   });
 
   const handleSignUp = useCallback(
-    loginPayload => dispatch(signUpUser(loginPayload)),
+    (loginPayload) => dispatch(signUpUser(loginPayload)),
     [dispatch],
   );
 
@@ -27,7 +33,7 @@ const SignUp: React.FC = () => {
     handleSignUp(values)
       .unwrap()
       .then(() => {
-        navigate(AppRoute.HOME);
+        navigate(MentorMenteeRoute.HOME);
       })
       .catch((err: Error) => {
         NotificationManager.error(err.message);
@@ -95,7 +101,10 @@ const SignUp: React.FC = () => {
             />
           </FloatingLabel>
 
-          <button className="btn btn-gu-pink text-gu-white form-control" type="submit">
+          <button
+            className="btn btn-gu-pink text-gu-white form-control"
+            type="submit"
+          >
             Sign up
           </button>
         </fieldset>

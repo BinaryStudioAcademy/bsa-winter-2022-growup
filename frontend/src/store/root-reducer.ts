@@ -1,8 +1,10 @@
 import { authReducer as auth } from './auth';
 import { companyReducer as companies } from './company';
 import { okrReducer as okr } from './okr';
+import { skillReducer as skill } from './skill';
 import { adminReducer as admin } from './admin';
 import { profileReducer as profile } from './profile';
+import { workStyleQuizReducer as workStyleQuiz } from './work-style-quiz';
 import { combineReducers } from '@reduxjs/toolkit';
 
 const rootReducer = combineReducers({
@@ -10,7 +12,9 @@ const rootReducer = combineReducers({
   auth,
   companies,
   okr,
+  skill,
   profile,
+  workStyleQuiz,
 });
 
 export { rootReducer };

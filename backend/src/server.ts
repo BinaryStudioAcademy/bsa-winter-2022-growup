@@ -1,6 +1,6 @@
 import cors from 'cors';
 import path from 'path';
-import express, { Express } from 'express';
+import express, { Express, Response, Request } from 'express';
 import { createConnection } from 'typeorm';
 
 import * as swaggerUi from 'swagger-ui-express';
@@ -25,6 +25,10 @@ app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api', verifyToken);
 
 routes(app);
+
+app.use('*', (_: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '../public/index.html'));
+});
 
 app.listen(port, async () => {
   try {

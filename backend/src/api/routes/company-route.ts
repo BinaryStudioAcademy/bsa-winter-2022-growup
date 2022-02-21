@@ -33,10 +33,11 @@ router.post(
   '/',
   validatePermissions([RoleType.Admin, RoleType.User]),
   run((req): Promise<CompanyResponse> => {
-    const { userId, userRole, body } = req;
+    const { userId, userRole, companyId, body } = req;
     const tokenPayload = {
       userId,
-      userRole,
+      role: userRole,
+      companyId,
     };
     const data = { body, tokenPayload };
     return createCompany(data);
@@ -48,10 +49,11 @@ router.patch(
   validatePermissions([RoleType.Admin, RoleType.User]),
   run((req): Promise<CompanyResponse> => {
     const { id } = req.params;
-    const { body, userId, userRole } = req;
+    const { body, userId, userRole, companyId } = req;
     const tokenPayload = {
       userId,
-      userRole,
+      role: userRole,
+      companyId,
     };
     return editCompany({ id, body, tokenPayload });
   }),

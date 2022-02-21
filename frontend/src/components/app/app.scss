@@ -1,12 +1,28 @@
-/* stylelint-disable */
-@import "../../assets/css/styles.scss";
-/* stylelint-enable */
+@import 'src/assets/scss/utils';
 
-.main-container {
-  margin-left: 4em;
-  margin-top: 5em;
-  @include media-breakpoint-up(md) {
-    margin-left: 16.875em;
-    margin-top: 6.25em;
+// FIX: This breaks admin page!
+.wrapper {
+  display: grid;
+  grid-template-columns: minmax(273px, auto) 1fr;
+  grid-template-rows: 80px 1fr;
+  grid-template-areas:
+    'sidebar header'
+    'sidebar main'
+    'sidebar main';
+  @include media-breakpoint-down(md) {
+    grid-template-columns: minmax(65px, auto) 1fr;
+    grid-template-rows: 64px 1fr;
   }
+}
+
+.header-wrapper {
+  grid-area: header;
+}
+
+.sidebar-wrapper {
+  grid-area: sidebar;
+}
+
+.main-wrapper {
+  grid-area: main;
 }

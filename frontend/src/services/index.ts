@@ -8,6 +8,8 @@ import { OkrApi } from './okr-api';
 import { ObjectiveApi } from './objective.api';
 import { KeyResultApi } from './keyresult.api';
 import { Storage } from './storage/storage.service';
+import { WorkStyleQuiz } from './work-style-quiz-api/work-style-quiz-api.service';
+import { UsersApi } from './user-api/user-api.service';
 
 const storage = new Storage({
   storage: localStorage,
@@ -38,6 +40,16 @@ const tags = new TagsApi({
   http,
 });
 
+const workStyleQuiz = new WorkStyleQuiz({
+  apiPath: ENV.API_PATH || '',
+  http,
+});
+
+const users = new UsersApi({
+  apiPath: ENV.API_PATH || '',
+  http,
+});
+
 export { tags as TagsApi };
 export {
   http,
@@ -49,4 +61,6 @@ export {
   okr,
   objective,
   keyResult,
+  workStyleQuiz,
+  users,
 };

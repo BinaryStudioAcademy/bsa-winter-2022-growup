@@ -1,0 +1,36 @@
+%growup-card {
+  border-radius: 10px !important;
+  border: 0px !important;
+
+  box-shadow: 0px 2px 4px $shadow;
+
+  .card-header {
+    padding: 1.5rem 2rem !important;
+    border: 0px !important;
+  }
+}
+
+.growup-card-primary {
+  @extend %growup-card;
+
+  .card-header {
+    background: $gu-blue;
+    color: $white;
+  }
+}
+
+.growup-card-secondary {
+  @extend %growup-card;
+
+  .card-header {
+    background: $white;
+    color: $gu-blue;
+
+    border-bottom: 1px solid $card-header-border !important;
+  }
+}
+
+.bg-growup-navigation {
+  background: $white !important;
+  box-shadow: 0px 2px 4px $shadow !important;
+}
