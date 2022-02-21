@@ -38,7 +38,6 @@ const Notifications: React.FC = () => {
 
     return data.map((item: INotificationData) => <Notification {...item} />);
   };
-
   const onClick = (): void => setViewAll(!viewAll);
 
   return (

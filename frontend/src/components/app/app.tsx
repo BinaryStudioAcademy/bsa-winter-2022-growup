@@ -1,4 +1,4 @@
-import { useAppSelector } from 'hooks/hooks';
+// import { useAppSelector } from 'hooks/hooks';
 import { AppRoute, ProfileSettingsRoute } from 'common/enums/enums';
 import Login from 'components/login/login';
 import SignUp from 'components/sign-up/sign-up';
@@ -15,8 +15,9 @@ import './app.scss';
 import OpprotunitiesPage from 'components/opportunities-page/opportunitiesPage';
 
 const App: React.FC = () => {
-  const isAdmin = true;
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const isAdmin = false;
+  // const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const isAuthenticated = true;
   return (
     <div>
       {isAdmin || !isAuthenticated ? null : (

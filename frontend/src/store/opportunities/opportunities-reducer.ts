@@ -3,36 +3,13 @@ import { opportunitiesAction, OpportunityActions } from './common';
 interface opportunitiesState {
   opportunities: any[];
   isShowModal: boolean;
+  isLoaded: boolean;
 }
 
 const initialState: opportunitiesState = {
-  opportunities: [
-    {
-      oppName: 'Academy',
-      programmName: 'QA',
-      orgName: 'Group QA Team',
-      startData: 'February 02 2022',
-      oppId: '1',
-      isFollow: false,
-    },
-    {
-      oppName: 'Academy Bro',
-      programmName: 'QA',
-      orgName: 'Group QA Team',
-      startData: 'February 02 2022',
-      oppId: '2',
-      isFollow: false,
-    },
-    {
-      oppName: 'Academy Bro 2',
-      programmName: 'QA',
-      orgName: 'Group QA Team',
-      startData: 'February 02 2022',
-      oppId: '3',
-      isFollow: false,
-    },
-  ],
+  opportunities: [],
   isShowModal: false,
+  isLoaded: false,
 };
 
 const opportunityReducer = (
@@ -43,12 +20,14 @@ const opportunityReducer = (
     case OpportunityActions.LOAD_OPPORTUNITIES:
       return {
         isShowModal: false,
+        isLoaded: true,
         opportunities: action.payload.opportunities,
       };
     case OpportunityActions.ADD_OPPORTUNITY:
       return {
+        ...state,
         isShowModal: false,
-        opportunities: [...state.opportunities, action.payload.newOpportunity],
+        opportunities: [...state.opportunities, action.payload.newOpp],
       };
     case OpportunityActions.SHOW_MODAL:
       return {

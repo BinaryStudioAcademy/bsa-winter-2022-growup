@@ -4,6 +4,7 @@ import { okrReducer as okr } from './okr';
 import { adminReducer as admin } from './admin';
 import { profileReducer as profile } from './profile';
 import opportunityReducer from './opportunities/opportunities-reducer';
+import recomededOpportunitiesReducer from './recomended-opportunities/recomended-opportunities-reducer';
 import { combineReducers } from '@reduxjs/toolkit';
 
 const rootReducer = combineReducers({
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   okr,
   profile,
   opportunityReducer,
+  recomededOpportunitiesReducer,
 });
 
 export { rootReducer };

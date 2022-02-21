@@ -2,11 +2,12 @@
   width: 80%;
   max-width: 840px;
   &--item {
-    border-bottom: 1px solid rgba(145, 145, 145, 0.582) !important;
+    border: 0;
+    border-bottom: 1px solid rgba(145, 145, 145, 0.582);
     transition: all 0.5s ease-in-out;
     outline: none;
     &:focus {
-      border-bottom: 1px solid rgb(70, 61, 168) !important;
+      border-bottom: 1px solid rgb(70, 61, 168);
     }
   }
   &__close-btn {
@@ -38,4 +39,5 @@
 .opportunity-modal-wrapper {
   background-color: rgba(136, 136, 136, 0.432);
   z-index: 1000;
+  height: 100vh;
 }
