@@ -502,6 +502,118 @@
           }
         }
       }
+    },
+    "/api/career-path": {
+      "post": {
+        "tags": ["Career Path"],
+        "summary": "Create career path",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "domain": {
+                  "type": "string"
+                },
+                "levels": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "skills": {
+                      "type": "array",
+                      "items": {
+                        "allOf": [
+                          {
+                            "$ref": "#/definitions/Skill"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "objectives": {
+                                "type": "array",
+                                "items": {
+                                  "$ref": "#/definitions/Skill Objective"
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "domain": {
+                  "$ref": "#/definitions/Domain"
+                },
+                "level": {
+                  "$ref": "#/definitions/Level"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/career-path/{id}": {
+      "get": {
+        "tags": ["Career Path"],
+        "summary": "Fetch career path",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Domain id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "domain": {
+                  "$ref": "#/definitions/Domain"
+                },
+                "level": {
+                  "$ref": "#/definitions/Level"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -643,7 +755,26 @@
         }
       }
     },
-    "ResponseLevel": {
+    "Skill": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/Skill Type"
+        }
+      }
+    },
+    "Skill Objective": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "Level": {
       "type": "object",
       "properties": {
         "id": {
@@ -668,36 +799,12 @@
           "description": "Time the object was deletedAt"
         },
         "nextLevel": {
-          "$ref": "#/definitions/ResponseLevel",
+          "$ref": "#/definitions/Level",
           "description": "Next level of the current one"
         }
       }
     },
-    "RequestLevel": {
-      "type": "object",
-      "properties": {
-        "YOUR LEVEL NAME": {
-          "type": "object",
-          "properties": {
-            "YOUR CATEGORY NAME": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "type": {
-                    "$ref": "#/definitions/Career Path Type"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "Career Path Type": {
+    "Skill Type": {
       "type": "string",
       "enum": ["Hard skills", "Soft skills", "Language"]
     }

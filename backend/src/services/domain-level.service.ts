@@ -17,17 +17,10 @@ export const createDomainLevel = async ({
 }: DomainLevelCreation): Promise<DomainLevel> => {
   const domainLevelRepository = getCustomRepository(DomainLevelRepository);
 
-  await domainLevelRepository.createUnique({
-    name,
-    domain,
-    prevLevel: prev,
-  });
+  const props = { name, domain, prevLevel: prev };
 
-  const level = domainLevelRepository.findOne({
-    name,
-    domain,
-    prevLevel: prev,
-  });
+  await domainLevelRepository.createUnique(props);
+  const level = domainLevelRepository.findOne(props);
 
   return level;
 };
