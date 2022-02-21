@@ -1,6 +1,5 @@
 import { memo } from 'react';
 import type { UseTagList } from 'hooks/common';
-
 import Tag from '../common/tag';
 
 type PropTypes = {
