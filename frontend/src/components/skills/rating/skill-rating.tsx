@@ -77,15 +77,7 @@ const SkillElement = (props: SkillTypes): React.ReactElement => {
             type="button"
             onClick={(): void => saveEdits(props.id)}
           >
-            {isEdit ? (
-              <>
-                Save <Save />
-              </>
-            ) : (
-              <>
-                Edit <Edit />
-              </>
-            )}
+            {isEdit ? <Save /> : <Edit />}
           </button>
         ) : (
           true
@@ -96,7 +88,7 @@ const SkillElement = (props: SkillTypes): React.ReactElement => {
             type="button"
             onClick={(): void => deleteSkill(props.id)}
           >
-            Delete <Delete />
+            <Delete />
           </button>
         ) : (
           true
