@@ -15,7 +15,6 @@ export class skillFieldsUpdate1644929911066 implements MigrationInterface {
     await queryRunner.query(
       'ALTER TABLE "skill" ADD "name" character varying(250) NOT NULL',
     );
-    // await queryRunner.query(`ALTER TABLE "skill" DROP COLUMN "name"`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {

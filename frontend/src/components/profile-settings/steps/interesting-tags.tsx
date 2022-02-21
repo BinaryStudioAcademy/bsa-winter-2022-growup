@@ -1,10 +1,10 @@
-import EditSection from '../../profile/components/profile-info/edit-section/edit-section';
+import InterestsBlock from './interests-block';
 
 const InterestingTags: React.FC = () => {
   return (
-    <EditSection title="Interests">
+    <InterestsBlock>
       <div className="group fw-bold fs-7"></div>
-    </EditSection>
+    </InterestsBlock>
   );
 };
 

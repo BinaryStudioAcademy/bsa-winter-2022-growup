@@ -4,12 +4,11 @@ import { Company } from '~/data/entities/company';
 import { createDomain, getDomain } from '~/services/domain.service';
 import {
   createDomainLevel,
-  // createDomainLevels,
   getDomainLevels,
 } from '~/services/domain-level.service';
 import { upsertSkills } from '~/services/skill.service';
+import { upsertObjectives } from '~/services/skill-objective.service';
 import { createSkillCategories } from '~/services/skill-category.service';
-// import { createSkillObjective } from '~/services/skill-objective.service';
 
 import { asyncForEach } from '~/common/helpers/array.helper';
 
@@ -50,46 +49,29 @@ export const createCareerPath = async (
     skillsWithLevel.map((s) => ({ name: s.name, type: s.type, company })),
   );
 
-  const categoryInstances = await createSkillCategories(skillsWithLevel.map(s => ({
-    level: s.level,
-    skill: upsertedSkills.find(upsertedSkill => s.name === upsertedSkill.name && s.type === upsertedSkill.type),
-  })));
+  const categoryInstances = await createSkillCategories(
+    skillsWithLevel.map((s) => ({
+      level: s.level,
+      skill: upsertedSkills.find(
+        (upsertedSkill) =>
+          s.name === upsertedSkill.name && s.type === upsertedSkill.type,
+      ),
+    })),
+  );
 
-  console.log(categoryInstances);
+  asyncForEach(async (category) => {
+    const objectives = skillsWithLevel.find(
+      (skill) =>
+        skill.name === category.skill.name &&
+        skill.type === category.skill.type &&
+        category.level.name === skill.level.name,
+    ).objectives;
 
-  // await asyncForEach(async ([name, value]) => {
-  //   const level = await createDomainLevel({
-  //     name,
-  //     domain,
-  //     prev: domainLevelInstances.length ? domainLevelInstances.at(-1) : null,
-  //   });
-
-  //   const categories = Object.entries(value);
-
-  //   asyncForEach(async ([name, value]) => {
-  //     const skills = value;
-
-  //     asyncForEach(async (skill) => {
-  //       const skillInstance = await createSkill({
-  //         company,
-  //         name: skill.name,
-  //         type: skill.type,
-  //       });
-
-  //       const categoryInstance = await createSkillCategory({
-  //         level,
-  //         skill: skillInstance,
-  //       });
-
-  //       await createSkillObjective({
-  //         name,
-  //         category: categoryInstance,
-  //       });
-  //     }, skills);
-  //   }, categories);
-
-  //   domainLevelInstances.push(level);
-  // }, domainLevels);
+    await upsertObjectives(
+      category,
+      objectives.map((objective) => ({ name: objective.name, category })),
+    );
+  }, categoryInstances);
 
   const levels = await getDomainLevels(domain);
 

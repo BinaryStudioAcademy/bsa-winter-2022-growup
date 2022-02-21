@@ -4,7 +4,6 @@
     "version": "1.0.0",
     "title": "GrowUP API"
   },
-  "host": "localhost:3001",
   "basePath": "/",
   "tags": [
     {
@@ -12,11 +11,11 @@
       "description": "API for users. Example how use Swagger"
     }
   ],
-  "schemes": ["http"],
+  "schemes": ["http", "https"],
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "paths": {
-    "/company": {
+    "/api/company": {
       "post": {
         "parameters": [
           {
@@ -53,33 +52,45 @@
             }
           }
         }
-      },
+      }
+    },
+    "/api/company/{id}": {
       "patch": {
         "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Company id"
+          },
           {
             "name": "body",
             "in": "body",
             "schema": {
               "type": "object",
               "properties": {
-                "id": {
+                "name": {
                   "type": "string"
                 },
-                "body": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "description": {
-                      "type": "string"
-                    }
-                  }
+                "description": {
+                  "type": "string"
                 }
               }
             },
             "required": true,
-            "description": "Company credentials"
+            "description": "Company new data"
           }
         ],
         "tags": ["Company"],
@@ -232,7 +243,7 @@
             "description": "JWT Token"
           }
         ],
-        "tags": ["Tags"],
+        "tags": ["Tags", "Admin"],
         "summary": "Fetching tags",
         "responses": {
           "200": {
@@ -272,7 +283,7 @@
             "descsription": "Name of all new tagss"
           }
         ],
-        "tags": ["Tags"],
+        "tags": ["Tags", "Admin"],
         "summary": "Creating new tags",
         "responses": {
           "200": {
@@ -319,7 +330,7 @@
             "descsription": "Tag id you want to delete"
           }
         ],
-        "tags": ["Tags"],
+        "tags": ["Tags", "Admin"],
         "summary": "Delete tag by id",
         "responses": {
           "200": {
@@ -395,7 +406,48 @@
         }
       }
     },
-    "/api/career-path": {
+    "/api/company/users": {
+      "get": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          }
+        ],
+        "tags": ["Users", "Admin"],
+        "summary": "Retrieves list of non-admin users",
+        "responses": {
+          "200": {
+            "description": "Returns list of users",
+            "schema": {
+              "type": "array",
+              "items": {
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/User"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "role": {
+                        "type": "string",
+                        "enum": ["Mentor", "Mentee", "Admin"]
+                      },
+                      "company": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
       "post": {
         "parameters": [
           {
@@ -408,77 +460,44 @@
           },
           {
             "in": "body",
-            "name": "Career Path",
+            "name": "Body",
             "schema": {
               "type": "object",
               "properties": {
-                "domain": {
+                "email": {
                   "type": "string"
                 },
-                "level": {
-                  "$ref": "#/definitions/RequestLevel"
+                "roleType": {
+                  "type": "string",
+                  "enum": ["Mentor", "Mentee", "Admin"]
                 }
               }
             }
           }
         ],
-        "tags": ["Career path"],
-        "summary": "Creating new career path",
+        "tags": ["Users", "Admin"],
+        "summary": "Invites non-admin user",
         "responses": {
           "200": {
-            "description": "Returns domain name and nested levels",
+            "description": "Returns new user",
             "schema": {
-              "type": "object",
-              "properties": {
-                "domain": {
-                  "$ref": "#/definitions/Domain"
+              "allOf": [
+                {
+                  "$ref": "#/definitions/User"
                 },
-                "level": {
-                  "$ref": "#/definitions/ResponseLevel"
+                {
+                  "type": "object",
+                  "properties": {
+                    "role": {
+                      "type": "string",
+                      "enum": ["Mentor", "Mentee", "Admin"]
+                    },
+                    "company": {
+                      "type": "string"
+                    }
+                  }
                 }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/career-path/{id}": {
-      "get": {
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "schema": {
-              "type": "string"
-            },
-            "description": "JWT Token",
-            "required": true
-          },
-          {
-            "in": "path",
-            "name": "id",
-            "schema": {
-              "type": "string"
-            },
-            "required": true,
-            "descsription": "Career id you want to retrieve"
-          }
-        ],
-        "tags": ["Career path"],
-        "summary": "Returns domain name and domain levels",
-        "responses": {
-          "200": {
-            "description": "Returns domain name and nested levels",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "domain": {
-                  "$ref": "#/definitions/Domain"
-                },
-                "level": {
-                  "$ref": "#/definitions/ResponseLevel"
-                }
-              }
+              ]
             }
           }
         }

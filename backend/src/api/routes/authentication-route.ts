@@ -1,9 +1,9 @@
 import { Request, Router } from 'express';
 
-import { run } from '../../common/helpers/route.helper';
+import { run } from '~/common/helpers/route.helper';
 import {
   authenticateUser,
-  registerUser,
+  registerUserAdmin,
   refreshToken,
 } from '~/services/user.service';
 
@@ -16,7 +16,9 @@ router
   )
   .post(
     '/register',
-    run(async (req: Request) => await registerUser(req.body)),
+    run(
+      async (req: Request) => await registerUserAdmin(req.body, req.companyId),
+    ),
   )
   .post(
     '/auth/refresh',

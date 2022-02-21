@@ -7,7 +7,6 @@ import { Skill } from '../entities/skill';
 import { asyncForEach } from '../../common/helpers/array.helper';
 
 import CompanyRepository from '../repositories/company.repository';
-// import { PermissionType } from 'growup-shared';
 
 export default class UserSeeder {
   public static async execute(): Promise<void> {

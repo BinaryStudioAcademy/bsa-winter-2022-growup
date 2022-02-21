@@ -1,4 +1,4 @@
-@import 'src/assets/css/styles';
+@import '~assets/scss/utils';
 
 .profile-header {
   width: 100%;
@@ -11,8 +11,7 @@
   position: relative;
 
   &__avatar {
-    width: 148px;
-    height: 148px;
+    background-size: contain;
   }
 
   &__edit {

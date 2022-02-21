@@ -1,26 +1,22 @@
-import { getCustomRepository } from 'typeorm';
+import { getCustomRepository, In } from 'typeorm';
 import SkillObjectiveRepository from '~/data/repositories/skill-objective.repository';
 
 import { SkillObjective } from '~/data/entities/skill-objective';
 
 type SkillObjectiveProps = Pick<SkillObjective, 'category' | 'name'>;
 
-export const createSkillObjective = async ({
-  name,
-  category,
-}: SkillObjectiveProps): Promise<SkillObjective> => {
+export const upsertObjectives = async (
+  category: SkillObjective['category'],
+  data: SkillObjectiveProps[],
+) => {
   const skillObjectiveRepository = getCustomRepository(
     SkillObjectiveRepository,
   );
-  const target = await skillObjectiveRepository.findOne({ category, name });
-  if (target) return target;
+  await skillObjectiveRepository.bulkCreate(data);
 
-  const skillObjective = await skillObjectiveRepository
-    .create({
-      name,
-      category,
-    })
-    .save();
-
-  return skillObjective;
+  const objectives = await skillObjectiveRepository.find({
+    category,
+    name: In(data.map((objective) => objective.name)),
+  });
+  return objectives;
 };
