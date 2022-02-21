@@ -8,7 +8,7 @@ import type { ITag } from 'common/interfaces/tag/tag';
 
 import { adminActions } from 'store/actions';
 
-import Tag from './common/tag';
+import Tag from './tag-item/tag-item';
 import TagModal from './modal/tag-modal';
 
 type Props = {
