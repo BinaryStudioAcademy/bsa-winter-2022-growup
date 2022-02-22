@@ -8,7 +8,6 @@ import { Opportunity } from '~/data/entities/opportunity';
 import { opportunityMapper } from '~/common/mappers/opportunities.mapper';
 import UserRepository from '~/data/repositories/user.repository';
 import { User } from '~/data/entities/user';
-import { users } from '~/data/seed-data/user.data';
 import { asyncForEach } from '~/common/helpers/array.helper';
 
 export const getOpportunities = async (
@@ -16,16 +15,11 @@ export const getOpportunities = async (
 ): Promise<Opportunity[]> => {
   const opportunityRepository = getCustomRepository(OpportunitiesRepository);
   const companyRepository = getCustomRepository(CompanyRepository);
-  const userRepository = getCustomRepository(UserRepository);
   const companyInstance: Company = await companyRepository.findOne({
     id: companyId,
   });
-  const userInstance: User = await userRepository.findOne({
-    firstName: users[0].firstName,
-  });
   const opportunities = await opportunityRepository.find({
     company: companyInstance,
-    user: userInstance,
     relations: ['company', 'user', 'tags'],
   } as FindManyOptions);
 
