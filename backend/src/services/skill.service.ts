@@ -31,51 +31,33 @@ export const getSkills = async (id: string): Promise<Skill[]> => {
 
 export const createSkills = async (
   data: any,
-  _userId: string,
+  userId: string,
   companyId: string,
 ): Promise<SkillsCreationResponse> => {
   const skillRepository = getCustomRepository(SkillRepository);
   const companyRepository = getCustomRepository(CompanyRepository);
   const userRepository = getCustomRepository(UserRepository);
-  // const userSkillRepository = getCustomRepository(UserSkillRepository);
 
   const companyInstance: Company = await companyRepository.findOne({
     id: companyId,
   });
-  // const userInstance: User = await userRepository.findOne({
-  //   company: companyInstance
-  // });
-
-  const skill = await skillRepository.findOne({
-    name: 'HTML5',
-  });
-
   const user = await userRepository.findOne({
-    company: companyInstance,
+    where: { id: userId },
+    relations: ['skills'],
   });
-  console.log(skill);
-  skill.users.push(user);
-  user.skills.push(skill);
-  await user.save();
-  await skill.save();
 
   const skills: any = [];
   await asyncForEach(async ({ name, type }: any) => {
-    const skillInstance = skillRepository.create({
+    const skill = skillRepository.create({
       name: name,
       type: type,
       company: companyInstance,
     });
-
-    await skillInstance.save();
-    // const userSkillInstance = userSkillRepository.create({
-    //   skill: skillInstance,
-    //   user: userInstance,
-    // });
-
-    // await userSkillInstance.save();
-    skills.push(skillInstance);
+    user.skills.push(skill);
+    await skill.save();
+    skills.push(skill);
   }, data);
+  await user.save();
 
   return skills.map((skill: Skill) => skillsMapper(skill));
 };
