@@ -1,9 +1,9 @@
 import { Modal as ModalWindow } from 'react-bootstrap';
+import './styles.scss';
 
 type PropTypes = {
   show: boolean;
   onClose: () => void;
-
   title: string;
   className?: string;
 };
@@ -16,8 +16,8 @@ const Modal: React.FC<PropTypes> = ({
   className,
 }) => {
   return (
-    <ModalWindow show={show} onHide={onClose}>
-      <ModalWindow.Header closeButton className="fw-bold fs-4">
+    <ModalWindow show={show} onHide={onClose} centered>
+      <ModalWindow.Header closeButton className="fw-bold fs-3">
         {title}
       </ModalWindow.Header>
       <ModalWindow.Body className={className}>{children}</ModalWindow.Body>
