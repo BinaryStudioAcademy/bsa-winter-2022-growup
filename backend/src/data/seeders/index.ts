@@ -4,9 +4,13 @@ import ormconfig from '~/config/ormconfig';
 
 import CompanySeeder from './company.seeder';
 import UserSeeder from './user.seeder';
+import UserSkillSeeder from './user-skill.seeder';
 
-createConnection(ormconfig).then(() => {
-  CompanySeeder.execute().then(() => {
-    UserSeeder.execute();
-  });
-});
+async function Connection(): Promise<void> {
+  await createConnection(ormconfig);
+  await CompanySeeder.execute();
+  await UserSeeder.execute();
+  await UserSkillSeeder.execute();
+  console.log('seeders');
+}
+Connection();
