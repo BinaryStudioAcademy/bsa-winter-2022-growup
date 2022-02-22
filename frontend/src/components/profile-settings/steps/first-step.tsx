@@ -1,16 +1,13 @@
 import { StepProps } from './common/step-props';
-import { TextField } from '../../common/common';
+import { TextField } from 'components/common/common';
 import Experience from './experience';
 import Education from './education';
 import InterestingTags from './interesting-tags';
 import StepControl from './step-control';
-import { useAppForm } from '../../../hooks/app-form/app-form.hook';
-import { profileFirstStep as profileFirstStepValidationSchema } from '../../../validation-schemas/validation-schemas';
-import {
-  FirstStepPayloadKey,
-  UserPayloadKey,
-} from '../../../common/enums/enums';
+import { profileFirstStep as profileFirstStepValidationSchema } from 'validation-schemas/validation-schemas';
+import { useAppForm } from 'hooks/hooks';
 import { DEFAULT_FIRST_STEP_PAYLOAD } from './common/constants';
+import { FirstStepPayloadKey, UserPayloadKey } from 'common/enums/enums';
 
 const FirstStep: React.FC<StepProps> = ({
   isDisablePrevious,

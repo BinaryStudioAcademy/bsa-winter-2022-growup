@@ -1,4 +1,4 @@
-import { useState } from '../../../hooks/hooks';
+import { useState } from 'hooks/hooks';
 import { ClearButton, Option, Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import './styles.scss';

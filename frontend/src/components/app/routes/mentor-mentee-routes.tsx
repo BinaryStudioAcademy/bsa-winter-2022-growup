@@ -1,4 +1,4 @@
-import { Navigate } from '../../../hooks/hooks';
+import { Navigate } from 'hooks/hooks';
 import {
   AppRoute,
   MentorMenteeRoute,
