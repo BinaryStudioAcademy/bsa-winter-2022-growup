@@ -1,7 +1,7 @@
 import { IOkr } from 'common/interfaces/okr';
 import { IObjective } from 'common/interfaces/objective';
 import { Http } from 'services/http/http.service';
-import { IAuthApi } from '../auth-api/auth-api.service';
+import { IAuthApi } from 'common/interfaces/api';
 import { HttpMethod } from 'common/enums/http/http';
 import { ContentType } from 'common/enums/file/file';
 

@@ -3,7 +3,7 @@ import { ContentType, HttpMethod } from 'common/enums/enums';
 import type { IHttp } from 'common/interfaces/http/http';
 import type { ITag } from 'common/interfaces/tag/tag';
 import type { TagCreation } from 'common/types/types';
-import { IAuthApi } from '../auth-api/auth-api.service';
+import { IAuthApi } from 'common/interfaces/api';
 
 type CreateTagResponse = {
   tags: ITag[];

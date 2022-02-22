@@ -5,11 +5,7 @@ import {
   IUserSignUpForm,
 } from 'common/interfaces/user';
 import { Http } from 'services/http/http.service';
-
-export interface IAuthApi {
-  apiPath: string;
-  http: Http;
-}
+import { IAuthApi } from 'common/interfaces/api';
 
 class AuthApi {
   private _apiPath: string;

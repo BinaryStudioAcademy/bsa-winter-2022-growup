@@ -2,7 +2,7 @@ import { ContentType, HttpMethod } from 'common/enums/enums';
 
 import type { IHttp } from 'common/interfaces/http/http';
 import { IUser } from 'common/interfaces/user/user';
-import { IAuthApi } from '../auth-api/auth-api.service';
+import { IAuthApi } from 'common/interfaces/api';
 
 class UsersApi {
   private http: IHttp;

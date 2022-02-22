@@ -1,5 +1,5 @@
 import { ICompany } from 'common/interfaces/company/company';
-import { IAuthApi } from '../auth-api/auth-api.service';
+import { IAuthApi } from 'common/interfaces/api';
 import { Http } from '../http/http.service';
 import { HttpMethod } from 'common/enums/http/http';
 import { ContentType } from 'common/enums/file/file';

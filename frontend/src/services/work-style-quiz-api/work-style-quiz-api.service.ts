@@ -1,7 +1,7 @@
 import { ContentType, HttpMethod } from 'common/enums/enums';
 import { Http } from 'services/http/http.service';
 import { IQuestion } from 'common/interfaces/user-quiz';
-import { IAuthApi } from '../auth-api/auth-api.service';
+import { IAuthApi } from 'common/interfaces/api';
 
 class WorkStyleQuiz {
   private apiPath: string;

@@ -1,6 +1,6 @@
 import { IKeyResult } from 'common/interfaces/key-result';
 import { IOkr } from 'common/interfaces/okr';
-import { IAuthApi } from '../auth-api/auth-api.service';
+import { IAuthApi } from 'common/interfaces/api';
 import { Http } from 'services/http/http.service';
 import { HttpMethod } from 'common/enums/http/http';
 import { ContentType } from 'common/enums/file/file';

@@ -1,7 +1,7 @@
 import { ContentType, HttpMethod } from 'common/enums/enums';
 import { IUser } from 'common/interfaces/user';
 import { Http } from 'services/http/http.service';
-import { IAuthApi } from '../auth-api/auth-api.service';
+import { IAuthApi } from 'common/interfaces/api';
 
 class ProfileApi {
   private _apiPath: string;
