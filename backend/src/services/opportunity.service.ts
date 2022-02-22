@@ -23,7 +23,6 @@ export const getOpportunities = async (
   const userInstance: User = await userRepository.findOne({
     firstName: users[0].firstName,
   });
-  console.log();
   const opportunities = await opportunityRepository.find({
     company: companyInstance,
     user: userInstance,
