@@ -804,6 +804,118 @@
           }
         }
       }
+    },
+    "/api/career-path": {
+      "post": {
+        "tags": ["Career Path"],
+        "summary": "Create career path",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "domain": {
+                  "type": "string"
+                },
+                "levels": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "skills": {
+                      "type": "array",
+                      "items": {
+                        "allOf": [
+                          {
+                            "$ref": "#/definitions/Skill"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "objectives": {
+                                "type": "array",
+                                "items": {
+                                  "$ref": "#/definitions/Skill Objective"
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "domain": {
+                  "$ref": "#/definitions/Domain"
+                },
+                "level": {
+                  "$ref": "#/definitions/Level"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/career-path/{id}": {
+      "get": {
+        "tags": ["Career Path"],
+        "summary": "Fetch career path",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Domain id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "domain": {
+                  "$ref": "#/definitions/Domain"
+                },
+                "level": {
+                  "$ref": "#/definitions/Level"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -1019,6 +1131,85 @@
           "type": "string"
         }
       }
+    },
+    "Domain": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "uuid"
+        },
+        "name": {
+          "type": "string",
+          "description": "Domain name",
+          "example": "Fullstack Developer"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Time the object was created at"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Time the object was updated at. By default it is the same as the creation time"
+        },
+        "deletedAt": {
+          "type": "string",
+          "description": "Time the object was deletedAt"
+        }
+      }
+    },
+    "Skill": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/Skill Type"
+        }
+      }
+    },
+    "Skill Objective": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "Level": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "uuid"
+        },
+        "name": {
+          "type": "string",
+          "description": "Domain name",
+          "example": "Fullstack Developer"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Time the object was created at"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Time the object was updated at. By default it is the same as the creation time"
+        },
+        "deletedAt": {
+          "type": "string",
+          "description": "Time the object was deletedAt"
+        },
+        "nextLevel": {
+          "$ref": "#/definitions/Level",
+          "description": "Next level of the current one"
+        }
+      }
+    },
+    "Skill Type": {
+      "type": "string",
+      "enum": ["Hard skills", "Soft skills", "Language"]
     }
   }
 }
