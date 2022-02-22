@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ReducerName } from 'common/enums/app/reducer-name.enum';
-import { ISkill } from '../../components/skills/common/interfaces';
+import { ISkill } from 'components/skills/common/interfaces';
 import { ActionType } from './common';
 
 type State = {
@@ -10,33 +10,33 @@ type State = {
 const initialState: State = {
   userSkill: [
     {
-      id: 1,
+      id: '1',
       name: 'UX Design',
-      userId: 1,
+      userId: '1',
       rating: ['1', '', '1'],
     },
     {
-      id: 2,
+      id: '2',
       name: 'InVision',
-      userId: 1,
+      userId: '1',
       rating: ['8', '7', '8'],
     },
     {
-      id: 3,
+      id: '3',
       name: 'UX Design',
-      userId: 2,
+      userId: '2',
       rating: ['3', '10', '8'],
     },
     {
-      id: 4,
+      id: '4',
       name: 'Data Visualization',
-      userId: 1,
+      userId: '1',
       rating: ['7', '', '7'],
     },
     {
-      id: 5,
+      id: '5',
       name: 'Mathematical',
-      userId: 2,
+      userId: '2',
       rating: ['8', '2', '5'],
     },
   ],
@@ -49,7 +49,7 @@ const { reducer, actions } = createSlice({
     [ActionType.ADD_SKILL]: (state, action: PayloadAction<ISkill>) => {
       state.userSkill.push(action.payload);
     },
-    [ActionType.REMOVE_SKILL]: (state, action: PayloadAction<number>) => {
+    [ActionType.REMOVE_SKILL]: (state, action: PayloadAction<string>) => {
       state.userSkill = state.userSkill.filter(
         (skill) => skill.id !== action.payload,
       );
@@ -61,6 +61,9 @@ const { reducer, actions } = createSlice({
         }
         return skill;
       });
+    },
+    [ActionType.SORT_NAME]: (state, action: PayloadAction<ISkill[]>) => {
+      state.userSkill = action.payload;
     },
   },
 });

@@ -1,6 +1,5 @@
 import { memo } from 'react';
 import { Card } from 'react-bootstrap';
-// import { Plus } from 'react-bootstrap-icons';
 
 import { useState, useCallback, useAppDispatch } from 'hooks/hooks';
 

@@ -1,5 +1,4 @@
-import { FindManyOptions, getCustomRepository } from 'typeorm';
-
+import { FindManyOptions, getCustomRepository, In } from 'typeorm';
 import SkillRepository from '~/data/repositories/skill.repository';
 
 import { Skill } from '~/data/entities/skill';
@@ -124,4 +123,20 @@ export const updateSkill = async (
     status: HttpCode.BAD_REQUEST,
     message: 'Skill id is undefined',
   });
+};
+
+type SkillProps = Pick<Skill, 'company' | 'name' | 'type'>;
+
+export const upsertSkills = async (
+  company: Company,
+  data: SkillProps[],
+): Promise<Skill[]> => {
+  const skillRepository = getCustomRepository(SkillRepository);
+  await skillRepository.bulkCreate(data);
+
+  const names = data.map((s) => s.name);
+  const skills = await skillRepository.find({ company, name: In(names) });
+  return skills.filter((s) =>
+    data.find((d) => d.name === s.name && d.type === s.type),
+  );
 };
