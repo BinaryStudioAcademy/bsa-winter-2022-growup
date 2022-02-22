@@ -1,6 +1,7 @@
 import './styles.scss';
 import calendar from 'assets/img/okr-items/calendar-orange.png';
 import pencil from 'assets/img/okr-items/pencil.png';
+import { parseDate } from 'helpers/parse-date';
 
 interface PropTypes {
   name: string;
@@ -25,7 +26,7 @@ const OrkItem: React.FC<PropTypes> = (props) => (
         <img alt="calendar" src={calendar} width="12" className="mb-1" />
       </div>
       <div>
-        {props.startDate} - {props.endDate}
+        {parseDate(props.startDate)} - {parseDate(props.endDate)}
       </div>
       <div>
         <img alt="pencil" src={pencil} width="12" className="mb-1" />
