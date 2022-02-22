@@ -24,7 +24,7 @@ const auth = new AuthApi({
   http,
 });
 
-const company = new CompanyApi({ http });
+const company = new CompanyApi({ apiPath: ENV.API_PATH || '', http });
 
 const profile = new ProfileApi({
   apiPath: ENV.API_PATH || '',
