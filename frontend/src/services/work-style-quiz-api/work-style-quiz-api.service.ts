@@ -1,17 +1,13 @@
 import { ContentType, HttpMethod } from 'common/enums/enums';
 import { Http } from 'services/http/http.service';
 import { IQuestion } from 'common/interfaces/user-quiz';
-
-interface IWorkStyleQuizApi {
-  apiPath: string;
-  http: Http;
-}
+import { IAuthApi } from '../auth-api/auth-api.service';
 
 class WorkStyleQuiz {
   private apiPath: string;
   private http: Http;
 
-  constructor({ apiPath, http }: IWorkStyleQuizApi) {
+  constructor({ apiPath, http }: IAuthApi) {
     this.apiPath = apiPath;
     this.http = http;
   }

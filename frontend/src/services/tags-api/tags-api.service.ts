@@ -3,11 +3,7 @@ import { ContentType, HttpMethod } from 'common/enums/enums';
 import type { IHttp } from 'common/interfaces/http/http';
 import type { ITag } from 'common/interfaces/tag/tag';
 import type { TagCreation } from 'common/types/types';
-
-type Props = {
-  apiPath: string;
-  http: IHttp;
-};
+import { IAuthApi } from '../auth-api/auth-api.service';
 
 type CreateTagResponse = {
   tags: ITag[];
@@ -18,7 +14,7 @@ class TagsApi {
   private http: IHttp;
   private apiPath: string;
 
-  constructor({ apiPath, http }: Props) {
+  constructor({ apiPath, http }: IAuthApi) {
     this.http = http;
     this.apiPath = apiPath;
   }

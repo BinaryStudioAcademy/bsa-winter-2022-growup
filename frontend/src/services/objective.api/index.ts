@@ -1,13 +1,16 @@
 import { IOkr } from 'common/interfaces/okr';
 import { IObjective } from 'common/interfaces/objective';
 import { Http } from 'services/http/http.service';
+import { IAuthApi } from '../auth-api/auth-api.service';
 import { HttpMethod } from 'common/enums/http/http';
 import { ContentType } from 'common/enums/file/file';
 
 class ObjectiveApi {
   private http: Http;
+  private apiPath: string;
 
-  constructor({ http }: { http: Http }) {
+  constructor({ apiPath, http }: IAuthApi) {
+    this.apiPath = apiPath;
     this.http = http;
   }
 
@@ -26,7 +29,7 @@ class ObjectiveApi {
 
     try {
       const result = await this.http.load<IOkr>(
-        `/company/okr/${okrId}/objective`,
+        `${this.apiPath}/company/okr/${okrId}/objective`,
         options,
       );
       return result;
@@ -52,7 +55,7 @@ class ObjectiveApi {
 
     try {
       const result = await this.http.load<IOkr>(
-        `/company/okr/${okrId}/objective/${objective.id}`,
+        `${this.apiPath}/company/okr/${okrId}/objective/${objective.id}`,
         options,
       );
       return result;

@@ -6,7 +6,7 @@ import {
 } from 'common/interfaces/user';
 import { Http } from 'services/http/http.service';
 
-interface IAuthApi {
+export interface IAuthApi {
   apiPath: string;
   http: Http;
 }

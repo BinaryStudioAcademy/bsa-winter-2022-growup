@@ -1,12 +1,15 @@
 import { IOkr } from 'common/interfaces/okr';
 import { Http } from 'services/http/http.service';
+import { IAuthApi } from '../auth-api/auth-api.service';
 import { HttpMethod } from 'common/enums/http/http';
 import { ContentType } from 'common/enums/file/file';
 
 class OkrApi {
   private http: Http;
+  private apiPath: string;
 
-  constructor({ http }: { http: Http }) {
+  constructor({ apiPath, http }: IAuthApi) {
+    this.apiPath = apiPath;
     this.http = http;
   }
 
@@ -19,7 +22,10 @@ class OkrApi {
     };
 
     try {
-      const result = await this.http.load<IOkr[]>('/company/okr', options);
+      const result = await this.http.load<IOkr[]>(
+        `${this.apiPath}/company/okr`,
+        options,
+      );
       return result;
     } catch (e) {
       //passing an error to the handler
@@ -38,7 +44,7 @@ class OkrApi {
 
     try {
       const result = await this.http.load<IOkr>(
-        `/company/okr/${okrId}`,
+        `${this.apiPath}/company/okr/${okrId}`,
         options,
       );
       return result;
@@ -61,7 +67,10 @@ class OkrApi {
     };
 
     try {
-      const result = await this.http.load<IOkr>('/company/okr', options);
+      const result = await this.http.load<IOkr>(
+        `${this.apiPath}/company/okr`,
+        options,
+      );
       return result;
     } catch (e) {
       //passing an error to the handler
