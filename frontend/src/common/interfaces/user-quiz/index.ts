@@ -22,3 +22,9 @@ export interface IUserQuizCategory {
   quizCategoryId: string;
   score: number;
 }
+
+export interface IUserQuizResult {
+  quizCategoryId: string;
+  score: number;
+  quizCategory: ICategory;
+}

@@ -1,6 +1,7 @@
-import { getCustomRepository } from 'typeorm';
+import { FindManyOptions, getCustomRepository } from 'typeorm';
 import { QuizQuestion } from '~/data/entities/quiz-question';
 import { QuizCategory } from '~/data/entities/quiz-category';
+import { User_QuizCategory } from '~/data/entities/user-quiz-category';
 
 import QuizQuestionRepository from '~/data/repositories/quiz-question.repository';
 import UserQuizCategoryRepository from '~/data/repositories/user-quiz-category.repository';
@@ -51,9 +52,10 @@ export const getQuestions = async (): Promise<QuizQuestion[]> => {
 export const sendResults = async ({
   body,
   tokenPayload,
-}: WorkQuizProps): Promise<void> => {
+}: WorkQuizProps): Promise<User_QuizCategory[]> => {
   const { userId } = tokenPayload;
   const questions = body;
+
   const userQuizCategoryRepository = await getCustomRepository(
     UserQuizCategoryRepository,
   );
@@ -80,7 +82,7 @@ export const sendResults = async ({
 
     await asyncForEach(async (resultQuestion) => {
       const resultAnswers = resultQuestion.answers;
-      const categoryQuestion = categoryQuestions.find(
+      const categoryQuestion = await categoryQuestions.find(
         (q) => q.question === resultQuestion.question,
       );
 
@@ -115,6 +117,14 @@ export const sendResults = async ({
       score: summ.score.toString(),
     });
 
-    userQuizCategoryInstance.save();
+    await userQuizCategoryInstance.save();
   }, summary);
+
+  const userResults: User_QuizCategory[] =
+    await userQuizCategoryRepository.find({
+      user: userInstance,
+      relations: ['quizCategory'],
+    } as FindManyOptions);
+
+  return userResults;
 };
