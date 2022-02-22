@@ -7,7 +7,7 @@ interface Props {
 }
 
 const AdminRouting: React.FC<Props> = ({ isAuthenticated }) => (
-  <div className="w-100">
+  <div className="w-100 ">
     <Routes>
       {isAuthenticated
         ? adminRoutes.map(({ path, element }: IRoute) => (
