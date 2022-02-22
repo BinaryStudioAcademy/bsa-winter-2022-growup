@@ -1,3 +1,5 @@
+import { useCallback, useState } from 'hooks/hooks';
+import CareerJourneyForm from '../../profile-edit/career-journey-form/career-journey-form';
 import { CareerJourney, Education, Interests, Skill } from '../interfaces';
 import AddSection from '../add-section/add-section';
 import CareerCard from '../career-card/career-card';
@@ -62,57 +64,71 @@ const interestsData: Interests[] = [
   },
 ];
 
-const ProfileMain: React.FC = () => (
-  <main className="profile-main">
-    <div className="left-side">
-      <AddSection title="Career journey">
-        {careerJourneyData.map((item, i) => (
-          <CareerCard
-            key={i}
-            title={item.title}
-            position={item.position}
-            company={item.company}
-            startDate={item.startDate}
-            endDate={item.endDate}
-          />
-        ))}
-      </AddSection>
-      <AddSection title="Education">
-        {educationData.map((item, i) => (
-          <EducationCard
-            key={i}
-            title={item.title}
-            university={item.university}
-            degree={item.degree}
-            startDate={item.startDate}
-            endDate={item.endDate}
-          />
-        ))}
-      </AddSection>
-    </div>
-    <div className="right-side">
-      <EditSection title="Skills">
-        <div className="group">
-          <h4 className="group__title fw-bold fs-7">Technical skills</h4>
-          {skillData.map((item, i) => (
-            <Tag key={i}>{item.name}</Tag>
+const ProfileMain: React.FC = () => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const closeModal = useCallback(() => setIsModalVisible(false), []);
+  const showModal = useCallback(() => setIsModalVisible(true), []);
+
+  return (
+    <main className="profile-main">
+      <div className="left-side">
+        <AddSection title="Career journey" onButtonClick={showModal}>
+          <>
+            {careerJourneyData.map((item, i) => (
+              <CareerCard
+                key={i}
+                title={item.title}
+                position={item.position}
+                company={item.company}
+                startDate={item.startDate}
+                endDate={item.endDate}
+              />
+            ))}
+            <CareerJourneyForm
+              show={isModalVisible}
+              title={'Edit career journey'}
+              onClose={closeModal}
+            />
+          </>
+        </AddSection>
+        <AddSection title="Education">
+          {educationData.map((item, i) => (
+            <EducationCard
+              key={i}
+              title={item.title}
+              university={item.university}
+              degree={item.degree}
+              startDate={item.startDate}
+              endDate={item.endDate}
+            />
           ))}
-        </div>
-        <div className="group">
-          <h4 className="group__title fw-bold fs-7">Language</h4>
-          <Tag>English</Tag>
-          <Tag>French</Tag>
-        </div>
-      </EditSection>
-      <EditSection title="Interests">
-        <div className="group fw-bold fs-7">
-          {interestsData.map((item, i) => (
-            <Tag key={i}>{item.name}</Tag>
-          ))}
-        </div>
-      </EditSection>
-    </div>
-  </main>
-);
+        </AddSection>
+      </div>
+      <div className="right-side">
+        <EditSection title="Skills">
+          <div className="group">
+            <h4 className="group__title fw-bold fs-7">Technical skills</h4>
+            {skillData.map((item, i) => (
+              <Tag key={i}>{item.name}</Tag>
+            ))}
+          </div>
+          <div className="group">
+            <h4 className="group__title fw-bold fs-7">Language</h4>
+            <Tag>English</Tag>
+            <Tag>French</Tag>
+          </div>
+        </EditSection>
+        <EditSection title="Interests">
+          <div className="group fw-bold fs-7">
+            {interestsData.map((item, i) => (
+              <Tag key={i}>{item.name}</Tag>
+            ))}
+          </div>
+        </EditSection>
+      </div>
+    </main>
+  );
+};
 
 export default ProfileMain;
