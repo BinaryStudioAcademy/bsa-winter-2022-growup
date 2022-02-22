@@ -1,5 +1,8 @@
 import { getCustomRepository } from 'typeorm';
+import CompanyRepositry from '../data/repositories/company.repository';
+
 import { Company } from '../data/entities/company';
+
 import { HttpCode, HttpError } from 'growup-shared';
 import { signToken } from '~/common/utils/token.util';
 import { CompanyResponse } from '~/common/models/responses/company';
@@ -117,6 +120,13 @@ const createQuiz = async (companyInstance: Company): Promise<void> => {
       }, quizCurrentAnswer);
     }, questions);
   }, categories);
+};
+
+export const getCompany = async (id: Company['id']): Promise<Company> => {
+  const companyRepository = getCustomRepository(CompanyRepositry);
+  const company = await companyRepository.findOne(id);
+
+  return company;
 };
 
 export const createCompany = async ({

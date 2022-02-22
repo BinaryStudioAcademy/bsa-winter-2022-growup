@@ -11,9 +11,9 @@ import { ReactComponent as SortUp } from '../../assets/img/icons/skill-icons/sor
 import { ReactComponent as SortDown } from '../../assets/img/icons/skill-icons/sortDown-icon.svg';
 
 const SkillOverview = (): React.ReactElement => {
-  const user = useAppSelector((state: RootState) => state.okr.user);
+  const user = useAppSelector((state: RootState) => state.auth.user);
   const skillList = useAppSelector((state: RootState) =>
-    state.skill.userSkill.filter((skill) => skill.userId === user.id),
+    state.skill.userSkill.filter((skill) => skill.userId === user?.id),
   );
   const [textFind, setTextFind] = useState('');
   const [textAdd, setTextAdd] = useState('');
@@ -31,10 +31,10 @@ const SkillOverview = (): React.ReactElement => {
   }
 
   function handleSubmit(e: React.SyntheticEvent): void {
-    if (validSkillName(textAdd)) {
+    if (validSkillName(textAdd) && user) {
       dispatch(
         actions.ADD_SKILL({
-          id: new Date().getMilliseconds(),
+          id: new Date().getMilliseconds().toString(),
           name: textAdd,
           userId: user.id,
           rating: ['', '', ''],

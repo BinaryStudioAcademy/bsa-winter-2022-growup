@@ -15,7 +15,7 @@
     "typeorm": "ts-node node_modules/typeorm/cli.js",
     "add-migration": "ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:generate -n",
     "migrate": "ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:run",
-    "migration-revert": "ts-node node_modules/typeorm/cli.js migration:revert",
+    "migration-revert": "ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:revert",
     "generate-seed": "ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:create -d ./src/data/seeders -n",
     "seed": "ts-node -r tsconfig-paths/register ./src/data/seeders",
     "build:ts": "tsc && tscpaths -p tsconfig.json --src ./src --out ./build/src",

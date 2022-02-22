@@ -19,7 +19,7 @@ const App: React.FC = () => {
 
   return (
     <div className="wrapper">
-      {isAdmin ? (
+      {!isAdmin ? (
         <AdminRouting isAuthenticated={isAuthenticated} />
       ) : (
         <UserRouting isAuthenticated={isAuthenticated} />
