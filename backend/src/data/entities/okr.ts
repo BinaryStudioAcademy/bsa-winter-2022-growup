@@ -1,6 +1,7 @@
-import { Entity, ManyToOne, Column } from 'typeorm';
+import { Entity, ManyToOne, Column, OneToMany } from 'typeorm';
 import { AbstractEntity } from '~/data/abstract/abstract.entity';
 import { User } from './user';
+import { Objective } from './objective';
 
 @Entity()
 export class OKR extends AbstractEntity {
@@ -15,4 +16,7 @@ export class OKR extends AbstractEntity {
 
   @ManyToOne(() => User, (user) => user.id)
   user: User;
+
+  @OneToMany(() => Objective, (objective) => objective.okr)
+  objectives: Objective[];
 }

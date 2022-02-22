@@ -1,16 +1,26 @@
-import { IOkr } from '../common/interfaces';
+import { IOkr } from 'common/interfaces/okr';
 import OrkItem from '../workspace-item';
 
 interface PropTypes {
   collection: IOkr[];
 }
 
-const OkrList: React.FC<PropTypes> = (props) => (
+const OkrList: React.FC<PropTypes> = ({ collection }) => (
   <div className="OKR-page d-flex flex-row flex-wrap">
-    {props.collection.map((okr: IOkr) => {
-      const collection = okr.objective;
-      const objectivesCounter = collection.length;
-      const resultsCounter = okr.keyResult.length;
+    {collection.map((okr: IOkr) => {
+      const objectives = okr.objectives;
+      let objectivesCounter = 0;
+      let resultsCounter = 0;
+
+      if (objectives) {
+        objectivesCounter += objectives.length;
+        resultsCounter = objectives.reduce((acc, objective) => {
+          if (objective.keyResults) {
+            acc += objective.keyResults.length;
+          }
+          return acc;
+        }, 0);
+      }
       return (
         <OrkItem
           key={okr.id}
