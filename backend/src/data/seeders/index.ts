@@ -7,6 +7,7 @@ import UserSeeder from './user.seeder';
 import OpportunitySeeder from './opportunity.seeder';
 import TagsSeeder from './tags.seeder';
 import OpportunityTagSeeder from './opportunity-tags.seeder';
+import SkillSeeder from './skills.seeder';
 
 async function Connection(): Promise<void> {
   await createConnection(ormconfig);
@@ -15,5 +16,6 @@ async function Connection(): Promise<void> {
   await OpportunitySeeder.execute();
   await TagsSeeder.execute();
   await OpportunityTagSeeder.execute();
+  await SkillSeeder.execute();
 }
 Connection();

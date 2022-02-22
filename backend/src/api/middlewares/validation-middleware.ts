@@ -22,7 +22,9 @@ const validateBody = (
 ): ((request: Request, response: Response, next: NextFunction) => void) => {
   return async (request: Request, _response: Response, next: NextFunction) => {
     try {
-      request.body = await schema.validate(request.body);
+      request.body = await schema.validate(request.body, {
+        stripUnknown: true,
+      });
     } catch (error: unknown) {
       const validationError: yup.ValidationError = error as yup.ValidationError;
       const message: string =

@@ -6,12 +6,19 @@ import {
 } from '~/services/opportunity.service';
 
 const router: Router = Router();
+
 router.get(
   '/',
-  run((_) => getOpportunities()),
+  run((req) => {
+    const { companyId } = req;
+    return getOpportunities(companyId);
+  }),
 );
 router.post(
   '/',
-  run((req) => createOpportunities(req.body.opportunities)),
+  run((req) => {
+    const { companyId, userId } = req;
+    return createOpportunities(req.body.opportunities, userId, companyId);
+  }),
 );
 export default router;

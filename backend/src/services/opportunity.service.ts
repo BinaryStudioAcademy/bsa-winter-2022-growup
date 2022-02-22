@@ -1,6 +1,4 @@
 import { FindManyOptions, getCustomRepository } from 'typeorm';
-import { companies } from '~/data/seed-data/company.data';
-
 import OpportunitiesRepository from '~/data/repositories/opportunity.repository';
 import CompanyRepository from '~/data/repositories/company.repository';
 
@@ -13,16 +11,19 @@ import { User } from '~/data/entities/user';
 import { users } from '~/data/seed-data/user.data';
 import { asyncForEach } from '~/common/helpers/array.helper';
 
-export const getOpportunities = async (): Promise<Opportunity[]> => {
+export const getOpportunities = async (
+  companyId: string,
+): Promise<Opportunity[]> => {
   const opportunityRepository = getCustomRepository(OpportunitiesRepository);
   const companyRepository = getCustomRepository(CompanyRepository);
   const userRepository = getCustomRepository(UserRepository);
   const companyInstance: Company = await companyRepository.findOne({
-    name: companies[0].name,
+    id: companyId,
   });
   const userInstance: User = await userRepository.findOne({
     firstName: users[0].firstName,
   });
+  console.log();
   const opportunities = await opportunityRepository.find({
     company: companyInstance,
     user: userInstance,
@@ -39,15 +40,17 @@ interface Props {
 }
 export const createOpportunities = async (
   data: Opportunity[],
-): Promise<any> => {
+  userId: string,
+  companyId: string,
+): Promise<Opportunity[]> => {
   const companyRepository = getCustomRepository(CompanyRepository);
   const userRepository = getCustomRepository(UserRepository);
   const opportunitiesRepository = getCustomRepository(OpportunitiesRepository);
   const companyInstance: Company = await companyRepository.findOne({
-    name: companies[0].name,
+    id: companyId,
   });
   const userInstance: User = await userRepository.findOne({
-    firstName: users[0].firstName,
+    id: userId,
   });
 
   const opportunities: Opportunity[] = [];

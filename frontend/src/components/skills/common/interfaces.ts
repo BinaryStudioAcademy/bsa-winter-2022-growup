@@ -1,6 +1,6 @@
 export interface ISkill {
-  id: number;
+  id: string;
   name: string;
-  userId: number;
+  userId: string;
   rating: Array<string>;
 }
