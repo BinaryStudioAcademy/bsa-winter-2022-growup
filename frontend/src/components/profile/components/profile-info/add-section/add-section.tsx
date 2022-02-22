@@ -10,7 +10,7 @@ const AddSection: React.FC<Props> = ({ children, title }) => (
       <p className="add-section-header__title m-0 fw-bold fs-4">{title}</p>
       <button
         type="button"
-        className="add-section-header__add fw-bold bg-transparent d-flex align-items-center fs-5 text-gu-white"
+        className="add-section-header__add fw-bold d-flex align-items-center fs-5"
       >
         <Plus className="add-section-header__add-icon" />
         <span>Add experience</span>
