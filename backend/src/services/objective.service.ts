@@ -63,11 +63,6 @@ export const updateObjectiveById = async ({
     badRequestError('Objective isn`t exist!!!');
   }
 
-  if (body.id) delete body.id;
-  if (body.okr) delete body.okr;
-  if (body.createdAt) delete body.createdAt;
-  if (body.deletedAt) delete body.deletedAt;
-
   Object.assign(objective, body);
   objective.updatedAt = new Date();
   await objective.save();

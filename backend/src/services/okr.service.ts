@@ -63,11 +63,6 @@ export const updateOkrById = async ({
   const okr = await okrRepository.findOne({ id: okrId });
 
   if (okr) {
-    if (data.id) delete data.id;
-    if (data.user) delete data.user;
-    if (data.createdAt) delete data.createdAt;
-    if (data.deletedAt) delete data.deletedAt;
-
     Object.assign(okr, data);
     okr.updatedAt = new Date();
     await okr.save();
