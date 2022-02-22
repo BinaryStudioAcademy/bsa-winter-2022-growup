@@ -14,7 +14,6 @@ const OpprotunitiesPage: React.FC = () => {
   useEffect(() => {
     isLoaded ? null : dispatch(opportunityActions.fetchLoadOpp());
   }, []);
-  // const showModalHandler = ():void=> { dispatch(opportunitiesActions.showModal()); };
   return (
     <section className="d-flex flex-column">
       <div className=" d-flex align-items-center px-3 py-3 rounded-top bg-gu-blue text-gu-white">

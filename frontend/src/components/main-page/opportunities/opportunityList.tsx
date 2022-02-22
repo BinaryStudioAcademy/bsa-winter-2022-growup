@@ -1,5 +1,5 @@
 import OpportunityItem from './opportunityItem';
-import './opportunities.scss';
+import './style.scss';
 import { useAppSelector } from 'hooks/hooks';
 import { IOpportunity } from 'store/opportunities/common';
 const OpportunityList: React.FC = () => {
