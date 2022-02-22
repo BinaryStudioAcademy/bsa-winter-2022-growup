@@ -11,8 +11,10 @@ interface IReturnCompanyData {
 class CompanyApi {
   // eslint-disable-next-line
   private http: Http;
+  private apiPath: string;
 
-  constructor({ http }: { http: Http }) {
+  constructor({ apiPath, http }: { apiPath: string; http: Http }) {
+    this.apiPath = apiPath;
     this.http = http;
   }
 
@@ -27,7 +29,7 @@ class CompanyApi {
 
     try {
       const result = await this.http.load<IReturnCompanyData>(
-        '/company',
+        `${this.apiPath}/company`,
         options,
       );
       return result;
@@ -52,7 +54,7 @@ class CompanyApi {
 
     try {
       const result = await this.http.load<IReturnCompanyData>(
-        '/company/' + id,
+        `${this.apiPath}/company/${id}`,
         options,
       );
       return result;
