@@ -31,7 +31,7 @@ const router: Router = Router();
 
 router.post(
   '/',
-  validatePermissions([RoleType.Admin, RoleType.User]),
+  validatePermissions([RoleType.ADMIN]),
   run((req): Promise<CompanyResponse> => {
     const { userId, userRole, companyId, body } = req;
     const tokenPayload = {
@@ -46,7 +46,7 @@ router.post(
 
 router.patch(
   '/:id',
-  validatePermissions([RoleType.Admin, RoleType.User]),
+  validatePermissions([RoleType.ADMIN]),
   run((req): Promise<CompanyResponse> => {
     const { id } = req.params;
     const { body, userId, userRole, companyId } = req;
@@ -61,19 +61,19 @@ router.patch(
 
 router.get(
   '/okr',
-  validatePermissions([RoleType.Admin, RoleType.User]),
+  validatePermissions([RoleType.MENTEE, RoleType.MENTOR]),
   run((req): Promise<OKR[]> => getAllOkr(req.userId)),
 );
 
 router.get(
-  '/okr/:id',
-  validatePermissions([RoleType.Admin, RoleType.User]),
-  run((req): Promise<OKR> => getOkrById(req.params.id)),
+  '/okr/:okrId',
+  validatePermissions([RoleType.MENTEE, RoleType.MENTOR]),
+  run((req): Promise<OKR> => getOkrById(req.params.okrId)),
 );
 
 router.post(
   '/okr',
-  validatePermissions([RoleType.Admin, RoleType.User]),
+  validatePermissions([RoleType.MENTEE, RoleType.MENTOR]),
   validateBody(createOkrSchema),
   run((req): Promise<OKR> => {
     const { userId, body } = req;
@@ -83,15 +83,15 @@ router.post(
 );
 
 router.put(
-  '/okr/:id',
-  validatePermissions([RoleType.Admin, RoleType.User]),
+  '/okr/:okrId',
+  validatePermissions([RoleType.MENTEE, RoleType.MENTOR]),
   validateBody(updateOkrSchema),
   run((req): Promise<OKR> => {
-    const { id } = req.params;
+    const { okrId } = req.params;
     const { body } = req;
 
     const data = {
-      okrId: id,
+      okrId,
       data: body,
     };
     return updateOkrById(data);
@@ -99,45 +99,37 @@ router.put(
 );
 
 router.post(
-  '/okr/:id/objective',
-  validatePermissions([RoleType.Admin, RoleType.User]),
+  '/okr/:okrId/objective',
+  validatePermissions([RoleType.MENTEE, RoleType.MENTOR]),
   validateBody(createObjectiveSchema),
   run((req): Promise<OKR> => {
     const { body } = req;
-    const { id } = req.params;
-    const data = { okrId: id, body };
+    const { okrId } = req.params;
+    const data = { okrId, body };
     return createObjectiveToOkr(data);
   }),
 );
 
 router.put(
-  '/okr/:id/objective/:id1',
-  validatePermissions([RoleType.Admin, RoleType.User]),
+  '/okr/:okrId/objective/:objectiveId',
+  validatePermissions([RoleType.MENTEE, RoleType.MENTOR]),
   validateBody(updateObjectiveSchema),
   run((req): Promise<OKR> => {
-    const { id, id1 } = req.params;
+    const { okrId, objectiveId } = req.params;
     const { body } = req;
-    const data = {
-      okrId: id,
-      objectiveId: id1,
-      body,
-    };
+    const data = { okrId, objectiveId, body };
     return updateObjectiveById(data);
   }),
 );
 
 router.post(
-  '/okr/:id/objective/:id1/keyresult',
-  validatePermissions([RoleType.Admin, RoleType.User]),
+  '/okr/:okrId/objective/:objectiveId/keyresult',
+  validatePermissions([RoleType.MENTEE, RoleType.MENTOR]),
   validateBody(createKeyResultSchema),
   run((req): Promise<OKR> => {
-    const { id, id1 } = req.params;
-
-    const data = {
-      okrId: id,
-      objectiveId: id1,
-      body: req.body,
-    };
+    const { okrId, objectiveId } = req.params;
+    const { body } = req;
+    const data = { okrId, objectiveId, body };
     return addNewKeyresultToObjective(data);
   }),
 );

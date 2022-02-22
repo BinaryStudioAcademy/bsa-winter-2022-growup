@@ -37,14 +37,12 @@ export const createOkr = async ({
   const okrRepository = getCustomRepository(Okrepository);
   const userRepository = getCustomRepository(UserRepository);
 
-  if (!body.name) throw badRequestError('Okr name is undefined!!!');
-  if (!body.startDate) throw badRequestError('Okr startDate is undefined!!!');
-  if (!body.endDate) badRequestError('Okr endDate is undefined!!!');
-
   const user = await userRepository.findOne({ id: userId });
   const isOkrExist = await okrRepository.findOne({ name: body.name });
 
-  if (isOkrExist) badRequestError(`Okr with name ${body.name} is exist!!!`);
+  if (isOkrExist) {
+    badRequestError(`Okr with name ${body.name} is exist!!!`);
+  }
 
   const okr = okrRepository.create();
   Object.assign(okr, body);

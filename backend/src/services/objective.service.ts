@@ -12,8 +12,6 @@ export const createObjectiveToOkr = async ({
   okrId: string;
   body: Objective;
 }): Promise<OKR> => {
-  if (!body.name) throw badRequestError('Objective name is undefined!!!');
-
   const okrRepository = getCustomRepository(Okrepository);
   const objectiveRepository = getCustomRepository(ObjectiveRepository);
 
@@ -22,8 +20,9 @@ export const createObjectiveToOkr = async ({
     name: body.name,
   });
 
-  if (isObjectiveExist)
+  if (isObjectiveExist) {
     badRequestError(`Objective with name ${body.name} is exist!!!`);
+  }
 
   if (okr) {
     const objective = objectiveRepository.create();
@@ -57,8 +56,12 @@ export const updateObjectiveById = async ({
     id: objectiveId,
   });
 
-  if (!okr) badRequestError('Okr isn`t exist!!!');
-  if (!objective) badRequestError('Objective isn`t exist!!!');
+  if (!okr) {
+    badRequestError('Okr isn`t exist!!!');
+  }
+  if (!objective) {
+    badRequestError('Objective isn`t exist!!!');
+  }
 
   if (body.id) delete body.id;
   if (body.okr) delete body.okr;

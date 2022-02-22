@@ -23,8 +23,12 @@ export const addNewKeyresultToObjective = async ({
   const okr = await okrRepository.findOne({ id: okrId });
   const objective = await objectiveRepository.findOne({ id: objectiveId });
 
-  if (!okr) throw badRequestError('Okr isn`t exist!!!');
-  if (!objective) throw badRequestError('Objective isn`t exist!!!');
+  if (!okr) {
+    throw badRequestError('Okr isn`t exist!!!');
+  }
+  if (!objective) {
+    throw badRequestError('Objective isn`t exist!!!');
+  }
 
   const keyResult = keyResultRepository.create();
   Object.assign(keyResult, body);
