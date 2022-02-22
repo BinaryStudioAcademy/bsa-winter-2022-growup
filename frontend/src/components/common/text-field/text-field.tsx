@@ -1,6 +1,6 @@
 import { FloatingLabel } from 'react-bootstrap';
-import FormInput from '../form-input/form-input';
 import { Control } from 'react-hook-form';
+import { FormInput } from '../common';
 
 interface Props {
   label: string;
