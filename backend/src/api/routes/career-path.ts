@@ -12,7 +12,7 @@ const router = Router();
 router.post(
   '/',
   run(async (req: Request) => {
-    const company = await getCompany();
+    const company = await getCompany(req.companyId);
     return createCareerPath(req.body, company);
   }),
 );
