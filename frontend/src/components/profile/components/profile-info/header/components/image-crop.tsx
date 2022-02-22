@@ -58,7 +58,6 @@ const Cropper: React.FC<Props> = memo(({ onSave: save }) => {
     if (!ctx) return;
 
     ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-    ctx.imageSmoothingQuality = 'high';
 
     ctx.drawImage(
       image,
@@ -77,14 +76,14 @@ const Cropper: React.FC<Props> = memo(({ onSave: save }) => {
         if (!blob) return;
         save(blob);
       },
-      'image/png',
+      'image/jpeg',
       1,
     );
   };
 
   return (
     <>
-      <canvas ref={canvasRef} style={{ display: 'none' }} />
+      <canvas ref={canvasRef} style={{ width: 200, height: 200 }} />
       <Form.Control
         placeholder="Image"
         type="file"
@@ -98,8 +97,8 @@ const Cropper: React.FC<Props> = memo(({ onSave: save }) => {
         onChange={(e): void => setCrop(e)}
         onComplete={(e): void => setCompletedCrop(e)}
         onImageLoaded={onLoad}
-        minHeight={crop.height}
-        minWidth={crop.height}
+        minHeight={200}
+        minWidth={200}
       />
       <div className="d-flex" onClick={onSave}>
         <button className="btn btn-outline-gu-purple flex-fill fw-bold border-2">
