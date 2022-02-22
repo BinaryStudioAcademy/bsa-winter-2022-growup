@@ -1,7 +1,7 @@
-import { useAppDispatch } from 'hooks/hooks';
+import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { useRef } from 'react';
-import { X } from 'react-bootstrap-icons';
 import * as opportunitiesActions from 'store/opportunities/actions';
+import { Button, Form, Modal } from 'react-bootstrap';
 
 const OpportunityModal: React.FC = () => {
   const opportunityName = useRef<HTMLInputElement>(null);
@@ -9,90 +9,81 @@ const OpportunityModal: React.FC = () => {
   const organizationName = useRef<HTMLInputElement>(null);
   const startDate = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
+  const isShowModal = useAppSelector(
+    (state) => state.opportunities.isShowModal,
+  );
 
+  const hideModal = (): void => {
+    dispatch(opportunitiesActions.closeModal());
+  };
+  const sendData = (): void => {
+    dispatch(
+      opportunitiesActions.fetchNewOpp({
+        name: opportunityName.current?.value,
+        type: type.current?.value,
+        organization: organizationName.current?.value,
+        startDate: startDate.current?.value,
+      }),
+    );
+  };
   return (
-    <div className="opportunity-modal-wrapper position-absolute top-0 start-0 end-0 bottom-0 w-100">
-      <div
-        className="opportunity-modal position-relative top-50 start-50
-        translate-middle bg-gu-white d-flex flex-column rounded-3"
-      >
-        <span
-          className="bg-gu-blue text-gu-white fs-5
-            py-3 ps-3 rounded-top mb-3"
+    <>
+      <Modal show={isShowModal} onHide={hideModal}>
+        <Modal.Header
+          closeButton
+          className="bg-gu-blue text-gu-white modal-header"
         >
-          Add New Opportunity
-        </span>
-        <span
-          className="opportunity-modal__close-btn position-absolute text-gu-white top-0"
-          onClick={(): void => {
-            dispatch(opportunitiesActions.closeModal());
-          }}
-        >
-          <X />
-        </span>
-        <div className="d-flex flex-column ps-3 pe-3 ">
-          <label
-            htmlFor="name-of-opportunity"
-            className="d-flex flex-column mb-4 "
-          >
-            <span className="fs-6 mb-1 fw-bold">Opportunity Name</span>
-            <input
-              ref={opportunityName}
-              className="opportunity-modal--item  fs-6 p-0 pb-1 bg-gu-white "
-              type="text"
-              id="name-of-opportunity"
-              placeholder="name of opportunity..."
-            />
-          </label>
+          <Modal.Title>Add New Opportunity</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Opportunity Name</Form.Label>
+              <Form.Control
+                type="string"
+                placeholder="Enter name..."
+                ref={opportunityName}
+              />
+            </Form.Group>
 
-          <label htmlFor="type" className="d-flex flex-column mb-4">
-            <span className="fs-6 mb-1 fw-bold">Type</span>
-            <input
-              ref={type}
-              className="opportunity-modal--item  fs-6 pb-1 bg-gu-white "
-              type="text"
-              id="type"
-              placeholder="type..."
-            />
-          </label>
-          <label htmlFor="org-name" className="d-flex flex-column mb-4">
-            <span className="fs-6 mb-1 fw-bold">Organization Name</span>
-            <input
-              ref={organizationName}
-              className="opportunity-modal--item  fs-6 pb-1 bg-gu-white "
-              type="text"
-              id="org-name"
-              placeholder="organisation name..."
-            />
-          </label>
-          <label htmlFor="start-at" className="d-flex flex-column mb-4">
-            <span className="fs-6 mb-1 fw-bold">Start Date</span>
-            <input
-              ref={startDate}
-              className="opportunity-modal--item  fs-6 pb-1 bg-gu-white "
-              type="text"
-              id="start-at"
-              placeholder="start at..."
-            />
-          </label>
-        </div>
-        <div
-          className="btn btn-gu-blue align-self-center mb-2"
-          onClick={(): void => {
-            dispatch(
-              opportunitiesActions.fetchNewOpp({
-                name: opportunityName.current?.value,
-                type: type.current?.value,
-                organization: organizationName.current?.value,
-                startDate: startDate.current?.value,
-              }),
-            );
-          }}
-        >
-          Submit
-        </div>
-      </div>
-    </div>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Organization Name</Form.Label>
+              <Form.Control
+                type="string"
+                placeholder="Enter name..."
+                ref={organizationName}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Type of Opportunity</Form.Label>
+              <Form.Control
+                type="string"
+                placeholder="Enter type..."
+                ref={type}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Start Date</Form.Label>
+              <Form.Control
+                type="string"
+                placeholder="Enter date..."
+                ref={startDate}
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={hideModal} variant="secondary">
+            Close
+          </Button>
+          <Button onClick={sendData} className="btn-gu-pink">
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 };
 

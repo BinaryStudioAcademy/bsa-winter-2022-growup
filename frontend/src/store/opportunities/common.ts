@@ -29,8 +29,8 @@ export interface OpportunitiesProps {
 
 export interface State {
   opportunities: IOpportunity[];
-  isShowModal: boolean;
-  isLoaded: boolean;
+  isShowModal?: boolean;
+  isLoaded?: boolean;
 }
 
 export interface ITagsData {
@@ -49,7 +49,7 @@ interface ILoadAction {
 
 export interface opportunitiesAction {
   type: string;
-  isLoaded: boolean;
-  isShowModal: boolean;
+  isLoaded: boolean | undefined;
+  isShowModal: boolean | undefined;
   payload?: ILoadAction;
 }

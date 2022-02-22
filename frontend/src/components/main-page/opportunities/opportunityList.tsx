@@ -1,29 +1,9 @@
 import OpportunityItem from './opportunityItem';
 import './opportunities.scss';
+import { useAppSelector } from 'hooks/hooks';
+import { IOpportunity } from 'store/opportunities/common';
 const OpportunityList: React.FC = () => {
-  const opportunities = [
-    {
-      name: 'Learning JS',
-      organization: 'Data System Opp',
-      startDate: 'March 20 2022',
-      type: 'Project/Lecture',
-      tags: ['Programming'],
-    },
-    {
-      name: 'QA Testing Like God',
-      organization: 'Company Query',
-      startDate: 'May 02 2022',
-      type: 'Lectury/HomeWork',
-      tags: ['Testing'],
-    },
-    {
-      name: 'How to improve your bussiness skills',
-      organization: 'Imporove Yourself',
-      startDate: 'June 12 2022',
-      type: 'Lecture',
-      tags: ['Bussiness'],
-    },
-  ];
+  const opportunities = useAppSelector((state) => state.homePage.opportunities);
   return (
     <section className="opportunities mt-5 text-start d-flex flex-column ">
       <div className=" d-flex align-items-center px-3 py-3 rounded-top bg-gu-blue text-gu-white">
@@ -35,14 +15,14 @@ const OpportunityList: React.FC = () => {
         </span>
       </div>
       <div className="oppotunities__list">
-        {opportunities.map((item, index: number) => {
+        {opportunities.map((item: IOpportunity, index: number) => {
           return (
             <OpportunityItem
               name={item.name}
               organization={item.organization}
               startDate={item.startDate}
               key={index}
-              tagsData={item.tags}
+              tagsData={item.tagsData}
               type={item.type}
             />
           );

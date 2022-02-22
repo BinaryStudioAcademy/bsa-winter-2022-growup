@@ -9,7 +9,7 @@ const fetchLoadOpp = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const result: OpportunitiesProps[] = await http.load(
-        'http://localhost:3001/company/opportunities',
+        'http://localhost:3001/api/company/opportunities',
         {
           method: 'GET',
           payload: null,
@@ -49,7 +49,7 @@ const fetchNewOpp = createAsyncThunk(
         ],
       };
       const res: IPostOppData[] = await http.post(
-        'http://localhost:3001/company/opportunities',
+        'http://localhost:3001/api/company/opportunities',
         {
           method: 'POST',
           payload: JSON.stringify(oppData),

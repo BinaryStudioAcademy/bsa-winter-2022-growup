@@ -10,15 +10,19 @@ import adminRoute from './admin-route';
 import workQuizRoute from './work-quiz';
 
 const routes = (app: Express): void => {
-  app.use('/api/auth', authenticationRoute);
-  app.use('/api/user', userRoute);
-  app.use('/api/company/tags', tagsRoute);
-  app.use('/company/opportunities', opportunitiesRoute);
-  app.use('/api/company', companyRoute);
-  app.use('/api/company', adminRoute);
-  app.use('/api/work-quiz', workQuizRoute);
+  try {
+    app.use('/api/auth', authenticationRoute);
+    app.use('/api/user', userRoute);
+    app.use('/api/company/tags', tagsRoute);
+    app.use('/api/company/opportunities', opportunitiesRoute);
+    app.use('/api/company', companyRoute);
+    app.use('/api/company', adminRoute);
+    app.use('/api/work-quiz', workQuizRoute);
 
-  app.use(errorHandlerMiddleware);
+    app.use(errorHandlerMiddleware);
+  } catch (err) {
+    throw new Error('Some error with seeders...');
+  }
 };
 
 export default routes;

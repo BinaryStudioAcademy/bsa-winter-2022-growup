@@ -10,13 +10,11 @@ const OpprotunitiesPage: React.FC = () => {
     (state) => state.opportunities.opportunities,
   );
   const dispatch = useAppDispatch();
-  const isShowModal = useAppSelector(
-    (state) => state.opportunities.isShowModal,
-  );
   const isLoaded = useAppSelector((state) => state.opportunities.isLoaded);
   useEffect(() => {
     isLoaded ? null : dispatch(opportunityActions.fetchLoadOpp());
   }, []);
+  // const showModalHandler = ():void=> { dispatch(opportunitiesActions.showModal()); };
   return (
     <section className="d-flex flex-column">
       <div className=" d-flex align-items-center px-3 py-3 rounded-top bg-gu-blue text-gu-white">
@@ -48,7 +46,7 @@ const OpprotunitiesPage: React.FC = () => {
           );
         })}
       </div>
-      {isShowModal ? <OpportunityModal /> : null}
+      <OpportunityModal />
     </section>
   );
 };

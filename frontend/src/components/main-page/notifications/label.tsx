@@ -3,7 +3,7 @@ import { ILabelData } from '../common/interfaces';
 import { ReactComponent as OpportunityLogo } from '../../../assets/img/opportunity-icon.svg';
 import { ReactComponent as OKRLogo } from '../../../assets/img/okr-icon.svg';
 import { ReactComponent as ApproveSkillsLogo } from '../../../assets/img/approve-skill.svg';
-import { NotificationTypes } from '../common/enums';
+import { NotificationTypes } from 'store/home-page/common';
 
 interface Props extends ILabelData {}
 
