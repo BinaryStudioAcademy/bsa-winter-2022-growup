@@ -2,7 +2,7 @@ import { PencilFill, ShieldFillCheck } from 'react-bootstrap-icons';
 import { useState, useCallback } from 'hooks/hooks';
 
 import { IUser } from 'common/interfaces/user';
-import { UserAvatar } from 'components/common/common';
+import Avatar from 'react-avatar';
 
 import EditAvatar from './components/edit-avatar';
 
@@ -20,12 +20,16 @@ const Header: React.FC<Props> = ({ avatar, firstName, lastName }) => {
     <>
       <div className="profile-header d-flex">
         <div className="profile">
-          <UserAvatar
-            avatar={avatar}
-            firstName={firstName}
-            lastName={lastName}
-            size="148"
-          />
+          {avatar ? (
+            <img
+              className="profile__avatar"
+              src={avatar}
+              alt="Avatar"
+              style={{ width: '148px', height: '148px' }}
+            />
+          ) : (
+            <Avatar name={`${firstName} ${lastName}`} size="148" />
+          )}
           <div className="profile__edit d-flex align-items-center justify-content-center position-absolute">
             <PencilFill className="edit-button" onClick={showModal} />
           </div>

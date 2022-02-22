@@ -10,9 +10,7 @@ const upload = multer();
 router.put(
   '/avatar',
   upload.single('avatar'),
-  run((req: Request) => {
-    return updateUserAvatar(req.userId, req.file);
-  }),
+  run((req: Request) => updateUserAvatar(req.userId, req.file)),
 );
 
 router.get(

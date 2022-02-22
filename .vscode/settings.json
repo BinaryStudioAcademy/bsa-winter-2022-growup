@@ -7,5 +7,6 @@
   "prettier.quoteProps": "preserve",
   "prettier.trailingComma": "all",
   "prettier.bracketSpacing": true,
-  "prettier.arrowParens": "always"
+  "prettier.arrowParens": "always",
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }

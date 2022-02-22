@@ -1,9 +1,10 @@
-import { FormEvent } from 'react';
 import { Form } from 'react-bootstrap';
-import { useAppDispatch, useState } from 'hooks/hooks';
+import { useAppDispatch, useCallback, useState } from 'hooks/hooks';
 
 import { Modal } from 'components/common/common';
 import { profileActions } from 'store/profile';
+
+import ImageCrop from './image-crop';
 
 type Props = {
   show: boolean;
@@ -12,37 +13,32 @@ type Props = {
 };
 
 const EditAvatar: React.FC<Props> = (props) => {
-  const [file, setFile] = useState<File | null>(null);
+  const [error, setError] = useState('');
   const dispatch = useAppDispatch();
 
-  const changeHandler = (e: FormEvent): void => {
-    const event = e as FormEvent<HTMLInputElement>;
-    if (event.currentTarget.files) setFile(event.currentTarget.files[0]);
-  };
+  const closeModal = useCallback(() => {
+    setError('');
+    props.onClose();
+  }, []);
 
-  const submitHandler = (e: FormEvent): void => {
-    e.preventDefault();
-
-    if (file) {
-      dispatch(profileActions.updateAvatar(file));
-      props.onClose();
+  const submitHandler = useCallback((file: Blob): void => {
+    // eslint-disable-next-line
+    console.log(file.size, file.size / 1024 / 1024);
+    if (file.size / 1024 / 1024 > 1) {
+      setError('File size can not be greater than 1mb');
+      return;
     }
-  };
+
+    dispatch(profileActions.updateAvatar(file));
+    closeModal();
+  }, []);
 
   return (
-    <Modal {...props}>
-      <Form onSubmit={submitHandler}>
-        <Form.Control
-          placeholder="Image"
-          type="file"
-          onChange={changeHandler}
-          accept="image/*"
-        />
-        <div className="d-flex">
-          <button className="btn btn-outline-gu-purple flex-fill fw-bold border-2 mt-4">
-            Save
-          </button>
-        </div>
+    <Modal show={props.show} title={props.title} onClose={closeModal}>
+      <Form className="d-flex flex-column gap-4">
+        <ImageCrop onSave={submitHandler} />
+
+        {!!error.length && <div className="alert alert-danger">{error}</div>}
       </Form>
     </Modal>
   );
