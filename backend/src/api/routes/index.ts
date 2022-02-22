@@ -13,7 +13,6 @@ const routes = (app: Express): void => {
   app.use('/api/user', userRoute);
   app.use('/api/career-path', careerPathRoute);
 
-  app.use('/company', companyRoute);
   app.use('/api/company', companyRoute);
   app.use('/api/company', adminRoute);
   app.use('/api/work-quiz', workQuizRoute);
