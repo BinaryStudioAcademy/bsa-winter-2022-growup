@@ -12,7 +12,7 @@ import { ReactComponent as Save } from '../../../assets/img/icons/skill-icons/sa
 import { ReactComponent as Edit } from '../../../assets/img/icons/skill-icons/edit-icon.svg';
 
 interface SkillTypes {
-  id: number;
+  id: string;
   name: string;
   rating: Array<string>;
 }
@@ -29,10 +29,10 @@ const SkillElement = (props: SkillTypes): React.ReactElement => {
   ]);
   const [nameSkill, setNameSkill] = useState(props.name);
   const [isStar, setIsStar] = useState(false);
-  const user = useAppSelector((state: RootState) => state.okr.user);
+  const user = useAppSelector((state: RootState) => state.auth.user);
   const dispatch = useAppDispatch();
 
-  function deleteSkill(id: number): void {
+  function deleteSkill(id: string): void {
     dispatch(actions.REMOVE_SKILL(id));
   }
   function editSkill(text: string, el: number): void {
@@ -42,8 +42,8 @@ const SkillElement = (props: SkillTypes): React.ReactElement => {
       setRatingValues(editRating);
     }
   }
-  function saveEdits(id: number): void {
-    if (isEdit) {
+  function saveEdits(id: string): void {
+    if (isEdit && user) {
       dispatch(
         actions.EDIT_SKILL({
           id: id,
