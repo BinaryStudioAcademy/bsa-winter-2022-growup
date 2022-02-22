@@ -12,10 +12,13 @@ import TestItem from './work-quiz-item/work-quiz-item';
 import './styles.scss';
 
 const StyleTest: React.FC = () => {
-  const { questions, isLoading } = useAppSelector(
+  const { questions, isLoading, result } = useAppSelector(
     (state: RootState) => state.workStyleQuiz,
   );
-  const [answersCount, setAnswersCount] = useState<number>(0);
+
+  const [answersCount, setAnswersCount] = useState(0);
+  const [isPassedTest, setIsPassedTest] = useState(false);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -62,11 +65,54 @@ const StyleTest: React.FC = () => {
     if (questions) {
       dispatch(workStyleQuizActions.sendWorkStyleQuizResults(questions));
     }
+
+    setIsPassedTest(true);
   };
+
+  if (isPassedTest && result) {
+    const sortedByScore = [...result];
+    sortedByScore.sort((res1, res2) => res2.score - res1.score);
+    const maxCategories = sortedByScore.filter(
+      (res) => res.score === sortedByScore[0].score,
+    );
+
+    return (
+      <div className="test-result">
+        <h3 className="test-result__title fs-2"> Work style test result: </h3>
+        <ul className="test-result-items fs-5">
+          {result.map((res, i) => (
+            <li className="test-result__item p-1 m-0" key={i}>
+              <span className="pb-1">
+                {res.quizCategory.name}: {res.score}
+              </span>
+            </li>
+          ))}
+        </ul>
+        <p className="test-conclusion fs-4">
+          {maxCategories.length > 1 ? (
+            <span className="test-conclusion__title fw-bolder">
+              You have a few dominant styles:{' '}
+            </span>
+          ) : (
+            <span className="test-conclusion__title fw-bolder">
+              Your dominant style is{' '}
+            </span>
+          )}
+          {maxCategories.map((res, i) => {
+            if (i === maxCategories.length - 1) {
+              return <i key={i}>{`${res.quizCategory.name}.`}</i>;
+            }
+
+            return <i key={i}>{`${res.quizCategory.name}, `}</i>;
+          })}
+        </p>
+      </div>
+    );
+  }
 
   return (
     <>
-      {!isLoading && questions ? (
+      {!isLoading && questions && questions.length ? (
         <div>
           {questions.map((question, i) => (
             <div key={question.id} className="test mb-3">
