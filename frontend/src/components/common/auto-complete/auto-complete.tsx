@@ -1,6 +1,5 @@
 import { useState } from '../../../hooks/hooks';
-import { ClearButton, Typeahead } from 'react-bootstrap-typeahead';
-import { Option } from 'react-bootstrap-typeahead/types/types';
+import { ClearButton, Option, Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import './styles.scss';
 
