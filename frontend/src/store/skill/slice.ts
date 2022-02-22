@@ -62,6 +62,9 @@ const { reducer, actions } = createSlice({
         return skill;
       });
     },
+    [ActionType.SORT_NAME]: (state, action: PayloadAction<ISkill[]>) => {
+      state.userSkill = action.payload;
+    },
   },
 });
 

@@ -55,6 +55,7 @@ export const sendResults = async ({
 }: WorkQuizProps): Promise<User_QuizCategory[]> => {
   const { userId } = tokenPayload;
   const questions = body;
+
   const userQuizCategoryRepository = await getCustomRepository(
     UserQuizCategoryRepository,
   );
@@ -81,7 +82,7 @@ export const sendResults = async ({
 
     await asyncForEach(async (resultQuestion) => {
       const resultAnswers = resultQuestion.answers;
-      const categoryQuestion = categoryQuestions.find(
+      const categoryQuestion = await categoryQuestions.find(
         (q) => q.question === resultQuestion.question,
       );
 

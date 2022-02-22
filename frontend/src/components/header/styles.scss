@@ -1,10 +1,12 @@
-@import '~assets/scss/utils';
+@import 'src/assets/scss/utils';
 
 $white-blue: #f0f3f9;
 
 .header-section {
   z-index: 2;
   background-color: #fff;
+  top: 0;
+  left: 0;
 }
 
 .form-section {
@@ -62,4 +64,15 @@ $white-blue: #f0f3f9;
   color: $gu-blue;
   width: 30px;
   height: 30px;
+}
+
+#user-menu {
+  background: none;
+  border: 0px;
+  outline: none;
+  box-shadow: none;
+}
+
+#user-menu::after {
+  display: none;
 }

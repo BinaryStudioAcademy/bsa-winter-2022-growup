@@ -1,5 +1,9 @@
 .btn {
   border-radius: 70px !important;
+
+  &:focus {
+    box-shadow: none;
+  }
 }
 
 .btn-hover-gu-purple:hover {

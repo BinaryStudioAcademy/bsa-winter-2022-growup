@@ -1,5 +1,6 @@
 import '../styles.scss';
 import star from 'assets/img/icons/skill-icons/star.png';
+import starDisable from 'assets/img/icons/skill-icons/starDisable.png';
 import { useState } from 'react';
 import RatingValue from './value';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
@@ -27,6 +28,7 @@ const SkillElement = (props: SkillTypes): React.ReactElement => {
     props.rating[2],
   ]);
   const [nameSkill, setNameSkill] = useState(props.name);
+  const [isStar, setIsStar] = useState(false);
   const user = useAppSelector((state: RootState) => state.okr.user);
   const dispatch = useAppDispatch();
 
@@ -70,22 +72,23 @@ const SkillElement = (props: SkillTypes): React.ReactElement => {
         ) : (
           `${props.name}`
         )}{' '}
-        <img alt="star" src={star} />
+        <button
+          className="border-0 bg-gu-white sort-button"
+          onClick={(): void => setIsStar(!isStar)}
+        >
+          {isStar ? (
+            <img alt="star" src={star} />
+          ) : (
+            <img alt="star" src={starDisable} />
+          )}
+        </button>
         {isHover ? (
           <button
             className="btn btn-gu-white btn-outline-gu-black button-group"
             type="button"
             onClick={(): void => saveEdits(props.id)}
           >
-            {isEdit ? (
-              <>
-                Save <Save />
-              </>
-            ) : (
-              <>
-                Edit <Edit />
-              </>
-            )}
+            {isEdit ? <Save /> : <Edit />}
           </button>
         ) : (
           true
@@ -96,7 +99,7 @@ const SkillElement = (props: SkillTypes): React.ReactElement => {
             type="button"
             onClick={(): void => deleteSkill(props.id)}
           >
-            Delete <Delete />
+            <Delete />
           </button>
         ) : (
           true
