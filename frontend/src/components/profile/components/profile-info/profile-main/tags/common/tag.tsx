@@ -5,7 +5,7 @@ import type { TagVisibleInfo } from 'common/types/types';
 
 type PropTypes = {
   tag: TagVisibleInfo;
-  onDelete: (id: TagVisibleInfo['id']) => void;
+  onDelete?: (id: TagVisibleInfo['id']) => void;
 };
 
 const Tag: React.FC<PropTypes> = ({ tag, onDelete }) => {
@@ -13,10 +13,12 @@ const Tag: React.FC<PropTypes> = ({ tag, onDelete }) => {
     <div className="row tag bg-gu-white text-gu-blue fs-6 g-0">
       <div className="col">
         {tag.name}{' '}
-        <Icon.XLg
-          className="cursor-pointer"
-          onClick={(): void => onDelete(tag.id)}
-        />
+        {onDelete !== undefined ? (
+          <Icon.XLg
+            className="cursor-pointer"
+            onClick={(): void => onDelete(tag.id)}
+          />
+        ) : null}
       </div>
     </div>
   );
