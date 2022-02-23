@@ -14,7 +14,7 @@ const EditSection: React.FC<Props> = ({ children, title }) => (
         to="/skill"
         className="edit-section-header__edit fw-bold bg-transparent d-flex align-items-center fs-5"
       >
-        <PencilFill className="edit-section-header__edit-icon" />
+        <PencilFill className="edit-section-header__edit-icon me-2" />
         <span>Edit</span>
       </Link>
     </div>
