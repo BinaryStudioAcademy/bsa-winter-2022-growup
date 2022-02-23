@@ -6,6 +6,7 @@ import workStyleQuizReducer from './reducer';
 const initialState: State = {
   questions: null,
   isLoading: true,
+  result: null,
 };
 
 const { reducer, actions } = createSlice({

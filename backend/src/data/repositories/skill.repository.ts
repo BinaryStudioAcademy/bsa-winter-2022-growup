@@ -4,7 +4,9 @@ import { Skill } from '../entities/skill';
 
 @EntityRepository(Skill)
 class SkillRepository extends Repository<Skill> {
-  public async bulkCreate(data: QueryDeepPartialEntity<Skill>[]): Promise<InsertResult> {
+  public async bulkCreate(
+    data: QueryDeepPartialEntity<Skill>[],
+  ): Promise<InsertResult> {
     return this.createQueryBuilder()
       .insert()
       .into(Skill)

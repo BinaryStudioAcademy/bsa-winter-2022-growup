@@ -146,6 +146,7 @@ export const createCompany = async ({
       const newCompany = Object.assign(company, body);
 
       const companyInstance = await newCompany.save();
+
       await createQuiz(companyInstance);
 
       const token = signToken({

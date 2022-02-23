@@ -2,17 +2,13 @@ import { ContentType, HttpMethod } from 'common/enums/enums';
 
 import type { IHttp } from 'common/interfaces/http/http';
 import { IUser } from 'common/interfaces/user/user';
-
-type Props = {
-  apiPath: string;
-  http: IHttp;
-};
+import { IAuthApi } from 'common/interfaces/api';
 
 class UsersApi {
   private http: IHttp;
   private apiPath: string;
 
-  constructor({ apiPath, http }: Props) {
+  constructor({ apiPath, http }: IAuthApi) {
     this.http = http;
     this.apiPath = apiPath;
   }
