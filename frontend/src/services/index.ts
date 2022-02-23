@@ -4,6 +4,7 @@ import { CompanyApi } from './company-api';
 import { Http } from './http/http.service';
 import { ProfileApi } from './profile-api/profile-api.service';
 import { TagsApi } from './tags-api/tags-api.service';
+import { SkillsApi } from './skill-api/skill-api.service';
 import { OkrApi } from './okr-api';
 import { ObjectiveApi } from './objective.api';
 import { KeyResultApi } from './keyresult.api';
@@ -40,6 +41,11 @@ const tags = new TagsApi({
   http,
 });
 
+const skills = new SkillsApi({
+  apiPath: ENV.API_PATH || '',
+  http,
+});
+
 const workStyleQuiz = new WorkStyleQuiz({
   apiPath: ENV.API_PATH || '',
   http,
@@ -63,4 +69,5 @@ export {
   keyResult,
   workStyleQuiz,
   users,
+  skills,
 };
