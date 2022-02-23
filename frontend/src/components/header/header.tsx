@@ -1,29 +1,24 @@
-import { Dropdown } from 'react-bootstrap';
 import { BookmarkFill } from 'react-bootstrap-icons';
 
 import { useAppDispatch, useAppSelector } from 'hooks/store/store.hooks';
-import { actions } from 'store/auth/slice';
 import { profileActions } from 'store/actions';
 import notificationIcon from 'assets/img/icons/header-icons/notification-icon.svg';
 import notificationPointer from 'assets/img/icons/header-icons/notification-pointer.svg';
 import searchIcon from 'assets/img/icons/header-icons/search-icon.svg';
 
+import { UserAvatar } from 'components/common/common';
+
 import './styles.scss';
-import { useNavigate } from 'react-router-dom';
-import { AppRoute } from 'common/enums/enums';
 import { useEffect } from 'hooks/hooks';
 
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const user = useAppSelector((state) => state.profile.user);
-  const onClick = (): void => {
-    dispatch(actions.LOGOUT_USER());
-    navigate(AppRoute.LOGIN);
-  };
+
   useEffect(() => {
     dispatch(profileActions.fetchProfile());
   }, [dispatch]);
+
   return (
     <header className="header-section w-100 position-fixed">
       <div className="header-container d-flex align-items-center justify-content-end pe-4 py-2 pe-md-4 py-md-3">
@@ -54,32 +49,13 @@ const Header: React.FC = () => {
             alt="notification pointer"
           />
         </div>
-        <Dropdown>
-          <Dropdown.Toggle id="user-menu">
-            {user?.avatar ? (
-              <img
-                className="avatar-icon rounded-circle"
-                src={user.avatar}
-                alt="avatar icon"
-              ></img>
-            ) : (
-              <div
-                className={`avatar-icon bg-gu-pink text-gu-white rounded-circle d-flex justify-content-center align-items-center ${
-                  user?.firstName ? 'bg-gu-pink' : 'bg-gu-black'
-                } `}
-              >
-                {user?.firstName ? (
-                  <span>{user.firstName[0] + user.lastName[0]}</span>
-                ) : (
-                  <span></span>
-                )}
-              </div>
-            )}
-          </Dropdown.Toggle>
-          <Dropdown.Menu>
-            <Dropdown.Item onClick={onClick}>Log out</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+        <UserAvatar
+          avatar={user?.avatar}
+          firstName={user?.firstName}
+          lastName={user?.lastName}
+          size="50"
+          dropdown
+        />
       </div>
     </header>
   );

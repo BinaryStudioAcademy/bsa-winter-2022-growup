@@ -14,11 +14,12 @@ type Props = {
   avatar?: IUser['avatar'];
   firstName?: IUser['firstName'];
   lastName?: IUser['lastName'];
+  dropdown?: boolean;
   size: string;
 };
 
 const UserAvatar: React.FC<Props> = memo(
-  ({ avatar, firstName, lastName, size }) => {
+  ({ avatar, firstName, lastName, size, dropdown = false }) => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -45,9 +46,11 @@ const UserAvatar: React.FC<Props> = memo(
             />
           )}
         </Dropdown.Toggle>
-        <Dropdown.Menu>
-          <Dropdown.Item onClick={onClick}>Log out</Dropdown.Item>
-        </Dropdown.Menu>
+        {dropdown && (
+          <Dropdown.Menu>
+            <Dropdown.Item onClick={onClick}>Log out</Dropdown.Item>
+          </Dropdown.Menu>
+        )}
       </Dropdown>
     );
   },
