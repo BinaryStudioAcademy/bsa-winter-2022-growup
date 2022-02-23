@@ -20,7 +20,7 @@ const Sidebar: React.FC = () => {
       <div className="sidebar-container d-flex flex-column pt-2 pt-md-3">
         <Link to={MentorMenteeRoute.HOME}>
           <a
-            className="logo-section d-flex align-items-center text-decoration-none px-2 ps-md-4"
+            className="logo-section d-flex align-items-center text-decoration-none px-2 ps-md-4 mb-5"
             href=""
           >
             <img
