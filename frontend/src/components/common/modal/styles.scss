@@ -54,11 +54,3 @@
     }
   }
 }
-
-@include media-breakpoint-down(xs) {
-  .modal-content {
-    .modal-body {
-      padding: 20px;
-    }
-  }
-}
