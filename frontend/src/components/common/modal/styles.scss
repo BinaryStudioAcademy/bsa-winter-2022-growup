@@ -1,4 +1,4 @@
-@import 'src/assets/scss/utils';
+@import '~assets/scss/utils';
 
 .fade {
   background-color: #867dfd5b;
@@ -30,7 +30,7 @@
   }
 }
 
-@media (max-width: 576px) {
+@include media-breakpoint-down(lg) {
   .modal-content {
     .modal-header {
       padding: 20px;
@@ -42,7 +42,7 @@
   }
 }
 
-@media (max-width: 360px) {
+@include media-breakpoint-down(md) {
   .modal-content {
     .modal-header {
       padding: 15px;
@@ -54,7 +54,7 @@
   }
 }
 
-@media (max-width: 280px) {
+@include media-breakpoint-down(xs) {
   .modal-content {
     .modal-body {
       padding: 20px;
