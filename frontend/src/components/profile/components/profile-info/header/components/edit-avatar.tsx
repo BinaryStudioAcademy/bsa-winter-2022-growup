@@ -1,5 +1,6 @@
 import { Form } from 'react-bootstrap';
 import { useAppDispatch, useCallback, useState } from 'hooks/hooks';
+import { NotificationManager } from 'react-notifications';
 
 import { Modal } from 'components/common/common';
 import { profileActions } from 'store/profile';
@@ -14,6 +15,7 @@ type Props = {
 
 const EditAvatar: React.FC<Props> = (props) => {
   const [error, setError] = useState('');
+  const [imageLoading, setImageLoading] = useState(false);
   const dispatch = useAppDispatch();
 
   const closeModal = useCallback(() => {
@@ -21,22 +23,27 @@ const EditAvatar: React.FC<Props> = (props) => {
     props.onClose();
   }, []);
 
-  const _submitHandler = useCallback((file: Blob): void => {
-    // eslint-disable-next-line
-    console.log(file.size, file.size / 1024 / 1024);
-    if (file.size / 1024 / 1024 > 1) {
-      setError('File size can not be greater than 1mb');
-      return;
-    }
-
-    dispatch(profileActions.updateAvatar(file));
-    closeModal();
+  const submitHandler = useCallback((file: Blob): void => {
+    setImageLoading(true);
+    dispatch(profileActions.updateAvatar(file))
+      .unwrap()
+      .then(() => {
+        setImageLoading(false);
+        closeModal();
+      })
+      .catch((error) => {
+        NotificationManager.error(error.message);
+      });
   }, []);
 
   return (
     <Modal show={props.show} title={props.title} onClose={closeModal}>
       <Form className="d-flex flex-column gap-4">
-        <ImageCrop />
+        <ImageCrop
+          setError={setError}
+          onSave={submitHandler}
+          isLoading={imageLoading}
+        />
 
         {!!error.length && <div className="alert alert-danger">{error}</div>}
       </Form>

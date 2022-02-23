@@ -1,85 +1,90 @@
-import React, { useState } from 'react';
-import Cropper from 'react-cropper';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
+import ReactCropper, { Cropper } from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
-// import './Demo.css';
+import { Form } from 'react-bootstrap';
 
-const defaultSrc =
-  'https://raw.githubusercontent.com/roadmanfong/react-cropper/master/example/img/child.jpg';
+type Props = {
+  setError: (msg: string) => void;
+  onSave: (file: Blob) => void;
+  isLoading?: boolean;
+};
 
-export const Demo: React.FC = () => {
-  const [image, setImage] = useState(defaultSrc);
-  const [cropData, setCropData] = useState('#');
-  const [cropper, setCropper] = useState<any>();
-  const onChange = (e: any): void => {
-    e.preventDefault();
-    let files;
-    if (e.dataTransfer) {
-      files = e.dataTransfer.files;
-    } else if (e.target) {
-      files = e.target.files;
+export const Demo: React.FC<Props> = ({
+  setError,
+  onSave,
+  isLoading = false,
+}) => {
+  const [image, setImage] = useState<string>('');
+  const [_cropData, setCropData] = useState<string>('#');
+
+  const onSelectFile = (e: ChangeEvent<HTMLInputElement>): void => {
+    if (e.target.files && e.target.files.length > 0) {
+      if (e.target.files[0].size > 1024 * 1024) {
+        setError('File is too big. Max size - 1mb');
+        return;
+      }
+
+      setError('');
+      const reader = new FileReader();
+      reader.addEventListener('load', () => setImage(reader.result as string));
+      reader.readAsDataURL(e.target.files[0]);
     }
-    const reader = new FileReader();
-    reader.onload = (): void => {
-      setImage(reader.result as any);
-    };
-    reader.readAsDataURL(files[0]);
   };
 
-  const getCropData = (): void => {
+  const [cropper, setCropper] = useState<Cropper>();
+
+  const getCropData = (e: FormEvent): void => {
+    e.preventDefault();
+
     if (typeof cropper !== 'undefined') {
       setCropData(cropper.getCroppedCanvas().toDataURL());
+
+      cropper.getCroppedCanvas().toBlob((blob) => {
+        if (blob) onSave(blob);
+      });
     }
   };
 
   return (
-    <div>
-      <div style={{ width: '100%' }}>
-        <input type="file" onChange={onChange} />
-        <button>Use default img</button>
-        <br />
-        <br />
-        <Cropper
+    <>
+      <Form.Control
+        placeholder="image"
+        type="file"
+        onChange={onSelectFile}
+        accept="image/*"
+      />
+      {!!image.length && (
+        <ReactCropper
           style={{ height: 400, width: '100%' }}
           zoomTo={0.5}
           initialAspectRatio={1}
+          aspectRatio={1}
           preview=".img-preview"
           src={image}
           viewMode={1}
-          minCropBoxHeight={10}
-          minCropBoxWidth={10}
-          background={false}
-          responsive={true}
+          minCropBoxHeight={200}
+          minCropBoxWidth={200}
+          background
           autoCropArea={1}
-          checkOrientation={false} // https://github.com/fengyuanchen/cropperjs/issues/671
-          onInitialized={(instance: any): void => {
+          checkOrientation={false}
+          onInitialized={(instance: Cropper): void => {
             setCropper(instance);
           }}
-          guides={true}
+          responsive
+          guides
         />
-      </div>
-      <div>
-        <div className="box" style={{ width: '50%', float: 'right' }}>
-          <h1>Preview</h1>
-          <div
-            className="img-preview"
-            style={{ width: '100%', float: 'left', height: '300px' }}
-          />
-        </div>
-        <div
-          className="box"
-          style={{ width: '50%', float: 'right', height: '300px' }}
+      )}
+
+      <div className="d-flex">
+        <button
+          onClick={getCropData}
+          className="btn btn-outline-gu-purple flex-fill border-2 fw-bold"
+          disabled={isLoading}
         >
-          <h1>
-            <span>Crop</span>
-            <button style={{ float: 'right' }} onClick={getCropData}>
-              Crop Image
-            </button>
-          </h1>
-          <img style={{ width: '100%' }} src={cropData} alt="cropped" />
-        </div>
+          {isLoading ? 'Loading...' : 'Save'}
+        </button>
       </div>
-      <br style={{ clear: 'both' }} />
-    </div>
+    </>
   );
 };
 
