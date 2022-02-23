@@ -19,8 +19,10 @@ export const createDomainLevel = async ({
 
   const props = { name, domain, prevLevel: prev };
 
-  await domainLevelRepository.createUnique(props);
-  const level = domainLevelRepository.findOne(props);
+  const target = await domainLevelRepository.findOne(props);
+  if (target) return target;
+
+  const level = await domainLevelRepository.create(props).save();
 
   return level;
 };
@@ -29,7 +31,9 @@ export const getDomainLevels = async (
   domain: DomainLevel['domain'],
 ): Promise<DomainLevel> => {
   const domainLevelRepository = getCustomRepository(DomainLevelRepository);
-  const lowestLevel = await domainLevelRepository.findOne({ domain });
+  const lowestLevel = await domainLevelRepository.findOne({
+    where: { domain, prevLevel: null },
+  });
 
   if (!lowestLevel)
     throw new HttpError({
@@ -38,7 +42,7 @@ export const getDomainLevels = async (
     });
 
   const manager = getManager().getTreeRepository(DomainLevel);
-  const tree = manager.findDescendantsTree(lowestLevel);
+  const tree = await manager.findDescendantsTree(lowestLevel);
 
   return tree;
 };
