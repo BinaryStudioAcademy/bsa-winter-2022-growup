@@ -1,16 +1,9 @@
-import {
-  Entity,
-  Column,
-  ManyToOne,
-  OneToMany,
-  ManyToMany,
-  JoinTable,
-} from 'typeorm';
+import { Entity, Column, ManyToOne, OneToMany } from 'typeorm';
 import { AbstractEntity } from '~/data/abstract/abstract.entity';
 import { DomainLevel } from './domain-level';
 import { Company } from './company';
 import { UserRole } from './user-role';
-import { Skill } from './skill';
+import { UserSkill } from './user-skill';
 
 @Entity()
 export class User extends AbstractEntity {
@@ -41,10 +34,6 @@ export class User extends AbstractEntity {
   @OneToMany(() => UserRole, (userRole) => userRole.id)
   role: UserRole;
 
-  @ManyToMany(() => Skill, (skill) => skill.users)
-  @JoinTable({
-    name: 'user_skill',
-    joinColumn: { name: 'userId', referencedColumnName: 'id' },
-  })
-  skills: Skill[];
+  @OneToMany(() => UserSkill, (userSkill) => userSkill.user)
+  userSkills: UserSkill[];
 }

@@ -1,8 +1,8 @@
-import { Column, Entity, ManyToMany, ManyToOne, Unique } from 'typeorm';
+import { Column, Entity, ManyToOne, Unique, OneToMany } from 'typeorm';
 import { AbstractEntity } from '~/data/abstract/abstract.entity';
 import { Company } from './company';
 import { SkillType } from '~/common/enums/skill-type';
-import { User } from './user';
+import { UserSkill } from './user-skill';
 @Unique('company_unique_skill', ['type', 'name', 'company'])
 @Entity()
 export class Skill extends AbstractEntity {
@@ -18,6 +18,6 @@ export class Skill extends AbstractEntity {
   @Column({ type: 'varchar', length: 250 })
   name: string;
 
-  @ManyToMany(() => User, (user) => user.skills)
-  users: User[];
+  @OneToMany(() => UserSkill, (userSkill) => userSkill.user)
+  userSkills: UserSkill[];
 }

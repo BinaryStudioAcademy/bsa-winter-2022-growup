@@ -12,6 +12,7 @@ import { SuccessResponse } from '~/common/models/responses/success';
 import { HttpCode, HttpError } from 'growup-shared';
 // import UserSkillRepository from '~/data/repositories/userskill.repository';
 import UserRepository from '~/data/repositories/user.repository';
+import UserSkillRepository from '~/data/repositories/userskill.repository';
 // import { User } from '~/data/entities/user';
 
 export const getSkills = async (id: string): Promise<Skill[]> => {
@@ -26,6 +27,14 @@ export const getSkills = async (id: string): Promise<Skill[]> => {
     company: companyInstance,
   } as FindManyOptions);
 
+  // const userSkillRepository = getCustomRepository(UserSkillRepository);
+  // const userSkills = await userSkillRepository.find({
+  //   where: {
+  //     skill: In(skills),
+  //   },
+  // });
+  // userSkills[0].mentorRating
+
   return skills.map((skill) => skillsMapper(skill));
 };
 
@@ -37,13 +46,13 @@ export const createSkills = async (
   const skillRepository = getCustomRepository(SkillRepository);
   const companyRepository = getCustomRepository(CompanyRepository);
   const userRepository = getCustomRepository(UserRepository);
+  const userSkillRepository = getCustomRepository(UserSkillRepository);
 
   const companyInstance: Company = await companyRepository.findOne({
     id: companyId,
   });
   const user = await userRepository.findOne({
     where: { id: userId },
-    relations: ['skills'],
   });
 
   const skills: any = [];
@@ -53,8 +62,12 @@ export const createSkills = async (
       type: type,
       company: companyInstance,
     });
-    user.skills.push(skill);
     await skill.save();
+    const userSkill = userSkillRepository.create({
+      skill,
+      user,
+    });
+    await userSkill.save();
     skills.push(skill);
   }, data);
   await user.save();
