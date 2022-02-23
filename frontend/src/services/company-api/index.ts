@@ -1,5 +1,6 @@
 import { ICompany } from 'common/interfaces/company/company';
-import { Http } from 'services/http/http.service';
+import { IAuthApi } from 'common/interfaces/api';
+import { Http } from '../http/http.service';
 import { HttpMethod } from 'common/enums/http/http';
 import { ContentType } from 'common/enums/file/file';
 
@@ -8,12 +9,40 @@ interface IReturnCompanyData {
   company: ICompany;
 }
 
+interface IReturnCompaniesData {
+  token: string;
+  companies: ICompany[];
+}
+
 class CompanyApi {
   // eslint-disable-next-line
   private http: Http;
+  private apiPath: string;
 
-  constructor({ http }: { http: Http }) {
+  constructor({ apiPath, http }: IAuthApi) {
+    this.apiPath = apiPath;
     this.http = http;
+  }
+
+  public async getAllCompamies(): Promise<IReturnCompaniesData | null> {
+    const options = {
+      method: HttpMethod.GET,
+      contentType: ContentType.JSON,
+      hasAuth: true,
+      payload: null,
+    };
+
+    try {
+      const result = await this.http.load<IReturnCompaniesData>(
+        `${this.apiPath}/company`,
+        options,
+      );
+      return result;
+    } catch (e) {
+      //passing an error to the handler
+      console.warn(e);
+      return null;
+    }
   }
 
   public async addCompany(
@@ -27,7 +56,7 @@ class CompanyApi {
 
     try {
       const result = await this.http.load<IReturnCompanyData>(
-        '/company',
+        `${this.apiPath}/company`,
         options,
       );
       return result;
@@ -52,7 +81,7 @@ class CompanyApi {
 
     try {
       const result = await this.http.load<IReturnCompanyData>(
-        '/company/' + id,
+        `${this.apiPath}/company/${id}`,
         options,
       );
       return result;

@@ -1,6 +1,6 @@
 import cors from 'cors';
 import path from 'path';
-import express, { Express, Response, Request } from 'express';
+import express, { Express, Request, Response } from 'express';
 import { createConnection } from 'typeorm';
 
 import * as swaggerUi from 'swagger-ui-express';

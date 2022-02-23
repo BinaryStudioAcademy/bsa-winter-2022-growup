@@ -1,4 +1,6 @@
 import { FormEvent } from 'react';
+
+import { NotificationManager } from 'react-notifications';
 import { useAppDispatch, useTagList } from 'hooks/hooks';
 import { adminActions } from 'store/actions';
 
@@ -22,7 +24,14 @@ const TagModal: React.FC<PropTypes> = ({ show, onClose }) => {
 
     onClose();
     clearItems();
-    dispatch(adminActions.createTags(tagList));
+    dispatch(adminActions.createTags(tagList))
+      .unwrap()
+      .then((result) => {
+        if (result && result?.existingTags.length)
+          NotificationManager.error(
+            `Tags already exist: ${result.existingTags.join(', ')}`,
+          );
+      });
   };
 
   return (

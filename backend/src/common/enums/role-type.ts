@@ -1,1 +1,1 @@
-export { RoleType } from 'growup-shared';
+export { RoleType } from 'growup-shared/common/enums';

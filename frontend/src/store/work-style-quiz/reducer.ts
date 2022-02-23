@@ -29,6 +29,13 @@ const WorkStyleQuizReducer = (
       }
     },
   );
+
+  builder.addCase(
+    actions.sendWorkStyleQuizResults.fulfilled,
+    (state, action) => {
+      state.result = action.payload;
+    },
+  );
 };
 
 export default WorkStyleQuizReducer;

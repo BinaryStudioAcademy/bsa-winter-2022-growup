@@ -13,9 +13,7 @@ const TagForm: React.FC<PropTypes> = ({ onSubmit }) => {
 
   const submitHandler = (e: FormEvent): void => {
     e.preventDefault();
-
     onSubmit({ name: value });
-
     setValue('');
   };
 

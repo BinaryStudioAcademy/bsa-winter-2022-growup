@@ -1,0 +1,40 @@
+@import '~assets/scss/utils';
+
+.close {
+  float: right;
+  line-height: 1.4;
+  opacity: 0.5;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+button.close {
+  background-color: transparent;
+  border: 0;
+}
+
+.rbt-token {
+  background-color: $purple-100;
+  color: $gu-purple;
+}
+
+.rbt-token-active {
+  background-color: $gu-blue;
+  color: $gu-white;
+}
+
+.dropdown-item:active {
+  background-color: $gu-blue !important;
+}
+
+.rbt-input-multi.focus {
+  border-color: $gray-500;
+  box-shadow: 0 0 0 2px $purple-100;
+}
+
+.form-control:focus {
+  border-color: $gray-500 !important;
+  box-shadow: 0 0 0 2px $purple-100 !important;
+}
