@@ -1,44 +1,28 @@
 import './notification.scss';
 import { ReactChild, useState } from 'react';
 import { ArrowDown, ArrowUp } from 'react-bootstrap-icons';
-import Notification from './notification';
-import INotificationData from '../interfaces/INotificationData';
-import { NotificationTypes } from '../enums/NotificationTypes';
+import Notification from './notificationItem';
+import { useAppSelector } from 'hooks/hooks';
+import { INotifications } from 'store/home-page/common';
 
 const Notifications: React.FC = () => {
   const [viewAll, setViewAll] = useState<boolean>(false);
 
-  const notificationsData = [
-    {
-      title: 'Notification__item',
-      type: NotificationTypes.approve_skills,
-    },
-    {
-      title: 'Notification__item',
-      type: NotificationTypes.opportunities,
-    },
-    {
-      title: 'Notification__item',
-      type: NotificationTypes.okr,
-    },
-    {
-      title: 'Notification__item',
-      type: NotificationTypes.okr,
-    },
-    {
-      title: 'Notification__item',
-      type: NotificationTypes.opportunities,
-    },
-  ];
+  const notificationsData = useAppSelector(
+    (state) => state.homePage.notifications,
+  );
 
   const renderNotifications = (): ReactChild[] => {
     const itemsCount = 3;
-    const to = viewAll ? notificationsData.length : itemsCount;
-    const data = notificationsData.slice(0, to);
+    const to = viewAll ? notificationsData?.length : itemsCount;
+    const data = notificationsData?.slice(0, to);
 
-    return data.map((item: INotificationData) => <Notification {...item} />);
+    return data
+      ? data?.map((item: INotifications, index: number) => (
+          <Notification {...item} key={index} />
+        ))
+      : [];
   };
-
   const onClick = (): void => setViewAll(!viewAll);
 
   return (

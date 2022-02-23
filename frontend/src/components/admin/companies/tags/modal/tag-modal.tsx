@@ -27,9 +27,10 @@ const TagModal: React.FC<PropTypes> = ({ show, onClose }) => {
     dispatch(adminActions.createTags(tagList))
       .unwrap()
       .then((result) => {
-        NotificationManager.error(
-          `Tags already exist ${result?.existingTags.join(', ')}`,
-        );
+        if (result && result?.existingTags.length)
+          NotificationManager.error(
+            `Tags already exist: ${result.existingTags.join(', ')}`,
+          );
       });
   };
 

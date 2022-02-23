@@ -59,7 +59,7 @@ export const createCareerPath = async (
     })),
   );
 
-  asyncForEach(async (category) => {
+  await asyncForEach(async (category) => {
     const objectives = skillsWithLevel.find(
       (skill) =>
         skill.name === category.skill.name &&

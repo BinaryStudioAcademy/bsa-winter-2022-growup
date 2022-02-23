@@ -1,5 +1,6 @@
 import { ICompany } from 'common/interfaces/company/company';
-import { Http } from 'services/http/http.service';
+import { IAuthApi } from 'common/interfaces/api';
+import { Http } from '../http/http.service';
 import { HttpMethod } from 'common/enums/http/http';
 import { ContentType } from 'common/enums/file/file';
 
@@ -18,7 +19,7 @@ class CompanyApi {
   private http: Http;
   private apiPath: string;
 
-  constructor({ apiPath, http }: { apiPath: string; http: Http }) {
+  constructor({ apiPath, http }: IAuthApi) {
     this.apiPath = apiPath;
     this.http = http;
   }
