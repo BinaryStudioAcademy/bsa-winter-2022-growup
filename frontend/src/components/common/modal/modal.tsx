@@ -20,7 +20,7 @@ const Modal: React.FC<PropTypes> = ({
   className,
   buttonText,
   onSubmit,
-  footer = true,
+  footer = false,
 }) => {
   return (
     <ModalWindow show={show} onHide={onClose} centered>
