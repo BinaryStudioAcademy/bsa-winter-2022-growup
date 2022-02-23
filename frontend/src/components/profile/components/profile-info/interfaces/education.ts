@@ -1,6 +1,6 @@
 export interface Education {
   id: string;
-  title: string;
+  specialization: string;
   university: string;
   degree: string;
   startDate: Date;

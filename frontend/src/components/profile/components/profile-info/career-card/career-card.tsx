@@ -5,7 +5,6 @@ import { CareerJourney } from '../interfaces';
 type Props = Omit<CareerJourney, 'id'>;
 
 const CareerCard: React.FC<Props> = ({
-  title,
   position,
   company,
   startDate,
@@ -23,7 +22,7 @@ const CareerCard: React.FC<Props> = ({
       <div className="career-card-time fs-7 ">{startDate.getFullYear()}</div>
       <div className="card-body career-card-info">
         <h3 className="card-text career-card-info__title fw-bold fs-4 text-gu-black">
-          {title}
+          {position}
         </h3>
         <p className="card-text career-card-info__role m-0 mb-1 fs-6 text-gu-black">
           <span>Role</span>

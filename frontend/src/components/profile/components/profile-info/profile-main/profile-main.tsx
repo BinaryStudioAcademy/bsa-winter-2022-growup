@@ -12,7 +12,6 @@ import './profile-main.scss';
 const careerJourneyData: CareerJourney[] = [
   {
     id: '1',
-    title: 'Fullstack JS Developer',
     position: 'Fullstack JS Developer',
     company: 'Binary Studio',
     startDate: new Date('2020-01-30T03:24:00'),
@@ -20,7 +19,6 @@ const careerJourneyData: CareerJourney[] = [
   },
   {
     id: '2',
-    title: 'Fullstack JS Developer',
     position: 'Fullstack JS Developer',
     company: 'Binary Studio',
     startDate: new Date('2021-12-17T03:24:00'),
@@ -32,7 +30,7 @@ const careerJourneyData: CareerJourney[] = [
 const educationData: Education[] = [
   {
     id: '1',
-    title: 'Computer Science',
+    specialization: 'Computer Science',
     university: 'Lviv Polytechnic National University',
     degree: 'Masters',
     startDate: new Date('2021-12-17T03:24:00'),
@@ -78,7 +76,6 @@ const ProfileMain: React.FC = () => {
             {careerJourneyData.map((item, i) => (
               <CareerCard
                 key={i}
-                title={item.title}
                 position={item.position}
                 company={item.company}
                 startDate={item.startDate}
@@ -96,7 +93,7 @@ const ProfileMain: React.FC = () => {
           {educationData.map((item, i) => (
             <EducationCard
               key={i}
-              title={item.title}
+              specialization={item.specialization}
               university={item.university}
               degree={item.degree}
               startDate={item.startDate}

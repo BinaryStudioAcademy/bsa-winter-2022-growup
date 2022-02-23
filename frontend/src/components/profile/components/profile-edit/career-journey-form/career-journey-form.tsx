@@ -1,6 +1,6 @@
 import { FloatingLabel, Form } from 'react-bootstrap';
 import { useAppForm } from 'hooks/hooks';
-import { FormInput, Modal, DatePicker } from 'components/common/common';
+import { DatePicker, FormInput, Modal } from 'components/common/common';
 import { DEFAULT_CAREER_JOURNEY_PAYLOAD } from './common/constants';
 import { CareerJourneyPayloadKey } from 'common/enums/user/career-journey-payload-key.enum';
 import { careerJourney as careerJourneyValidationSchema } from 'validation-schemas/validation-schemas';
@@ -52,35 +52,15 @@ const CareerJourneyForm: React.FC<Props> = (props) => {
           />
         </FloatingLabel>
 
-        <FloatingLabel
-          controlId="career-journey-start-date"
-          label="Start date"
-          className="mb-3"
-        >
-          <FormInput
-            name={CareerJourneyPayloadKey.START_DATE}
-            control={control}
-            errors={errors}
-            type="text"
-            placeholder="Start date"
-          />
-        </FloatingLabel>
+        <div className="mb-3">
+          <Form.Label>Start date</Form.Label>
+          <DatePicker />
+        </div>
 
-        <DatePicker />
-
-        <FloatingLabel
-          controlId="career-journey-end-date"
-          label="End date"
-          className="mb-3"
-        >
-          <FormInput
-            name={CareerJourneyPayloadKey.END_DATE}
-            control={control}
-            errors={errors}
-            type="text"
-            placeholder="End date"
-          />
-        </FloatingLabel>
+        <div className="mb-3">
+          <Form.Label>End date</Form.Label>
+          <DatePicker />
+        </div>
       </Form>
     </Modal>
   );

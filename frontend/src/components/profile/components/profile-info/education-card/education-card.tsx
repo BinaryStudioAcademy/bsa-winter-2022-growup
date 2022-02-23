@@ -5,7 +5,7 @@ import { Education } from '../interfaces';
 type Props = Omit<Education, 'id'>;
 
 const EducationCard: React.FC<Props> = ({
-  title,
+  specialization,
   university,
   degree,
   startDate,
@@ -22,10 +22,10 @@ const EducationCard: React.FC<Props> = ({
     <div className="card education-card">
       <div className="card-body education-card-info d-flex flex-column align-items-start">
         <h3 className="card-text education-card-info__title fw-bold fs-4">
-          {title}
+          {specialization}
         </h3>
-        <p className="card-text education-card-info__universitet m-0 mb-1 fs-6">
-          <span>Universitet</span>
+        <p className="card-text education-card-info__university m-0 mb-1 fs-6">
+          <span>University</span>
           {university}
         </p>
         <p className="card-text education-card-info__degree m-0 mb-1 fs-6">
