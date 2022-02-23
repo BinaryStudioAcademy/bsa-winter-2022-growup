@@ -1,4 +1,4 @@
-import { Navigate } from '../../../hooks/hooks';
+import { Navigate } from 'hooks/hooks';
 import {
   AppRoute,
   MentorMenteeRoute,
@@ -10,6 +10,7 @@ import { NotFound } from '../../not-found';
 import ProfileSettings from '../../profile-settings/profile-settings';
 import ControlledTabs from 'components/okr/tabs/two-tabs';
 import SkillOverview from 'components/skills/skill-overview';
+import OpprotunitiesPage from 'components/opportunities-page/opportunitiesPage';
 
 export const mentorMenteeRoutes = [
   {
@@ -38,7 +39,7 @@ export const mentorMenteeRoutes = [
   },
   {
     path: MentorMenteeRoute.OPPORTUNITIES,
-    element: <div>Opportunities</div>,
+    element: <OpprotunitiesPage />,
   },
   {
     path: MentorMenteeRoute.MENTEE_PROFILES,

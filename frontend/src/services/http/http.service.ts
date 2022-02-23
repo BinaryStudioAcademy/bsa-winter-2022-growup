@@ -49,6 +49,38 @@ class Http {
       this.throwError(err);
     }
   }
+  public async post<T>(url: string, options: HttpOptions): Promise<T> {
+    try {
+      const {
+        method = HttpMethod.GET,
+        payload = null,
+        hasAuth = true,
+        contentType,
+        query,
+      } = options;
+
+      const headers = this.getHeaders(hasAuth, contentType);
+
+      const fetchOptions = {
+        method,
+        headers,
+      };
+      const response = await fetch(
+        this.getUrl(url, query),
+        payload === null
+          ? fetchOptions
+          : {
+              ...fetchOptions,
+              body: payload,
+            },
+      );
+      await this.checkStatus(response);
+
+      return this.parseJSON<T>(response);
+    } catch (err) {
+      this.throwError(err);
+    }
+  }
 
   private getUrl(url: string, query?: object): string {
     return `${url}${query ? `?${stringify(query)}` : ''}`;

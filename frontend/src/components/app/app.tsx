@@ -16,15 +16,16 @@ const App: React.FC = () => {
     (state) => state.auth.user?.roleType === RoleType.ADMIN,
   );
   const { isAuthenticated } = useAppSelector((state) => state.auth);
-
   return (
-    <div className="wrapper">
+    <>
       {isAdmin ? (
         <AdminRouting isAuthenticated={isAuthenticated} />
       ) : (
-        <UserRouting isAuthenticated={isAuthenticated} />
+        <div className="wrapper">
+          <UserRouting isAuthenticated={isAuthenticated} />
+        </div>
       )}
-    </div>
+    </>
   );
 };
 
