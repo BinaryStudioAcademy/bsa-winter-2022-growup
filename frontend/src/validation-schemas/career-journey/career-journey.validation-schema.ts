@@ -1,7 +1,9 @@
 import * as Joi from 'joi';
 import { CareerJourneyPayloadKey } from '../../common/enums/user/career-journey-payload-key.enum';
-import { CareerJourneyValidationRule } from '../../common/enums/validation/career-journey-validation-rule.enum';
-import { CareerJourneyValidationMessage } from '../../common/enums/validation/career-journey-validation.enum';
+import {
+  CareerJourneyValidationMessage,
+  CareerJourneyValidationRule,
+} from '../../common/enums/validation/validation';
 
 const careerJourney = Joi.object({
   [CareerJourneyPayloadKey.POSITION]: Joi.string()
