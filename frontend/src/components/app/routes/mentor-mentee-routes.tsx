@@ -1,4 +1,5 @@
 import { Navigate } from 'hooks/hooks';
+import { RoleType } from 'growup-shared';
 import {
   AppRoute,
   MentorMenteeRoute,
@@ -11,8 +12,9 @@ import ProfileSettings from '../../profile-settings/profile-settings';
 import ControlledTabs from 'components/okr/tabs/two-tabs';
 import SkillOverview from 'components/skills/skill-overview';
 import OpprotunitiesPage from 'components/opportunities-page/opportunitiesPage';
+import { IRoute } from '../common/interfaces';
 
-export const mentorMenteeRoutes = [
+export const mentorMenteeRoutes: IRoute[] = [
   {
     path: MentorMenteeRoute.OKR,
     element: <ControlledTabs />,
@@ -44,6 +46,7 @@ export const mentorMenteeRoutes = [
   {
     path: MentorMenteeRoute.MENTEE_PROFILES,
     element: <div>Mentee Profiles</div>,
+    role: RoleType.MENTOR,
   },
   {
     path: MentorMenteeRoute.ANY,
