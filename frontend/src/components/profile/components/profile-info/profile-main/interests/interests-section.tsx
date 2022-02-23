@@ -1,10 +1,10 @@
 import { useState, useCallback, useEffect } from 'hooks/hooks';
 import TagModal from '../tags/modal/tag-modal';
-import { PencilFill } from 'react-bootstrap-icons';
 import { tagsActions } from 'store/actions';
 import { useAppDispatch } from 'hooks/store/store.hooks';
 import Tag from '../tags/common/tag';
 import type { ITag } from 'common/interfaces/tag/tag';
+import { PencilFill } from 'react-bootstrap-icons';
 
 type PropTypes = {
   tagList: ITag[];
@@ -24,10 +24,6 @@ const Interests: React.FC<PropTypes> = ({ tagList }) => {
     dispatch(tagsActions.fetchTags());
   }, [dispatch]);
 
-  const deleteTag = useCallback((id: ITag['id']) => {
-    dispatch(tagsActions.deleteTag(id));
-  }, []);
-
   return (
     <>
       <TagModal show={isModalVisible} onClose={hideModal} />
@@ -46,9 +42,7 @@ const Interests: React.FC<PropTypes> = ({ tagList }) => {
         </div>
         <div className="edit-section-content d-flex flex-wrap align-items-start">
           {tagList.length ? (
-            tagList.map((tag) => (
-              <Tag key={tag.id} tag={tag} onDelete={deleteTag} />
-            ))
+            tagList.map((tag) => <Tag key={tag.id} tag={tag} />)
           ) : (
             <p className="m-0 text-center">No tags here...</p>
           )}
