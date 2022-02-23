@@ -18,11 +18,9 @@ import type { SuccessResponse } from '~/common/models/responses/success';
 export const getTags = async (): Promise<Tags[]> => {
   const tagsRepository = getCustomRepository(TagsRepository);
   const companyRepository = getCustomRepository(CompanyRepository);
-
   const companyInstance: Company = await companyRepository.findOne({
     name: companies[0].name,
   });
-
   const tags = await tagsRepository.find({
     company: companyInstance,
     relations: ['company'],
