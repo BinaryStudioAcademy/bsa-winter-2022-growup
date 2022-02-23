@@ -8,6 +8,11 @@ interface IReturnCompanyData {
   company: ICompany;
 }
 
+interface IReturnCompaniesData {
+  token: string;
+  companies: ICompany[];
+}
+
 class CompanyApi {
   // eslint-disable-next-line
   private http: Http;
@@ -16,6 +21,27 @@ class CompanyApi {
   constructor({ apiPath, http }: { apiPath: string; http: Http }) {
     this.apiPath = apiPath;
     this.http = http;
+  }
+
+  public async getAllCompamies(): Promise<IReturnCompaniesData | null> {
+    const options = {
+      method: HttpMethod.GET,
+      contentType: ContentType.JSON,
+      hasAuth: true,
+      payload: null,
+    };
+
+    try {
+      const result = await this.http.load<IReturnCompaniesData>(
+        `${this.apiPath}/company`,
+        options,
+      );
+      return result;
+    } catch (e) {
+      //passing an error to the handler
+      console.warn(e);
+      return null;
+    }
   }
 
   public async addCompany(

@@ -5,6 +5,20 @@ import { ICompany } from 'common/interfaces/company/company';
 import { StorageKey } from 'common/enums/app/storage-key.enum';
 import { company as companyApi } from 'services';
 
+const get_allCompanisesAsync = createAsyncThunk(
+  ActionType.GET_ALL_COMPANIES,
+  async (_, { dispatch }) => {
+    const result = await companyApi.getAllCompamies();
+
+    if (result) {
+      const { token, companies } = result;
+
+      window.localStorage.setItem(StorageKey.TOKEN, token);
+      dispatch(actions.get_all_companies(companies));
+    }
+  },
+);
+
 const add_companyAsync = createAsyncThunk(
   ActionType.ADD_COMPANY,
   async (newCompany: ICompany, { dispatch }) => {
@@ -35,6 +49,7 @@ const edit_companyAsync = createAsyncThunk(
 
 const companyActions = {
   ...actions,
+  get_allCompanisesAsync,
   add_companyAsync,
   edit_companyAsync,
 };
