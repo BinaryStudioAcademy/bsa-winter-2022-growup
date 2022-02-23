@@ -57,7 +57,7 @@ const CareerJourneyForm: React.FC<Props> = (props) => {
           <DatePicker />
         </div>
 
-        <div className="mb-3">
+        <div>
           <Form.Label>End date</Form.Label>
           <DatePicker />
         </div>
