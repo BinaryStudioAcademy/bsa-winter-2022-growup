@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { run } from '~/common/helpers/route.helper';
-import { createTags, deleteTag, getTags } from '~/services/tag.service';
+import { createTagsController } from '../controllers/tags.controller';
+import { deleteTag, getTags } from '~/services/tag.service';
 import {
   getCommonUserList,
   registerCommonUsers,
@@ -15,10 +16,7 @@ router.get(
   run((_) => getTags()),
 );
 
-router.post(
-  '/tags',
-  run((req) => createTags(req.body.tags)),
-);
+router.post('/tags', run(createTagsController));
 
 router.delete(
   '/tags/:id',

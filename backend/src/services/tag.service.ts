@@ -9,7 +9,6 @@ import CompanyRepository from '~/data/repositories/company.repository';
 import { Tags } from '~/data/entities/tags';
 import { Company } from '~/data/entities/company';
 
-import { asyncForEach } from '~/common/helpers/array.helper';
 import { tagsMapper } from '~/common/mappers/tags.mapper';
 
 import type { TagsCreationResponse } from '~/common/models/tags/tags';
@@ -31,38 +30,48 @@ export const getTags = async (): Promise<Tags[]> => {
 
 export const createTags = async (
   data: Tags['name'][],
+  company: Company,
 ): Promise<TagsCreationResponse> => {
   const tagsRepository = getCustomRepository(TagsRepository);
-  const companyRepository = getCustomRepository(CompanyRepository);
 
-  const companyInstance: Company = await companyRepository.findOne({
-    name: companies[0].name,
+  const tags = Array.from(new Set(data));
+
+  const alreadyExistingTags = (
+    await tagsRepository.find({
+      relations: ['company'],
+      where: { company },
+    })
+  ).map((tag) => tag.name);
+
+  await tagsRepository.bulkCreate(
+    tags.map((name) => ({
+      name,
+      company,
+    })),
+  );
+
+  const tagInstances = await tagsRepository.find({
+    relations: ['company'],
+    where: { company },
   });
 
-  const targetTags = await tagsRepository.find({ company: companyInstance });
-  const tags: Tags[] = [];
-  const existingTags: Tags['name'][] = [];
+  const createdTags = tagInstances.filter(
+    (tag) => tags.includes(tag.name) && !alreadyExistingTags.includes(tag.name),
+  );
+  const existingTags = tagInstances
+    .filter(
+      (tag) =>
+        tags.filter(
+          (tagName) => tagName.toLowerCase() === tag.name.toLowerCase(),
+        ).length &&
+        alreadyExistingTags.filter(
+          (existingTag) => existingTag.toLowerCase() === tag.name.toLowerCase(),
+        ).length,
+    )
+    .map((tag) => tag.name);
 
-  await asyncForEach(async (name) => {
-    const tagName = name.toLowerCase();
-
-    if (targetTags.find((tag) => tag.name.toLowerCase() === tagName)) {
-      existingTags.push(name);
-      return;
-    }
-
-    const tagInstance = tagsRepository.create({
-      name,
-      company: companyInstance,
-    });
-
-    const tag = await tagInstance.save();
-    tags.push(tag);
-  }, data);
-
-  const mappedTags = tags.map((tag) => tagsMapper(tag));
   return {
-    tags: mappedTags,
+    tags: createdTags,
     existingTags,
   };
 };

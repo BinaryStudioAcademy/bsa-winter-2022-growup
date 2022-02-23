@@ -3,9 +3,10 @@ import { AbstractEntity } from '~/data/abstract/abstract.entity';
 import { Company } from './company';
 import { Opportunity } from './opportunity';
 
+@Unique('company_unique_tags', ['name', 'company'])
 @Entity()
 export class Tags extends AbstractEntity {
-  @Column({ type: 'varchar', length: 250 })
+  @Column({ type: 'citext' })
   name: string;
 
   @ManyToOne(() => Company, (company) => company.id)
