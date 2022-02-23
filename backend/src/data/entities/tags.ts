@@ -1,4 +1,11 @@
-import { Entity, ManyToOne, Column, ManyToMany, JoinTable } from 'typeorm';
+import {
+  Entity,
+  ManyToOne,
+  Unique,
+  Column,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
 import { AbstractEntity } from '~/data/abstract/abstract.entity';
 import { Company } from './company';
 import { Opportunity } from './opportunity';
