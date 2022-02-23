@@ -828,30 +828,33 @@
                   "type": "string"
                 },
                 "levels": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "skills": {
-                      "type": "array",
-                      "items": {
-                        "allOf": [
-                          {
-                            "$ref": "#/definitions/Skill"
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "objectives": {
-                                "type": "array",
-                                "items": {
-                                  "$ref": "#/definitions/Skill Objective"
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "skills": {
+                        "type": "array",
+                        "items": {
+                          "allOf": [
+                            {
+                              "$ref": "#/definitions/Skill"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "objectives": {
+                                  "type": "array",
+                                  "items": {
+                                    "$ref": "#/definitions/Skill Objective"
+                                  }
                                 }
                               }
                             }
-                          }
-                        ]
+                          ]
+                        }
                       }
                     }
                   }
