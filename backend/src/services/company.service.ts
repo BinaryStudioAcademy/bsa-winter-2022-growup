@@ -144,7 +144,11 @@ export const getAllCompanies = async ({
 
   const companies = await companyRepository.find();
 
-  const token = signToken({ userId, role: userRole });
+  const token = signToken({
+    userId,
+    role: userRole,
+    companyId: companies[0].id,
+  });
 
   return { token, companies };
 };
