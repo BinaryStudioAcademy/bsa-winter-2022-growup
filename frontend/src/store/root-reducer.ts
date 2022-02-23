@@ -7,6 +7,8 @@ import { profileReducer as profile } from './profile';
 import { workStyleQuizReducer as workStyleQuiz } from './work-style-quiz';
 import { opportunityReducer as opportunities } from './opportunities';
 import { homePageReducer as homePage } from './home-page';
+import { careerJourneyReducer as careerJourney } from './career-journey';
+import { educationReducer as education } from './education';
 import { combineReducers } from '@reduxjs/toolkit';
 
 const rootReducer = combineReducers({
@@ -19,6 +21,8 @@ const rootReducer = combineReducers({
   opportunities,
   homePage,
   workStyleQuiz,
+  careerJourney,
+  education,
 });
 
 export { rootReducer };
