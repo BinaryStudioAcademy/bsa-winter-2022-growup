@@ -6,3 +6,10 @@ export const badRequestError = (message: string): HttpError => {
     message,
   });
 };
+
+export const successRequest = (message: string): HttpError => {
+  return new HttpError({
+    status: HttpCode.OK,
+    message,
+  });
+};

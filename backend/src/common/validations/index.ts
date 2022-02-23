@@ -4,4 +4,8 @@ export {
   createObjectiveSchema,
   updateObjectiveSchema,
 } from './objective-schemas';
+export {
+  createCareerJourneySchema,
+  updateCareerJourneySchema,
+} from './career-journey-schemas';
 export { createKeyResultSchema } from './key-result-schema';
