@@ -10,6 +10,6 @@ export class Company extends AbstractEntity {
   @Column({ type: 'varchar', length: 250 })
   description: string;
 
-  @OneToMany(() => User, (user) => user)
-  user: User;
+  @OneToMany(() => User, (user) => user.company)
+  users: User[];
 }
