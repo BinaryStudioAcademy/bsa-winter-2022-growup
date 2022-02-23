@@ -52,6 +52,7 @@ const Admin: React.FC<PropTypes> = ({ variant }) => {
                 firstName={user?.firstName}
                 lastName={user?.lastName}
                 size="50"
+                dropdown
               />
             </Nav.Item>
           </Nav>
