@@ -16,6 +16,7 @@ import CompanyRepository from '~/data/repositories/company.repository';
 import WorkQuizRepository from '~/data/repositories/work-quiz.repository';
 import QuizCategoryRepository from '~/data/repositories/quiz-category.repository';
 import QuizAnswerRepository from '~/data/repositories/quiz-answer.repository';
+import UserRepository from '~/data/repositories/user.repository';
 
 import { asyncForEach } from '~/common/helpers/array.helper';
 import styleQuizJSON from '~/data/local/style-quiz.json';
@@ -141,13 +142,18 @@ export const getAllCompanies = async ({
   userRole: RoleType;
 }): Promise<CompaniesResponse> => {
   const companyRepository = getCustomRepository(CompanyRepository);
+  const userRepository = getCustomRepository(UserRepository);
 
-  const companies = await companyRepository.find();
+  userId = 'af5265d2-7b28-4bc0-bb59-98fc262c2a4b';
+  const user = await userRepository.findOne({ id: userId });
+  console.warn(user);
+  const companies = await companyRepository.find({ user: user });
 
+  const companyId = companies[0] ? companies[0].id : null;
   const token = signToken({
     userId,
     role: userRole,
-    companyId: companies[0].id,
+    companyId,
   });
 
   return { token, companies };

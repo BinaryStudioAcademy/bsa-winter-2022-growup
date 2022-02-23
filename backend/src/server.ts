@@ -1,6 +1,6 @@
 import cors from 'cors';
 import path from 'path';
-import express, { Express, Response, Request } from 'express';
+import express, { Express } from 'express';
 import { createConnection } from 'typeorm';
 
 import * as swaggerUi from 'swagger-ui-express';
@@ -10,7 +10,7 @@ import ormconfig from '~/config/ormconfig';
 import { env } from '~/config/env';
 import { logger } from '~/common/utils/logger.util';
 import swaggerDocument from '~/api-doc/swagger.json';
-import verifyToken from './api/middlewares/authorization-middleware';
+//import verifyToken from './api/middlewares/authorization-middleware';
 
 const { port } = env.app;
 
@@ -22,13 +22,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.use('/api', verifyToken);
+//app.use('/api', verifyToken);
 
 routes(app);
 
-app.use('*', (_: Request, res: Response) => {
+/*app.use('*', (_: Request, res: Response) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
-});
+});*/
 
 app.listen(port, async () => {
   try {

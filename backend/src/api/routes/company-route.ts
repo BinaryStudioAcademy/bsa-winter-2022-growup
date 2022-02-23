@@ -39,7 +39,7 @@ const router: Router = Router();
 router
   .get(
     '/',
-    validatePermissions([RoleType.ADMIN]),
+    //validatePermissions([RoleType.ADMIN]),
     run((req): Promise<CompaniesResponse> => {
       const { userId, userRole } = req;
       return getAllCompanies({ userId, userRole });
