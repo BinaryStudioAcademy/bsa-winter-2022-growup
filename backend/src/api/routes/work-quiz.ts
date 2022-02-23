@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { run } from '~/common/helpers/route.helper';
 import { getQuestions, sendResults } from '~/services/work-quiz.service';
 import { ITokenPayload } from '~/common/models/middlewares/token-payload';
+
 const router: Router = Router();
 
 router

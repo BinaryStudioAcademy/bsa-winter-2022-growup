@@ -1,112 +1,86 @@
-import { ChangeEvent, FormEvent, memo } from 'react';
-import { Form } from 'react-bootstrap';
-import { useState, useRef, useCallback } from 'hooks/hooks';
+import React, { useState } from 'react';
+import Cropper from 'react-cropper';
+import 'cropperjs/dist/cropper.css';
+// import './Demo.css';
 
-import ReactCropper, { Crop } from 'react-image-crop';
+const defaultSrc =
+  'https://raw.githubusercontent.com/roadmanfong/react-cropper/master/example/img/child.jpg';
 
-import 'react-image-crop/dist/ReactCrop.css';
+export const Demo: React.FC = () => {
+  const [image, setImage] = useState(defaultSrc);
+  const [cropData, setCropData] = useState('#');
+  const [cropper, setCropper] = useState<any>();
+  const onChange = (e: any): void => {
+    e.preventDefault();
+    let files;
+    if (e.dataTransfer) {
+      files = e.dataTransfer.files;
+    } else if (e.target) {
+      files = e.target.files;
+    }
+    const reader = new FileReader();
+    reader.onload = (): void => {
+      setImage(reader.result as any);
+    };
+    reader.readAsDataURL(files[0]);
+  };
 
-type Props = {
-  onSave: (data: Blob) => void;
-};
-
-const Cropper: React.FC<Props> = memo(({ onSave: save }) => {
-  const [crop, setCrop] = useState<Partial<Crop>>({
-    unit: 'px',
-    width: 200,
-    aspect: 1,
-  });
-  const [upImg, setUpImg] = useState('');
-  const [completedCrop, setCompletedCrop] = useState<Crop | null>(null);
-  const canvasRef = useRef(null);
-  const imgRef = useRef(null);
-
-  const onSelectFile = (e: ChangeEvent<HTMLInputElement>): void => {
-    if (e.target.files && e.target.files.length > 0) {
-      const reader = new FileReader();
-      reader.addEventListener('load', () => setUpImg(reader.result as string));
-      reader.readAsDataURL(e.target.files[0]);
+  const getCropData = (): void => {
+    if (typeof cropper !== 'undefined') {
+      setCropData(cropper.getCroppedCanvas().toDataURL());
     }
   };
 
-  const onLoad = useCallback((img) => {
-    imgRef.current = img;
-  }, []);
-
-  const onSave = (e: FormEvent): void => {
-    e.preventDefault();
-
-    if (
-      completedCrop === null ||
-      canvasRef.current === null ||
-      imgRef.current === null
-    )
-      return;
-
-    const image = imgRef.current as HTMLImageElement;
-
-    const canvas = canvasRef.current as HTMLCanvasElement;
-    const pixelRatio = window.devicePixelRatio;
-
-    const scaleX = image.naturalWidth / image.width;
-    const scaleY = image.naturalHeight / image.height;
-
-    canvas.width = completedCrop.width * pixelRatio * scaleX;
-    canvas.height = completedCrop.height * pixelRatio * scaleY;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-
-    ctx.drawImage(
-      image,
-      completedCrop.x * scaleX,
-      completedCrop.y * scaleY,
-      completedCrop.width * scaleX,
-      completedCrop.height * scaleY,
-      0,
-      0,
-      completedCrop.width * scaleX,
-      completedCrop.height * scaleY,
-    );
-
-    canvas.toBlob(
-      (blob) => {
-        if (!blob) return;
-        save(blob);
-      },
-      'image/jpeg',
-      1,
-    );
-  };
-
   return (
-    <>
-      <canvas ref={canvasRef} style={{ width: 200, height: 200 }} />
-      <Form.Control
-        placeholder="Image"
-        type="file"
-        onChange={onSelectFile}
-        accept="image/*"
-      />
-
-      <ReactCropper
-        src={upImg}
-        crop={crop}
-        onChange={(e): void => setCrop(e)}
-        onComplete={(e): void => setCompletedCrop(e)}
-        onImageLoaded={onLoad}
-        minHeight={200}
-        minWidth={200}
-      />
-      <div className="d-flex" onClick={onSave}>
-        <button className="btn btn-outline-gu-purple flex-fill fw-bold border-2">
-          Save
-        </button>
+    <div>
+      <div style={{ width: '100%' }}>
+        <input type="file" onChange={onChange} />
+        <button>Use default img</button>
+        <br />
+        <br />
+        <Cropper
+          style={{ height: 400, width: '100%' }}
+          zoomTo={0.5}
+          initialAspectRatio={1}
+          preview=".img-preview"
+          src={image}
+          viewMode={1}
+          minCropBoxHeight={10}
+          minCropBoxWidth={10}
+          background={false}
+          responsive={true}
+          autoCropArea={1}
+          checkOrientation={false} // https://github.com/fengyuanchen/cropperjs/issues/671
+          onInitialized={(instance: any): void => {
+            setCropper(instance);
+          }}
+          guides={true}
+        />
       </div>
-    </>
+      <div>
+        <div className="box" style={{ width: '50%', float: 'right' }}>
+          <h1>Preview</h1>
+          <div
+            className="img-preview"
+            style={{ width: '100%', float: 'left', height: '300px' }}
+          />
+        </div>
+        <div
+          className="box"
+          style={{ width: '50%', float: 'right', height: '300px' }}
+        >
+          <h1>
+            <span>Crop</span>
+            <button style={{ float: 'right' }} onClick={getCropData}>
+              Crop Image
+            </button>
+          </h1>
+          <img style={{ width: '100%' }} src={cropData} alt="cropped" />
+        </div>
+      </div>
+      <br style={{ clear: 'both' }} />
+    </div>
   );
-});
+};
 
-export default Cropper;
+export default Demo;

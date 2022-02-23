@@ -111,6 +111,308 @@
         }
       }
     },
+    "/company/okr": {
+      "get": {
+        "tags": ["Okr"],
+        "summary": "Get all okrs by logined user",
+        "responses": {
+          "200": {
+            "description": "Returns array of okrs if everything is ok.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Okr"
+              }
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Okr"],
+        "summary": "Create new okr by logined user",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "startDate": {
+                  "type": "string"
+                },
+                "endDate": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true,
+            "description": "Company credentials"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns created okr if everything is ok.",
+            "schema": {
+              "$ref": "#/definitions/Okr"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/company/okr/{id}": {
+      "get": {
+        "tags": ["Okr"],
+        "summary": "Get okr by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID of the okr to get"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns okr if everything is ok.",
+            "schema": {
+              "$ref": "#/definitions/Okr"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Okr"],
+        "summary": "Update okr by logined user",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID of the okr to get"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "startDate": {
+                  "type": "string"
+                },
+                "endDate": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true,
+            "description": "Okr credentials"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns created okr if everything is ok.",
+            "schema": {
+              "$ref": "#/definitions/Okr"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/company/okr/{id}/objective": {
+      "post": {
+        "tags": ["Okr"],
+        "summary": "Add new objective to the okr",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID of the okr to get"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "number"
+                }
+              }
+            },
+            "required": true,
+            "description": "Okr credentials"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns created objective if everything is ok.",
+            "schema": {
+              "$ref": "#/definitions/Okr"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/company/okr/{id}/objective/{id1}": {
+      "put": {
+        "tags": ["Okr"],
+        "summary": "Update objective to the okr",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID of the okr"
+          },
+          {
+            "in": "path",
+            "name": "id1",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID of the objective"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "number"
+                }
+              }
+            },
+            "required": true,
+            "description": "Okr credentials"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns created objective if everything is ok.",
+            "schema": {
+              "$ref": "#/definitions/Okr"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/company/okr/{id}/objective/{id}/keyresult": {
+      "post": {
+        "tags": ["Okr"],
+        "summary": "Add new keyresult to the objective",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID of the okr"
+          },
+          {
+            "in": "path",
+            "name": "id1",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID of the objective"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": true,
+            "description": "Okr credentials"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns created objective if everything is ok.",
+            "schema": {
+              "$ref": "#/definitions/Okr"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/api/auth/register": {
       "post": {
         "parameters": [
@@ -502,9 +804,331 @@
           }
         }
       }
+    },
+    "/api/career-path": {
+      "post": {
+        "tags": ["Career Path"],
+        "summary": "Create career path",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "domain": {
+                  "type": "string"
+                },
+                "levels": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "skills": {
+                      "type": "array",
+                      "items": {
+                        "allOf": [
+                          {
+                            "$ref": "#/definitions/Skill"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "objectives": {
+                                "type": "array",
+                                "items": {
+                                  "$ref": "#/definitions/Skill Objective"
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "domain": {
+                  "$ref": "#/definitions/Domain"
+                },
+                "level": {
+                  "$ref": "#/definitions/Level"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/career-path/{id}": {
+      "get": {
+        "tags": ["Career Path"],
+        "summary": "Fetch career path",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Domain id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "domain": {
+                  "$ref": "#/definitions/Domain"
+                },
+                "level": {
+                  "$ref": "#/definitions/Level"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/work-quiz/question": {
+      "get": {
+        "tags": ["Work Quiz"],
+        "summary": "Fetch quiz questions and its answers",
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  },
+                  "updatedAt": {
+                    "type": "string"
+                  },
+                  "deletedAt": {
+                    "type": "string"
+                  },
+                  "question": {
+                    "type": "string"
+                  },
+                  "answers": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/Answer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/work-quiz/result": {
+      "post": {
+        "tags": ["Work Quiz"],
+        "summary": "Send quiz results",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/Question"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "answers": {
+                        "type": "array",
+                        "items": {
+                          "allOf": [
+                            {
+                              "$ref": "#/definitions/Answer"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "isSelected": {
+                                  "type": "boolean"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "string"
+                  },
+                  "quizCategoryId": {
+                    "type": "string"
+                  },
+                  "score": {
+                    "type": "number"
+                  },
+                  "quizCategory": {
+                    "type": "object",
+                    "$ref": "#/definitions/Category"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
+    "KeyResult": {
+      "required": ["token"],
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": "string",
+          "nullable": true,
+          "default": null
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string",
+          "nullable": true,
+          "default": null
+        }
+      }
+    },
+    "Objective": {
+      "required": ["token"],
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "result": {
+          "type": "number"
+        },
+        "deletedAt": {
+          "type": "string",
+          "nullable": true,
+          "default": null
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string",
+          "nullable": true,
+          "default": null
+        },
+        "keyResults": {
+          "type": "array",
+          "nullable": true,
+          "default": null,
+          "items": {
+            "$ref": "#/definitions/KeyResult"
+          }
+        }
+      }
+    },
+    "Okr": {
+      "required": ["token"],
+
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": "string",
+          "nullable": true,
+          "default": null
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string",
+          "nullable": true,
+          "default": null
+        },
+        "objectives": {
+          "type": "array",
+          "nullable": true,
+          "default": null,
+          "items": {
+            "$ref": "#/definitions/Objective"
+          }
+        }
+      }
+    },
     "Company": {
       "required": ["token"],
       "properties": {
@@ -613,6 +1237,148 @@
           "type": "string"
         },
         "deletedAt": {
+          "type": "string"
+        }
+      }
+    },
+    "Domain": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "uuid"
+        },
+        "name": {
+          "type": "string",
+          "description": "Domain name",
+          "example": "Fullstack Developer"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Time the object was created at"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Time the object was updated at. By default it is the same as the creation time"
+        },
+        "deletedAt": {
+          "type": "string",
+          "description": "Time the object was deletedAt"
+        }
+      }
+    },
+    "Skill": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/Skill Type"
+        }
+      }
+    },
+    "Skill Objective": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "Level": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "uuid"
+        },
+        "name": {
+          "type": "string",
+          "description": "Domain name",
+          "example": "Fullstack Developer"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Time the object was created at"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Time the object was updated at. By default it is the same as the creation time"
+        },
+        "deletedAt": {
+          "type": "string",
+          "description": "Time the object was deletedAt"
+        },
+        "nextLevel": {
+          "$ref": "#/definitions/Level",
+          "description": "Next level of the current one"
+        }
+      }
+    },
+    "Skill Type": {
+      "type": "string",
+      "enum": ["Hard skills", "Soft skills", "Language"]
+    },
+    "Answer": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": "string"
+        },
+        "answer": {
+          "type": "string"
+        },
+        "score": {
+          "type": "number"
+        }
+      }
+    },
+    "Question": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "question": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": "string"
+        }
+      }
+    },
+    "Category": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": "string"
+        },
+        "name": {
           "type": "string"
         }
       }

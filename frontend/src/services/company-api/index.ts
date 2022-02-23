@@ -1,5 +1,6 @@
 import { ICompany } from 'common/interfaces/company/company';
-import { Http } from 'services/http/http.service';
+import { IAuthApi } from 'common/interfaces/api';
+import { Http } from '../http/http.service';
 import { HttpMethod } from 'common/enums/http/http';
 import { ContentType } from 'common/enums/file/file';
 
@@ -11,8 +12,10 @@ interface IReturnCompanyData {
 class CompanyApi {
   // eslint-disable-next-line
   private http: Http;
+  private apiPath: string;
 
-  constructor({ http }: { http: Http }) {
+  constructor({ apiPath, http }: IAuthApi) {
+    this.apiPath = apiPath;
     this.http = http;
   }
 
@@ -27,7 +30,7 @@ class CompanyApi {
 
     try {
       const result = await this.http.load<IReturnCompanyData>(
-        '/company',
+        `${this.apiPath}/company`,
         options,
       );
       return result;
@@ -52,7 +55,7 @@ class CompanyApi {
 
     try {
       const result = await this.http.load<IReturnCompanyData>(
-        '/company/' + id,
+        `${this.apiPath}/company/${id}`,
         options,
       );
       return result;

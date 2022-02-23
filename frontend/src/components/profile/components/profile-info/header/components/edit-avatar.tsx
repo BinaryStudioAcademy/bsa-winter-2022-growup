@@ -21,7 +21,7 @@ const EditAvatar: React.FC<Props> = (props) => {
     props.onClose();
   }, []);
 
-  const submitHandler = useCallback((file: Blob): void => {
+  const _submitHandler = useCallback((file: Blob): void => {
     // eslint-disable-next-line
     console.log(file.size, file.size / 1024 / 1024);
     if (file.size / 1024 / 1024 > 1) {
@@ -36,7 +36,7 @@ const EditAvatar: React.FC<Props> = (props) => {
   return (
     <Modal show={props.show} title={props.title} onClose={closeModal}>
       <Form className="d-flex flex-column gap-4">
-        <ImageCrop onSave={submitHandler} />
+        <ImageCrop />
 
         {!!error.length && <div className="alert alert-danger">{error}</div>}
       </Form>

@@ -1,17 +1,13 @@
 import { ContentType, HttpMethod } from 'common/enums/enums';
 import { Http } from 'services/http/http.service';
-import { IQuestion } from 'common/interfaces/user-quiz';
-
-interface IWorkStyleQuizApi {
-  apiPath: string;
-  http: Http;
-}
+import { IAuthApi } from 'common/interfaces/api';
+import { IQuestion, IUserQuizResult } from 'common/interfaces/user-quiz';
 
 class WorkStyleQuiz {
   private apiPath: string;
   private http: Http;
 
-  constructor({ apiPath, http }: IWorkStyleQuizApi) {
+  constructor({ apiPath, http }: IAuthApi) {
     this.apiPath = apiPath;
     this.http = http;
   }
@@ -35,7 +31,7 @@ class WorkStyleQuiz {
 
   async sendWorkStyleResults(
     results: IQuestion[],
-  ): Promise<IQuestion[] | null> {
+  ): Promise<IUserQuizResult[] | null> {
     try {
       const result = await this.http.load(`${this.apiPath}/work-quiz/result`, {
         contentType: ContentType.JSON,
@@ -43,7 +39,7 @@ class WorkStyleQuiz {
         payload: JSON.stringify(results),
       });
 
-      return result as IQuestion[];
+      return result as IUserQuizResult[];
     } catch {
       return null;
     }

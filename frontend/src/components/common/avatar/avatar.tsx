@@ -38,7 +38,11 @@ const UserAvatar: React.FC<Props> = memo(
               style={{ width: `${size}px`, height: `${size}px` }}
             />
           ) : (
-            <Avatar name={`${firstName} ${lastName}`} size={size} />
+            <Avatar
+              name={`${firstName} ${lastName}`}
+              size={size}
+              className="rounded-circle"
+            />
           )}
         </Dropdown.Toggle>
         <Dropdown.Menu>
