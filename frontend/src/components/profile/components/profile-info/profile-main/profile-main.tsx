@@ -1,42 +1,9 @@
-import { useCallback, useState } from 'hooks/hooks';
-import CareerJourneyForm from '../../profile-edit/career-journey-form/career-journey-form';
-import { CareerJourney, Education, Interests, Skill } from '../interfaces';
-import AddSection from '../add-section/add-section';
-import CareerCard from '../career-card/career-card';
+import { Interests, Skill } from '../interfaces';
 import EditSection from '../edit-section/edit-section';
-import EducationCard from '../education-card/education-card';
+import CareerJourneySection from './career-journey-section';
+import EducationSection from './education-section';
 import Tag from '../tag/tag';
 import './profile-main.scss';
-
-// FROM DB
-const careerJourneyData: CareerJourney[] = [
-  {
-    id: '1',
-    position: 'Fullstack JS Developer',
-    company: 'Binary Studio',
-    startDate: new Date('2020-01-30T03:24:00'),
-    endDate: new Date(),
-  },
-  {
-    id: '2',
-    position: 'Fullstack JS Developer',
-    company: 'Binary Studio',
-    startDate: new Date('2021-12-17T03:24:00'),
-    endDate: new Date(),
-  },
-];
-
-// FROM DB
-const educationData: Education[] = [
-  {
-    id: '1',
-    specialization: 'Computer Science',
-    university: 'Lviv Polytechnic National University',
-    degree: 'Masters',
-    startDate: new Date('2021-12-17T03:24:00'),
-    endDate: new Date(),
-  },
-];
 
 // FROM DB
 const skillData: Skill[] = [
@@ -63,44 +30,11 @@ const interestsData: Interests[] = [
 ];
 
 const ProfileMain: React.FC = () => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const closeModal = useCallback(() => setIsModalVisible(false), []);
-  const showModal = useCallback(() => setIsModalVisible(true), []);
-
   return (
     <main className="profile-main">
       <div className="left-side">
-        <AddSection title="Career journey" onButtonClick={showModal}>
-          <>
-            {careerJourneyData.map((item, i) => (
-              <CareerCard
-                key={i}
-                position={item.position}
-                company={item.company}
-                startDate={item.startDate}
-                endDate={item.endDate}
-              />
-            ))}
-            <CareerJourneyForm
-              show={isModalVisible}
-              title={'Edit career journey'}
-              onClose={closeModal}
-            />
-          </>
-        </AddSection>
-        <AddSection title="Education">
-          {educationData.map((item, i) => (
-            <EducationCard
-              key={i}
-              specialization={item.specialization}
-              university={item.university}
-              degree={item.degree}
-              startDate={item.startDate}
-              endDate={item.endDate}
-            />
-          ))}
-        </AddSection>
+        <CareerJourneySection />
+        <EducationSection />
       </div>
       <div className="right-side">
         <EditSection title="Skills">
