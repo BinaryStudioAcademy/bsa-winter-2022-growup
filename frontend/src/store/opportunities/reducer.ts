@@ -42,6 +42,7 @@ const opportunityReducer = (builder: ActionReducerMapBuilder<State>): void => {
   });
   builder.addCase(actions.fetchNewOpp.fulfilled, (state, action) => {
     state.opportunities = [...state.opportunities, action.payload];
+    state.isShowModal = false;
   });
 };
 export default opportunityReducer;

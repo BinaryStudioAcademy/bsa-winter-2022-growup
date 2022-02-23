@@ -33,16 +33,14 @@ const Admin: React.FC<PropTypes> = ({ variant }) => {
       >
         <Container>
           <Navbar.Brand>
-            <Link to={AdminRoute.ADMIN}>
-              <a
-                className="d-flex align-items-center text-decoration-none"
-                href=""
-              >
-                <img className="logo-icon me-md-3" src={logo} alt="logo" />
-                <span className="logo-title fs-1 text-gu-black m-0 d-none d-md-block">
-                  Grow Up
-                </span>
-              </a>
+            <Link
+              to={AdminRoute.ADMIN}
+              className="d-flex align-items-center text-decoration-none"
+            >
+              <img className="logo-icon me-md-3" src={logo} alt="logo" />
+              <span className="logo-title fs-1 text-gu-black m-0 d-none d-md-block">
+                Grow Up
+              </span>
             </Link>
           </Navbar.Brand>
           <Nav>

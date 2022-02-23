@@ -37,7 +37,12 @@ const EditAvatar: React.FC<Props> = (props) => {
   }, []);
 
   return (
-    <Modal show={props.show} title={props.title} onClose={closeModal}>
+    <Modal
+      show={props.show}
+      title={props.title}
+      onClose={closeModal}
+      footer={false}
+    >
       <Form className="d-flex flex-column gap-4">
         <ImageCrop
           setError={setError}
