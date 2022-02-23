@@ -1,5 +1,5 @@
 import { Modal as ModalWindow } from 'react-bootstrap';
-// import { Button } from '../common';
+import { Button } from '../common';
 import './styles.scss';
 
 type PropTypes = {
@@ -18,9 +18,9 @@ const Modal: React.FC<PropTypes> = ({
   title,
   children,
   className,
-  // buttonText,
-  // onSubmit,
-  // footer = true,
+  buttonText,
+  onSubmit,
+  footer = false,
 }) => {
   return (
     <ModalWindow show={show} onHide={onClose} centered>
@@ -28,7 +28,7 @@ const Modal: React.FC<PropTypes> = ({
         {title}
       </ModalWindow.Header>
       <ModalWindow.Body className={className}>{children}</ModalWindow.Body>
-      {/* {footer && (
+      {footer && (
         <ModalWindow.Footer className="fw-bold fs-3">
           <Button
             themeType={'btn-gu-pink text-gu-white'}
@@ -36,7 +36,7 @@ const Modal: React.FC<PropTypes> = ({
             onSubmit={onSubmit}
           />
         </ModalWindow.Footer>
-      )} */}
+      )}
     </ModalWindow>
   );
 };
