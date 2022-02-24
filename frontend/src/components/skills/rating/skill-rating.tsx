@@ -4,12 +4,12 @@ import starDisable from 'assets/img/icons/skill-icons/starDisable.png';
 import { useState } from 'react';
 import RatingValue from './value';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
-import { actions } from 'store/skill/slice';
 import { RootState } from 'common/types/types';
 import { validRating } from '../validations/rating';
 import { ReactComponent as Delete } from '../../../assets/img/icons/skill-icons/delete-icon.svg';
 import { ReactComponent as Save } from '../../../assets/img/icons/skill-icons/save-icon.svg';
 import { ReactComponent as Edit } from '../../../assets/img/icons/skill-icons/edit-icon.svg';
+import { skillActions } from 'store/skill';
 
 interface SkillTypes {
   id: string;
@@ -33,7 +33,7 @@ const SkillElement = (props: SkillTypes): React.ReactElement => {
   const dispatch = useAppDispatch();
 
   function deleteSkill(id: string): void {
-    dispatch(actions.REMOVE_SKILL(id));
+    dispatch(skillActions.deleteSkill(id));
   }
   function editSkill(text: string, el: number): void {
     if (validRating(text)) {
@@ -45,12 +45,14 @@ const SkillElement = (props: SkillTypes): React.ReactElement => {
   function saveEdits(id: string): void {
     if (isEdit && user) {
       dispatch(
-        actions.EDIT_SKILL({
-          id: id,
-          name: nameSkill,
-          userId: user.id,
-          rating: ratingValues,
-        }),
+        skillActions.updateSkill([
+          {
+            id: id,
+            name: nameSkill,
+            type: 'Soft skills',
+            // rating: ratingValues,
+          },
+        ]),
       );
     }
     setIsEdit(!isEdit);

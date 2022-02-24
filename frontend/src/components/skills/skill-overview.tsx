@@ -1,20 +1,23 @@
 import { RootState } from 'common/types/types';
 import ProfileHeader from './header-user';
 import SkillElement from './rating/skill-rating';
-import { ISkill } from './common/interfaces';
+// import { ISkill } from './common/interfaces';
+import { ISkill } from 'common/interfaces/skill/skill';
 import './styles.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { actions } from '../../store/skill/slice';
 import { validSkillName } from './validations/skill-name';
 import { ReactComponent as SortUp } from '../../assets/img/icons/skill-icons/sortUp-icon.svg';
 import { ReactComponent as SortDown } from '../../assets/img/icons/skill-icons/sortDown-icon.svg';
+import { skillActions } from 'store/skill';
 
 const SkillOverview = (): React.ReactElement => {
   const user = useAppSelector((state: RootState) => state.auth.user);
-  const skillList = useAppSelector((state: RootState) =>
-    state.skill.userSkill.filter((skill) => skill.userId === user?.id),
-  );
+  // const skillList = useAppSelector((state: RootState) =>
+  // state.skill.userSkill.filter((skill) => skill.userId === user?.id),
+  // );
+  const skills = useAppSelector((state: RootState) => state.skill.userSkill);
   const [textFind, setTextFind] = useState('');
   const [textAdd, setTextAdd] = useState('');
   const [isManager, setIsManager] = useState(true);
@@ -22,6 +25,10 @@ const SkillOverview = (): React.ReactElement => {
   const [isSortName, setIsSortName] = useState(true);
   const [isSortSelf, setIsSortSelf] = useState(true);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(skillActions.fetchSkills());
+  }, []);
 
   function isFind(text: string): boolean {
     const partName = text.slice(0, textFind.length);
@@ -33,12 +40,13 @@ const SkillOverview = (): React.ReactElement => {
   function handleSubmit(e: React.SyntheticEvent): void {
     if (validSkillName(textAdd) && user) {
       dispatch(
-        actions.ADD_SKILL({
-          id: new Date().getMilliseconds().toString(),
-          name: textAdd,
-          userId: user.id,
-          rating: ['', '', ''],
-        }),
+        skillActions.createSkill([
+          {
+            id: '',
+            name: textAdd,
+            type: 'Soft skills',
+          },
+        ]),
       );
       setTextAdd('');
     }
@@ -80,25 +88,25 @@ const SkillOverview = (): React.ReactElement => {
   }
 
   function sortSkillNames(): void {
-    const sortNames = skillList.sort(sortByName);
+    const sortNames = skills.sort(sortByName);
     setIsSortName(!isSortName);
     dispatch(actions.SORT_NAME(sortNames));
   }
 
   function sortSelfRating(): void {
-    const sortSelfRating = skillList.sort(sortBySelfRating);
+    const sortSelfRating = skills.sort(sortBySelfRating);
     setIsSortSelf(!isSortSelf);
     dispatch(actions.SORT_NAME(sortSelfRating));
   }
 
   function sortManagerRating(): void {
-    const sortManager = skillList.sort(sortByManager);
+    const sortManager = skills.sort(sortByManager);
     setIsManager(!isManager);
     dispatch(actions.SORT_NAME(sortManager));
   }
 
   function sortSkillReview(): void {
-    const sortSkillReview = skillList.sort(sortBySkillReview);
+    const sortSkillReview = skills.sort(sortBySkillReview);
     setIsSkillReview(!isSkillReview);
     dispatch(actions.SORT_NAME(sortSkillReview));
   }
@@ -183,17 +191,19 @@ const SkillOverview = (): React.ReactElement => {
           </tr>
         </thead>
         <tbody>
-          {skillList.map((skill: ISkill) => {
-            if (isFind(skill.name))
-              return (
-                <SkillElement
-                  key={skill.id}
-                  name={skill.name}
-                  rating={skill.rating}
-                  id={skill.id}
-                />
-              );
-          })}
+          {skills
+            ? skills.map((skill: ISkill) => {
+                if (isFind(skill.name))
+                  return (
+                    <SkillElement
+                      key={skill.id}
+                      name={skill.name}
+                      rating={skill.rating}
+                      id={skill.id}
+                    />
+                  );
+              })
+            : true}
         </tbody>
       </table>
     </div>

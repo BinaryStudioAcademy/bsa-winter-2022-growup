@@ -31,7 +31,7 @@ const router: Router = Router();
 
 router.post(
   '/',
-  validatePermissions([RoleType.ADMIN]),
+  // validatePermissions([RoleType.ADMIN]),
   run((req): Promise<CompanyResponse> => {
     const { userId, userRole, companyId, body } = req;
     const tokenPayload = {

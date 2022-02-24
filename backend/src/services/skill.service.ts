@@ -12,11 +12,13 @@ import { SuccessResponse } from '~/common/models/responses/success';
 import { HttpCode, HttpError } from 'growup-shared';
 import UserRepository from '~/data/repositories/user.repository';
 import UserSkillRepository from '~/data/repositories/userskill.repository';
+// import { User } from '~/data/entities/user';
+// import { UserSkill } from '~/data/entities/user-skill';
 
-export const getSkills = async (id: Company['id']): Promise<Skill[]> => {
+export const getSkills = async (id: Company['id']): Promise<any> => {
   const skillRepository = getCustomRepository(SkillRepository);
   const companyRepository = getCustomRepository(CompanyRepository);
-
+  console.log(id);
   const companyInstance: Company = await companyRepository.findOne({
     id: id,
   });
@@ -25,26 +27,45 @@ export const getSkills = async (id: Company['id']): Promise<Skill[]> => {
     company: companyInstance,
   } as FindManyOptions);
 
-  // const userSkillRepository = getCustomRepository(UserSkillRepository);
-  // const userSkills = await userSkillRepository.find({
-  //   where: {
-  //     skill: In(skills),
-  //   },
-  // });
+  const userSkillRepository = getCustomRepository(UserSkillRepository);
+  console.log(userSkillRepository);
+  const userSkills = await userSkillRepository.find({
+    where: {
+      skill: In(skills.map((s) => s.id)),
+    },
+    // relations: ['userSkills']
+  });
+  console.log(userSkills);
   // userSkills[0].mentorRating
-
-  return skills.map((skill) => skillsMapper(skill));
+  const newSkills: any = skills.map((skill) => skillsMapper(skill));
+  const skillsWithRating = newSkills.map((el: any) => {
+    return {
+      ...el,
+      rating: ['1', '1', '2'],
+    };
+  });
+  return skillsWithRating;
 };
 
-export const getUserSkills = async (id: string): Promise<any> => {
-  const userRepository = getCustomRepository(UserRepository);
+export const getUserSkills = async (_id: string): Promise<any> => {
+  // const userRepository = getCustomRepository(UserRepository);
+  // const skillRepository = getCustomRepository(SkillRepository);
+  // const userSkillRepository = getCustomRepository(UserSkillRepository);
+  // const userInstance: User = await userRepository.findOne({
+  //   id: id,
+  // });
+  // const userSkillInstance: UserSkill = await userSkillRepository.findOne({
+  //   reviewRating: null,
+  // });
+  // console.log(userInstance);
+  // console.log(skillRepository);
+  // console.log(userSkillInstance);
+  // console.log(userSkillRepository);
+  // console.log(userInstance.company);
+  // console.log(userInstance.userSkills);
+  // console.log(userInstance.id);
 
-  const user = await userRepository.findOne({
-    where: { id: id },
-    relations: ['skills'],
-  });
-
-  return user.userSkills;
+  return null;
 };
 
 export const createSkills = async (

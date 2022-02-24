@@ -3,6 +3,7 @@ import { ReducerName } from 'common/enums/app/reducer-name.enum';
 import { ISkill } from 'components/skills/common/interfaces';
 // import { ISkill } from 'common/interfaces/skill/skill';
 import { ActionType } from './common';
+import SkillReducer from './reducer';
 
 type State = {
   userSkill: ISkill[];
@@ -35,10 +36,8 @@ const { reducer, actions } = createSlice({
     [ActionType.SORT_NAME]: (state, action: PayloadAction<ISkill[]>) => {
       state.userSkill = action.payload;
     },
-    // [ActionType.GET_SKILLS]: (state, action: PayloadAction<ISkill[]>) => {
-    //   state.userSkill = action.payload;
-    // },
   },
+  extraReducers: SkillReducer,
 });
 
 export { reducer, actions };
