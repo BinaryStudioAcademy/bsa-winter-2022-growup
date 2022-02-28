@@ -17,6 +17,7 @@ import {
 } from '~/services/skill-category.service';
 
 import { asyncForEach } from '~/common/helpers/array.helper';
+import { convertToSkillCategory } from '~/common/mappers/career-path.mapper';
 
 import { SkillObjective } from '~/data/entities/skill-objective';
 import { DomainLevel } from '~/data/entities/domain-level';
@@ -32,12 +33,10 @@ type CareeerPathResponse = {
   level: DomainLevelResponse;
 };
 
-const getLevelsAndSkills = async (
-  domain: Domain,
-): Promise<DomainLevelResponse> => {
-  const rootLevel = (await getDomainLevels(domain)) as DomainLevelResponse;
+const getLevelsAndSkills = async (domain: Domain): Promise<DomainLevel> => {
+  const rootLevel = await getDomainLevels(domain);
 
-  let currentLevel: DomainLevelResponse = rootLevel;
+  let currentLevel: DomainLevelResponse = rootLevel as DomainLevelResponse;
   while (currentLevel.nextLevel) {
     const categories = await getCategories(currentLevel);
 
@@ -47,22 +46,13 @@ const getLevelsAndSkills = async (
       skillObjectives.push(...objectives);
     }, categories);
 
-    const categorySkills = categories.map((category) => ({
-      ...category,
-      skill: {
-        ...category.skill,
-        objectives: skillObjectives.filter(
-          (objective) => objective.category.id === category.id,
-        ),
-      },
-    }));
+    const categorySkills = convertToSkillCategory(categories, skillObjectives);
 
-    currentLevel.skills = categorySkills.map(
-      (category) => category.skill,
-    ) as unknown as Skill[];
+    currentLevel.skills = categorySkills.map((category) => category.skill);
     if (!currentLevel.nextLevel.length) break;
     currentLevel = currentLevel.nextLevel[0] as DomainLevelResponse;
   }
+
   return rootLevel;
 };
 
