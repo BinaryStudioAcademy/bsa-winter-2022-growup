@@ -1,5 +1,7 @@
 import { ChangeEvent, FormEvent } from 'react';
 import { Form } from 'react-bootstrap';
+import { NotificationManager } from 'react-notifications';
+
 import { useState, useAppDispatch } from 'hooks/hooks';
 import { RoleType } from 'common/enums/enums';
 
@@ -28,7 +30,11 @@ const UserForm: React.FC<Props> = ({ onSubmit: submit }) => {
         email,
         roleType: role,
       }),
-    );
+    )
+      .unwrap()
+      .then(() => {
+        NotificationManager.success('User invited successfully');
+      });
 
     setEmail('');
     setRole(RoleType.MENTOR);
