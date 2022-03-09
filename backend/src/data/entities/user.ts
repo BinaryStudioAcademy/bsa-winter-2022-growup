@@ -3,6 +3,8 @@ import { AbstractEntity } from '~/data/abstract/abstract.entity';
 import { DomainLevel } from './domain-level';
 import { Company } from './company';
 import { UserRole } from './user-role';
+import { CareerJourney } from './career-journey';
+import { Education } from './education';
 
 @Entity()
 export class User extends AbstractEntity {
@@ -32,4 +34,10 @@ export class User extends AbstractEntity {
 
   @OneToMany(() => UserRole, (userRole) => userRole.id)
   role: UserRole;
+
+  @OneToMany(() => CareerJourney, (careerJourney) => careerJourney.user)
+  careerJourneys: CareerJourney[];
+
+  @OneToMany(() => Education, (education) => education.user)
+  educations: Education[];
 }
