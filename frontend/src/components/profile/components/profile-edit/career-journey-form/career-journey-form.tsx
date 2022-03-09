@@ -1,8 +1,16 @@
 import { FloatingLabel, Form } from 'react-bootstrap';
-import { useAppForm } from 'hooks/hooks';
-import { DatePicker, FormInput, Modal } from 'components/common/common';
+import { NotificationManager } from 'react-notifications';
+import {
+  useAppDispatch,
+  useAppForm,
+  useCallback,
+  useNavigate,
+} from 'hooks/hooks';
+import { FormInput, FormInputDate, Modal } from 'components/common/common';
+import { createCareerJourney } from 'store/career-journey/actions';
 import { DEFAULT_CAREER_JOURNEY_PAYLOAD } from './common/constants';
 import { CareerJourneyPayloadKey } from 'common/enums/user/career-journey-payload-key.enum';
+import { MentorMenteeRoute } from 'common/enums/mentor-mentee-route/mentor-mentee-route.enum';
 import { careerJourney as careerJourneyValidationSchema } from 'validation-schemas/validation-schemas';
 
 type Props = {
@@ -12,18 +20,33 @@ type Props = {
 };
 
 const CareerJourneyForm: React.FC<Props> = (props) => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const { control, errors, handleSubmit } = useAppForm({
     defaultValues: DEFAULT_CAREER_JOURNEY_PAYLOAD,
     validationSchema: careerJourneyValidationSchema,
   });
 
-  const onSubmitForm = (): void => {
-    alert('submit career journey form');
+  const handleSave = useCallback(
+    (payload) => dispatch(createCareerJourney(payload)),
+    [dispatch],
+  );
+
+  const onSubmitForm = (values: object): void => {
+    handleSave(values)
+      .unwrap()
+      .then(() => {
+        navigate(MentorMenteeRoute.PROFILE);
+      })
+      .catch((err: Error) => {
+        NotificationManager.error(err.message);
+      });
   };
 
   return (
-    <Modal {...props}>
-      <Form className="w-100" onSubmit={handleSubmit(onSubmitForm)}>
+    <Modal {...props} onSubmit={handleSubmit(onSubmitForm)}>
+      <Form className="w-100">
         <FloatingLabel
           controlId="career-journey-position"
           label="Position"
@@ -53,14 +76,20 @@ const CareerJourneyForm: React.FC<Props> = (props) => {
         </FloatingLabel>
 
         <div className="mb-3">
-          <Form.Label>Start date</Form.Label>
-          <DatePicker />
+          <FormInputDate
+            name={CareerJourneyPayloadKey.START_DATE}
+            control={control}
+            errors={errors}
+            placeholder="Start date"
+          />
         </div>
 
-        <div>
-          <Form.Label>End date</Form.Label>
-          <DatePicker />
-        </div>
+        <FormInputDate
+          name={CareerJourneyPayloadKey.END_DATE}
+          control={control}
+          errors={errors}
+          placeholder="End date"
+        />
       </Form>
     </Modal>
   );
