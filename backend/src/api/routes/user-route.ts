@@ -4,6 +4,7 @@ import multer from 'multer';
 import { run } from '~/common/helpers/route.helper';
 import { fetchUser, updateUserAvatar } from '~/services/user.service';
 import careerJourneyPouter from './career-journey';
+import educationRoute from './education-route';
 
 const router = Router();
 const upload = multer();
@@ -22,5 +23,6 @@ router
   );
 
 router.use('/career-journey', careerJourneyPouter);
+router.use('/education', educationRoute);
 
 export default router;
