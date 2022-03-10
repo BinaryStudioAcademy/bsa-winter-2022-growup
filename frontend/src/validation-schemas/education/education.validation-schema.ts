@@ -10,6 +10,7 @@ import {
 } from 'common/enums/validation/validation';
 
 const education = Joi.object({
+  id: Joi.optional(),
   [EducationPayloadKey.SPECIALIZATION]: Joi.string()
     .trim()
     .min(EducationValidationRule.SPECIALIZATION_MIN_LENGTH)
