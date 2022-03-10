@@ -1031,6 +1031,27 @@
     }
   },
   "definitions": {
+    "Default": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "uuid"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Time the object was created at"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Time the object was updated at. By default it is the same as the creation time"
+        },
+        "deletedAt": {
+          "type": "string",
+          "description": "Time the object was deletedAt"
+        }
+      }
+    },
     "KeyResult": {
       "required": ["token"],
       "type": "object",
@@ -1245,79 +1266,104 @@
       }
     },
     "Domain": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "uuid"
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Domain name",
+              "example": "Fullstack Developer"
+            }
+          }
         },
-        "name": {
-          "type": "string",
-          "description": "Domain name",
-          "example": "Fullstack Developer"
-        },
-        "createdAt": {
-          "type": "string",
-          "description": "Time the object was created at"
-        },
-        "updatedAt": {
-          "type": "string",
-          "description": "Time the object was updated at. By default it is the same as the creation time"
-        },
-        "deletedAt": {
-          "type": "string",
-          "description": "Time the object was deletedAt"
-        }
-      }
+        { "$ref": "#/definitions/Default" }
+      ]
     },
     "Skill": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "type": {
+              "$ref": "#/definitions/Skill Type"
+            }
+          }
         },
-        "type": {
-          "$ref": "#/definitions/Skill Type"
-        }
-      }
+        { "$ref": "#/definitions/Default" }
+      ]
     },
     "Skill Objective": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        }
-      }
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            }
+          }
+        },
+        { "$ref": "#/definitions/Default" }
+      ]
     },
     "Level": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "uuid"
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Domain name",
+              "example": "Fullstack Developer"
+            },
+            "nextLevel": {
+              "$ref": "#/definitions/Level",
+              "description": "Next level of the current one"
+            },
+            "skills": {
+              "allOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "objectives": {
+                            "type": "array",
+                            "items": {
+                              "allOf": [
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "name": {
+                                      "type": "string"
+                                    }
+                                  }
+                                },
+                                { "$ref": "#/definitions/Default" }
+                              ]
+                            }
+                          }
+                        }
+                      },
+                      { "$ref": "#/definitions/Default" }
+                    ]
+                  }
+                },
+                { "$ref": "#/definitions/Default" }
+              ]
+            }
+          }
         },
-        "name": {
-          "type": "string",
-          "description": "Domain name",
-          "example": "Fullstack Developer"
-        },
-        "createdAt": {
-          "type": "string",
-          "description": "Time the object was created at"
-        },
-        "updatedAt": {
-          "type": "string",
-          "description": "Time the object was updated at. By default it is the same as the creation time"
-        },
-        "deletedAt": {
-          "type": "string",
-          "description": "Time the object was deletedAt"
-        },
-        "nextLevel": {
-          "$ref": "#/definitions/Level",
-          "description": "Next level of the current one"
-        }
-      }
+        { "$ref": "#/definitions/Default" }
+      ]
     },
     "Skill Type": {
       "type": "string",

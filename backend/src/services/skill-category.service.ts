@@ -21,3 +21,14 @@ export const createSkillCategories = async (
     data.find((d) => d.skill.id === r.skill.id && d.level.id === r.level.id),
   );
 };
+
+export const getCategories = async (
+  level: SkillCategory['level'],
+): Promise<SkillCategory[]> => {
+  const skillCategoryRepository = getCustomRepository(SkillCategoryRepository);
+  const categories = await skillCategoryRepository.find({
+    where: { level },
+    relations: ['skill'],
+  });
+  return categories;
+};
