@@ -1,16 +1,38 @@
+import { NotificationManager } from 'react-notifications';
 import { Calendar, PencilFill, TrashFill } from 'react-bootstrap-icons';
-import './education-card.scss';
+import { useAppDispatch, useCallback, useNavigate } from 'hooks/hooks';
+import { removeEducation } from 'store/education/actions';
 import { Education } from '../interfaces';
+import { MentorMenteeRoute } from 'common/enums/mentor-mentee-route/mentor-mentee-route.enum';
+import './education-card.scss';
 
-type Props = Omit<Education, 'id'>;
+interface Props {
+  education: Education;
+  onEdit: (education: Education) => void;
+}
 
-const EducationCard: React.FC<Props> = ({
-  specialization,
-  university,
-  degree,
-  startDate,
-  endDate,
-}) => {
+const EducationCard: React.FC<Props> = ({ education, onEdit }) => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const { specialization, university, degree, startDate, endDate } = education;
+
+  const handleRemove = useCallback(
+    (payload) => dispatch(removeEducation(payload)),
+    [dispatch],
+  );
+
+  const onRemove = (): void => {
+    handleRemove(education)
+      .unwrap()
+      .then(() => {
+        navigate(MentorMenteeRoute.PROFILE);
+      })
+      .catch((err: Error) => {
+        NotificationManager.error(err.message);
+      });
+  };
+
   const absoluteYears: number = endDate.getFullYear() - startDate.getFullYear();
   const absoluteMonths: number = endDate.getMonth() - startDate.getMonth();
 
@@ -34,15 +56,27 @@ const EducationCard: React.FC<Props> = ({
         </p>
       </div>
       <div className="card-footer bg-white education-footer d-flex justify-content-between">
-        <div className="education-footer__duration align-items-center fs-7">
+        <div className="education-footer__duration align-self-center fs-7">
           <Calendar className="career-card-footer__calendar-icon" />
           <span>
             {years > 0 ? `${years} y` : ''} {months > 0 ? `${months} mo` : ''}
           </span>
         </div>
         <div className="education-action-buttons d-flex align-items-center text-gu-purple">
-          <PencilFill className="education-action-buttons__edit" />
-          <TrashFill className="education-action-buttons__delete" />
+          <button
+            type="button"
+            className="border-0 p-0 bg-transparent text-gu-purple"
+            onClick={(): void => onEdit(education)}
+          >
+            <PencilFill className="education-action-buttons__edit" />
+          </button>
+          <button
+            type="button"
+            className="border-0 p-0 bg-transparent text-gu-purple"
+            onClick={onRemove}
+          >
+            <TrashFill className="education-action-buttons__delete" />
+          </button>
         </div>
       </div>
     </div>
