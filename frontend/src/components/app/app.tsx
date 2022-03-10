@@ -3,7 +3,7 @@ import AdminRouting from './admin-routing';
 import UserRouting from './user-routing';
 import { getCurrentUser } from '../../store/auth/actions';
 import { RoleType } from 'common/enums/enums';
-import './app.scss';
+import './styles.scss';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();

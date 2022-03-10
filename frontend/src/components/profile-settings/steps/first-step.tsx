@@ -1,4 +1,4 @@
-import { StepProps } from './common/step-props';
+import { StepProps as Props } from './common/interfaces';
 import { TextField } from 'components/common/common';
 import Experience from './experience';
 import Education from './education';
@@ -9,7 +9,7 @@ import { useAppForm } from 'hooks/hooks';
 import { DEFAULT_FIRST_STEP_PAYLOAD } from './common/constants';
 import { FirstStepPayloadKey, UserPayloadKey } from 'common/enums/enums';
 
-const FirstStep: React.FC<StepProps> = ({
+const FirstStep: React.FC<Props> = ({
   isDisablePrevious,
   onPrevious,
   onNext,

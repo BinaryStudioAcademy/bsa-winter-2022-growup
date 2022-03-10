@@ -2,12 +2,12 @@ import { memo } from 'react';
 import { Modal } from 'components/common/common';
 import UserForm from './user-form';
 
-type PropTypes = {
+type Props = {
   show: boolean;
   onClose: () => void;
 };
 
-const UserModal: React.FC<PropTypes> = memo(({ show, onClose }) => {
+const UserModal: React.FC<Props> = memo(({ show, onClose }) => {
   return (
     <Modal
       show={show}

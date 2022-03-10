@@ -1,4 +1,4 @@
-import { StepProps } from './common/step-props';
+import { StepProps } from './common/interfaces';
 
 interface Props extends StepProps {
   isValid: boolean;

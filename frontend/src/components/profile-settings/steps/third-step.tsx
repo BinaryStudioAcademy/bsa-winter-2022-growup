@@ -1,7 +1,7 @@
-import { StepProps } from './common/step-props';
+import { StepProps as Props } from './common/interfaces';
 import StepControl from './step-control';
 
-const ThirdStep: React.FC<StepProps> = ({
+const ThirdStep: React.FC<Props> = ({
   children,
   isDisablePrevious,
   onPrevious,

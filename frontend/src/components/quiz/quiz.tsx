@@ -1,5 +1,5 @@
 import QuizItem from './quiz-item/quiz-item';
-import IQuiz from './interfaces/quiz';
+import { IQuiz } from './common/interfaces';
 
 type Props = {
   quizes: IQuiz[];

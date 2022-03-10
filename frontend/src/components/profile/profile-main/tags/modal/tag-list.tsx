@@ -1,14 +1,13 @@
 import { memo } from 'react';
 import type { UseTagList } from 'hooks/common';
+import Tag from '../tag/tag';
 
-import Tag from '../tag-item/tag-item';
-
-type Props = {
+type PropTypes = {
   tagList: UseTagList['list'];
   onDelete: UseTagList['deleteItem'];
 };
 
-const TagList: React.FC<Props> = ({ tagList, onDelete }) => (
+const TagList: React.FC<PropTypes> = ({ tagList, onDelete }) => (
   <div className="d-flex flex-wrap gap-2">
     {tagList.map((tag, index) => (
       <Tag

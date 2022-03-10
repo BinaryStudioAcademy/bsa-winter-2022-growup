@@ -9,12 +9,12 @@ import { Modal } from 'components/common/common';
 import TagForm from './form';
 import TagList from './tag-list';
 
-type PropTypes = {
+type Props = {
   show: boolean;
   onClose: () => void;
 };
 
-const TagModal: React.FC<PropTypes> = ({ show, onClose }) => {
+const TagModal: React.FC<Props> = ({ show, onClose }) => {
   const { list: tagList, addItem, deleteItem, clearItems } = useTagList();
 
   const dispatch = useAppDispatch();
