@@ -13,10 +13,29 @@ class EducationApi {
   }
 
   getAllEducations(): Promise<Education[]> {
-    return this.http.load<Education[]>(`${this.apiPath}/user/education`, {
-      method: HttpMethod.GET,
-      contentType: ContentType.JSON,
-    });
+    // return this.http.load<Education[]>(`${this.apiPath}/user/education`, {
+    //   method: HttpMethod.GET,
+    //   contentType: ContentType.JSON,
+    // });
+
+    return Promise.resolve([
+      {
+        id: '1',
+        specialization: 'Computer Science',
+        university: 'Lviv Polytechnic National University',
+        degree: 'Masters',
+        startDate: new Date('2021-12-17T03:24:00'),
+        endDate: new Date(),
+      },
+      {
+        id: '2',
+        specialization: 'Computer Science',
+        university: 'Kyiv National University',
+        degree: 'Bachelor',
+        startDate: new Date('2019-09-01T05:04:10'),
+        endDate: new Date(),
+      },
+    ]);
   }
 
   createEducation(payload: Education): Promise<void> {
