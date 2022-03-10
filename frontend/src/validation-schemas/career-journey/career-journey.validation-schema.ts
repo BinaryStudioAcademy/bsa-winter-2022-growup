@@ -10,6 +10,7 @@ import {
 } from 'common/enums/validation/validation';
 
 const careerJourney = Joi.object({
+  id: Joi.optional(),
   [CareerJourneyPayloadKey.POSITION]: Joi.string()
     .trim()
     .min(CareerJourneyValidationRule.POSITION_MIN_LENGTH)
