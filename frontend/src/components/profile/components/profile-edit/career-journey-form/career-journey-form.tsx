@@ -1,51 +1,32 @@
 import { FloatingLabel, Form } from 'react-bootstrap';
-import { NotificationManager } from 'react-notifications';
-import {
-  useAppDispatch,
-  useAppForm,
-  useCallback,
-  useNavigate,
-} from 'hooks/hooks';
+import { useAppForm } from 'hooks/hooks';
 import { FormInput, FormInputDate, Modal } from 'components/common/common';
-import { createCareerJourney } from 'store/career-journey/actions';
+import { CareerJourney } from '../../profile-info/interfaces';
 import { DEFAULT_CAREER_JOURNEY_PAYLOAD } from './common/constants';
 import { CareerJourneyPayloadKey } from 'common/enums/user/career-journey-payload-key.enum';
-import { MentorMenteeRoute } from 'common/enums/mentor-mentee-route/mentor-mentee-route.enum';
 import { careerJourney as careerJourneyValidationSchema } from 'validation-schemas/validation-schemas';
 
 type Props = {
-  show: boolean;
-  title: string;
+  careerJourney: CareerJourney | null;
   onClose: () => void;
+  onSubmit: (values: object) => void;
 };
 
 const CareerJourneyForm: React.FC<Props> = (props) => {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  const { careerJourney, onSubmit } = props;
 
   const { control, errors, handleSubmit } = useAppForm({
-    defaultValues: DEFAULT_CAREER_JOURNEY_PAYLOAD,
+    defaultValues: careerJourney || DEFAULT_CAREER_JOURNEY_PAYLOAD,
     validationSchema: careerJourneyValidationSchema,
   });
 
-  const handleSave = useCallback(
-    (payload) => dispatch(createCareerJourney(payload)),
-    [dispatch],
-  );
-
-  const onSubmitForm = (values: object): void => {
-    handleSave(values)
-      .unwrap()
-      .then(() => {
-        navigate(MentorMenteeRoute.PROFILE);
-      })
-      .catch((err: Error) => {
-        NotificationManager.error(err.message);
-      });
-  };
-
   return (
-    <Modal {...props} onSubmit={handleSubmit(onSubmitForm)}>
+    <Modal
+      {...props}
+      show={true}
+      title={careerJourney ? 'Edit career journey' : 'Add career journey'}
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <Form className="w-100">
         <FloatingLabel
           controlId="career-journey-position"
