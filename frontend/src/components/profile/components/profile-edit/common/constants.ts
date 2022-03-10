@@ -1,4 +1,8 @@
-const MIN_DATE = new Date(2022, 0, 1);
-const MAX_DATE = new Date();
+const MIN_DATE = new Date(0);
+
+const end = new Date();
+end.setHours(23, 59);
+
+const MAX_DATE = end;
 
 export { MAX_DATE, MIN_DATE };
