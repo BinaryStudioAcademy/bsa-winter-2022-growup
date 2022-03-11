@@ -214,7 +214,7 @@ export const fetchUser = async (id: User['id']): Promise<UserWithRole> => {
   const userRepository = getCustomRepository(UserRepository);
   const roleRepository = getCustomRepository(UserRoleRepository);
 
-  const { password: _password, ...user } = await userRepository.findOne(id);
+  const { password: _password, ...user } = await userRepository.geUserById(id);
   const { role } = await roleRepository.findOne({ user });
 
   return {

@@ -20,9 +20,8 @@ router
   .get(
     '/',
     run((req: Request) => fetchUser(req.userId)),
-  );
-
-router.use('/career-journey', careerJourneyPouter);
-router.use('/education', educationRoute);
+  )
+  .use('/career-journey', careerJourneyPouter)
+  .use('/education', educationRoute);
 
 export default router;
