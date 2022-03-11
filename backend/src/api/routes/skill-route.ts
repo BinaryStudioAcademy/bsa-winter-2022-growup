@@ -40,8 +40,7 @@ router
   .delete(
     '/:id',
     run((req) => {
-      console.log(req.params.id);
-      return deleteSkill(req.params.id);
+      return deleteSkill(req.params.id, req.userId);
     }),
   )
   .patch(

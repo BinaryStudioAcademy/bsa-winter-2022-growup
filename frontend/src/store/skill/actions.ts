@@ -15,11 +15,35 @@ const fetchSkills = createAsyncThunk(
   },
 );
 
+const fetchUserSkills = createAsyncThunk(
+  ActionType.FETCH_USER_SKILL,
+  async (_, { rejectWithValue }) => {
+    try {
+      const result = await skills.fetchUserSkill();
+      return result;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
 const createSkill = createAsyncThunk(
   ActionType.CREATE_SKILLS,
   async (data: ISkill[], { rejectWithValue }) => {
     try {
       const result = await skills.createSkill(data);
+      return result;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
+const connectSkill = createAsyncThunk(
+  ActionType.CONNECT_SKILLS,
+  async (data: ISkill[], { rejectWithValue }) => {
+    try {
+      const result = await skills.connectSkill(data);
       return result;
     } catch (err) {
       return rejectWithValue(err);
@@ -41,7 +65,7 @@ const deleteSkill = createAsyncThunk(
 
 const updateSkill = createAsyncThunk(
   ActionType.UPDATE_SKILL,
-  async (data: ISkill[], { rejectWithValue }) => {
+  async (data: any, { rejectWithValue }) => {
     try {
       const result = await skills.updateSkill(data);
       return result;
@@ -51,4 +75,11 @@ const updateSkill = createAsyncThunk(
   },
 );
 
-export { fetchSkills, createSkill, deleteSkill, updateSkill };
+export {
+  fetchSkills,
+  createSkill,
+  deleteSkill,
+  updateSkill,
+  fetchUserSkills,
+  connectSkill,
+};

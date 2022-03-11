@@ -6,11 +6,27 @@ import * as actions from './actions';
 const SkillReducer = (builder: ActionReducerMapBuilder<any>): void => {
   builder.addCase(actions.fetchSkills.fulfilled, (state, action) => {
     if (action.payload) {
+      state.allSkills = action.payload;
+    }
+  });
+
+  builder.addCase(actions.fetchUserSkills.fulfilled, (state, action) => {
+    if (action.payload) {
       state.userSkill = action.payload;
     }
   });
 
   builder.addCase(actions.createSkill.fulfilled, (state, action) => {
+    console.warn(action.payload);
+    const newAction: SkillProps = {
+      ...action.payload[0],
+      rating: ['', '', ''],
+    };
+    state.userSkill.push(newAction);
+  });
+
+  builder.addCase(actions.connectSkill.fulfilled, (state, action) => {
+    console.warn(action.payload);
     const newAction: SkillProps = {
       ...action.payload[0],
       rating: ['', '', ''],

@@ -7,10 +7,12 @@ import SkillReducer from './reducer';
 
 type State = {
   userSkill: ISkill[];
+  allSkills: ISkill[];
 };
 
 const initialState: State = {
   userSkill: [],
+  allSkills: [],
 };
 
 const { reducer, actions } = createSlice({

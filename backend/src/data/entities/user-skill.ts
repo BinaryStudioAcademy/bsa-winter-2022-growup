@@ -13,9 +13,15 @@ export class UserSkill extends BaseEntity {
   @Column({ nullable: true })
   reviewRating: number;
 
-  @ManyToOne(() => User, (user) => user.userSkills, { primary: true })
+  @ManyToOne(() => User, (user) => user.userSkills, {
+    primary: true,
+    onDelete: 'CASCADE',
+  })
   user: User;
 
-  @ManyToOne(() => Skill, (skill) => skill.userSkills, { primary: true })
+  @ManyToOne(() => Skill, (skill) => skill.userSkills, {
+    primary: true,
+    onDelete: 'CASCADE',
+  })
   skill: Skill;
 }

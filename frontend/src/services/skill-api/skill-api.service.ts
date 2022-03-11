@@ -28,9 +28,39 @@ class SkillsApi {
     }
   }
 
+  public async fetchUserSkill(): Promise<ISkill[] | null> {
+    try {
+      const result = await this.http.load(`${this.apiPath}/skills/user`, {
+        contentType: ContentType.JSON,
+      });
+      return result as ISkill[];
+    } catch {
+      return null;
+    }
+  }
+
   public async createSkill(skillsPayload: SkillProps[]): Promise<any | null> {
     try {
       const result = await this.http.load(`${this.apiPath}/skills`, {
+        contentType: ContentType.JSON,
+        method: HttpMethod.POST,
+        hasAuth: true,
+        payload: JSON.stringify([
+          {
+            name: skillsPayload[0].name,
+            type: skillsPayload[0].type,
+          },
+        ]),
+      });
+      return result as any;
+    } catch {
+      return null;
+    }
+  }
+
+  public async connectSkill(skillsPayload: SkillProps[]): Promise<any | null> {
+    try {
+      const result = await this.http.load(`${this.apiPath}/skills/user`, {
         contentType: ContentType.JSON,
         method: HttpMethod.POST,
         hasAuth: true,
@@ -54,7 +84,6 @@ class SkillsApi {
         method: HttpMethod.DELETE,
         hasAuth: true,
       });
-      console.warn(result);
       return result;
     } catch {
       return null;
@@ -63,20 +92,23 @@ class SkillsApi {
 
   public async updateSkill(skillsPayload: ISkill[]): Promise<any | null> {
     try {
-      console.warn(skillsPayload);
       const result = await this.http.load(
         `${this.apiPath}/skills/${skillsPayload[0].id}`,
         {
           contentType: ContentType.JSON,
           method: HttpMethod.PATCH,
           hasAuth: true,
-          payload: JSON.stringify({
-            name: skillsPayload[0].name,
-            type: skillsPayload[0].type,
-          }),
+          payload: JSON.stringify([
+            {
+              name: skillsPayload[0].name,
+              type: skillsPayload[0].type,
+            },
+            {
+              rating: skillsPayload[1].rating,
+            },
+          ]),
         },
       );
-      console.warn(result);
       return result as any;
     } catch {
       return null;

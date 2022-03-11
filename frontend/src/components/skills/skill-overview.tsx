@@ -18,6 +18,7 @@ const SkillOverview = (): React.ReactElement => {
   // state.skill.userSkill.filter((skill) => skill.userId === user?.id),
   // );
   const skills = useAppSelector((state: RootState) => state.skill.userSkill);
+  const allSkills = useAppSelector((state: RootState) => state.skill.allSkills);
   const [textFind, setTextFind] = useState('');
   const [textAdd, setTextAdd] = useState('');
   const [isManager, setIsManager] = useState(true);
@@ -27,6 +28,7 @@ const SkillOverview = (): React.ReactElement => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    dispatch(skillActions.fetchUserSkills());
     dispatch(skillActions.fetchSkills());
   }, []);
 
@@ -39,15 +41,19 @@ const SkillOverview = (): React.ReactElement => {
 
   function handleSubmit(e: React.SyntheticEvent): void {
     if (validSkillName(textAdd) && user) {
-      dispatch(
-        skillActions.createSkill([
-          {
-            id: '',
-            name: textAdd,
-            type: 'Soft skills',
-          },
-        ]),
-      );
+      const isName = allSkills.find((skill) => skill.name === textAdd);
+      const newSkill = [
+        {
+          id: '',
+          name: textAdd,
+          type: 'Soft skills',
+        },
+      ];
+      if (!isName) {
+        dispatch(skillActions.createSkill(newSkill));
+      } else {
+        dispatch(skillActions.connectSkill(newSkill));
+      }
       setTextAdd('');
     }
     e.preventDefault();
@@ -88,25 +94,29 @@ const SkillOverview = (): React.ReactElement => {
   }
 
   function sortSkillNames(): void {
-    const sortNames = skills.sort(sortByName);
+    const copySkills = [...skills];
+    const sortNames = copySkills.sort(sortByName);
     setIsSortName(!isSortName);
     dispatch(actions.SORT_NAME(sortNames));
   }
 
   function sortSelfRating(): void {
-    const sortSelfRating = skills.sort(sortBySelfRating);
+    const copySkills = [...skills];
+    const sortSelfRating = copySkills.sort(sortBySelfRating);
     setIsSortSelf(!isSortSelf);
     dispatch(actions.SORT_NAME(sortSelfRating));
   }
 
   function sortManagerRating(): void {
-    const sortManager = skills.sort(sortByManager);
+    const copySkills = [...skills];
+    const sortManager = copySkills.sort(sortByManager);
     setIsManager(!isManager);
     dispatch(actions.SORT_NAME(sortManager));
   }
 
   function sortSkillReview(): void {
-    const sortSkillReview = skills.sort(sortBySkillReview);
+    const copySkills = [...skills];
+    const sortSkillReview = copySkills.sort(sortBySkillReview);
     setIsSkillReview(!isSkillReview);
     dispatch(actions.SORT_NAME(sortSkillReview));
   }
@@ -116,7 +126,7 @@ const SkillOverview = (): React.ReactElement => {
       <div className="mb-5">
         <ProfileHeader />
       </div>
-      <div className="d-flex justify-content-between mb-4">
+      <div className="d-flex justify-content-between flex-wrap gap-3 mb-4">
         <form className="row g-3">
           <div className="col-auto">
             <input
@@ -130,7 +140,7 @@ const SkillOverview = (): React.ReactElement => {
           </div>
         </form>
         <form className="d-flex" onSubmit={handleSubmit}>
-          <div className="col-auto mx-4">
+          <div className="col-auto me-4">
             <input
               type="text"
               className="form-control"

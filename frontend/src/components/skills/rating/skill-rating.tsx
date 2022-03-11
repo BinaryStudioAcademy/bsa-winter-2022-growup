@@ -23,15 +23,14 @@ const SkillElement = (props: SkillTypes): React.ReactElement => {
   const [isHover, setIsHover] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [ratingValues, setRatingValues] = useState([
-    props.rating[0],
-    props.rating[1],
-    props.rating[2],
+    props.rating[0].toString(),
+    props.rating[1].toString(),
+    props.rating[2].toString(),
   ]);
   const [nameSkill, setNameSkill] = useState(props.name);
   const [isStar, setIsStar] = useState(false);
   const user = useAppSelector((state: RootState) => state.auth.user);
   const dispatch = useAppDispatch();
-
   function deleteSkill(id: string): void {
     dispatch(skillActions.deleteSkill(id));
   }
@@ -50,7 +49,9 @@ const SkillElement = (props: SkillTypes): React.ReactElement => {
             id: id,
             name: nameSkill,
             type: 'Soft skills',
-            // rating: ratingValues,
+          },
+          {
+            rating: ratingValues,
           },
         ]),
       );
