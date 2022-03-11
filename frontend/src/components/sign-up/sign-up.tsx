@@ -10,9 +10,11 @@ import {
   useAppSelector,
   useCallback,
   useNavigate,
+  useState,
 } from 'hooks/hooks';
 import { Container, FloatingLabel, Form } from 'react-bootstrap';
 import { NotificationManager } from 'react-notifications';
+import { Eye, EyeSlash } from 'react-bootstrap-icons';
 import { signUpUser } from 'store/auth/actions';
 import { Link } from '../common/common';
 import { signUp as signUpValidationSchema } from 'validation-schemas/validation-schemas';
@@ -23,6 +25,8 @@ const SignUp: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector((state) => state.auth.isLoading);
+
+  const [isHiddenPassword, setIsHiddenPassword] = useState(true);
 
   const { control, errors, handleSubmit } = useAppForm({
     defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
@@ -95,15 +99,22 @@ const SignUp: React.FC = () => {
           <FloatingLabel
             controlId="signUpPassword"
             label="Password"
-            className="mb-3"
+            className="mb-3 d-flex flex-wrap"
           >
             <FormInput
               name={UserPayloadKey.PASSWORD}
               control={control}
               errors={errors}
-              type="password"
+              type={isHiddenPassword ? 'password' : 'text'}
               placeholder="Password"
             />
+            <button
+              type="button"
+              className="auth-form__icon input-group-text position-absolute"
+              onClick={(): void => setIsHiddenPassword(!isHiddenPassword)}
+            >
+              {isHiddenPassword ? <EyeSlash /> : <Eye />}
+            </button>
           </FloatingLabel>
 
           <div className="d-grid gap-2">
