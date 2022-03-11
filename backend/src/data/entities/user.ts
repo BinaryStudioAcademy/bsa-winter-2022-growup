@@ -11,7 +11,7 @@ export class User extends AbstractEntity {
   @Column({ type: 'varchar', length: 50 })
   email: string;
 
-  @Column({ type: 'varchar', length: 100 })
+  @Column({ type: 'varchar', length: 100, select: false })
   password: string;
 
   @Column({ type: 'varchar', length: 250, nullable: true })
@@ -32,8 +32,8 @@ export class User extends AbstractEntity {
   @ManyToOne(() => DomainLevel, (domainLevel) => domainLevel.id)
   domain: DomainLevel;
 
-  @OneToMany(() => UserRole, (userRole) => userRole.id)
-  role: UserRole;
+  @OneToMany(() => UserRole, (userRole) => userRole.user)
+  role: UserRole[];
 
   @OneToMany(() => CareerJourney, (careerJourney) => careerJourney.user, {
     cascade: true,
