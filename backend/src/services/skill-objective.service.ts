@@ -20,3 +20,16 @@ export const upsertObjectives = async (
   });
   return objectives;
 };
+
+export const getObjectives = async (
+  category: SkillObjective['category'],
+): Promise<SkillObjective[]> => {
+  const skillObjectiveRepository = getCustomRepository(
+    SkillObjectiveRepository,
+  );
+  const objectives = await skillObjectiveRepository.find({
+    relations: ['category'],
+    where: { category },
+  });
+  return objectives;
+};

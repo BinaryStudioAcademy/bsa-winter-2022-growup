@@ -1,9 +1,11 @@
-import { FormEvent } from 'react';
 import { Form } from 'react-bootstrap';
-import { useAppDispatch, useState } from 'hooks/hooks';
+import { useAppDispatch, useCallback, useState } from 'hooks/hooks';
+import { NotificationManager } from 'react-notifications';
 
 import { Modal } from 'components/common/common';
 import { profileActions } from 'store/profile';
+
+import ImageCrop from './image-crop';
 
 type Props = {
   show: boolean;
@@ -12,37 +14,43 @@ type Props = {
 };
 
 const EditAvatar: React.FC<Props> = (props) => {
-  const [file, setFile] = useState<File | null>(null);
+  const [error, setError] = useState('');
+  const [imageLoading, setImageLoading] = useState(false);
   const dispatch = useAppDispatch();
 
-  const changeHandler = (e: FormEvent): void => {
-    const event = e as FormEvent<HTMLInputElement>;
-    if (event.currentTarget.files) setFile(event.currentTarget.files[0]);
-  };
+  const closeModal = useCallback(() => {
+    setError('');
+    props.onClose();
+  }, []);
 
-  const submitHandler = (e: FormEvent): void => {
-    e.preventDefault();
-
-    if (file) {
-      dispatch(profileActions.updateAvatar(file));
-      props.onClose();
-    }
-  };
+  const submitHandler = useCallback((file: Blob): void => {
+    setImageLoading(true);
+    dispatch(profileActions.updateAvatar(file))
+      .unwrap()
+      .then(() => {
+        setImageLoading(false);
+        closeModal();
+      })
+      .catch((error) => {
+        NotificationManager.error(error.message);
+      });
+  }, []);
 
   return (
-    <Modal {...props}>
-      <Form onSubmit={submitHandler}>
-        <Form.Control
-          placeholder="Image"
-          type="file"
-          onChange={changeHandler}
-          accept="image/*"
+    <Modal
+      show={props.show}
+      title={props.title}
+      onClose={closeModal}
+      footer={false}
+    >
+      <Form className="d-flex flex-column gap-4">
+        <ImageCrop
+          setError={setError}
+          onSave={submitHandler}
+          isLoading={imageLoading}
         />
-        <div className="d-flex">
-          <button className="btn btn-outline-gu-purple flex-fill fw-bold border-2 mt-4">
-            Save
-          </button>
-        </div>
+
+        {!!error.length && <div className="alert alert-danger">{error}</div>}
       </Form>
     </Modal>
   );

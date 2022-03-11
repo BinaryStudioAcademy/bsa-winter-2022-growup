@@ -57,7 +57,12 @@ const AddEditCompany: FC<IAddCompany> = ({ show, handleClose, company }) => {
           {company ? 'Edit company' : 'Add company info'}
         </Modal.Title>
       </Modal.Header>
-      <Card.Img variant="top" src="holder.js/100px180" alt={company?.name} />
+      <Card.Img
+        className="modal-company-image"
+        variant="top"
+        src="holder.js/100px180"
+        alt={company?.name}
+      />
       <Modal.Body>
         <Form.Group className="mb-3" controlId="CompanyName">
           <Form.Label>Company name</Form.Label>

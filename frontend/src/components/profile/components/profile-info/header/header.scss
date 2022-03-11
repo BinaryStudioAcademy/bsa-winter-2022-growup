@@ -12,6 +12,7 @@
 
   &__avatar {
     background-size: contain;
+    border-radius: 50%;
   }
 
   &__edit {
@@ -19,9 +20,10 @@
     border-radius: 100%;
     width: 26px;
     height: 26px;
-    top: 13px;
-    right: 0px;
+    top: 17%;
+    left: 83%;
     background-color: #fff;
+    transform: translate(-50%, -50%);
   }
 
   .edit-button {

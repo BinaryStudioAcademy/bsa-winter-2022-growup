@@ -8,16 +8,19 @@ import { ReactComponent as MenteeProfileIcon } from 'assets/img/icons/sidebar-ic
 import { MentorMenteeRoute } from 'common/enums/enums';
 import { Link } from 'components/common/common';
 import './styles.scss';
+import { useAppSelector } from 'hooks/store/store.hooks';
+
+import { RoleType } from 'growup-shared';
 
 const Sidebar: React.FC = () => {
-  const isMentor = true;
+  const { user } = useAppSelector((state) => state.auth);
 
   return (
     <aside className="sidebar-section position-fixed h-100 bg-gu-blue">
       <div className="sidebar-container d-flex flex-column pt-2 pt-md-3">
         <Link to={MentorMenteeRoute.HOME}>
           <a
-            className="logo-section d-flex align-items-center text-decoration-none px-2 ps-md-4"
+            className="logo-section d-flex align-items-center text-decoration-none px-2 ps-md-4 mb-5"
             href=""
           >
             <img
@@ -82,7 +85,7 @@ const Sidebar: React.FC = () => {
                 </span>
               </Link>
             </li>
-            {isMentor ? (
+            {user && user.roleType === RoleType.MENTOR && (
               <li className="navigation-list__item navigation-item mb-4">
                 <Link to={MentorMenteeRoute.MENTEE_PROFILES}>
                   <span className="navigation-item__link navigation-link d-flex align-items-center p-2 ps-md-4 fs-4 font-weight-normal text-gu-white">
@@ -93,7 +96,7 @@ const Sidebar: React.FC = () => {
                   </span>
                 </Link>
               </li>
-            ) : null}
+            )}
           </ul>
         </nav>
       </div>

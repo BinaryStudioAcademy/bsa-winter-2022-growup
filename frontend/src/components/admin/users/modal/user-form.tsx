@@ -1,5 +1,7 @@
 import { ChangeEvent, FormEvent } from 'react';
 import { Form } from 'react-bootstrap';
+import { NotificationManager } from 'react-notifications';
+
 import { useState, useAppDispatch } from 'hooks/hooks';
 import { RoleType } from 'common/enums/enums';
 
@@ -15,7 +17,7 @@ const UserForm: React.FC<Props> = ({ onSubmit: submit }) => {
   const dispatch = useAppDispatch();
 
   const emailChangeHandler = (e: ChangeEvent<HTMLInputElement>): void =>
-    setEmail(e.currentTarget.value);
+    setEmail(e.target.value.replace(' ', ''));
 
   const roleChangeHandler = (e: ChangeEvent<HTMLSelectElement>): void =>
     setRole(e.currentTarget.value as RoleType);
@@ -28,7 +30,11 @@ const UserForm: React.FC<Props> = ({ onSubmit: submit }) => {
         email,
         roleType: role,
       }),
-    );
+    )
+      .unwrap()
+      .then(() => {
+        NotificationManager.success('User invited successfully');
+      });
 
     setEmail('');
     setRole(RoleType.MENTOR);
@@ -46,6 +52,7 @@ const UserForm: React.FC<Props> = ({ onSubmit: submit }) => {
             value={email}
             onChange={emailChangeHandler}
             placeholder="Enter email name..."
+            required
           />
         </Form.Group>
         <Form.Group className="flex-fill">

@@ -18,5 +18,5 @@ yarn-debug.log*
 yarn-error.log*
 
 # VSCode
-.vscode
-.idea
+.vscode/
+.idea/
