@@ -5,3 +5,4 @@ export { default as UserAvatar } from './avatar/avatar';
 export { default as TextField } from './text-field/text-field';
 export { default as Button } from './button/button';
 export { default as AutoComplete } from './auto-complete/auto-complete';
+export { default as FormInput } from './form-input/form-input';
