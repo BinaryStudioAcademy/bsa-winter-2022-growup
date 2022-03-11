@@ -32,8 +32,7 @@ router
     validatePermissions([RoleType.MENTEE, RoleType.MENTOR]),
     validateBody(createCareerJourneySchema),
     run(async (req: Request) => {
-      const { body } = req;
-      const { userId } = req;
+      const { body, userId } = req;
       body.user = userId;
       return createCareerJourney(body);
     }),
