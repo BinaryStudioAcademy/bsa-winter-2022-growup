@@ -1,4 +1,8 @@
-import { MentorMenteeRoute, UserPayloadKey } from 'common/enums/enums';
+import {
+  AppRoute,
+  MentorMenteeRoute,
+  UserPayloadKey,
+} from 'common/enums/enums';
 import FormInput from 'components/common/form-input/form-input';
 import {
   useAppDispatch,
@@ -6,18 +10,23 @@ import {
   useAppSelector,
   useCallback,
   useNavigate,
+  useState,
 } from 'hooks/hooks';
 import { Container, FloatingLabel, Form } from 'react-bootstrap';
 import { NotificationManager } from 'react-notifications';
+import { Eye, EyeSlash } from 'react-bootstrap-icons';
 import { signUpUser } from 'store/auth/actions';
+import { Link } from '../common/common';
 import { signUp as signUpValidationSchema } from 'validation-schemas/validation-schemas';
-import '../login/styles.scss';
 import { DEFAULT_SIGN_UP_PAYLOAD } from './common/constants';
+import '../login/styles.scss';
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector((state) => state.auth.isLoading);
+
+  const [isHiddenPassword, setIsHiddenPassword] = useState(true);
 
   const { control, errors, handleSubmit } = useAppForm({
     defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
@@ -90,23 +99,37 @@ const SignUp: React.FC = () => {
           <FloatingLabel
             controlId="signUpPassword"
             label="Password"
-            className="mb-3"
+            className="mb-3 d-flex flex-wrap"
           >
             <FormInput
               name={UserPayloadKey.PASSWORD}
               control={control}
               errors={errors}
-              type="password"
+              type={isHiddenPassword ? 'password' : 'text'}
               placeholder="Password"
             />
+            <button
+              type="button"
+              className="auth-form__icon input-group-text position-absolute"
+              onClick={(): void => setIsHiddenPassword(!isHiddenPassword)}
+            >
+              {isHiddenPassword ? <EyeSlash /> : <Eye />}
+            </button>
           </FloatingLabel>
 
-          <button
-            className="btn btn-gu-pink text-gu-white form-control"
-            type="submit"
-          >
-            Sign up
-          </button>
+          <div className="d-grid gap-2">
+            <button className="btn btn-gu-pink text-gu-white" type="submit">
+              Sign up
+            </button>
+            <Form.Text className="mt-2 text-center fs-5">
+              Already have an account?
+              <Link to={AppRoute.LOGIN}>
+                <b className="text-decoration-underline text-gu-blue mx-2">
+                  Login here
+                </b>
+              </Link>
+            </Form.Text>
+          </div>
         </fieldset>
       </Form>
     </Container>
