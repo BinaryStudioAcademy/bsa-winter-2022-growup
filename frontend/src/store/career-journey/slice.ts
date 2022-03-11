@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getAllCareerJourneys } from './actions';
 import { ReducerName } from 'common/enums/app/reducer-name.enum';
-import { CareerJourney } from '../../components/profile/components/profile-info/interfaces';
+import { ICareerJourney } from '../../components/profile/common/interfaces';
 
 type State = {
-  careerJourneys: CareerJourney[];
+  careerJourneys: ICareerJourney[];
 };
 
 const initialState: State = {
@@ -17,7 +17,11 @@ const { reducer, actions } = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getAllCareerJourneys.fulfilled, (state, action) => {
-      state.careerJourneys = action.payload;
+      state.careerJourneys = action.payload.map((item) => ({
+        ...item,
+        startDate: new Date(item.startDate),
+        endDate: new Date(item.endDate),
+      }));
     });
   },
 });

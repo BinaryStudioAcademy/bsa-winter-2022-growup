@@ -1,13 +1,13 @@
 import { FloatingLabel, Form } from 'react-bootstrap';
 import { useAppForm } from 'hooks/hooks';
 import { FormInput, FormInputDate, Modal } from 'components/common/common';
-import { CareerJourney } from '../../profile-info/interfaces';
 import { DEFAULT_CAREER_JOURNEY_PAYLOAD } from './common/constants';
 import { CareerJourneyPayloadKey } from 'common/enums/user/career-journey-payload-key.enum';
 import { careerJourney as careerJourneyValidationSchema } from 'validation-schemas/validation-schemas';
+import { ICareerJourney } from '../../../common/interfaces';
 
 type Props = {
-  careerJourney: CareerJourney | null;
+  careerJourney: ICareerJourney | null;
   onClose: () => void;
   onSubmit: (values: object) => void;
 };

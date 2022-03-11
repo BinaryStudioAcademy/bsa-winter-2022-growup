@@ -11,6 +11,9 @@ import {
 
 const careerJourney = Joi.object({
   id: Joi.optional(),
+  createdAt: Joi.optional(),
+  deletedAt: Joi.optional(),
+  updatedAt: Joi.optional(),
   [CareerJourneyPayloadKey.POSITION]: Joi.string()
     .trim()
     .min(CareerJourneyValidationRule.POSITION_MIN_LENGTH)

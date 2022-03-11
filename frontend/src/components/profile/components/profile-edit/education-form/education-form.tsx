@@ -1,13 +1,13 @@
 import { FloatingLabel, Form } from 'react-bootstrap';
 import { useAppForm } from 'hooks/hooks';
 import { FormInput, FormInputDate, Modal } from 'components/common/common';
-import { Education } from '../../profile-info/interfaces';
 import { DEFAULT_EDUCATION_PAYLOAD } from './common/constants';
 import { EducationPayloadKey } from 'common/enums/user/education-payload-key.enum';
 import { education as educationValidationSchema } from 'validation-schemas/validation-schemas';
+import { IEducation } from '../../../common/interfaces';
 
 type Props = {
-  education: Education | null;
+  education: IEducation | null;
   onClose: () => void;
   onSubmit: (values: object) => void;
 };

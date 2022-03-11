@@ -7,8 +7,8 @@ import { ICareerJourney } from '../common/interfaces';
 import { MentorMenteeRoute } from 'common/enums/mentor-mentee-route/mentor-mentee-route.enum';
 
 interface Props {
-  careerJourney: CareerJourney;
-  onEdit: (careerJourney: CareerJourney) => void;
+  careerJourney: ICareerJourney;
+  onEdit: (careerJourney: ICareerJourney) => void;
 }
 
 const CareerCard: React.FC<Props> = ({ careerJourney, onEdit }) => {

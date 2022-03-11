@@ -1,9 +1,9 @@
 import type { IUser as IUserDefault } from 'growup-shared/common/interfaces';
 import { RoleType } from 'common/enums/user/roles.enum';
 import {
-  CareerJourney,
-  Education,
-} from 'components/profile/components/profile-info/interfaces';
+  ICareerJourney,
+  IEducation,
+} from '../../../components/profile/common/interfaces';
 
 interface IUser extends IUserDefault {
   firstName: string;
@@ -16,8 +16,8 @@ interface IUser extends IUserDefault {
   deletedAt: string | null;
 
   roleType: RoleType;
-  careerJourneys: CareerJourney[];
-  educations: Education[];
+  careerJourneys: ICareerJourney[];
+  educations: IEducation[];
 }
 
 export type { IUser };

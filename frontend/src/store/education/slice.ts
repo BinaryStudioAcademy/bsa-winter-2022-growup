@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getAllEducations } from './actions';
 import { ReducerName } from 'common/enums/app/reducer-name.enum';
-import { Education } from '../../components/profile/components/profile-info/interfaces';
+import { IEducation } from '../../components/profile/common/interfaces';
 
 type State = {
-  educations: Education[];
+  educations: IEducation[];
 };
 
 const initialState: State = {

@@ -5,7 +5,6 @@ import { IEducation } from '../common/interfaces';
 import { useAppDispatch, useCallback, useNavigate } from 'hooks/hooks';
 import { removeEducation } from 'store/education/actions';
 import { MentorMenteeRoute } from 'common/enums/mentor-mentee-route/mentor-mentee-route.enum';
-import './education-card.scss';
 
 interface Props {
   education: IEducation;
