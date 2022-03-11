@@ -4,6 +4,7 @@ export interface ISkill {
   type?: string;
   company?: string;
   rating?: any;
+  isStarred?: boolean;
 
   createdAt?: string;
   updatedAt?: string;

@@ -15,6 +15,7 @@ interface SkillTypes {
   id: string;
   name: string;
   rating: Array<string>;
+  isStarred: boolean | undefined;
 }
 
 const column = [0, 1, 2];
@@ -28,7 +29,7 @@ const SkillElement = (props: SkillTypes): React.ReactElement => {
     props.rating[2].toString(),
   ]);
   const [nameSkill, setNameSkill] = useState(props.name);
-  const [isStar, setIsStar] = useState(false);
+  const [isStar, setIsStar] = useState(props.isStarred);
   const user = useAppSelector((state: RootState) => state.auth.user);
   const dispatch = useAppDispatch();
   function deleteSkill(id: string): void {
@@ -52,6 +53,7 @@ const SkillElement = (props: SkillTypes): React.ReactElement => {
           },
           {
             rating: ratingValues,
+            isStarred: isStar,
           },
         ]),
       );
@@ -77,7 +79,9 @@ const SkillElement = (props: SkillTypes): React.ReactElement => {
         )}{' '}
         <button
           className="border-0 bg-gu-white sort-button"
-          onClick={(): void => setIsStar(!isStar)}
+          onClick={(): void =>
+            isEdit ? setIsStar(!isStar) : console.warn('Warning')
+          }
         >
           {isStar ? (
             <img alt="star" src={star} />

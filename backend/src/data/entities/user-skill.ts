@@ -4,6 +4,9 @@ import { Skill } from './skill';
 
 @Entity()
 export class UserSkill extends BaseEntity {
+  @Column({ default: false })
+  isStarred: boolean;
+
   @Column({ nullable: true })
   selfRating: number;
 

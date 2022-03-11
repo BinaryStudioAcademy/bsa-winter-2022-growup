@@ -52,7 +52,7 @@ class SkillsApi {
           },
         ]),
       });
-      return result as any;
+      return result as ISkill;
     } catch {
       return null;
     }
@@ -71,7 +71,7 @@ class SkillsApi {
           },
         ]),
       });
-      return result as any;
+      return result as ISkill;
     } catch {
       return null;
     }
@@ -105,11 +105,12 @@ class SkillsApi {
             },
             {
               rating: skillsPayload[1].rating,
+              isStarred: skillsPayload[1].isStarred,
             },
           ]),
         },
       );
-      return result as any;
+      return result as ISkill;
     } catch {
       return null;
     }

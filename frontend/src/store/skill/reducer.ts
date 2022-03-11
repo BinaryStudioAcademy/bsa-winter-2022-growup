@@ -17,7 +17,6 @@ const SkillReducer = (builder: ActionReducerMapBuilder<any>): void => {
   });
 
   builder.addCase(actions.createSkill.fulfilled, (state, action) => {
-    console.warn(action.payload);
     const newAction: SkillProps = {
       ...action.payload[0],
       rating: ['', '', ''],
@@ -26,7 +25,6 @@ const SkillReducer = (builder: ActionReducerMapBuilder<any>): void => {
   });
 
   builder.addCase(actions.connectSkill.fulfilled, (state, action) => {
-    console.warn(action.payload);
     const newAction: SkillProps = {
       ...action.payload[0],
       rating: ['', '', ''],

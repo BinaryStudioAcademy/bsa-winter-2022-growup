@@ -15,7 +15,6 @@ router
   .get(
     '/',
     run((req) => {
-      console.log(req.companyId);
       return getSkills(req.companyId);
     }),
   )
@@ -40,14 +39,12 @@ router
   .delete(
     '/:id',
     run((req) => {
-      return deleteSkill(req.params.id, req.userId);
+      return deleteSkill(req.params.id);
     }),
   )
   .patch(
     '/:id',
     run((req) => {
-      console.log(req.params.id);
-      console.log(req.body);
       return updateSkill(req.params.id, req.body);
     }),
   );

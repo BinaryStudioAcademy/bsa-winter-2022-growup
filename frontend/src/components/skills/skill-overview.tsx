@@ -1,7 +1,6 @@
 import { RootState } from 'common/types/types';
 import ProfileHeader from './header-user';
 import SkillElement from './rating/skill-rating';
-// import { ISkill } from './common/interfaces';
 import { ISkill } from 'common/interfaces/skill/skill';
 import './styles.scss';
 import { useEffect, useState } from 'react';
@@ -14,9 +13,6 @@ import { skillActions } from 'store/skill';
 
 const SkillOverview = (): React.ReactElement => {
   const user = useAppSelector((state: RootState) => state.auth.user);
-  // const skillList = useAppSelector((state: RootState) =>
-  // state.skill.userSkill.filter((skill) => skill.userId === user?.id),
-  // );
   const skills = useAppSelector((state: RootState) => state.skill.userSkill);
   const allSkills = useAppSelector((state: RootState) => state.skill.allSkills);
   const [textFind, setTextFind] = useState('');
@@ -26,6 +22,8 @@ const SkillOverview = (): React.ReactElement => {
   const [isSortName, setIsSortName] = useState(true);
   const [isSortSelf, setIsSortSelf] = useState(true);
   const dispatch = useAppDispatch();
+  const skillStarred = skills.filter((skill: ISkill) => skill.isStarred);
+  const skillNotStarred = skills.filter((skill: ISkill) => !skill.isStarred);
 
   useEffect(() => {
     dispatch(skillActions.fetchUserSkills());
@@ -202,7 +200,7 @@ const SkillOverview = (): React.ReactElement => {
         </thead>
         <tbody>
           {skills
-            ? skills.map((skill: ISkill) => {
+            ? skillStarred.map((skill: ISkill) => {
                 if (isFind(skill.name))
                   return (
                     <SkillElement
@@ -210,6 +208,21 @@ const SkillOverview = (): React.ReactElement => {
                       name={skill.name}
                       rating={skill.rating}
                       id={skill.id}
+                      isStarred={skill.isStarred}
+                    />
+                  );
+              })
+            : true}
+          {skills
+            ? skillNotStarred.map((skill: ISkill) => {
+                if (isFind(skill.name))
+                  return (
+                    <SkillElement
+                      key={skill.id}
+                      name={skill.name}
+                      rating={skill.rating}
+                      id={skill.id}
+                      isStarred={skill.isStarred}
                     />
                   );
               })
