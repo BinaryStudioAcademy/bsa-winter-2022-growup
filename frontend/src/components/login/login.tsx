@@ -1,16 +1,22 @@
-import { MentorMenteeRoute, UserPayloadKey } from 'common/enums/enums';
-import { FormInput } from 'components/common/common';
+import {
+  AppRoute,
+  MentorMenteeRoute,
+  UserPayloadKey,
+} from 'common/enums/enums';
 import {
   useAppDispatch,
   useAppForm,
   useAppSelector,
   useCallback,
   useNavigate,
+  useState,
 } from 'hooks/hooks';
+import { FormInput } from 'components/common/common';
 import { Container, FloatingLabel, Form } from 'react-bootstrap';
-import { Google } from 'react-bootstrap-icons';
 import { NotificationManager } from 'react-notifications';
+import { Eye, EyeSlash } from 'react-bootstrap-icons';
 import { loginUser } from 'store/auth/actions';
+import { Link } from '../common/common';
 import { login as loginValidationSchema } from 'validation-schemas/validation-schemas';
 import { DEFAULT_LOGIN_PAYLOAD } from './common/constants';
 import './styles.scss';
@@ -19,6 +25,8 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector((state) => state.auth.isLoading);
+
+  const [isHiddenPassword, setIsHiddenPassword] = useState(true);
 
   const { control, errors, handleSubmit } = useAppForm({
     defaultValues: DEFAULT_LOGIN_PAYLOAD,
@@ -64,15 +72,22 @@ const Login: React.FC = () => {
           <FloatingLabel
             controlId="authPassword"
             label="Password"
-            className="mb-3"
+            className="mb-3 d-flex flex-wrap"
           >
             <FormInput
               name={UserPayloadKey.PASSWORD}
               control={control}
               errors={errors}
-              type="password"
+              type={isHiddenPassword ? 'password' : 'text'}
               placeholder="Password"
             />
+            <button
+              type="button"
+              className="auth-form__icon input-group-text position-absolute"
+              onClick={(): void => setIsHiddenPassword(!isHiddenPassword)}
+            >
+              {isHiddenPassword ? <EyeSlash /> : <Eye />}
+            </button>
           </FloatingLabel>
 
           <Form.Group
@@ -91,10 +106,14 @@ const Login: React.FC = () => {
             <button className="btn btn-gu-pink text-gu-white" type="submit">
               Sign in
             </button>
-            <Form.Text className="mb-1 text-center">or</Form.Text>
-            <button className="btn btn-gu-blue" type="submit">
-              <Google className="mx-2" /> Sign in with Google
-            </button>
+            <Form.Text className="mt-2 text-center fs-5">
+              Don't have a GrowUp account?
+              <Link to={AppRoute.SIGN_UP}>
+                <b className="text-decoration-underline text-gu-blue mx-2">
+                  Sign up
+                </b>
+              </Link>
+            </Form.Text>
           </div>
         </fieldset>
       </Form>

@@ -111,10 +111,21 @@
         }
       }
     },
-    "/company/okr": {
+    "api/company/okr": {
       "get": {
         "tags": ["Okr"],
         "summary": "Get all okrs by logined user",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Returns array of okrs if everything is ok.",
@@ -137,6 +148,15 @@
         "tags": ["Okr"],
         "summary": "Create new okr by logined user",
         "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
           {
             "name": "body",
             "in": "body",
@@ -174,11 +194,20 @@
         }
       }
     },
-    "/company/okr/{id}": {
+    "api/company/okr/{id}": {
       "get": {
         "tags": ["Okr"],
         "summary": "Get okr by id",
         "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
           {
             "in": "path",
             "name": "id",
@@ -208,6 +237,15 @@
         "tags": ["Okr"],
         "summary": "Update okr by logined user",
         "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
           {
             "in": "path",
             "name": "id",
@@ -254,11 +292,20 @@
         }
       }
     },
-    "/company/okr/{id}/objective": {
+    "api/company/okr/{id}/objective": {
       "post": {
         "tags": ["Okr"],
         "summary": "Add new objective to the okr",
         "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
           {
             "in": "path",
             "name": "id",
@@ -302,11 +349,20 @@
         }
       }
     },
-    "/company/okr/{id}/objective/{id1}": {
+    "api/company/okr/{id}/objective/{id1}": {
       "put": {
         "tags": ["Okr"],
         "summary": "Update objective to the okr",
         "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token",
+            "required": true
+          },
           {
             "in": "path",
             "name": "id",
@@ -359,11 +415,20 @@
         }
       }
     },
-    "/company/okr/{id}/objective/{id}/keyresult": {
+    "api/company/okr/{id}/objective/{id}/keyresult": {
       "post": {
         "tags": ["Okr"],
         "summary": "Add new keyresult to the objective",
         "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token",
+            "required": true
+          },
           {
             "in": "path",
             "name": "id",

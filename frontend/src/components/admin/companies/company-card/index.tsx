@@ -5,11 +5,11 @@ import AddEditCompany from '../addedit-company';
 
 import './styles.scss';
 
-interface ICompanyCard {
+interface Props {
   company: ICompany;
 }
 
-const CompanyCard: FC<ICompanyCard> = ({ company }) => {
+const CompanyCard: FC<Props> = ({ company }) => {
   const [show, setShow] = useState(false);
 
   const handleClose = (): void => setShow(false);

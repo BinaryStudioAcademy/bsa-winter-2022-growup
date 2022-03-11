@@ -1,7 +1,8 @@
 import OpportunityItem from './opportunityItem';
-import './style.scss';
+import './styles.scss';
 import { useAppSelector } from 'hooks/hooks';
 import { IOpportunity } from 'store/opportunities/common';
+
 const OpportunityList: React.FC = () => {
   const opportunities = useAppSelector((state) => state.homePage.opportunities);
   return (

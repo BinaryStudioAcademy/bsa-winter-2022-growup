@@ -4,4 +4,6 @@ const DEFAULT_SKILL_PAYLOAD = {
   [SkillPayloadKey.NAME]: '',
 };
 
-export { DEFAULT_SKILL_PAYLOAD };
+const defaultSkillLvlCount = 10;
+
+export { DEFAULT_SKILL_PAYLOAD, defaultSkillLvlCount };
