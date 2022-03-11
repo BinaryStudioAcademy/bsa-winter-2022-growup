@@ -1,7 +1,6 @@
 import './styles.scss';
-import calendar from 'assets/img/okr-items/calendar-orange.png';
-import pencil from 'assets/img/okr-items/pencil.png';
 import { parseDate } from 'helpers/parse-date';
+import { Calendar, PencilFill } from 'react-bootstrap-icons';
 
 interface PropTypes {
   name: string;
@@ -21,15 +20,15 @@ const OrkItem: React.FC<PropTypes> = (props) => (
     <div className="key-result fs-6 fw-bold">
       KeyResults: {props.resultsCounter}
     </div>
-    <div className="timestamp fs-6 mt-3 d-flex justify-content-evenly">
+    <div className="timestamp fs-6 mt-3 d-flex justify-content-evenly text-secondary">
       <div>
-        <img alt="calendar" src={calendar} width="12" className="mb-1" />
+        <Calendar className="mb-1" />
       </div>
       <div>
         {parseDate(props.startDate)} - {parseDate(props.endDate)}
       </div>
       <div>
-        <img alt="pencil" src={pencil} width="12" className="mb-1" />
+        <PencilFill className="mb-1 ms-1 text-gu-purple" />
       </div>
     </div>
   </div>
