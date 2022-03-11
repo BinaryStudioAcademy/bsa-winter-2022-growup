@@ -2,7 +2,7 @@ import { Modal as ModalWindow } from 'react-bootstrap';
 import { Button } from '../common';
 import './styles.scss';
 
-type PropTypes = {
+type Props = {
   show: boolean;
   onClose: () => void;
   title: string;
@@ -12,7 +12,7 @@ type PropTypes = {
   footer?: boolean;
 };
 
-const Modal: React.FC<PropTypes> = ({
+const Modal: React.FC<Props> = ({
   show,
   onClose,
   title,

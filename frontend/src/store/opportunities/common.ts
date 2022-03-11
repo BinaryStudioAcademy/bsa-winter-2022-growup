@@ -1,4 +1,4 @@
-export interface IOpportunity extends OpportunitiesProps {
+export interface IOpportunity extends IOpportunityBase {
   isFollow?: boolean;
   tagsData?: string[];
 }
@@ -12,13 +12,13 @@ export enum OpportunityActions {
   LOAD_OPPORTUNITIES = 'LOAD_OPPORTUNITIES',
 }
 
-export interface IPostOppData extends OpportunitiesProps {
+export interface IPostOppData extends IOpportunityBase {
   createdAt: string;
   updatedAt: string;
   deletedAt?: null | string;
 }
 
-export interface OpportunitiesProps {
+export interface IOpportunityBase {
   id?: string;
   name?: string;
   organization?: string;
@@ -47,7 +47,7 @@ interface ILoadAction {
   };
 }
 
-export interface opportunitiesAction {
+export interface IOpportunitiesAction {
   type: string;
   isLoaded: boolean | undefined;
   isShowModal: boolean | undefined;
