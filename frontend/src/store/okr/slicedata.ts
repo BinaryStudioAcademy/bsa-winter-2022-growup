@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ReducerName } from 'common/enums/app/reducer-name.enum';
-import { IUser, IOkr } from '../../components/okr/common/interfaces';
+import { IUser, IOkr } from 'components/okr/common/interfaces';
 
 type State = {
   user: IUser;

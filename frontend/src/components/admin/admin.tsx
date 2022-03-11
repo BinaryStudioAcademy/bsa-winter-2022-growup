@@ -17,11 +17,11 @@ enum Variants {
   career = 'career',
 }
 
-type PropTypes = {
+type Props = {
   variant: keyof typeof Variants;
 };
 
-const Admin: React.FC<PropTypes> = ({ variant }) => {
+const Admin: React.FC<Props> = ({ variant }) => {
   const user = useAppSelector((state) => state.auth.user);
 
   return (

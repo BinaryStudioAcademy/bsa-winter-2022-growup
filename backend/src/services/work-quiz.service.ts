@@ -29,7 +29,7 @@ interface ITestSummary {
   score: number;
 }
 
-interface WorkQuizProps {
+interface IWorkQuizProps {
   body: IQuestion[];
   tokenPayload: ITokenPayload;
 }
@@ -52,7 +52,7 @@ export const getQuestions = async (): Promise<QuizQuestion[]> => {
 export const sendResults = async ({
   body,
   tokenPayload,
-}: WorkQuizProps): Promise<User_QuizCategory[]> => {
+}: IWorkQuizProps): Promise<User_QuizCategory[]> => {
   const { userId } = tokenPayload;
   const questions = body;
 
