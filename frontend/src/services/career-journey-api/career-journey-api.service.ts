@@ -13,30 +13,13 @@ class CareerJourneyApi {
   }
 
   getAllCareerJourneys(): Promise<CareerJourney[]> {
-    // return this.http.load<CareerJourney[]>(
-    //   `${this.apiPath}/user/career-journey`,
-    //   {
-    //     method: HttpMethod.GET,
-    //     contentType: ContentType.JSON,
-    //   },
-    // );
-
-    return Promise.resolve([
+    return this.http.load<CareerJourney[]>(
+      `${this.apiPath}/user/career-journey`,
       {
-        id: '1',
-        position: 'Fullstack JS Developer',
-        company: 'Binary Studio',
-        startDate: new Date('2020-01-30T03:24:00'),
-        endDate: new Date(),
+        method: HttpMethod.GET,
+        contentType: ContentType.JSON,
       },
-      {
-        id: '2',
-        position: 'Fullstack JS Developer',
-        company: 'Binary Studio',
-        startDate: new Date('2021-12-17T03:24:00'),
-        endDate: new Date(),
-      },
-    ]);
+    );
   }
 
   createCareerJourney(payload: CareerJourney): Promise<void> {
