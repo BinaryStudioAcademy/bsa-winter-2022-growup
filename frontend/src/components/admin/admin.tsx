@@ -17,11 +17,11 @@ enum Variants {
   career = 'career',
 }
 
-type PropTypes = {
+type Props = {
   variant: keyof typeof Variants;
 };
 
-const Admin: React.FC<PropTypes> = ({ variant }) => {
+const Admin: React.FC<Props> = ({ variant }) => {
   const user = useAppSelector((state) => state.auth.user);
 
   return (
@@ -33,16 +33,14 @@ const Admin: React.FC<PropTypes> = ({ variant }) => {
       >
         <Container>
           <Navbar.Brand>
-            <Link to={AdminRoute.ADMIN}>
-              <a
-                className="d-flex align-items-center text-decoration-none"
-                href=""
-              >
-                <img className="logo-icon me-md-3" src={logo} alt="logo" />
-                <span className="logo-title fs-1 text-gu-black m-0 d-none d-md-block">
-                  Grow Up
-                </span>
-              </a>
+            <Link
+              to={AdminRoute.ADMIN}
+              className="d-flex align-items-center text-decoration-none"
+            >
+              <img className="logo-icon me-md-3" src={logo} alt="logo" />
+              <span className="logo-title fs-1 text-gu-black m-0 d-none d-md-block">
+                Grow Up
+              </span>
             </Link>
           </Navbar.Brand>
           <Nav>
@@ -52,6 +50,7 @@ const Admin: React.FC<PropTypes> = ({ variant }) => {
                 firstName={user?.firstName}
                 lastName={user?.lastName}
                 size="50"
+                dropdown
               />
             </Nav.Item>
           </Nav>

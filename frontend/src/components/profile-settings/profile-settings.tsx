@@ -1,9 +1,6 @@
-import { Navigate, Outlet, useLocation, useNavigate } from '../../hooks/hooks';
-import { Route, Routes } from '../common/common';
-import {
-  MentorMenteeRoute,
-  ProfileSettingsRoute,
-} from '../../common/enums/enums';
+import { Navigate, Outlet, useLocation, useNavigate } from 'hooks/hooks';
+import { Route, Routes } from 'components/common/common';
+import { MentorMenteeRoute, ProfileSettingsRoute } from 'common/enums/enums';
 import { steps } from './steps/steps';
 import Stepper from './stepper';
 import FirstStep from './steps/first-step';

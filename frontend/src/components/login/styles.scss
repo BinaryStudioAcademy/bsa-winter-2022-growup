@@ -24,6 +24,11 @@
   text-decoration: underline;
 }
 
+.auth-form__icon {
+  right: 0;
+  height: 58px;
+}
+
 @media (max-width: 360px) {
   .auth-form {
     padding: 0 20px;

@@ -6,6 +6,6 @@ export type MappedTag = Tags & {
 };
 
 export type TagsCreationResponse = {
-  tags: MappedTag[];
+  tags: Tags[];
   existingTags: Tags['name'][];
 };

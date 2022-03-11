@@ -4,11 +4,11 @@ import type { ICompany } from 'common/interfaces/company/company';
 import CompanyCard from './company-card';
 import AddEditCompany from './addedit-company';
 
-type PropTypes = {
+type Props = {
   companyList: ICompany[];
 };
 
-const Company: React.FC<PropTypes> = ({ companyList }) => {
+const Company: React.FC<Props> = ({ companyList }) => {
   const [show, setShow] = useState(false);
 
   const handleClose = (): void => setShow(false);

@@ -1,13 +1,16 @@
 import { IKeyResult } from 'common/interfaces/key-result';
 import { IOkr } from 'common/interfaces/okr';
+import { IAuthApi } from 'common/interfaces/api';
 import { Http } from 'services/http/http.service';
 import { HttpMethod } from 'common/enums/http/http';
 import { ContentType } from 'common/enums/file/file';
 
 class KeyResultApi {
   private http: Http;
+  private apiPath: string;
 
-  constructor({ http }: { http: Http }) {
+  constructor({ apiPath, http }: IAuthApi) {
+    this.apiPath = apiPath;
     this.http = http;
   }
 
@@ -28,7 +31,7 @@ class KeyResultApi {
 
     try {
       const result = await this.http.load<IOkr>(
-        `/company/okr/${okrId}/objective/${objectiveId}/keyresult`,
+        `${this.apiPath}/company/okr/${okrId}/objective/${objectiveId}/keyresult`,
         options,
       );
       return result;

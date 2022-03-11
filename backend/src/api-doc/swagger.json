@@ -111,10 +111,21 @@
         }
       }
     },
-    "/company/okr": {
+    "api/company/okr": {
       "get": {
         "tags": ["Okr"],
         "summary": "Get all okrs by logined user",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Returns array of okrs if everything is ok.",
@@ -137,6 +148,15 @@
         "tags": ["Okr"],
         "summary": "Create new okr by logined user",
         "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
           {
             "name": "body",
             "in": "body",
@@ -174,11 +194,20 @@
         }
       }
     },
-    "/company/okr/{id}": {
+    "api/company/okr/{id}": {
       "get": {
         "tags": ["Okr"],
         "summary": "Get okr by id",
         "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
           {
             "in": "path",
             "name": "id",
@@ -208,6 +237,15 @@
         "tags": ["Okr"],
         "summary": "Update okr by logined user",
         "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
           {
             "in": "path",
             "name": "id",
@@ -254,11 +292,20 @@
         }
       }
     },
-    "/company/okr/{id}/objective": {
+    "api/company/okr/{id}/objective": {
       "post": {
         "tags": ["Okr"],
         "summary": "Add new objective to the okr",
         "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
           {
             "in": "path",
             "name": "id",
@@ -302,11 +349,20 @@
         }
       }
     },
-    "/company/okr/{id}/objective/{id1}": {
+    "api/company/okr/{id}/objective/{id1}": {
       "put": {
         "tags": ["Okr"],
         "summary": "Update objective to the okr",
         "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token",
+            "required": true
+          },
           {
             "in": "path",
             "name": "id",
@@ -359,11 +415,20 @@
         }
       }
     },
-    "/company/okr/{id}/objective/{id}/keyresult": {
+    "api/company/okr/{id}/objective/{id}/keyresult": {
       "post": {
         "tags": ["Okr"],
         "summary": "Add new keyresult to the objective",
         "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token",
+            "required": true
+          },
           {
             "in": "path",
             "name": "id",
@@ -828,30 +893,33 @@
                   "type": "string"
                 },
                 "levels": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "skills": {
-                      "type": "array",
-                      "items": {
-                        "allOf": [
-                          {
-                            "$ref": "#/definitions/Skill"
-                          },
-                          {
-                            "type": "object",
-                            "properties": {
-                              "objectives": {
-                                "type": "array",
-                                "items": {
-                                  "$ref": "#/definitions/Skill Objective"
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "skills": {
+                        "type": "array",
+                        "items": {
+                          "allOf": [
+                            {
+                              "$ref": "#/definitions/Skill"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "objectives": {
+                                  "type": "array",
+                                  "items": {
+                                    "$ref": "#/definitions/Skill Objective"
+                                  }
                                 }
                               }
                             }
-                          }
-                        ]
+                          ]
+                        }
                       }
                     }
                   }
@@ -916,9 +984,139 @@
           }
         }
       }
+    },
+    "/api/work-quiz/question": {
+      "get": {
+        "tags": ["Work Quiz"],
+        "summary": "Fetch quiz questions and its answers",
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  },
+                  "updatedAt": {
+                    "type": "string"
+                  },
+                  "deletedAt": {
+                    "type": "string"
+                  },
+                  "question": {
+                    "type": "string"
+                  },
+                  "answers": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/definitions/Answer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/work-quiz/result": {
+      "post": {
+        "tags": ["Work Quiz"],
+        "summary": "Send quiz results",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/Question"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "answers": {
+                        "type": "array",
+                        "items": {
+                          "allOf": [
+                            {
+                              "$ref": "#/definitions/Answer"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "isSelected": {
+                                  "type": "boolean"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "string"
+                  },
+                  "quizCategoryId": {
+                    "type": "string"
+                  },
+                  "score": {
+                    "type": "number"
+                  },
+                  "quizCategory": {
+                    "type": "object",
+                    "$ref": "#/definitions/Category"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
+    "Default": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "uuid"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Time the object was created at"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Time the object was updated at. By default it is the same as the creation time"
+        },
+        "deletedAt": {
+          "type": "string",
+          "description": "Time the object was deletedAt"
+        }
+      }
+    },
     "KeyResult": {
       "required": ["token"],
       "type": "object",
@@ -1133,83 +1331,171 @@
       }
     },
     "Domain": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "uuid"
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Domain name",
+              "example": "Fullstack Developer"
+            }
+          }
         },
-        "name": {
-          "type": "string",
-          "description": "Domain name",
-          "example": "Fullstack Developer"
-        },
-        "createdAt": {
-          "type": "string",
-          "description": "Time the object was created at"
-        },
-        "updatedAt": {
-          "type": "string",
-          "description": "Time the object was updated at. By default it is the same as the creation time"
-        },
-        "deletedAt": {
-          "type": "string",
-          "description": "Time the object was deletedAt"
-        }
-      }
+        { "$ref": "#/definitions/Default" }
+      ]
     },
     "Skill": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "type": {
+              "$ref": "#/definitions/Skill Type"
+            }
+          }
         },
-        "type": {
-          "$ref": "#/definitions/Skill Type"
-        }
-      }
+        { "$ref": "#/definitions/Default" }
+      ]
     },
     "Skill Objective": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        }
-      }
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            }
+          }
+        },
+        { "$ref": "#/definitions/Default" }
+      ]
     },
     "Level": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "uuid"
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Domain name",
+              "example": "Fullstack Developer"
+            },
+            "nextLevel": {
+              "$ref": "#/definitions/Level",
+              "description": "Next level of the current one"
+            },
+            "skills": {
+              "allOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "objectives": {
+                            "type": "array",
+                            "items": {
+                              "allOf": [
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "name": {
+                                      "type": "string"
+                                    }
+                                  }
+                                },
+                                { "$ref": "#/definitions/Default" }
+                              ]
+                            }
+                          }
+                        }
+                      },
+                      { "$ref": "#/definitions/Default" }
+                    ]
+                  }
+                },
+                { "$ref": "#/definitions/Default" }
+              ]
+            }
+          }
         },
-        "name": {
-          "type": "string",
-          "description": "Domain name",
-          "example": "Fullstack Developer"
-        },
-        "createdAt": {
-          "type": "string",
-          "description": "Time the object was created at"
-        },
-        "updatedAt": {
-          "type": "string",
-          "description": "Time the object was updated at. By default it is the same as the creation time"
-        },
-        "deletedAt": {
-          "type": "string",
-          "description": "Time the object was deletedAt"
-        },
-        "nextLevel": {
-          "$ref": "#/definitions/Level",
-          "description": "Next level of the current one"
-        }
-      }
+        { "$ref": "#/definitions/Default" }
+      ]
     },
     "Skill Type": {
       "type": "string",
       "enum": ["Hard skills", "Soft skills", "Language"]
+    },
+    "Answer": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": "string"
+        },
+        "answer": {
+          "type": "string"
+        },
+        "score": {
+          "type": "number"
+        }
+      }
+    },
+    "Question": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "question": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": "string"
+        }
+      }
+    },
+    "Category": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
     }
   }
 }

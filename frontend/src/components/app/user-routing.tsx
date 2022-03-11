@@ -3,13 +3,15 @@ import { Route, Routes } from 'components/common/common';
 import { IRoute } from './common/interfaces';
 import Sidebar from '../sidebar/sidebar';
 import Header from '../header/header';
-import './app.scss';
+import './styles.scss';
+import { RoleType } from 'growup-shared';
 
 interface Props {
   isAuthenticated: boolean;
+  role?: RoleType;
 }
 
-const UserRouting: React.FC<Props> = ({ isAuthenticated }) => (
+const UserRouting: React.FC<Props> = ({ isAuthenticated, role }) => (
   <>
     {isAuthenticated && (
       <>
@@ -24,9 +26,12 @@ const UserRouting: React.FC<Props> = ({ isAuthenticated }) => (
     <main className="main-wrapper w-100 px-3 px-md-4 pt-3 pb-3">
       <Routes>
         {isAuthenticated
-          ? mentorMenteeRoutes.map(({ path, element }: IRoute) => (
-              <Route key={path} path={path} element={element} />
-            ))
+          ? mentorMenteeRoutes.map(
+              ({ path, element, role: routeRole }: IRoute) => {
+                if (routeRole && role && routeRole !== role) return;
+                return <Route key={path} path={path} element={element} />;
+              },
+            )
           : appRoutes.map(({ path, element }: IRoute) => (
               <Route key={path} path={path} element={element} />
             ))}

@@ -1,0 +1,88 @@
+@import 'src/assets/scss/utils';
+
+.profile-header {
+  width: 100%;
+  gap: 30px;
+  padding: 52px 60px;
+  background-color: #fff;
+}
+
+.profile {
+  position: relative;
+
+  &__avatar {
+    background-size: contain;
+    border-radius: 50%;
+  }
+
+  &__edit {
+    border: 1px solid #ee2a64;
+    border-radius: 100%;
+    width: 26px;
+    height: 26px;
+    top: 17%;
+    left: 83%;
+    background-color: #fff;
+    transform: translate(-50%, -50%);
+  }
+
+  .edit-button {
+    width: 10px;
+    color: #ee2a64;
+    cursor: pointer;
+  }
+}
+
+.profile-description {
+  flex-direction: column;
+
+  &__name {
+    line-height: 33px;
+    text-align: left;
+    margin: 0;
+    margin-bottom: 2.5px;
+  }
+
+  &__position {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22px;
+    text-align: left;
+    margin: 0;
+    color: #1d1d1d;
+  }
+}
+
+.level {
+  margin-top: 6px;
+  gap: 8px;
+
+  &__text {
+    font-weight: 400;
+    line-height: 19px;
+    text-align: left;
+    margin: 0;
+    color: #5c5d5f;
+  }
+
+  &__icon {
+    color: #4f00b5;
+    height: 14px;
+    width: 13px;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .profile__edit {
+    visibility: hidden;
+  }
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding-top: 16px;
+    padding-bottom: 28px;
+  }
+}

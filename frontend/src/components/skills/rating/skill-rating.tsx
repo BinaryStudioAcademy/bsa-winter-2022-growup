@@ -11,7 +11,7 @@ import { ReactComponent as Save } from '../../../assets/img/icons/skill-icons/sa
 import { ReactComponent as Edit } from '../../../assets/img/icons/skill-icons/edit-icon.svg';
 import { skillActions } from 'store/skill';
 
-interface SkillTypes {
+interface Props {
   id: string;
   name: string;
   rating: Array<string>;
@@ -20,7 +20,7 @@ interface SkillTypes {
 
 const column = [0, 1, 2];
 
-const SkillElement = (props: SkillTypes): React.ReactElement => {
+const SkillElement = (props: Props): React.ReactElement => {
   const [isHover, setIsHover] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [ratingValues, setRatingValues] = useState([

@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { useAppSelector, useEffect, useAppDispatch } from 'hooks/hooks';
 import { useSelector } from 'hooks/hooks';
 import { RootState } from 'common/types/types';
-import { adminActions } from 'store/actions';
+import { adminActions, companyActions } from 'store/actions';
 
 import Company from './company-item';
 import Tags from './tags/tags';
@@ -17,6 +17,7 @@ const Companies: React.FC = () => {
 
   useEffect(() => {
     dispatch(adminActions.fetchTags());
+    dispatch(companyActions.get_allCompanisesAsync());
   }, [dispatch]);
 
   return (

@@ -22,7 +22,7 @@ export class User extends AbstractEntity {
   @Column({ type: 'varchar', length: 150, nullable: true })
   avatar: string;
 
-  @ManyToOne(() => Company, (company) => company.id)
+  @ManyToOne(() => Company, (company) => company.users)
   company: Company;
 
   @ManyToOne(() => User, (user) => user.id)

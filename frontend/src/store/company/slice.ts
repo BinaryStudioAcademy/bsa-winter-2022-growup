@@ -15,6 +15,12 @@ const { reducer, actions } = createSlice({
   name: ReducerName.COMPANIES,
   initialState,
   reducers: {
+    [ActionType.GET_ALL_COMPANIES]: (
+      state,
+      action: PayloadAction<ICompany[]>,
+    ) => {
+      state.companies = action.payload;
+    },
     [ActionType.ADD_COMPANY]: (state, action: PayloadAction<ICompany>) => {
       const newCompanies = [...state.companies];
       newCompanies.push(action.payload);
