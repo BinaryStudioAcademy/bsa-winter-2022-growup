@@ -24,6 +24,7 @@ const CareerJourneyForm: React.FC<Props> = (props) => {
     <Modal
       {...props}
       show={true}
+      footer={true}
       title={careerJourney ? 'Edit career journey' : 'Add career journey'}
       onSubmit={handleSubmit(onSubmit)}
     >

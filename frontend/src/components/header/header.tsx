@@ -1,26 +1,23 @@
-import { Dropdown } from 'react-bootstrap';
 import { BookmarkFill } from 'react-bootstrap-icons';
 
-import { useAppDispatch } from 'hooks/store/store.hooks';
-import { actions } from 'store/auth/slice';
-
-import avatarIcon from 'assets/img/icons/header-icons/avatar-icon.svg';
+import { useAppDispatch, useAppSelector } from 'hooks/store/store.hooks';
+import { profileActions } from 'store/actions';
 import notificationIcon from 'assets/img/icons/header-icons/notification-icon.svg';
 import notificationPointer from 'assets/img/icons/header-icons/notification-pointer.svg';
 import searchIcon from 'assets/img/icons/header-icons/search-icon.svg';
 
+import { UserAvatar } from 'components/common/common';
+
 import './styles.scss';
-import { useNavigate } from 'react-router-dom';
-import { AppRoute } from 'common/enums/enums';
+import { useEffect } from 'hooks/hooks';
 
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const user = useAppSelector((state) => state.profile.user);
 
-  const onClick = (): void => {
-    dispatch(actions.LOGOUT_USER());
-    navigate(AppRoute.LOGIN);
-  };
+  useEffect(() => {
+    dispatch(profileActions.fetchProfile());
+  }, [dispatch]);
 
   return (
     <header className="header-section w-100 position-fixed">
@@ -52,14 +49,13 @@ const Header: React.FC = () => {
             alt="notification pointer"
           />
         </div>
-        <Dropdown>
-          <Dropdown.Toggle id="user-menu">
-            <img className="avatar-icon" src={avatarIcon} alt="avatar icon" />
-          </Dropdown.Toggle>
-          <Dropdown.Menu>
-            <Dropdown.Item onClick={onClick}>Log out</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+        <UserAvatar
+          avatar={user?.avatar}
+          firstName={user?.firstName}
+          lastName={user?.lastName}
+          size="50"
+          dropdown
+        />
       </div>
     </header>
   );

@@ -21,9 +21,9 @@ const Header: React.FC<Props> = ({ avatar, firstName, lastName }) => {
       <div className="profile-header d-flex">
         <div className="profile">
           <UserAvatar
-            avatar={avatar}
             firstName={firstName}
             lastName={lastName}
+            avatar={avatar}
             size="148"
           />
           <div className="profile__edit d-flex align-items-center justify-content-center position-absolute">

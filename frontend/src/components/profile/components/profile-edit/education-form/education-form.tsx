@@ -24,6 +24,7 @@ const EducationForm: React.FC<Props> = (props) => {
     <Modal
       {...props}
       show={true}
+      footer={true}
       title={education ? 'Edit education' : 'Add education'}
       onSubmit={handleSubmit(onSubmit)}
     >

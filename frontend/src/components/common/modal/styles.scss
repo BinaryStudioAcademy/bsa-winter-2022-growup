@@ -20,14 +20,6 @@
 
   .modal-body {
     padding: 50px;
-    background-color: $gu-white;
-  }
-
-  .modal-footer {
-    width: 100%;
-    padding: 25px 50px;
-    justify-content: start;
-    background-color: $gu-white;
   }
 }
 
@@ -51,6 +43,14 @@
 
     .modal-body {
       padding: 30px;
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .modal-content {
+    .modal-body {
+      padding: 20px;
     }
   }
 }

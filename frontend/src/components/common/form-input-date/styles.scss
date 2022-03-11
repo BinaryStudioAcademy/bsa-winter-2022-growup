@@ -43,6 +43,10 @@
   border-radius: 50%;
 }
 
+.react-datepicker__close-icon {
+  height: 58px;
+}
+
 .react-datepicker__close-icon::after {
   background-color: transparent;
   color: $gray-600;

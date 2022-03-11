@@ -1,13 +1,17 @@
 import { getCustomRepository } from 'typeorm';
 import CompanyRepositry from '../data/repositories/company.repository';
 
-import { Company } from '../data/entities/company';
+import { Company } from '~/data/entities/company';
 
 import { HttpCode, HttpError } from 'growup-shared';
 import { signToken } from '~/common/utils/token.util';
-import { CompanyResponse } from '~/common/models/responses/company';
+import {
+  CompanyResponse,
+  CompaniesResponse,
+} from '~/common/models/responses/company';
 
 import { ITokenPayload } from '~/common/models/middlewares/token-payload';
+import { RoleType } from 'growup-shared';
 import CompanyRepository from '~/data/repositories/company.repository';
 import WorkQuizRepository from '~/data/repositories/work-quiz.repository';
 import QuizCategoryRepository from '~/data/repositories/quiz-category.repository';
@@ -71,7 +75,7 @@ const createQuiz = async (companyInstance: Company): Promise<void> => {
   }, quiz.categories);
 
   // Create and set Questions
-  const createdQuesitons: QuizQuestion[] = [];
+  const createdQuestions: QuizQuestion[] = [];
   const quizQuestionRepository = await getCustomRepository(
     QuizQuestionRepository,
   );
@@ -89,7 +93,7 @@ const createQuiz = async (companyInstance: Company): Promise<void> => {
         category,
       });
       const created = await quizQuestionInstance.save();
-      createdQuesitons.push(created);
+      createdQuestions.push(created);
     }, quizCurrentQuestions);
   }, categories);
 
@@ -127,6 +131,27 @@ export const getCompany = async (id: Company['id']): Promise<Company> => {
   const company = await companyRepository.findOne(id);
 
   return company;
+};
+
+export const getAllCompanies = async ({
+  userId,
+  userRole,
+}: {
+  userId: string;
+  userRole: RoleType;
+}): Promise<CompaniesResponse> => {
+  const companyRepository = getCustomRepository(CompanyRepository);
+
+  const companies = await companyRepository.getAllCompaniesByUserId(userId);
+
+  const companyId = companies[0] ? companies[0].id : null;
+  const token = signToken({
+    userId,
+    role: userRole,
+    companyId,
+  });
+
+  return { token, companies };
 };
 
 export const createCompany = async ({

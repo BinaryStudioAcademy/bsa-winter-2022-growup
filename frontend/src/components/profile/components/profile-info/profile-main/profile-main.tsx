@@ -1,8 +1,11 @@
-import { Interests, Skill } from '../interfaces';
+import { Skill } from '../interfaces';
 import EditSection from '../edit-section/edit-section';
 import CareerJourneySection from './career-journey-section';
+import { useAppDispatch, useAppSelector, useEffect } from 'hooks/hooks';
 import EducationSection from './education-section';
+import Interests from './interests/interests-section';
 import Tag from '../tag/tag';
+import { tagsActions } from 'store/actions';
 import './profile-main.scss';
 
 // FROM DB
@@ -17,19 +20,14 @@ const skillData: Skill[] = [
   },
 ];
 
-// FROM DB
-const interestsData: Interests[] = [
-  {
-    id: '1',
-    name: 'Lviv',
-  },
-  {
-    id: '2',
-    name: 'Remote',
-  },
-];
-
 const ProfileMain: React.FC = () => {
+  const { tags } = useAppSelector((state) => state.tags);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(tagsActions.fetchTags());
+  }, [dispatch]);
+
   return (
     <main className="profile-main">
       <div className="left-side">
@@ -50,13 +48,7 @@ const ProfileMain: React.FC = () => {
             <Tag>French</Tag>
           </div>
         </EditSection>
-        <EditSection title="Interests">
-          <div className="group fw-bold fs-7">
-            {interestsData.map((item, i) => (
-              <Tag key={i}>{item.name}</Tag>
-            ))}
-          </div>
-        </EditSection>
+        <Interests tagList={tags} />
       </div>
     </main>
   );
