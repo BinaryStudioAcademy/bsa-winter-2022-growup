@@ -1,6 +1,6 @@
-import { StepProps } from './common/interfaces';
+import { IProfileSettingStep } from './common/interfaces';
 
-interface Props extends StepProps {
+interface Props extends IProfileSettingStep {
   isValid: boolean;
   onSubmit?: () => void;
 }

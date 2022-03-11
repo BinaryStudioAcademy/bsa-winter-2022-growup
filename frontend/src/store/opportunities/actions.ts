@@ -1,14 +1,18 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { ContentType } from 'common/enums/enums';
 import { http } from 'services';
-import { IOpportunity, IPostOppData, OpportunityActions } from './common';
-import { OpportunitiesProps } from './common';
+import {
+  IOpportunity,
+  IPostOppData,
+  OpportunityActions,
+  IOpportunityBase,
+} from './common';
 
 const fetchLoadOpp = createAsyncThunk(
   OpportunityActions.LOAD_OPPORTUNITIES,
   async (_, { rejectWithValue }) => {
     try {
-      const result: OpportunitiesProps[] = await http.load(
+      const result: IOpportunityBase[] = await http.load(
         'http://localhost:3001/api/company/opportunities',
         {
           method: 'GET',

@@ -1,7 +1,7 @@
-interface StepProps {
+interface IProfileSettingStep {
   isDisablePrevious?: boolean;
   onPrevious?: () => void;
   onNext?: () => void;
 }
 
-export type { StepProps };
+export type { IProfileSettingStep };

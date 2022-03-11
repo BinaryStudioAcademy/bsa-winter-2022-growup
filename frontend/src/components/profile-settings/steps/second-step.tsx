@@ -1,6 +1,8 @@
-import { StepProps as Props } from './common/interfaces';
+import { IProfileSettingStep } from './common/interfaces';
 import StepControl from './step-control';
 import WorkQuiz from 'components/work-quiz/work-quiz';
+
+interface Props extends IProfileSettingStep {}
 
 const SecondStep: React.FC<Props> = ({
   isDisablePrevious,

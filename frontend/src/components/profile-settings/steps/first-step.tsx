@@ -1,4 +1,4 @@
-import { StepProps as Props } from './common/interfaces';
+import { IProfileSettingStep } from './common/interfaces';
 import { TextField } from 'components/common/common';
 import Experience from './experience';
 import Education from './education';
@@ -8,6 +8,8 @@ import { profileFirstStep as profileFirstStepValidationSchema } from 'validation
 import { useAppForm } from 'hooks/hooks';
 import { DEFAULT_FIRST_STEP_PAYLOAD } from './common/constants';
 import { FirstStepPayloadKey, UserPayloadKey } from 'common/enums/enums';
+
+interface Props extends IProfileSettingStep {}
 
 const FirstStep: React.FC<Props> = ({
   isDisablePrevious,
