@@ -73,10 +73,6 @@
 }
 
 @include media-breakpoint-down(sm) {
-  .profile__edit {
-    visibility: hidden;
-  }
-
   .header {
     display: flex;
     flex-direction: column;
