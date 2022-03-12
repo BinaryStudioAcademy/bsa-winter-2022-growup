@@ -47,7 +47,7 @@ const SkillElement = (props: Props): React.ReactElement => {
       dispatch(
         skillActions.updateSkill([
           {
-            id: id,
+            id,
             name: nameSkill,
             type: 'Soft skills',
           },

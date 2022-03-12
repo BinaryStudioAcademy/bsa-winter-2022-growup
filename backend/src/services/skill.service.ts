@@ -12,13 +12,28 @@ import { SuccessResponse } from '~/common/models/responses/success';
 import { HttpCode, HttpError } from 'growup-shared';
 import UserRepository from '~/data/repositories/user.repository';
 import UserSkillRepository from '~/data/repositories/userskill.repository';
+import { SkillType } from '~/common/enums/skill-type';
+import { UserSkill } from '~/data/entities/user-skill';
+
+interface ISkill {
+  rating: (string | number)[];
+  isStarred: boolean | any;
+  company: Company;
+  type: SkillType;
+  name: string;
+  userSkills: UserSkill[];
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date;
+}
 
 export const getSkills = async (id: Company['id']): Promise<Skill[]> => {
   const skillRepository = getCustomRepository(SkillRepository);
   const companyRepository = getCustomRepository(CompanyRepository);
 
   const companyInstance: Company = await companyRepository.findOne({
-    id: id,
+    id,
   });
 
   const skills: Skill[] = await skillRepository.find({
@@ -29,7 +44,7 @@ export const getSkills = async (id: Company['id']): Promise<Skill[]> => {
   return newSkills;
 };
 
-export const getUserSkills = async (id: string): Promise<any> => {
+export const getUserSkills = async (id: string): Promise<ISkill[]> => {
   const userSkillRepository = getCustomRepository(UserSkillRepository);
 
   const userSkillInstance = await userSkillRepository.find({
@@ -43,10 +58,8 @@ export const getUserSkills = async (id: string): Promise<any> => {
     skillsMapper(userSkill.skill),
   );
   const skillsWithRating = newSkills.map((el: Skill, index: number) => {
-    const selfRating = userSkillInstance[index].selfRating;
-    const mentorRating = userSkillInstance[index].mentorRating;
-    const reviewRating = userSkillInstance[index].reviewRating;
-    const isStarred = userSkillInstance[index].isStarred;
+    const { selfRating, mentorRating, reviewRating, isStarred } =
+      userSkillInstance[index];
     return {
       ...el,
       rating: [
@@ -57,6 +70,7 @@ export const getUserSkills = async (id: string): Promise<any> => {
       isStarred: isStarred,
     };
   });
+  console.log(skillsWithRating);
   return skillsWithRating;
 };
 
@@ -80,8 +94,8 @@ export const createSkills = async (
   const skills: any = [];
   await asyncForEach(async ({ name, type }: Skill) => {
     const skill = skillRepository.create({
-      name: name,
-      type: type,
+      name,
+      type,
       company: companyInstance,
     });
     await skill.save();
@@ -106,7 +120,7 @@ export const connectSkills = async (
   const companyRepository = getCustomRepository(CompanyRepository);
   const userRepository = getCustomRepository(UserRepository);
   const userSkillRepository = getCustomRepository(UserSkillRepository);
-
+  console.log('s');
   const companyInstance: Company = await companyRepository.findOne({
     id: companyId,
   });
@@ -128,7 +142,7 @@ export const connectSkills = async (
     skills.push(importantSkill);
   }, data);
   await user.save();
-
+  console.log(skills);
   return skills.map((skill: Skill) => skillsMapper(skill));
 };
 
@@ -158,8 +172,8 @@ export const deleteSkill = async (
 
 export const updateSkill = async (
   id: Skill['id'],
-  body: any,
-): Promise<Skill> => {
+  data: any,
+): Promise<ISkill> => {
   if (id) {
     const skillRepository = getCustomRepository(SkillRepository);
     const skillInstance = await skillRepository.findOne(id);
@@ -170,20 +184,21 @@ export const updateSkill = async (
       },
       relations: ['user', 'skill'],
     });
-    const ratings = [body[1].rating[0], body[1].rating[1], body[1].rating[2]];
+    console.log(data);
+    const ratings = [...data[1].rating];
     const allRating = {
       selfRating: ratings[0] ? ratings[0] : null,
       mentorRating: ratings[1] ? ratings[1] : null,
       reviewRating: ratings[2] ? ratings[2] : null,
-      isStarred: body[1].isStarred,
+      isStarred: data[1].isStarred,
     };
     if (skillInstance) {
-      const newSkill = Object.assign(skillInstance, body[0]);
+      const newSkill = Object.assign(skillInstance, data[0]);
       const newRating = Object.assign(userSkillInstance, allRating);
       await newSkill.save();
       await newRating.save();
 
-      return { ...newSkill, rating: ratings, isStarred: body[1].isStar };
+      return { ...newSkill, rating: ratings, isStarred: data[1].isStar };
     }
 
     throw new HttpError({
