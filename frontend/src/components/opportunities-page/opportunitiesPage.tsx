@@ -1,6 +1,11 @@
 import OpportunityPageItem from './opportunitiesPageItem';
 import OpportunityModal from './OpportunityModal';
-import { useAppSelector, useAppDispatch, useEffect } from 'hooks/hooks';
+import {
+  useAppSelector,
+  useAppDispatch,
+  useEffect,
+  useNavigate,
+} from 'hooks/hooks';
 import * as opportunityActions from '../../store/opportunities/actions';
 import './styles.scss';
 import { IOpportunity } from 'store/opportunities/common';
@@ -11,9 +16,23 @@ const OpprotunitiesPage: React.FC = () => {
   );
   const dispatch = useAppDispatch();
   const isLoaded = useAppSelector((state) => state.opportunities.isLoaded);
+  const user = useAppSelector((store) => store.profile.user);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      user.firstName
+        ? user.isCompleteTest
+          ? null
+          : navigate('/profile/settings/2')
+        : navigate('/profile/settings/1');
+    }
+  }, [user]);
+
   useEffect(() => {
     isLoaded ? null : dispatch(opportunityActions.fetchLoadOpp());
   }, []);
+
   return (
     <section className="d-flex flex-column">
       <div className=" d-flex align-items-center px-3 py-3 rounded-top bg-gu-blue text-gu-white">

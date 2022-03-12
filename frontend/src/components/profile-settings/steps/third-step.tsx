@@ -4,7 +4,6 @@ import StepControl from './step-control';
 const ThirdStep: React.FC<StepProps> = ({
   children,
   isDisablePrevious,
-  onPrevious,
   onNext,
 }) => {
   const onSubmit = (): void => {
@@ -18,7 +17,6 @@ const ThirdStep: React.FC<StepProps> = ({
       <StepControl
         isValid={true}
         isDisablePrevious={isDisablePrevious}
-        onPrevious={onPrevious}
         onNext={onNext}
         onSubmit={onSubmit}
       />

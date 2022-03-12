@@ -73,3 +73,10 @@
 .navigation-item {
   list-style-type: none;
 }
+
+.navigation-list-item--blocked * {
+  color: rgb(187, 187, 187);
+  fill: rgb(187, 187, 187);
+  cursor: auto;
+  pointer-events: none;
+}

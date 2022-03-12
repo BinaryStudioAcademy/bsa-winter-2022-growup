@@ -8,9 +8,12 @@ import { ReactComponent as MenteeProfileIcon } from 'assets/img/icons/sidebar-ic
 import { MentorMenteeRoute } from 'common/enums/enums';
 import { Link } from 'components/common/common';
 import './styles.scss';
+import { useAppSelector } from 'hooks/hooks';
+import _ from 'lodash';
 
 const Sidebar: React.FC = () => {
   const isMentor = true;
+  const user = useAppSelector((store) => store.profile.user);
 
   return (
     <aside className="sidebar-section position-fixed h-100 bg-gu-blue">
@@ -32,7 +35,11 @@ const Sidebar: React.FC = () => {
         </Link>
         <nav className="navigation-section px-md-3">
           <ul className="navigation-section__list navigation-list d-flex flex-column m-0 p-0">
-            <li className="navigation-list__item navigation-item mb-4">
+            <li
+              className={`navigation-list__item navigation-item mb-4 
+            ${user?.firstName ? '' : 'navigation-list-item--blocked'}
+            ${user?.isCompleteTest ? '' : 'navigation-list-item--blocked'}`}
+            >
               <Link to={MentorMenteeRoute.HOME}>
                 <span className="navigation-item__link navigation-link d-flex align-items-center p-2 ps-md-4 fs-4 font-weight-normal text-gu-white">
                   <HomeIcon className="navigation-link__icon me-md-3" />
@@ -42,7 +49,12 @@ const Sidebar: React.FC = () => {
                 </span>
               </Link>
             </li>
-            <li className="navigation-list__item navigation-item mb-4">
+            <li
+              className={`navigation-list__item navigation-item mb-4 
+            ${user?.firstName ? '' : 'navigation-list-item--blocked'}
+            ${user?.isCompleteTest ? '' : 'navigation-list-item--blocked'}
+            `}
+            >
               <Link to={MentorMenteeRoute.OPPORTUNITIES}>
                 <span className="navigation-item__link navigation-link d-flex align-items-center p-2 ps-md-4 fs-4 font-weight-normal text-gu-white">
                   <OpportunitiesIcon className="navigation-link__icon me-md-3" />
@@ -52,7 +64,7 @@ const Sidebar: React.FC = () => {
                 </span>
               </Link>
             </li>
-            <li className="navigation-list__item navigation-item mb-4">
+            <li className={`navigation-list__item navigation-item mb-4 ${''}`}>
               <Link to={MentorMenteeRoute.PROFILE}>
                 <span className="navigation-item__link navigation-link d-flex align-items-center p-2 ps-md-4 fs-4 font-weight-normal text-gu-white">
                   <ProfileIcon className="navigation-link__icon me-md-3" />
@@ -62,7 +74,12 @@ const Sidebar: React.FC = () => {
                 </span>
               </Link>
             </li>
-            <li className="navigation-list__item navigation-item mb-4">
+            <li
+              className={`navigation-list__item navigation-item mb-4 
+            ${user?.firstName ? '' : 'navigation-list-item--blocked'}
+            ${user?.isCompleteTest ? '' : 'navigation-list-item--blocked'}
+            `}
+            >
               <Link to={MentorMenteeRoute.OKR}>
                 <span className="navigation-item__link navigation-link d-flex align-items-center p-2 ps-md-4 fs-4 font-weight-normal text-gu-white">
                   <OkrIcon className="navigation-link__icon me-md-3" />
@@ -72,7 +89,12 @@ const Sidebar: React.FC = () => {
                 </span>
               </Link>
             </li>
-            <li className="navigation-list__item navigation-item mb-4">
+            <li
+              className={`navigation-list__item navigation-item mb-4 
+            ${user?.firstName ? '' : 'navigation-list-item--blocked'}
+            ${user?.isCompleteTest ? '' : 'navigation-list-item--blocked'}
+            `}
+            >
               <Link to={MentorMenteeRoute.CAREER_PATH}>
                 <span className="navigation-item__link navigation-link d-flex align-items-center p-2 ps-md-4 fs-4 font-weight-normal text-gu-white">
                   <CareerPathIcon className="navigation-link__icon me-md-3" />
@@ -83,7 +105,12 @@ const Sidebar: React.FC = () => {
               </Link>
             </li>
             {isMentor ? (
-              <li className="navigation-list__item navigation-item mb-4">
+              <li
+                className={`navigation-list__item navigation-item mb-4 
+              ${user?.firstName ? '' : 'navigation-list-item--blocked'}
+              ${user?.isCompleteTest ? '' : 'navigation-list-item--blocked'}
+              `}
+              >
                 <Link to={MentorMenteeRoute.MENTEE_PROFILES}>
                   <span className="navigation-item__link navigation-link d-flex align-items-center p-2 ps-md-4 fs-4 font-weight-normal text-gu-white">
                     <MenteeProfileIcon className="navigation-link__icon me-md-3" />

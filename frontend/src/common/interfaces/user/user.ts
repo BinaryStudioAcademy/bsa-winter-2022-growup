@@ -6,11 +6,11 @@ interface IUser extends IUserDefault {
   lastName: string;
   avatar: string | null;
   companyId: string;
-
+  position: string;
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;
-
+  isCompleteTest: boolean;
   roleType: RoleType;
 }
 

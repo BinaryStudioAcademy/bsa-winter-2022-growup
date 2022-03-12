@@ -1,22 +1,13 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { ContentType } from 'common/enums/enums';
-import { http } from 'services';
+import { opportunities } from 'services';
 import { IOpportunity, IPostOppData, OpportunityActions } from './common';
-import { OpportunitiesProps } from './common';
 
 const fetchLoadOpp = createAsyncThunk(
   OpportunityActions.LOAD_OPPORTUNITIES,
   async (_, { rejectWithValue }) => {
     try {
-      const result: OpportunitiesProps[] = await http.load(
-        'http://localhost:3001/api/company/opportunities',
-        {
-          method: 'GET',
-          payload: null,
-          contentType: ContentType.JSON,
-        },
-      );
-      const opportunities = result.map((item) => {
+      const result: IPostOppData[] = await opportunities.fetchLoadOpp();
+      const opportunitiesData = result.map((item) => {
         const tags = item.tags?.map((item) => item.name);
         return {
           id: item.id,
@@ -28,7 +19,7 @@ const fetchLoadOpp = createAsyncThunk(
           type: item.type,
         };
       });
-      return opportunities;
+      return opportunitiesData;
     } catch (err) {
       return rejectWithValue(err);
     }
@@ -38,31 +29,13 @@ const fetchNewOpp = createAsyncThunk(
   OpportunityActions.ADD_OPPORTUNITY,
   async (data: IOpportunity, { rejectWithValue }) => {
     try {
-      const oppData = {
-        opportunities: [
-          {
-            name: data.name,
-            organization: data.organization,
-            type: data.type,
-            startDate: data.startDate,
-          },
-        ],
-      };
-      const res: IPostOppData[] = await http.post(
-        'http://localhost:3001/api/company/opportunities',
-        {
-          method: 'POST',
-          payload: JSON.stringify(oppData),
-          contentType: ContentType.JSON,
-        },
-      );
-
+      const result: IPostOppData[] = await opportunities.fetchNewOpp(data);
       const newOpp = {
-        name: res[0].name,
-        organization: res[0].organization,
-        type: res[0].type,
-        startDate: res[0].startDate,
-        id: res[0].id,
+        name: result[0].name,
+        organization: result[0].organization,
+        type: result[0].type,
+        startDate: result[0].startDate,
+        id: result[0].id,
         tags: [],
         isFollow: false,
       };

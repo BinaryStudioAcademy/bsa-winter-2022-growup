@@ -5,23 +5,9 @@ interface Props extends StepProps {
   onSubmit?: () => void;
 }
 
-const StepControl: React.FC<Props> = ({
-  isValid,
-  isDisablePrevious = false,
-  onPrevious,
-  onSubmit,
-  onNext,
-}) => {
+const StepControl: React.FC<Props> = ({ isValid, onSubmit, onNext }) => {
   return (
-    <div className="stepper__actions d-flex justify-content-between w-100 mt-4">
-      <button
-        className="btn btn-gu-pink text-gu-white"
-        onClick={(): void => onPrevious?.()}
-        disabled={isDisablePrevious}
-      >
-        Previous
-      </button>
-
+    <div className="stepper__actions d-flex justify-content-center w-100 mt-4 align-items-center">
       <button
         className="btn btn-gu-blue text-gu-white"
         onClick={async (): Promise<void> => {
@@ -31,7 +17,7 @@ const StepControl: React.FC<Props> = ({
           }
         }}
       >
-        Go to Questionnaire
+        Submit
       </button>
     </div>
   );

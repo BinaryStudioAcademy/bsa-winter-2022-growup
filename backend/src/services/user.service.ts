@@ -5,6 +5,7 @@ import { HttpCode, HttpError } from 'growup-shared';
 import UserRepository from '../data/repositories/user.repository';
 import UserRoleRepository from '~/data/repositories/role.repository';
 import CompanyRepository from '~/data/repositories/company.repository';
+import User_QuizCategoryRepository from '~/data/repositories/user-quiz-category.repository';
 import RefreshTokenRepository from '~/data/repositories/refresh-token.repository';
 
 import { refreshTokenSchema } from '~/common/models/tokens/refresh-token.model';
@@ -48,6 +49,7 @@ type UserRegistrationType = {
 
 type UserWithRole = Omit<User, 'password'> & {
   roleType: RoleType;
+  isCompleteTest: boolean;
 };
 
 const getUserJWT = async (user: User): Promise<TokenResponse> => {
@@ -213,14 +215,43 @@ export const registerCommonUsers = async (
 export const fetchUser = async (id: User['id']): Promise<UserWithRole> => {
   const userRepository = getCustomRepository(UserRepository);
   const roleRepository = getCustomRepository(UserRoleRepository);
+  const userQuizRepositiore = getCustomRepository(User_QuizCategoryRepository);
 
   const { password: _password, ...user } = await userRepository.findOne(id);
   const { role } = await roleRepository.findOne({ user });
-
+  const userQuizeCategoryInstance = await userQuizRepositiore.findOne({
+    where: {
+      userId: id,
+    },
+  });
+  const isCompleteTest = userQuizeCategoryInstance ? true : false;
   return {
     ...user,
     roleType: role,
+    isCompleteTest: isCompleteTest,
   } as UserWithRole;
+};
+
+interface NameAndPosition {
+  firstName: string;
+  lastName: string;
+  position: string;
+}
+
+export const insertFirstNameLastName = async (
+  id: User['id'],
+  { firstName, lastName, position }: NameAndPosition,
+) => {
+  const userRepository = getCustomRepository(UserRepository);
+  const userInstance = await userRepository.findOne({
+    where: {
+      id: id,
+    },
+  });
+  userInstance.firstName = firstName;
+  userInstance.lastName = lastName;
+  userInstance.position = position;
+  return userInstance.save();
 };
 
 export const updateUserAvatar = async (
