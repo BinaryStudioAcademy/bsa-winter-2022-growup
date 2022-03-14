@@ -11,6 +11,9 @@ import {
 
 const education = Joi.object({
   id: Joi.optional(),
+  createdAt: Joi.optional(),
+  deletedAt: Joi.optional(),
+  updatedAt: Joi.optional(),
   [EducationPayloadKey.SPECIALIZATION]: Joi.string()
     .trim()
     .min(EducationValidationRule.SPECIALIZATION_MIN_LENGTH)
