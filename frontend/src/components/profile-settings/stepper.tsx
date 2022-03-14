@@ -22,7 +22,7 @@ const Stepper: React.FC<Props> = ({ steps, activeStep, changeStepClicker }) => {
           >
             <div className="position-relative d-block">
               <span
-                className={`stepper__info position-relative d-inline-block fs-2 
+                className={`stepper__info position-relative d-inline-block fs-2
             ${isComplete ? 'stepper__step--cursor-active' : ''}`}
                 onClick={(): void => {
                   isComplete ? changeStepClicker(i) : null;

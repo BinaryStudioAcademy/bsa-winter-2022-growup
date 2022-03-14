@@ -11,7 +11,6 @@ import './styles.scss';
 import { useAppSelector } from 'hooks/hooks';
 import _ from 'lodash';
 import { RoleType } from 'growup-shared';
-
 const Sidebar: React.FC = () => {
   const { user } = useAppSelector((state) => state.auth);
   const userProfile = useAppSelector((state) => state.profile.user);
@@ -52,7 +51,7 @@ const Sidebar: React.FC = () => {
               </Link>
             </li>
             <li
-              className={`navigation-list__item navigation-item mb-4 
+              className={`navigation-list__item navigation-item mb-4
             ${userProfile?.firstName ? '' : 'navigation-list-item--blocked'}
             ${
               userProfile?.isCompleteTest ? '' : 'navigation-list-item--blocked'

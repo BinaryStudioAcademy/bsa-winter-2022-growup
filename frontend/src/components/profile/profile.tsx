@@ -10,7 +10,6 @@ import Tabs from './tabs/tabs';
 import Header from './header/header';
 import ProfileMain from './profile-main/profile-main';
 import './styles.scss';
-
 const ProfileInfo: React.FC = () => {
   const dispatch = useAppDispatch();
   const { user, isLoading } = useAppSelector((state) => state.profile);
