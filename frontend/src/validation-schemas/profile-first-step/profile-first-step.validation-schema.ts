@@ -1,12 +1,14 @@
+import * as Joi from 'joi';
+import {
+  StepsValidationMessage,
+  StepsValidationRule,
+} from 'common/enums/validation/validation';
 import {
   FirstStepPayloadKey,
   UserPayloadKey,
   UserValidationMessage,
   UserValidationRule,
 } from 'common/enums/enums';
-import { StepsValidationRule } from '../../common/enums/validation/steps-validation-rule.enum';
-import { StepsValidationMessage } from '../../common/enums/validation/steps-validation.enum';
-import * as Joi from 'joi';
 
 const profileFirstStep = Joi.object({
   [UserPayloadKey.FIRST_NAME]: Joi.string()

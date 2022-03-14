@@ -114,7 +114,7 @@
     "/api/company/okr": {
       "get": {
         "tags": ["Okr"],
-        "summary": "Get all okrs by logined user",
+        "summary": "Get all okrs by authorized user",
         "parameters": [
           {
             "in": "header",
@@ -146,7 +146,7 @@
       },
       "post": {
         "tags": ["Okr"],
-        "summary": "Create new okr by logined user",
+        "summary": "Create new okr by authorized user",
         "parameters": [
           {
             "in": "header",
@@ -235,7 +235,7 @@
       },
       "put": {
         "tags": ["Okr"],
-        "summary": "Update okr by logined user",
+        "summary": "Update okr by authorized user",
         "parameters": [
           {
             "in": "header",
@@ -548,7 +548,7 @@
         "summary": "Authenticate user",
         "responses": {
           "200": {
-            "description": "Returns token if eveeyrthing is ok. Token contains userId and role. It expires in 24h.",
+            "description": "Returns token if everything is ok. Token contains userId and role. It expires in 24h.",
             "schema": {
               "$ref": "#/definitions/Token"
             }
@@ -647,7 +647,7 @@
               }
             },
             "required": true,
-            "descsription": "Name of all new tagss"
+            "description": "Name of all new tags"
           }
         ],
         "tags": ["Tags", "Admin"],
@@ -694,7 +694,7 @@
               "type": "string"
             },
             "required": true,
-            "descsription": "Tag id you want to delete"
+            "description": "Tag id you want to delete"
           }
         ],
         "tags": ["Tags", "Admin"],
@@ -1004,7 +1004,7 @@
               "type": "string"
             },
             "required": true,
-            "descsription": "Career journey id you want to delete"
+            "description": "Career journey id you want to delete"
           }
         ],
         "summary": "Delete career journey by id",
@@ -1167,7 +1167,7 @@
               "type": "string"
             },
             "required": true,
-            "descsription": "Education id you want to delete"
+            "description": "Education id you want to delete"
           }
         ],
         "summary": "Delete education by id",

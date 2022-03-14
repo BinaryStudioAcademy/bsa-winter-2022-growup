@@ -1,16 +1,38 @@
 import './styles.scss';
+import { NotificationManager } from 'react-notifications';
 import { Calendar, PencilFill, TrashFill } from 'react-bootstrap-icons';
+import { useAppDispatch, useCallback, useNavigate } from 'hooks/hooks';
+import { removeCareerJourney } from 'store/career-journey/actions';
 import { ICareerJourney } from '../common/interfaces';
+import { MentorMenteeRoute } from 'common/enums/mentor-mentee-route/mentor-mentee-route.enum';
 
-type Props = Omit<ICareerJourney, 'id'>;
+interface Props {
+  careerJourney: ICareerJourney;
+  onEdit: (careerJourney: ICareerJourney) => void;
+}
 
-const CareerCard: React.FC<Props> = ({
-  title,
-  position,
-  company,
-  startDate,
-  endDate,
-}) => {
+const CareerCard: React.FC<Props> = ({ careerJourney, onEdit }) => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const { position, company, startDate, endDate } = careerJourney;
+
+  const handleRemove = useCallback(
+    (payload) => dispatch(removeCareerJourney(payload)),
+    [dispatch],
+  );
+
+  const onRemove = (): void => {
+    handleRemove(careerJourney)
+      .unwrap()
+      .then(() => {
+        navigate(MentorMenteeRoute.PROFILE);
+      })
+      .catch((err: Error) => {
+        NotificationManager.error(err.message);
+      });
+  };
+
   const absoluteYears: number = endDate.getFullYear() - startDate.getFullYear();
   const absoluteMonths: number = endDate.getMonth() - startDate.getMonth();
 
@@ -23,7 +45,7 @@ const CareerCard: React.FC<Props> = ({
       <div className="career-card-time fs-7 ">{startDate.getFullYear()}</div>
       <div className="card-body career-card-info">
         <h3 className="card-text career-card-info__title fw-bold fs-4 text-gu-black">
-          {title}
+          {position}
         </h3>
         <p className="card-text career-card-info__role m-0 mb-1 fs-6 text-gu-black">
           <span>Role</span>
@@ -42,8 +64,20 @@ const CareerCard: React.FC<Props> = ({
           </span>
         </div>
         <div className="career-action-buttons d-flex align-self-center text-gu-purple">
-          <PencilFill className="career-action-buttons__edit" />
-          <TrashFill className="career-action-buttons__delete" />
+          <button
+            type="button"
+            className="border-0 p-0 bg-transparent text-gu-purple"
+            onClick={(): void => onEdit(careerJourney)}
+          >
+            <PencilFill className="career-action-buttons__edit" />
+          </button>
+          <button
+            type="button"
+            className="border-0 p-0 bg-transparent text-gu-purple"
+            onClick={onRemove}
+          >
+            <TrashFill className="career-action-buttons__delete" />
+          </button>
         </div>
       </div>
     </div>
