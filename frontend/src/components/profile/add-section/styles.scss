@@ -1,4 +1,4 @@
-@import '~assets/scss/utils';
+@import 'src/assets/scss/utils';
 
 .add-section {
   border-radius: 10px;
@@ -14,11 +14,19 @@
   }
 
   &__add {
+    background-color: transparent;
+    color: $gu-white;
     border-radius: 30px;
     border: 2px solid #fff;
     padding: 6px 23px;
     line-height: 22px;
   }
+
+  &__add:hover {
+    background-color: $gu-white;
+    color: $gu-blue;
+  }
+
   &__add-icon {
     font-size: 22px;
   }

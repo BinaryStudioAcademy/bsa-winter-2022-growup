@@ -12,6 +12,8 @@ import { UsersApi } from './user-api/user-api.service';
 import { ProfileApi } from './profile-api/profile-api.service';
 import { WorkStyleQuiz } from './work-style-quiz-api/work-style-quiz-api.service';
 import { OpportunityApi } from './opporutnities-api';
+import { CareerJourneyApi } from './career-journey-api/career-journey-api.service';
+import { EducationApi } from './education-api/education-api.service';
 
 const storage = new Storage({
   storage: localStorage,
@@ -37,6 +39,8 @@ const objective = new ObjectiveApi(apiConfig);
 const keyResult = new KeyResultApi(apiConfig);
 const workStyleQuiz = new WorkStyleQuiz(apiConfig);
 const opportunities = new OpportunityApi(apiConfig);
+const careerJourney = new CareerJourneyApi(apiConfig);
+const education = new EducationApi(apiConfig);
 
 export { tags as TagsApi };
 export {
@@ -52,4 +56,6 @@ export {
   keyResult,
   workStyleQuiz,
   opportunities,
+  careerJourney,
+  education,
 };
