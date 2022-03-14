@@ -1,9 +1,11 @@
-import { StepProps } from './common/step-props';
+import { IProfileSettingStep } from './common/interfaces';
 import StepControl from './step-control';
 import WorkQuiz from 'components/work-quiz/work-quiz';
 import { useAppSelector } from 'hooks/hooks';
 
-const SecondStep: React.FC<StepProps> = ({ isDisablePrevious, onNext }) => {
+interface Props extends IProfileSettingStep {}
+
+const SecondStep: React.FC<Props> = ({ isDisablePrevious, onNext }) => {
   const onSubmit = (): void => {
     // eslint-disable-next-line no-console
     console.log('onSubmit second step');

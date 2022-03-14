@@ -6,13 +6,13 @@ import { companyActions } from 'store/company/actions';
 
 import './styles.scss';
 
-interface IAddCompany {
+interface Props {
   show: boolean;
   company?: ICompany;
   handleClose: () => void;
 }
 
-const AddEditCompany: FC<IAddCompany> = ({ show, handleClose, company }) => {
+const AddEditCompany: FC<Props> = ({ show, handleClose, company }) => {
   const [name, setName] = useState<string>(company ? company.name : '');
   const [description, setDescription] = useState<string>(
     company?.description ? company.description : '',
@@ -57,7 +57,12 @@ const AddEditCompany: FC<IAddCompany> = ({ show, handleClose, company }) => {
           {company ? 'Edit company' : 'Add company info'}
         </Modal.Title>
       </Modal.Header>
-      <Card.Img variant="top" src="holder.js/100px180" alt={company?.name} />
+      <Card.Img
+        className="modal-company-image"
+        variant="top"
+        src="holder.js/100px180"
+        alt={company?.name}
+      />
       <Modal.Body>
         <Form.Group className="mb-3" controlId="CompanyName">
           <Form.Label>Company name</Form.Label>

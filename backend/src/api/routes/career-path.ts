@@ -4,7 +4,7 @@ import { getCompany } from '~/services/company.service';
 
 import {
   createCareerPath,
-  getDomainAndLevels,
+  getCareerPath,
 } from '../controllers/career-path.controller';
 
 const router = Router();
@@ -19,7 +19,7 @@ router.post(
 
 router.get(
   '/:id',
-  run(async (req: Request) => getDomainAndLevels(req.params.id)),
+  run(async (req: Request) => getCareerPath(req.params.id)),
 );
 
 export default router;

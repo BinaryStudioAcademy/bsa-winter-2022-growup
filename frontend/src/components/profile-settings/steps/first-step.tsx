@@ -1,4 +1,4 @@
-import { StepProps } from './common/step-props';
+import { IProfileSettingStep } from './common/interfaces';
 import { TextField } from 'components/common/common';
 import Experience from './experience';
 import Education from './education';
@@ -11,7 +11,9 @@ import { FirstStepPayloadKey, UserPayloadKey } from 'common/enums/enums';
 import * as userAction from '../../../store/profile/actions';
 import { useAppDispatch } from 'hooks/store/store.hooks';
 
-const FirstStep: React.FC<StepProps> = ({ isDisablePrevious, onNext }) => {
+interface Props extends IProfileSettingStep {}
+
+const FirstStep: React.FC<Props> = ({ isDisablePrevious, onNext }) => {
   const { control, errors, isValid, handleSubmit } = useAppForm({
     defaultValues: DEFAULT_FIRST_STEP_PAYLOAD,
     validationSchema: profileFirstStepValidationSchema,

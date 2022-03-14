@@ -1,4 +1,4 @@
-import { getCustomRepository, Not } from 'typeorm';
+import { getCustomRepository } from 'typeorm';
 
 import { HttpCode, HttpError } from 'growup-shared';
 
@@ -169,26 +169,24 @@ export const authenticateUser = async (
 export const getCommonUserList = async (
   companyId: User['company']['id'],
 ): Promise<IListUser[]> => {
-  const roleRepository = getCustomRepository(UserRoleRepository);
+  const userRepository = getCustomRepository(UserRepository);
 
-  const roleList = await roleRepository.find({
-    relations: ['user', 'user.company'],
-    where: {
-      role: Not(RoleType.ADMIN),
-      user: {
-        company: {
-          id: companyId,
-        },
-      },
-    },
+  const usersList = await userRepository.getUsersByCompamyId(companyId);
+
+  const list = usersList.map((user) => {
+    const roles = user.role.reduce((roles, role) => {
+      roles.push(role.role);
+      return roles;
+    }, []);
+
+    delete user.role;
+
+    return {
+      ...user,
+      roleType: roles,
+    };
   });
-
-  const userList = roleList.map((role) => ({
-    ...role.user,
-    roleType: role.role,
-  }));
-
-  return userList as unknown as IListUser[];
+  return list as unknown as IListUser[];
 };
 
 export const registerUserAdmin = async (
@@ -217,7 +215,7 @@ export const fetchUser = async (id: User['id']): Promise<UserWithRole> => {
   const roleRepository = getCustomRepository(UserRoleRepository);
   const userQuizRepositiore = getCustomRepository(User_QuizCategoryRepository);
 
-  const { password: _password, ...user } = await userRepository.findOne(id);
+  const { password: _password, ...user } = await userRepository.geUserById(id);
   const { role } = await roleRepository.findOne({ user });
   const userQuizeCategoryInstance = await userQuizRepositiore.findOne({
     where: {

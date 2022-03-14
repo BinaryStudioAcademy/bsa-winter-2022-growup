@@ -2,16 +2,17 @@ import { Modal as ModalWindow } from 'react-bootstrap';
 import { Button } from '../common';
 import './styles.scss';
 
-type PropTypes = {
+type Props = {
   show: boolean;
   onClose: () => void;
   title: string;
   className?: string;
   buttonText?: string;
   onSubmit?: () => void;
+  footer?: boolean;
 };
 
-const Modal: React.FC<PropTypes> = ({
+const Modal: React.FC<Props> = ({
   show,
   onClose,
   title,
@@ -19,6 +20,7 @@ const Modal: React.FC<PropTypes> = ({
   className,
   buttonText,
   onSubmit,
+  footer = false,
 }) => {
   return (
     <ModalWindow show={show} onHide={onClose} centered>
@@ -26,13 +28,15 @@ const Modal: React.FC<PropTypes> = ({
         {title}
       </ModalWindow.Header>
       <ModalWindow.Body className={className}>{children}</ModalWindow.Body>
-      <ModalWindow.Footer className="fw-bold fs-3">
-        <Button
-          themeType={'btn-gu-pink text-gu-white'}
-          text={buttonText || 'Save'}
-          onSubmit={onSubmit}
-        />
-      </ModalWindow.Footer>
+      {footer && (
+        <ModalWindow.Footer className="fw-bold fs-3">
+          <Button
+            themeType={'btn-gu-pink text-gu-white'}
+            text={buttonText || 'Save'}
+            onSubmit={onSubmit}
+          />
+        </ModalWindow.Footer>
+      )}
     </ModalWindow>
   );
 };

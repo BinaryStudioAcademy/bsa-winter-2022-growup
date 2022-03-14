@@ -1,12 +1,17 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { opportunities } from 'services';
-import { IOpportunity, IPostOppData, OpportunityActions } from './common';
+import {
+  IOpportunity,
+  IPostOppData,
+  OpportunityActions,
+  IOpportunityBase,
+} from './common';
 
 const fetchLoadOpp = createAsyncThunk(
   OpportunityActions.LOAD_OPPORTUNITIES,
   async (_, { rejectWithValue }) => {
     try {
-      const result: IPostOppData[] = await opportunities.fetchLoadOpp();
+      const result: IOpportunityBase[] = await opportunities.fetchLoadOpp();
       const opportunitiesData = result.map((item) => {
         const tags = item.tags?.map((item) => item.name);
         return {

@@ -22,7 +22,7 @@ class ProfileApi {
     });
   }
 
-  updateAvatar(image: File): Promise<IUser> {
+  updateAvatar(image: Blob): Promise<IUser> {
     const formData = new FormData();
     formData.append('avatar', image);
 

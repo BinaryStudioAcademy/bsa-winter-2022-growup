@@ -7,14 +7,14 @@ import type { ITag } from 'common/interfaces/tag/tag';
 
 import { adminActions } from 'store/actions';
 
-import Tag from './common/tag';
+import Tag from './tag-item/tag-item';
 import TagModal from './modal/tag-modal';
 
-type PropTypes = {
+type Props = {
   tagList: ITag[];
 };
 
-const Tags: React.FC<PropTypes> = ({ tagList }) => {
+const Tags: React.FC<Props> = ({ tagList }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const dispatch = useAppDispatch();
 

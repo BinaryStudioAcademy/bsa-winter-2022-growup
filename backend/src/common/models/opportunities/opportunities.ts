@@ -4,5 +4,5 @@ import { User } from '~/data/entities/user';
 
 export type MappedOpportunity = Opportunity & {
   company: Company['id'];
-  user:User['id'];
+  user: User['id'];
 };

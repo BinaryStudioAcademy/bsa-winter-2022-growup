@@ -16,6 +16,6 @@ export default class TagsSeeder {
         ...tag,
         company: company,
       }).save();
-    },tagsData as Tags[]);
+    }, tagsData as Tags[]);
   }
 }

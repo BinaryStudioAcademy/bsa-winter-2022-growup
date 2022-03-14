@@ -22,8 +22,8 @@ export default class OpportunitySeeder {
       await Object.assign(new Opportunity(), {
         ...opportunitie,
         company: company,
-        user:user,
+        user: user,
       }).save();
-    },opporunities as Opportunity[]);
-    }
+    }, opporunities as Opportunity[]);
+  }
 }

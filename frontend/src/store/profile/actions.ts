@@ -16,7 +16,7 @@ const fetchProfile = createAsyncThunk(
 
 const updateAvatar = createAsyncThunk(
   ActionType.UPDATE_AVATAR,
-  async (data: File, { rejectWithValue }) => {
+  async (data: Blob, { rejectWithValue }) => {
     try {
       const result = await profile.updateAvatar(data);
       return result;

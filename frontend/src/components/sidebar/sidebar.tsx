@@ -10,17 +10,17 @@ import { Link } from 'components/common/common';
 import './styles.scss';
 import { useAppSelector } from 'hooks/hooks';
 import _ from 'lodash';
+import { RoleType } from 'growup-shared';
 
 const Sidebar: React.FC = () => {
-  const isMentor = true;
-  const user = useAppSelector((store) => store.profile.user);
-
+  const { user } = useAppSelector((state) => state.auth);
+  const userProfile = useAppSelector((state) => state.profile.user);
   return (
     <aside className="sidebar-section position-fixed h-100 bg-gu-blue">
       <div className="sidebar-container d-flex flex-column pt-2 pt-md-3">
         <Link to={MentorMenteeRoute.HOME}>
           <a
-            className="logo-section d-flex align-items-center text-decoration-none px-2 ps-md-4"
+            className="logo-section d-flex align-items-center text-decoration-none px-2 ps-md-4 mb-5"
             href=""
           >
             <img
@@ -37,8 +37,10 @@ const Sidebar: React.FC = () => {
           <ul className="navigation-section__list navigation-list d-flex flex-column m-0 p-0">
             <li
               className={`navigation-list__item navigation-item mb-4 
-            ${user?.firstName ? '' : 'navigation-list-item--blocked'}
-            ${user?.isCompleteTest ? '' : 'navigation-list-item--blocked'}`}
+            ${userProfile?.firstName ? '' : 'navigation-list-item--blocked'}
+            ${
+              userProfile?.isCompleteTest ? '' : 'navigation-list-item--blocked'
+            }`}
             >
               <Link to={MentorMenteeRoute.HOME}>
                 <span className="navigation-item__link navigation-link d-flex align-items-center p-2 ps-md-4 fs-4 font-weight-normal text-gu-white">
@@ -51,8 +53,10 @@ const Sidebar: React.FC = () => {
             </li>
             <li
               className={`navigation-list__item navigation-item mb-4 
-            ${user?.firstName ? '' : 'navigation-list-item--blocked'}
-            ${user?.isCompleteTest ? '' : 'navigation-list-item--blocked'}
+            ${userProfile?.firstName ? '' : 'navigation-list-item--blocked'}
+            ${
+              userProfile?.isCompleteTest ? '' : 'navigation-list-item--blocked'
+            }
             `}
             >
               <Link to={MentorMenteeRoute.OPPORTUNITIES}>
@@ -76,8 +80,10 @@ const Sidebar: React.FC = () => {
             </li>
             <li
               className={`navigation-list__item navigation-item mb-4 
-            ${user?.firstName ? '' : 'navigation-list-item--blocked'}
-            ${user?.isCompleteTest ? '' : 'navigation-list-item--blocked'}
+            ${userProfile?.firstName ? '' : 'navigation-list-item--blocked'}
+            ${
+              userProfile?.isCompleteTest ? '' : 'navigation-list-item--blocked'
+            }
             `}
             >
               <Link to={MentorMenteeRoute.OKR}>
@@ -91,8 +97,10 @@ const Sidebar: React.FC = () => {
             </li>
             <li
               className={`navigation-list__item navigation-item mb-4 
-            ${user?.firstName ? '' : 'navigation-list-item--blocked'}
-            ${user?.isCompleteTest ? '' : 'navigation-list-item--blocked'}
+            ${userProfile?.firstName ? '' : 'navigation-list-item--blocked'}
+            ${
+              userProfile?.isCompleteTest ? '' : 'navigation-list-item--blocked'
+            }
             `}
             >
               <Link to={MentorMenteeRoute.CAREER_PATH}>
@@ -104,11 +112,15 @@ const Sidebar: React.FC = () => {
                 </span>
               </Link>
             </li>
-            {isMentor ? (
+            {user && user.roleType === RoleType.MENTOR && (
               <li
                 className={`navigation-list__item navigation-item mb-4 
-              ${user?.firstName ? '' : 'navigation-list-item--blocked'}
-              ${user?.isCompleteTest ? '' : 'navigation-list-item--blocked'}
+              ${userProfile?.firstName ? '' : 'navigation-list-item--blocked'}
+              ${
+                userProfile?.isCompleteTest
+                  ? ''
+                  : 'navigation-list-item--blocked'
+              }
               `}
               >
                 <Link to={MentorMenteeRoute.MENTEE_PROFILES}>
@@ -120,7 +132,7 @@ const Sidebar: React.FC = () => {
                   </span>
                 </Link>
               </li>
-            ) : null}
+            )}
           </ul>
         </nav>
       </div>
