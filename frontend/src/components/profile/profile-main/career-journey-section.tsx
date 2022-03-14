@@ -62,10 +62,7 @@ const CareerJourneySection: React.FC = () => {
   };
 
   return (
-    <AddSection
-      title="Career journey"
-      onButtonClick={(): void => showModal(null)}
-    >
+    <AddSection title="Career journey" onAdd={(): void => showModal(null)}>
       <>
         {careerJourneyData.map((item, i) => (
           <CareerCard key={i} careerJourney={item} onEdit={showModal} />

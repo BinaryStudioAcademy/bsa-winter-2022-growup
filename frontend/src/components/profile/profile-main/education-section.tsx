@@ -4,7 +4,6 @@ import {
   useAppSelector,
   useCallback,
   useEffect,
-  useNavigate,
   useState,
 } from 'hooks/hooks';
 import AddSection from '../add-section/add-section';
@@ -14,12 +13,10 @@ import {
   getAllEducations,
   updateEducation,
 } from 'store/education/actions';
-import { MentorMenteeRoute } from 'common/enums/mentor-mentee-route/mentor-mentee-route.enum';
 import { IEducation } from '../common/interfaces';
 import { EducationForm } from '../components/profile-edit/profile-edit';
 
 const EducationSection: React.FC = () => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const educationData = useAppSelector((state) => state.education.educations);
 
@@ -53,7 +50,7 @@ const EducationSection: React.FC = () => {
     (education ? handleUpdate(values) : handleSave(values))
       .unwrap()
       .then(() => {
-        navigate(MentorMenteeRoute.PROFILE);
+        closeModal();
       })
       .catch((err: Error) => {
         NotificationManager.error(err.message);
@@ -61,7 +58,7 @@ const EducationSection: React.FC = () => {
   };
 
   return (
-    <AddSection title="Education" onButtonClick={(): void => showModal(null)}>
+    <AddSection title="Education" onAdd={(): void => showModal(null)}>
       <>
         {educationData.map((item, i) => (
           <EducationCard key={i} education={item} onEdit={showModal} />
