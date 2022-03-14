@@ -1,7 +1,7 @@
 import { getCustomRepository } from 'typeorm';
 import CompanyRepositry from '../data/repositories/company.repository';
 
-import { Company } from '../data/entities/company';
+import { Company } from '~/data/entities/company';
 
 import { HttpCode, HttpError } from 'growup-shared';
 import { signToken } from '~/common/utils/token.util';
@@ -75,7 +75,7 @@ const createQuiz = async (companyInstance: Company): Promise<void> => {
   }, quiz.categories);
 
   // Create and set Questions
-  const createdQuesitons: QuizQuestion[] = [];
+  const createdQuestions: QuizQuestion[] = [];
   const quizQuestionRepository = await getCustomRepository(
     QuizQuestionRepository,
   );
@@ -93,7 +93,7 @@ const createQuiz = async (companyInstance: Company): Promise<void> => {
         category,
       });
       const created = await quizQuestionInstance.save();
-      createdQuesitons.push(created);
+      createdQuestions.push(created);
     }, quizCurrentQuestions);
   }, categories);
 

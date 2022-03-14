@@ -111,10 +111,10 @@
         }
       }
     },
-    "api/company/okr": {
+    "/api/company/okr": {
       "get": {
         "tags": ["Okr"],
-        "summary": "Get all okrs by logined user",
+        "summary": "Get all okrs by authorized user",
         "parameters": [
           {
             "in": "header",
@@ -146,7 +146,7 @@
       },
       "post": {
         "tags": ["Okr"],
-        "summary": "Create new okr by logined user",
+        "summary": "Create new okr by authorized user",
         "parameters": [
           {
             "in": "header",
@@ -194,7 +194,7 @@
         }
       }
     },
-    "api/company/okr/{id}": {
+    "/api/company/okr/{id}": {
       "get": {
         "tags": ["Okr"],
         "summary": "Get okr by id",
@@ -235,7 +235,7 @@
       },
       "put": {
         "tags": ["Okr"],
-        "summary": "Update okr by logined user",
+        "summary": "Update okr by authorized user",
         "parameters": [
           {
             "in": "header",
@@ -292,7 +292,7 @@
         }
       }
     },
-    "api/company/okr/{id}/objective": {
+    "/api/company/okr/{id}/objective": {
       "post": {
         "tags": ["Okr"],
         "summary": "Add new objective to the okr",
@@ -349,7 +349,7 @@
         }
       }
     },
-    "api/company/okr/{id}/objective/{id1}": {
+    "/api/company/okr/{id}/objective/{id1}": {
       "put": {
         "tags": ["Okr"],
         "summary": "Update objective to the okr",
@@ -415,7 +415,7 @@
         }
       }
     },
-    "api/company/okr/{id}/objective/{id}/keyresult": {
+    "/api/company/okr/{id}/objective/{id}/keyresult": {
       "post": {
         "tags": ["Okr"],
         "summary": "Add new keyresult to the objective",
@@ -548,7 +548,7 @@
         "summary": "Authenticate user",
         "responses": {
           "200": {
-            "description": "Returns token if eveeyrthing is ok. Token contains userId and role. It expires in 24h.",
+            "description": "Returns token if everything is ok. Token contains userId and role. It expires in 24h.",
             "schema": {
               "$ref": "#/definitions/Token"
             }
@@ -647,7 +647,7 @@
               }
             },
             "required": true,
-            "descsription": "Name of all new tagss"
+            "description": "Name of all new tags"
           }
         ],
         "tags": ["Tags", "Admin"],
@@ -694,7 +694,7 @@
               "type": "string"
             },
             "required": true,
-            "descsription": "Tag id you want to delete"
+            "description": "Tag id you want to delete"
           }
         ],
         "tags": ["Tags", "Admin"],
@@ -865,6 +865,332 @@
                   }
                 }
               ]
+            }
+          }
+        }
+      }
+    },
+    "/api/user/career-journey": {
+      "get": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          }
+        ],
+        "tags": ["Users", "Profile"],
+        "summary": "Retrieves list of user career journeys",
+        "responses": {
+          "200": {
+            "description": "Returns list of user career journeys",
+            "schema": {
+              "type": "array",
+              "items": {
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/CareerJourneyResponse"
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Users", "Profile"],
+        "summary": "Create career-journey",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/CareerJourney"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/CareerJourneyResponse"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/api/user/career-journey/{id}": {
+      "put": {
+        "tags": ["Users", "Profile"],
+        "summary": "Update career-journey by id",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/CareerJourney"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/CareerJourneyResponse"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Users", "Profile"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Career journey id you want to delete"
+          }
+        ],
+        "summary": "Delete career journey by id",
+        "responses": {
+          "200": {
+            "description": "Return status of deletion",
+            "schema": {
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "default": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "default": "Career journey was deleted successfully"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/api/user/education": {
+      "get": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          }
+        ],
+        "tags": ["Users", "Profile"],
+        "summary": "Retrieves list of user educations",
+        "responses": {
+          "200": {
+            "description": "Returns list of user educations",
+            "schema": {
+              "type": "array",
+              "items": {
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/EducationResponse"
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Users", "Profile"],
+        "summary": "Create education",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Education"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/EducationResponse"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/api/user/education/{id}": {
+      "put": {
+        "tags": ["Users", "Profile"],
+        "summary": "Update education by id",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Education"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/EducationResponse"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Users", "Profile"],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Education id you want to delete"
+          }
+        ],
+        "summary": "Delete education by id",
+        "responses": {
+          "200": {
+            "description": "Return status of deletion",
+            "schema": {
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "default": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "default": "Education was deleted successfully"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
             }
           }
         }
@@ -1493,6 +1819,112 @@
           "type": "string"
         },
         "name": {
+          "type": "string"
+        }
+      }
+    },
+    "CareerJourney": {
+      "type": "object",
+      "properties": {
+        "position": {
+          "type": "string"
+        },
+        "company": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "string",
+          "nullable": true,
+          "default": null
+        }
+      }
+    },
+    "CareerJourneyResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "position": {
+          "type": "string"
+        },
+        "company": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "string",
+          "nullable": true,
+          "default": null
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": "string"
+        }
+      }
+    },
+    "Education": {
+      "type": "object",
+      "properties": {
+        "specialization": {
+          "type": "string"
+        },
+        "university:": {
+          "type": "string"
+        },
+        "degree": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "string",
+          "nullable": true,
+          "default": null
+        }
+      }
+    },
+    "EducationResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "specialization": {
+          "type": "string"
+        },
+        "university:": {
+          "type": "string"
+        },
+        "degree": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "endDate": {
+          "type": "string",
+          "nullable": true,
+          "default": null
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "deletedAt": {
           "type": "string"
         }
       }
