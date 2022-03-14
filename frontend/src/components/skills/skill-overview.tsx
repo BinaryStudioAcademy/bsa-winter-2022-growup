@@ -1,22 +1,30 @@
+import { Form } from 'react-bootstrap';
+import {
+  useAppDispatch,
+  useAppForm,
+  useAppSelector,
+  useState,
+  useEffect,
+} from 'hooks/hooks';
 import { RootState } from 'common/types/types';
+// import { ISkill } from './common/interfaces';
+import { ISkill } from 'common/interfaces/skill/skill';
 import ProfileHeader from './header-user';
 import SkillElement from './rating/skill-rating';
-import { ISkill } from 'common/interfaces/skill/skill';
-import './styles.scss';
-import { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from 'hooks/hooks';
-import { actions } from '../../store/skill/slice';
-import { validSkillName } from './validations/skill-name';
-import { ReactComponent as SortUp } from '../../assets/img/icons/skill-icons/sortUp-icon.svg';
-import { ReactComponent as SortDown } from '../../assets/img/icons/skill-icons/sortDown-icon.svg';
+import { FormInput } from '../common/common';
+import { ReactComponent as SortUp } from 'assets/img/icons/skill-icons/sortUp-icon.svg';
+import { ReactComponent as SortDown } from 'assets/img/icons/skill-icons/sortDown-icon.svg';
+import { SkillPayloadKey } from 'common/enums/enums';
+import { DEFAULT_SKILL_PAYLOAD } from './common/constants';
+import { actions } from 'store/skill/slice';
+import { skill as skillValidationSchema } from 'validation-schemas/validation-schemas';
 import { skillActions } from 'store/skill';
+import './styles.scss';
 
 const SkillOverview = (): React.ReactElement => {
-  const user = useAppSelector((state: RootState) => state.auth.user);
   const skills = useAppSelector((state: RootState) => state.skill.userSkill);
   const allSkills = useAppSelector((state: RootState) => state.skill.allSkills);
   const [textFind, setTextFind] = useState('');
-  const [textAdd, setTextAdd] = useState('');
   const [isManager, setIsManager] = useState(true);
   const [isSkillReview, setIsSkillReview] = useState(true);
   const [isSortName, setIsSortName] = useState(true);
@@ -30,6 +38,12 @@ const SkillOverview = (): React.ReactElement => {
     dispatch(skillActions.fetchSkills());
   }, []);
 
+  const { control, errors, handleSubmit, reset } = useAppForm({
+    defaultValues: DEFAULT_SKILL_PAYLOAD,
+    validationSchema: skillValidationSchema,
+    mode: 'onSubmit',
+  });
+
   function isFind(text: string): boolean {
     const partName = text.slice(0, textFind.length);
     return (
@@ -37,27 +51,27 @@ const SkillOverview = (): React.ReactElement => {
     );
   }
 
-  function handleSubmit(e: React.SyntheticEvent): void {
-    if (validSkillName(textAdd) && user) {
-      const isName = allSkills.find((skill) => skill.name === textAdd);
-      const isUserName = skills.find((skill) => skill.name === textAdd);
-      const newSkill = [
-        {
-          id: '',
-          name: textAdd,
-          type: 'Soft skills',
-        },
-      ];
-      if (!isUserName)
-        if (!isName) {
-          dispatch(skillActions.createSkill(newSkill));
-        } else {
-          dispatch(skillActions.connectSkill(newSkill));
-        }
-      setTextAdd('');
-    }
-    e.preventDefault();
-  }
+  const handleAdd = (payload: ISkill): void => {
+    const isName = allSkills.find((skill) => skill.name === payload.name);
+    const isUserName = skills.find((skill) => skill.name === payload.name);
+    if (!isUserName)
+      if (!isName) {
+        dispatch(skillActions.createSkill([payload]));
+      } else {
+        dispatch(skillActions.connectSkill([payload]));
+      }
+  };
+
+  const onAdd = (values: object): void => {
+    const name: { name: string } = values as { name: string };
+    const skill = {
+      id: '',
+      type: 'Soft skills',
+    };
+    const newSkill = { ...skill, name: name.name };
+    handleAdd(newSkill);
+    reset?.();
+  };
 
   function sortByName(x: ISkill, y: ISkill): number {
     let upDown;
@@ -80,6 +94,7 @@ const SkillOverview = (): React.ReactElement => {
       }
     return 0;
   }
+
   function sortByManager(x: ISkill, y: ISkill): number {
     if (y.rating && x.rating)
       if (isManager) {
@@ -89,6 +104,7 @@ const SkillOverview = (): React.ReactElement => {
       }
     return 0;
   }
+
   function sortBySkillReview(x: ISkill, y: ISkill): number {
     if (y.rating && x.rating)
       if (isSkillReview) {
@@ -132,7 +148,7 @@ const SkillOverview = (): React.ReactElement => {
       <div className="mb-5">
         <ProfileHeader />
       </div>
-      <div className="d-flex justify-content-between flex-wrap gap-3 mb-4">
+      <div className="d-flex justify-content-between mb-4">
         <form className="row g-3">
           <div className="col-auto">
             <input
@@ -141,19 +157,18 @@ const SkillOverview = (): React.ReactElement => {
               id="inputName"
               placeholder="Search skill"
               value={textFind}
-              onChange={(k): void => setTextFind(k.target.value)}
+              onChange={(e): void => setTextFind(e.target.value)}
             />
           </div>
         </form>
-        <form className="d-flex" onSubmit={handleSubmit}>
-          <div className="col-auto me-4">
-            <input
+        <Form className="d-flex" onSubmit={handleSubmit(onAdd)}>
+          <div className="col form-input mx-4">
+            <FormInput
+              name={SkillPayloadKey.NAME}
+              control={control}
+              errors={errors}
               type="text"
-              className="form-control"
-              id="inputSkill"
               placeholder="Enter name of the skill"
-              value={textAdd}
-              onChange={(k): void => setTextAdd(k.target.value)}
             />
           </div>
           <div className="col-auto">
@@ -163,7 +178,7 @@ const SkillOverview = (): React.ReactElement => {
               value="+ Add Skill"
             />
           </div>
-        </form>
+        </Form>
       </div>
       <table className="table">
         <thead>

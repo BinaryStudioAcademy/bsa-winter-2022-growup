@@ -1,4 +1,5 @@
-import { useCallback, useState } from 'hooks/hooks';
+import { useCallback, useState, useRef } from 'hooks/hooks';
+import { NotificationManager } from 'react-notifications';
 
 import type { TagCreation, TagVisibleInfo } from 'common/types/types';
 import type { UseTagList } from './common';
@@ -6,10 +7,23 @@ import type { UseTagList } from './common';
 const useTagList = (): UseTagList => {
   const [list, setList] = useState<TagCreation[]>([]);
 
-  const addItem = useCallback(
-    (tag: TagCreation) => setList((state) => [...state, tag]),
-    [],
-  );
+  const listRef = useRef<TagCreation[]>([]);
+  listRef.current = list;
+
+  const addItem = useCallback((tag: TagCreation) => {
+    if (tag.name === '') {
+      NotificationManager.error('Tag name is empty');
+      return;
+    }
+
+    const isExist = listRef.current.some((item) => item.name === tag.name);
+
+    if (isExist) {
+      NotificationManager.error('Tag name is exist');
+      return;
+    }
+    setList((state) => [...state, tag]);
+  }, []);
 
   const deleteItem = useCallback(
     (id: TagVisibleInfo['id']) =>
