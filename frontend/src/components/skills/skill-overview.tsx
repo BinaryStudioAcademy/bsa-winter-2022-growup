@@ -1,14 +1,23 @@
+import { Form } from 'react-bootstrap';
+import {
+  useAppDispatch,
+  useAppForm,
+  useAppSelector,
+  useCallback,
+  useState,
+} from 'hooks/hooks';
 import { RootState } from 'common/types/types';
+import { ISkill } from './common/interfaces';
 import ProfileHeader from './header-user';
 import SkillElement from './rating/skill-rating';
-import { ISkill } from './common/interfaces';
+import { FormInput } from '../common/common';
+import { ReactComponent as SortUp } from 'assets/img/icons/skill-icons/sortUp-icon.svg';
+import { ReactComponent as SortDown } from 'assets/img/icons/skill-icons/sortDown-icon.svg';
+import { SkillPayloadKey } from 'common/enums/enums';
+import { DEFAULT_SKILL_PAYLOAD } from './common/constants';
+import { actions } from 'store/skill/slice';
+import { skill as skillValidationSchema } from 'validation-schemas/validation-schemas';
 import './styles.scss';
-import { useState } from 'react';
-import { useAppDispatch, useAppSelector } from 'hooks/hooks';
-import { actions } from '../../store/skill/slice';
-import { validSkillName } from './validations/skill-name';
-import { ReactComponent as SortUp } from '../../assets/img/icons/skill-icons/sortUp-icon.svg';
-import { ReactComponent as SortDown } from '../../assets/img/icons/skill-icons/sortDown-icon.svg';
 
 const SkillOverview = (): React.ReactElement => {
   const user = useAppSelector((state: RootState) => state.auth.user);
@@ -16,12 +25,17 @@ const SkillOverview = (): React.ReactElement => {
     state.skill.userSkill.filter((skill) => skill.userId === user?.id),
   );
   const [textFind, setTextFind] = useState('');
-  const [textAdd, setTextAdd] = useState('');
   const [isManager, setIsManager] = useState(true);
   const [isSkillReview, setIsSkillReview] = useState(true);
   const [isSortName, setIsSortName] = useState(true);
   const [isSortSelf, setIsSortSelf] = useState(true);
   const dispatch = useAppDispatch();
+
+  const { control, errors, handleSubmit, reset } = useAppForm({
+    defaultValues: DEFAULT_SKILL_PAYLOAD,
+    validationSchema: skillValidationSchema,
+    mode: 'onSubmit',
+  });
 
   function isFind(text: string): boolean {
     const partName = text.slice(0, textFind.length);
@@ -30,20 +44,20 @@ const SkillOverview = (): React.ReactElement => {
     );
   }
 
-  function handleSubmit(e: React.SyntheticEvent): void {
-    if (validSkillName(textAdd) && user) {
-      dispatch(
-        actions.ADD_SKILL({
-          id: new Date().getMilliseconds().toString(),
-          name: textAdd,
-          userId: user.id,
-          rating: ['', '', ''],
-        }),
-      );
-      setTextAdd('');
-    }
-    e.preventDefault();
-  }
+  const handleAdd = useCallback(
+    (payload) => dispatch(actions.ADD_SKILL(payload)),
+    [dispatch],
+  );
+
+  const onAdd = (values: object): void => {
+    const skill = {
+      id: new Date().getMilliseconds().toString(),
+      userId: user?.id,
+      rating: ['', '', ''],
+    };
+    handleAdd({ ...skill, ...values });
+    reset?.();
+  };
 
   function sortByName(x: ISkill, y: ISkill): number {
     let upDown;
@@ -64,6 +78,7 @@ const SkillOverview = (): React.ReactElement => {
       return +x.rating[0] - +y.rating[0];
     }
   }
+
   function sortByManager(x: ISkill, y: ISkill): number {
     if (isManager) {
       return +y.rating[1] - +x.rating[1];
@@ -71,6 +86,7 @@ const SkillOverview = (): React.ReactElement => {
       return +x.rating[1] - +y.rating[1];
     }
   }
+
   function sortBySkillReview(x: ISkill, y: ISkill): number {
     if (isSkillReview) {
       return +y.rating[2] - +x.rating[2];
@@ -117,19 +133,18 @@ const SkillOverview = (): React.ReactElement => {
               id="inputName"
               placeholder="Search skill"
               value={textFind}
-              onChange={(k): void => setTextFind(k.target.value)}
+              onChange={(e): void => setTextFind(e.target.value)}
             />
           </div>
         </form>
-        <form className="d-flex" onSubmit={handleSubmit}>
-          <div className="col-auto mx-4">
-            <input
+        <Form className="d-flex" onSubmit={handleSubmit(onAdd)}>
+          <div className="col form-input mx-4">
+            <FormInput
+              name={SkillPayloadKey.NAME}
+              control={control}
+              errors={errors}
               type="text"
-              className="form-control"
-              id="inputSkill"
               placeholder="Enter name of the skill"
-              value={textAdd}
-              onChange={(k): void => setTextAdd(k.target.value)}
             />
           </div>
           <div className="col-auto">
@@ -139,7 +154,7 @@ const SkillOverview = (): React.ReactElement => {
               value="+ Add Skill"
             />
           </div>
-        </form>
+        </Form>
       </div>
       <table className="table">
         <thead>
