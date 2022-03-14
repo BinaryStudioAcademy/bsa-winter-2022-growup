@@ -3,7 +3,7 @@ import {
   MentorMenteeRoute,
   UserPayloadKey,
 } from 'common/enums/enums';
-import FormInput from 'components/common/form-input/form-input';
+import { FormInput } from 'components/common/common';
 import {
   useAppDispatch,
   useAppForm,
