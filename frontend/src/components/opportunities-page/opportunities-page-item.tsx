@@ -1,4 +1,4 @@
-import Follow from './Follow';
+import Follow from './follow';
 import OpportunityItem from 'components/main-page/opportunities/opportunityItem';
 import { IOpportunity } from 'store/opportunities/common';
 
@@ -23,7 +23,7 @@ const OpportunityPageItem: React.FC<Props> = ({
         tagsData={tagsData}
         type={type}
       />
-      <Follow isFollow={isFollow} id={id}></Follow>
+      <Follow isFollow={isFollow} id={id} />
     </div>
   );
 };

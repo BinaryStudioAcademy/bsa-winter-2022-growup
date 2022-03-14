@@ -1,11 +1,11 @@
-import OpportunityPageItem from './opportunitiesPageItem';
-import OpportunityModal from './OpportunityModal';
+import OpportunityPageItem from './opportunities-page-item';
+import OpportunityModal from './opportunity-modal';
 import { useAppSelector, useAppDispatch, useEffect } from 'hooks/hooks';
-import * as opportunityActions from '../../store/opportunities/actions';
+import * as opportunityActions from 'store/opportunities/actions';
 import './styles.scss';
 import { IOpportunity } from 'store/opportunities/common';
 
-const OpprotunitiesPage: React.FC = () => {
+const OpportunitiesPage: React.FC = () => {
   const opportunities = useAppSelector(
     (state) => state.opportunities.opportunities,
   );
@@ -49,4 +49,4 @@ const OpprotunitiesPage: React.FC = () => {
     </section>
   );
 };
-export default OpprotunitiesPage;
+export default OpportunitiesPage;
