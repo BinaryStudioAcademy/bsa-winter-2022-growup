@@ -32,7 +32,7 @@ export const createObjectiveToOkr = async ({
 
     await objective.save();
 
-    const responceOkr = okrRepository.getOneByUserId();
+    const responceOkr = okrRepository.findOne({ id: okrId });
     return responceOkr;
   }
 
@@ -67,6 +67,6 @@ export const updateObjectiveById = async ({
   objective.updatedAt = new Date();
   await objective.save();
 
-  const responceOkr = okrRepository.getOneByUserId();
+  const responceOkr = okrRepository.findOne({ id: okrId });
   return responceOkr;
 };
