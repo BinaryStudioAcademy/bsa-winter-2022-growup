@@ -65,7 +65,7 @@ const deleteSkill = createAsyncThunk(
 
 const updateSkill = createAsyncThunk(
   ActionType.UPDATE_SKILL,
-  async (data: any, { rejectWithValue }) => {
+  async (data: ISkill[], { rejectWithValue }) => {
     try {
       const result = await skills.updateSkill(data);
       return result;

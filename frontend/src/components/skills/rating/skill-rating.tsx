@@ -52,6 +52,8 @@ const SkillElement = (props: Props): React.ReactElement => {
             type: 'Soft skills',
           },
           {
+            id,
+            name: nameSkill,
             rating: ratingValues,
             isStarred: isStar,
           },

@@ -10,3 +10,7 @@ export interface ISkill {
   updatedAt?: string;
   deletedAt?: string;
 }
+
+export interface IResult {
+  skills: ISkill[];
+}

@@ -1,6 +1,6 @@
 import { ContentType, HttpMethod } from 'common/enums/enums';
 import { IHttp } from 'common/interfaces/http/http';
-import type { ISkill } from 'common/interfaces/skill/skill';
+import type { ISkill, IResult } from 'common/interfaces/skill/skill';
 import { SkillProps } from 'common/types/skills/skills';
 
 type Props = {
@@ -39,9 +39,11 @@ class SkillsApi {
     }
   }
 
-  public async createSkill(skillsPayload: SkillProps[]): Promise<any | null> {
+  public async createSkill(
+    skillsPayload: SkillProps[],
+  ): Promise<ISkill | null> {
     try {
-      const result = await this.http.load(`${this.apiPath}/skills`, {
+      const result: IResult = await this.http.load(`${this.apiPath}/skills`, {
         contentType: ContentType.JSON,
         method: HttpMethod.POST,
         hasAuth: true,
@@ -52,26 +54,31 @@ class SkillsApi {
           },
         ]),
       });
-      return result as ISkill;
+      return result.skills[0] as ISkill;
     } catch {
       return null;
     }
   }
 
-  public async connectSkill(skillsPayload: SkillProps[]): Promise<any | null> {
+  public async connectSkill(
+    skillsPayload: SkillProps[],
+  ): Promise<ISkill | null> {
     try {
-      const result = await this.http.load(`${this.apiPath}/skills/user`, {
-        contentType: ContentType.JSON,
-        method: HttpMethod.POST,
-        hasAuth: true,
-        payload: JSON.stringify([
-          {
-            name: skillsPayload[0].name,
-            type: skillsPayload[0].type,
-          },
-        ]),
-      });
-      return result as ISkill;
+      const result: IResult = await this.http.load(
+        `${this.apiPath}/skills/user`,
+        {
+          contentType: ContentType.JSON,
+          method: HttpMethod.POST,
+          hasAuth: true,
+          payload: JSON.stringify([
+            {
+              name: skillsPayload[0].name,
+              type: skillsPayload[0].type,
+            },
+          ]),
+        },
+      );
+      return result.skills[0] as ISkill;
     } catch {
       return null;
     }
@@ -90,7 +97,7 @@ class SkillsApi {
     }
   }
 
-  public async updateSkill(skillsPayload: ISkill[]): Promise<any | null> {
+  public async updateSkill(skillsPayload: ISkill[]): Promise<ISkill | null> {
     try {
       const result = await this.http.load(
         `${this.apiPath}/skills/${skillsPayload[0].id}`,

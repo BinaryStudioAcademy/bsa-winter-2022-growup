@@ -15,7 +15,8 @@ enum ActionType {
 }
 
 export type State = {
-  skills: ISkill[];
+  allSkills: ISkill[];
+  userSkill: ISkill[];
 };
 
 export { ActionType };

@@ -209,30 +209,32 @@ const SkillOverview = (): React.ReactElement => {
         <tbody>
           {skills
             ? skillStarred.map((skill: ISkill) => {
-                if (isFind(skill.name) && skill.rating)
-                  return (
-                    <SkillElement
-                      key={skill.id}
-                      name={skill.name}
-                      rating={skill.rating}
-                      id={skill.id}
-                      isStarred={skill.isStarred}
-                    />
-                  );
+                if (skill.name)
+                  if (isFind(skill.name) && skill.rating)
+                    return (
+                      <SkillElement
+                        key={skill.id}
+                        name={skill.name}
+                        rating={skill.rating}
+                        id={skill.id}
+                        isStarred={skill.isStarred}
+                      />
+                    );
               })
             : true}
           {skills
             ? skillNotStarred.map((skill: ISkill) => {
-                if (isFind(skill.name) && skill.rating)
-                  return (
-                    <SkillElement
-                      key={skill.id}
-                      name={skill.name}
-                      rating={skill.rating}
-                      id={skill.id}
-                      isStarred={skill.isStarred}
-                    />
-                  );
+                if (skill.name)
+                  if (isFind(skill.name) && skill.rating)
+                    return (
+                      <SkillElement
+                        key={skill.id}
+                        name={skill.name}
+                        rating={skill.rating}
+                        id={skill.id}
+                        isStarred={skill.isStarred}
+                      />
+                    );
               })
             : true}
         </tbody>
