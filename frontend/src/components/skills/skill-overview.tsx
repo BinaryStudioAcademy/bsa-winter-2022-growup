@@ -40,6 +40,7 @@ const SkillOverview = (): React.ReactElement => {
   function handleSubmit(e: React.SyntheticEvent): void {
     if (validSkillName(textAdd) && user) {
       const isName = allSkills.find((skill) => skill.name === textAdd);
+      const isUserName = skills.find((skill) => skill.name === textAdd);
       const newSkill = [
         {
           id: '',
@@ -47,11 +48,12 @@ const SkillOverview = (): React.ReactElement => {
           type: 'Soft skills',
         },
       ];
-      if (!isName) {
-        dispatch(skillActions.createSkill(newSkill));
-      } else {
-        dispatch(skillActions.connectSkill(newSkill));
-      }
+      if (!isUserName)
+        if (!isName) {
+          dispatch(skillActions.createSkill(newSkill));
+        } else {
+          dispatch(skillActions.connectSkill(newSkill));
+        }
       setTextAdd('');
     }
     e.preventDefault();
@@ -70,25 +72,31 @@ const SkillOverview = (): React.ReactElement => {
   }
 
   function sortBySelfRating(x: ISkill, y: ISkill): number {
-    if (isSortSelf) {
-      return +y.rating[0] - +x.rating[0];
-    } else {
-      return +x.rating[0] - +y.rating[0];
-    }
+    if (y.rating && x.rating)
+      if (isSortSelf) {
+        return +y.rating[0] - +x.rating[0];
+      } else {
+        return +x.rating[0] - +y.rating[0];
+      }
+    return 0;
   }
   function sortByManager(x: ISkill, y: ISkill): number {
-    if (isManager) {
-      return +y.rating[1] - +x.rating[1];
-    } else {
-      return +x.rating[1] - +y.rating[1];
-    }
+    if (y.rating && x.rating)
+      if (isManager) {
+        return +y.rating[1] - +x.rating[1];
+      } else {
+        return +x.rating[1] - +y.rating[1];
+      }
+    return 0;
   }
   function sortBySkillReview(x: ISkill, y: ISkill): number {
-    if (isSkillReview) {
-      return +y.rating[2] - +x.rating[2];
-    } else {
-      return +x.rating[2] - +y.rating[2];
-    }
+    if (y.rating && x.rating)
+      if (isSkillReview) {
+        return +y.rating[2] - +x.rating[2];
+      } else {
+        return +x.rating[2] - +y.rating[2];
+      }
+    return 0;
   }
 
   function sortSkillNames(): void {
@@ -201,7 +209,7 @@ const SkillOverview = (): React.ReactElement => {
         <tbody>
           {skills
             ? skillStarred.map((skill: ISkill) => {
-                if (isFind(skill.name))
+                if (isFind(skill.name) && skill.rating)
                   return (
                     <SkillElement
                       key={skill.id}
@@ -215,7 +223,7 @@ const SkillOverview = (): React.ReactElement => {
             : true}
           {skills
             ? skillNotStarred.map((skill: ISkill) => {
-                if (isFind(skill.name))
+                if (isFind(skill.name) && skill.rating)
                   return (
                     <SkillElement
                       key={skill.id}

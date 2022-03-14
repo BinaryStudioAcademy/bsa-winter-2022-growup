@@ -17,7 +17,7 @@ import { UserSkill } from '~/data/entities/user-skill';
 
 interface ISkill {
   rating: (string | number)[];
-  isStarred: boolean | any;
+  isStarred: boolean;
   company: Company;
   type: SkillType;
   name: string;
@@ -70,7 +70,6 @@ export const getUserSkills = async (id: string): Promise<ISkill[]> => {
       isStarred: isStarred,
     };
   });
-  console.log(skillsWithRating);
   return skillsWithRating;
 };
 
@@ -91,7 +90,7 @@ export const createSkills = async (
     where: { id: userId },
   });
 
-  const skills: any = [];
+  const skills: Skill[] = [];
   await asyncForEach(async ({ name, type }: Skill) => {
     const skill = skillRepository.create({
       name,
@@ -108,7 +107,7 @@ export const createSkills = async (
   }, data);
   await user.save();
 
-  return skills.map((skill: Skill) => skillsMapper(skill));
+  return { skills: skills.map((skill: Skill) => skillsMapper(skill)) };
 };
 
 export const connectSkills = async (
@@ -120,7 +119,7 @@ export const connectSkills = async (
   const companyRepository = getCustomRepository(CompanyRepository);
   const userRepository = getCustomRepository(UserRepository);
   const userSkillRepository = getCustomRepository(UserSkillRepository);
-  console.log('s');
+
   const companyInstance: Company = await companyRepository.findOne({
     id: companyId,
   });
@@ -131,7 +130,7 @@ export const connectSkills = async (
     company: companyInstance,
   } as FindManyOptions);
 
-  const skills: any = [];
+  const skills: Skill[] = [];
   await asyncForEach(async ({ name }: Skill) => {
     const importantSkill = allSkills.find((skill) => skill.name === name);
     const userSkill = userSkillRepository.create({
@@ -142,8 +141,8 @@ export const connectSkills = async (
     skills.push(importantSkill);
   }, data);
   await user.save();
-  console.log(skills);
-  return skills.map((skill: Skill) => skillsMapper(skill));
+
+  return { skills: skills.map((skill: Skill) => skillsMapper(skill)) };
 };
 
 export const deleteSkill = async (
@@ -172,7 +171,7 @@ export const deleteSkill = async (
 
 export const updateSkill = async (
   id: Skill['id'],
-  data: any,
+  data: ISkill[],
 ): Promise<ISkill> => {
   if (id) {
     const skillRepository = getCustomRepository(SkillRepository);
@@ -184,7 +183,6 @@ export const updateSkill = async (
       },
       relations: ['user', 'skill'],
     });
-    console.log(data);
     const ratings = [...data[1].rating];
     const allRating = {
       selfRating: ratings[0] ? ratings[0] : null,
@@ -198,7 +196,7 @@ export const updateSkill = async (
       await newSkill.save();
       await newRating.save();
 
-      return { ...newSkill, rating: ratings, isStarred: data[1].isStar };
+      return { ...newSkill, rating: ratings, isStarred: data[1].isStarred };
     }
 
     throw new HttpError({

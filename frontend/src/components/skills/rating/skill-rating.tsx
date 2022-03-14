@@ -14,7 +14,7 @@ import { skillActions } from 'store/skill';
 interface Props {
   id: string;
   name: string;
-  rating: Array<string>;
+  rating: Array<string | number>;
   isStarred: boolean | undefined;
 }
 

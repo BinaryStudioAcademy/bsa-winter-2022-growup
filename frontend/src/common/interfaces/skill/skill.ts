@@ -3,7 +3,7 @@ export interface ISkill {
   name: string;
   type?: string;
   company?: string | undefined;
-  rating?: any;
+  rating?: (string | number)[];
   isStarred?: boolean;
 
   createdAt?: string;
