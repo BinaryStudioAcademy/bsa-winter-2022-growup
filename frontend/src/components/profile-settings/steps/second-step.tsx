@@ -18,7 +18,7 @@ const SecondStep: React.FC<Props> = ({ isDisablePrevious, onNext }) => {
   return (
     <div className="stepper__form">
       <WorkQuiz />
-      {isCompleteTest ? (
+      {isCompleteTest ? ( //it`s a interim solution.Need to get variable result of the test from the DB
         result ? (
           <StepControl
             isValid={true}
