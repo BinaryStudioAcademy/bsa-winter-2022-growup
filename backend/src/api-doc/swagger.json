@@ -111,7 +111,7 @@
         }
       }
     },
-    "api/company/okr": {
+    "/api/company/okr": {
       "get": {
         "tags": ["Okr"],
         "summary": "Get all okrs by logined user",
@@ -194,7 +194,7 @@
         }
       }
     },
-    "api/company/okr/{id}": {
+    "/api/company/okr/{id}": {
       "get": {
         "tags": ["Okr"],
         "summary": "Get okr by id",
@@ -292,7 +292,7 @@
         }
       }
     },
-    "api/company/okr/{id}/objective": {
+    "/api/company/okr/{id}/objective": {
       "post": {
         "tags": ["Okr"],
         "summary": "Add new objective to the okr",
@@ -349,7 +349,7 @@
         }
       }
     },
-    "api/company/okr/{id}/objective/{id1}": {
+    "/api/company/okr/{id}/objective/{id1}": {
       "put": {
         "tags": ["Okr"],
         "summary": "Update objective to the okr",
@@ -415,7 +415,7 @@
         }
       }
     },
-    "api/company/okr/{id}/objective/{id}/keyresult": {
+    "/api/company/okr/{id}/objective/{id}/keyresult": {
       "post": {
         "tags": ["Okr"],
         "summary": "Add new keyresult to the objective",

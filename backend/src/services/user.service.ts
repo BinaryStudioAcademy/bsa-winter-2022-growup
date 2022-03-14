@@ -141,11 +141,8 @@ export const authenticateUser = async (
 ): Promise<TokenResponse> => {
   const userRepository = getCustomRepository(UserRepository);
 
-  const user = await userRepository.findOne({
-    relations: ['company'],
-    where: {
-      email: data.email,
-    },
+  const user = await userRepository.getUserWithPassword({
+    email: data.email,
   });
 
   if (!user)
@@ -157,6 +154,7 @@ export const authenticateUser = async (
   // Copmares hashed password and entered by user
   // If they do not match, return null
   const isPasswordMatch = await comparePasswords(data.password, user.password);
+
   if (!isPasswordMatch)
     throw new HttpError({
       status: HttpCode.NOT_FOUND,

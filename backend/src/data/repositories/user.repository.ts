@@ -1,4 +1,4 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository, ObjectLiteral, Repository } from 'typeorm';
 import { User } from '../entities/user';
 import { RoleType } from '~/common/enums/role-type';
 
@@ -37,6 +37,19 @@ class UserRepository extends Repository<User> {
       .where({ company: companyId })
       .andWhere('NOT user_role.role = :role', { role: RoleType.ADMIN })
       .getMany();
+  }
+
+  getUserWithPassword(where: ObjectLiteral): Promise<User> {
+    return this.createQueryBuilder('user')
+      .select()
+      .leftJoinAndSelect(
+        'user.company',
+        'company',
+        'user.companyId = company.id',
+      )
+      .addSelect('user.password')
+      .where(where)
+      .getOne();
   }
 }
 
