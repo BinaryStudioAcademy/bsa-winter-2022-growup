@@ -239,7 +239,7 @@ interface NameAndPosition {
 export const insertFirstNameLastName = async (
   id: User['id'],
   { firstName, lastName, position }: NameAndPosition,
-) => {
+): Promise<User> => {
   const userRepository = getCustomRepository(UserRepository);
   const userInstance = await userRepository.findOne({
     where: {
