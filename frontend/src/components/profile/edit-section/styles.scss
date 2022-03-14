@@ -57,6 +57,7 @@ button:focus {
 
   .edit-section-header {
     background-color: #463da8;
+    color: #fff;
 
     &__edit {
       color: #fff;
@@ -67,8 +68,6 @@ button:focus {
 
 @include media-breakpoint-down(lg) {
   .edit-section-header {
-    color: #fff;
-
     &__edit {
       position: relative;
       width: 50px;
