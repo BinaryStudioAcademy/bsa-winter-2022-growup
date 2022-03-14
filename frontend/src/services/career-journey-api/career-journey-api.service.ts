@@ -18,6 +18,7 @@ class CareerJourneyApi {
       {
         method: HttpMethod.GET,
         contentType: ContentType.JSON,
+        payload: null,
       },
     );
   }
@@ -47,6 +48,7 @@ class CareerJourneyApi {
       {
         method: HttpMethod.DELETE,
         contentType: ContentType.JSON,
+        payload: null,
       },
     );
   }

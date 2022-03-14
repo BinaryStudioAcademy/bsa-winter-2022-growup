@@ -16,6 +16,7 @@ class EducationApi {
     return this.http.load<IEducation[]>(`${this.apiPath}/user/education`, {
       method: HttpMethod.GET,
       contentType: ContentType.JSON,
+      payload: null,
     });
   }
 
@@ -44,6 +45,7 @@ class EducationApi {
       {
         method: HttpMethod.DELETE,
         contentType: ContentType.JSON,
+        payload: null,
       },
     );
   }
