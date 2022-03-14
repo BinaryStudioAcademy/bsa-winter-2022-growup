@@ -43,8 +43,6 @@ router
     validateBody(updateEducationSchema),
     run(async (req: Request) => {
       const { body } = req;
-      const { id } = req.params;
-      body.id = id;
       return updateEducation(body);
     }),
   )

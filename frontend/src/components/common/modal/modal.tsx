@@ -29,7 +29,7 @@ const Modal: React.FC<Props> = ({
       </ModalWindow.Header>
       <ModalWindow.Body className={className}>{children}</ModalWindow.Body>
       {footer && (
-        <ModalWindow.Footer className="fw-bold fs-3">
+        <ModalWindow.Footer className="w-100 bg-gu-white justify-content-start fw-bold fs-3">
           <Button
             themeType={'btn-gu-pink text-gu-white'}
             text={buttonText || 'Save'}
