@@ -18,6 +18,22 @@ class OkrRepository extends Repository<OKR> {
       .where({ user: userId })
       .getMany();
   }
+
+  getOneById(okrId: string): Promise<OKR> {
+    return this.createQueryBuilder('okr')
+      .leftJoinAndSelect(
+        'okr.objectives',
+        'objective',
+        'okr.id = objective.okr',
+      )
+      .leftJoinAndSelect(
+        'objective.keyResults',
+        'keyresult',
+        'objective.id = keyresult.objective',
+      )
+      .where('okr.id = :id', { id: okrId })
+      .getOne();
+  }
 }
 
 export default OkrRepository;

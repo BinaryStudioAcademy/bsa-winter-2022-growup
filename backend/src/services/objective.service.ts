@@ -67,6 +67,6 @@ export const updateObjectiveById = async ({
   objective.updatedAt = new Date();
   await objective.save();
 
-  const responceOkr = okrRepository.findOne({ id: okrId });
+  const responceOkr = okrRepository.getOneById(okrId);
   return responceOkr;
 };

@@ -36,6 +36,6 @@ export const addNewKeyresultToObjective = async ({
 
   await keyResult.save();
 
-  const responceOkr = okrRepository.findOne({ id: okrId });
+  const responceOkr = okrRepository.getOneById(okrId);
   return responceOkr;
 };
