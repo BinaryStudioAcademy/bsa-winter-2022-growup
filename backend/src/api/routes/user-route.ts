@@ -3,7 +3,7 @@ import multer from 'multer';
 
 import { run } from '~/common/helpers/route.helper';
 import { fetchUser, updateUserAvatar } from '~/services/user.service';
-import careerJourneyPouter from './career-journey';
+import careerJourneyRoute from './career-journey';
 import educationRoute from './education-route';
 
 const router = Router();
@@ -21,7 +21,7 @@ router
     '/',
     run((req: Request) => fetchUser(req.userId)),
   )
-  .use('/career-journey', careerJourneyPouter)
+  .use('/career-journey', careerJourneyRoute)
   .use('/education', educationRoute);
 
 export default router;
