@@ -1,12 +1,30 @@
-import { Entity, Column, ManyToOne } from 'typeorm';
-import { AbstractEntity } from '~/data/abstract/abstract.entity';
+import { Entity, ManyToOne, Column, BaseEntity } from 'typeorm';
 import { User } from './user';
+import { Skill } from './skill';
 
 @Entity()
-export class UserSkill extends AbstractEntity {
-  @Column({ type: 'varchar', length: 50 })
-  name: string;
+export class UserSkill extends BaseEntity {
+  @Column({ default: false })
+  isStarred: boolean;
 
-  @ManyToOne(() => User, (user) => user.id)
+  @Column({ nullable: true })
+  selfRating: number;
+
+  @Column({ nullable: true })
+  mentorRating: number;
+
+  @Column({ nullable: true })
+  reviewRating: number;
+
+  @ManyToOne(() => User, (user) => user.userSkills, {
+    primary: true,
+    onDelete: 'CASCADE',
+  })
   user: User;
+
+  @ManyToOne(() => Skill, (skill) => skill.userSkills, {
+    primary: true,
+    onDelete: 'CASCADE',
+  })
+  skill: Skill;
 }
