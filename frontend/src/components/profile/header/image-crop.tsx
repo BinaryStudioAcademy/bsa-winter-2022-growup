@@ -1,7 +1,8 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-import ReactCropper, { Cropper } from 'react-cropper';
-import 'cropperjs/dist/cropper.css';
 import { Form } from 'react-bootstrap';
+import ReactCropper, { Cropper } from 'react-cropper';
+
+import 'cropperjs/dist/cropper.css';
 
 type Props = {
   setError: (msg: string) => void;
