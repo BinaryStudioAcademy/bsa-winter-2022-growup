@@ -14,12 +14,15 @@
 
   .modal-header {
     background-color: $white;
-    border-radius: 15px 15px 0 0;
     padding: 25px;
   }
 
   .modal-body {
     padding: 50px;
+  }
+
+  .modal-footer {
+    align-self: end;
   }
 }
 
