@@ -35,7 +35,7 @@ const Sidebar: React.FC = () => {
         <nav className="navigation-section px-md-3">
           <ul className="navigation-section__list navigation-list d-flex flex-column m-0 p-0">
             <li
-              className={`navigation-list__item navigation-item mb-4 
+              className={`navigation-list__item navigation-item mb-4
             ${userProfile?.firstName ? '' : 'navigation-list-item--blocked'}
             ${
               userProfile?.isCompleteTest ? '' : 'navigation-list-item--blocked'
@@ -78,7 +78,7 @@ const Sidebar: React.FC = () => {
               </Link>
             </li>
             <li
-              className={`navigation-list__item navigation-item mb-4 
+              className={`navigation-list__item navigation-item mb-4
             ${userProfile?.firstName ? '' : 'navigation-list-item--blocked'}
             ${
               userProfile?.isCompleteTest ? '' : 'navigation-list-item--blocked'
@@ -95,7 +95,7 @@ const Sidebar: React.FC = () => {
               </Link>
             </li>
             <li
-              className={`navigation-list__item navigation-item mb-4 
+              className={`navigation-list__item navigation-item mb-4
             ${userProfile?.firstName ? '' : 'navigation-list-item--blocked'}
             ${
               userProfile?.isCompleteTest ? '' : 'navigation-list-item--blocked'
@@ -113,7 +113,7 @@ const Sidebar: React.FC = () => {
             </li>
             {user && user.roleType === RoleType.MENTOR && (
               <li
-                className={`navigation-list__item navigation-item mb-4 
+                className={`navigation-list__item navigation-item mb-4
               ${userProfile?.firstName ? '' : 'navigation-list-item--blocked'}
               ${
                 userProfile?.isCompleteTest
