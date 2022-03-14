@@ -9,7 +9,6 @@ import { MentorMenteeRoute } from 'common/enums/enums';
 import { Link } from 'components/common/common';
 import './styles.scss';
 import { useAppSelector } from 'hooks/hooks';
-import _ from 'lodash';
 import { RoleType } from 'growup-shared';
 const Sidebar: React.FC = () => {
   const { user } = useAppSelector((state) => state.auth);
