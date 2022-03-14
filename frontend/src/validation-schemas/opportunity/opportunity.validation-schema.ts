@@ -10,6 +10,7 @@ import {
 } from 'common/enums/validation/validation';
 
 const opportunity = Joi.object({
+  id: Joi.optional(),
   [OpportunityPayloadKey.NAME]: Joi.string()
     .trim()
     .min(OpportunityValidationRule.NAME_MIN_LENGTH)

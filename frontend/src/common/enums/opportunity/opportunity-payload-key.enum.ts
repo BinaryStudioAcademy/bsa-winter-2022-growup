@@ -1,7 +1,7 @@
 const OpportunityPayloadKey = {
-  NAME: 'NAME',
-  ORGANIZATION: 'ORGANIZATION',
-  TYPE: 'TYPE',
+  NAME: 'name',
+  ORGANIZATION: 'organization',
+  TYPE: 'type',
   START_DATE: 'startDate',
 };
 
