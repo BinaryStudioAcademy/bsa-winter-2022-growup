@@ -1,5 +1,5 @@
-import OpportunityPageItem from './opportunitiesPageItem';
-import OpportunityModal from './OpportunityModal';
+import OpportunityPageItem from './opportunities-page-item';
+import OpportunityModal from './opportunity-modal';
 import {
   useAppSelector,
   useAppDispatch,
@@ -9,6 +9,7 @@ import {
 import * as opportunityActions from '../../store/opportunities/actions';
 import './styles.scss';
 import { IOpportunity } from 'store/opportunities/common';
+import { MentorMenteeRoute } from 'common/enums/mentor-mentee-route/mentor-mentee-route.enum';
 
 const OpprotunitiesPage: React.FC = () => {
   const opportunities = useAppSelector(
@@ -20,12 +21,13 @@ const OpprotunitiesPage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) {
-      user.firstName
-        ? user.isCompleteTest
-          ? null
-          : navigate('/profile/settings/2')
-        : navigate('/profile/settings/1');
+    if (!user?.firstName) {
+      navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/1`);
+      return;
+    }
+    if (!user?.isCompleteTest) {
+      navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/2`);
+      return;
     }
   }, [user]);
 

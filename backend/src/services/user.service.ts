@@ -144,7 +144,6 @@ export const authenticateUser = async (
   const user = await userRepository.getUserWithPassword({
     email: data.email,
   });
-
   if (!user)
     throw new HttpError({
       status: HttpCode.NOT_FOUND,
@@ -154,7 +153,6 @@ export const authenticateUser = async (
   // Copmares hashed password and entered by user
   // If they do not match, return null
   const isPasswordMatch = await comparePasswords(data.password, user.password);
-
   if (!isPasswordMatch)
     throw new HttpError({
       status: HttpCode.NOT_FOUND,
