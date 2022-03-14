@@ -38,7 +38,7 @@ router
     }),
   )
   .put(
-    '/',
+    '/:id',
     validatePermissions([RoleType.MENTEE, RoleType.MENTOR]),
     validateBody(updateCareerJourneySchema),
     run(async (req: Request) => {
