@@ -29,7 +29,7 @@ interface Props {
   name: string;
   organization: string;
   type: string;
-  startDate: string;
+  startDate: Date;
 }
 export const createOpportunities = async (
   data: Opportunity[],

@@ -6,6 +6,7 @@ import {
   IPostOppData,
   OpportunityActions,
   IOpportunityBase,
+  SortOption,
 } from './common';
 
 const fetchLoadOpp = createAsyncThunk(
@@ -78,7 +79,9 @@ const fetchNewOpp = createAsyncThunk(
 );
 
 const showModal = createAction(OpportunityActions.SHOW_MODAL);
+
 const closeModal = createAction(OpportunityActions.CLOSE_MODAL);
+
 const subscribeFollow = createAction(
   OpportunityActions.SUBSCRIBE_FOLLOW,
   (id?: string) => {
@@ -89,6 +92,7 @@ const subscribeFollow = createAction(
     };
   },
 );
+
 const unSubscribeFollow = createAction(
   OpportunityActions.UNSUBSCRIBE_FOLLOW,
   (id?: string) => {
@@ -100,6 +104,11 @@ const unSubscribeFollow = createAction(
   },
 );
 
+const sortOpportunities = createAction(
+  OpportunityActions.SORT_OPPORTUNITIES,
+  (by: SortOption) => ({ payload: { by } }),
+);
+
 export {
   subscribeFollow,
   unSubscribeFollow,
@@ -107,4 +116,5 @@ export {
   closeModal,
   fetchNewOpp,
   fetchLoadOpp,
+  sortOpportunities,
 };

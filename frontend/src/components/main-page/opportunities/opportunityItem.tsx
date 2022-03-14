@@ -1,5 +1,7 @@
 import { ReactElement } from 'react';
 import { IOpportunity } from 'store/opportunities/common';
+import dayjs from 'dayjs';
+
 import Tag from './tag';
 
 interface Props extends IOpportunity {
@@ -33,7 +35,8 @@ const OpportunityItem: React.FC<Props> = ({
           <span className="opportunities__type">Org:</span> {organization}{' '}
         </span>
         <span className="opportunities__cart--text-item mb-1 overflow-hidden">
-          <span className="opportunities__type">Start:</span> {startDate}{' '}
+          <span className="opportunities__type">Start:</span>{' '}
+          {dayjs(startDate).format('DD/MM/YYYY')}{' '}
         </span>
         <span className="opportunities__cart--text-item mb-1 overflow-hidden">
           <span className="opportunities__type">Type:</span> {type}{' '}
