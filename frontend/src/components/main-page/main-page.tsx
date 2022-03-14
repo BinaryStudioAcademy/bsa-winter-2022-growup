@@ -1,6 +1,6 @@
 import './styles.scss';
 import Notifications from './notifications/notificationList';
-import OpportunityList from './opportunities/opportunityList';
+import OpportunityList from './opportunities/opportunity-list';
 
 const MainPage: React.FC = () => {
   return (
