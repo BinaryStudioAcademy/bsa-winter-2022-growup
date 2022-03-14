@@ -211,11 +211,11 @@ export const registerCommonUsers = async (
 export const fetchUser = async (id: User['id']): Promise<UserWithRole> => {
   const userRepository = getCustomRepository(UserRepository);
   const roleRepository = getCustomRepository(UserRoleRepository);
-  const userQuizRepositiore = getCustomRepository(User_QuizCategoryRepository);
+  const userQuizRepository = getCustomRepository(User_QuizCategoryRepository);
 
   const { password: _password, ...user } = await userRepository.geUserById(id);
   const { role } = await roleRepository.findOne({ user });
-  const userQuizeCategoryInstance = await userQuizRepositiore.findOne({
+  const userQuizeCategoryInstance = await userQuizRepository.findOne({
     where: {
       userId: id,
     },
