@@ -1,6 +1,7 @@
 import { ENV } from 'common/enums/enums';
 import { Http } from './http/http.service';
 
+import { SkillsApi } from './skill-api/skill-api.service';
 import { OkrApi } from './okr-api';
 import { CompanyApi } from './company-api';
 import { ObjectiveApi } from './objective.api';
@@ -30,6 +31,11 @@ const auth = new AuthApi({
 
 const apiConfig = { apiPath: ENV.API_PATH || '', http };
 
+const skills = new SkillsApi({
+  apiPath: ENV.API_PATH || '',
+  http,
+});
+
 const okr = new OkrApi(apiConfig);
 const tags = new TagsApi(apiConfig);
 const users = new UsersApi(apiConfig);
@@ -49,13 +55,14 @@ export {
   auth,
   okr,
   tags,
-  users,
   profile,
   company,
   objective,
   keyResult,
   workStyleQuiz,
   opportunities,
+  users,
+  skills,
   careerJourney,
   education,
 };

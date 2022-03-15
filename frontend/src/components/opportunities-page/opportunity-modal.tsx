@@ -1,13 +1,18 @@
-import { useAppDispatch, useAppSelector } from 'hooks/hooks';
+import DatePicker from 'react-datepicker';
+import { useAppDispatch, useAppSelector, useState } from 'hooks/hooks';
 import { useRef } from 'react';
 import * as opportunitiesActions from 'store/opportunities/actions';
 import { Button, Form, Modal } from 'react-bootstrap';
+
+import './styles.scss';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const OpportunityModal: React.FC = () => {
   const opportunityName = useRef<HTMLInputElement>(null);
   const type = useRef<HTMLInputElement>(null);
   const organizationName = useRef<HTMLInputElement>(null);
-  const startDate = useRef<HTMLInputElement>(null);
+  const [startDate, setStartDate] = useState(new Date());
+
   const dispatch = useAppDispatch();
   const isShowModal = useAppSelector(
     (state) => state.opportunities.isShowModal,
@@ -22,7 +27,7 @@ const OpportunityModal: React.FC = () => {
         name: opportunityName.current?.value,
         type: type.current?.value,
         organization: organizationName.current?.value,
-        startDate: startDate.current?.value,
+        startDate: startDate.toString(),
       }),
     );
   };
@@ -57,24 +62,36 @@ const OpportunityModal: React.FC = () => {
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Type of Opportunity</Form.Label>
-              <Form.Control
-                type="string"
-                placeholder="Enter type..."
-                ref={type}
-              />
+              <Form.Select className="opportunity_type">
+                <option disabled>Chose opportunity type</option>
+                <option value="Project/Lecture">Project/Lecture</option>
+                <option value="Lectury/HomeWork">Lectury/HomeWork</option>
+                <option value="Lecture">Lecture</option>
+              </Form.Select>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Start Date</Form.Label>
-              <Form.Control
-                type="string"
-                placeholder="Enter date..."
-                ref={startDate}
+              <DatePicker
+                isClearable
+                selected={startDate}
+                customInput={
+                  <Form.Control
+                    type="string"
+                    placeholder="Chose date..."
+                    ref={organizationName}
+                  />
+                }
+                withPortal
+                portalId="root-portal"
+                placeholderText="Choose a date"
+                dateFormat="MMMM d, yyyy"
+                onChange={(date: Date): void => setStartDate(date)}
               />
             </Form.Group>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className="w-100">
           <Button onClick={hideModal} variant="secondary">
             Close
           </Button>
