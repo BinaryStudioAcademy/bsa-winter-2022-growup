@@ -31,6 +31,12 @@ const FirstStep: React.FC<Props> = ({
   return (
     <div className="stepper__form">
       <TextField
+        label="Password"
+        name={UserPayloadKey.PASSWORD}
+        control={control}
+        errors={errors}
+      />
+      <TextField
         label="First name"
         name={UserPayloadKey.FIRST_NAME}
         control={control}

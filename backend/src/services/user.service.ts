@@ -63,7 +63,7 @@ const getUserJWT = async (user: User): Promise<TokenResponse> => {
   return { token };
 };
 
-const registerUser = async (
+export const registerUser = async (
   data: UserRegisterForm,
   role: RoleType,
   companyId: User['company']['id'],
@@ -84,7 +84,9 @@ const registerUser = async (
       message: 'User with this email already exists',
     });
 
-  const hashedPassword = await hashPassword(data.password);
+  const hashedPassword = data.password
+    ? await hashPassword(data.password)
+    : null;
   const company = await companyRepository.findOne(companyId);
 
   const userInstance = userRepository.create({
