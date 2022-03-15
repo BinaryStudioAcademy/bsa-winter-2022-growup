@@ -28,12 +28,18 @@ function FormInput<T>({
   placeholder,
 }: Props<T>): JSX.Element {
   const {
-    field,
+    field: { value, ...field },
   }: UseControllerReturn<T, Path<T>> = useController<T>({ name, control });
+  const fieldValue = value as string;
 
   return (
     <>
-      <Form.Control {...field} type={type} placeholder={placeholder} />
+      <Form.Control
+        {...field}
+        value={fieldValue}
+        type={type}
+        placeholder={placeholder}
+      />
       <span className="fs-6 text-gu-pink error mt-2">
         <ErrorMessage errors={errors} name={name} />
       </span>
