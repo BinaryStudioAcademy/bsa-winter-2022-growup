@@ -7,21 +7,19 @@ import StepControl from './step-control';
 import { profileFirstStep as profileFirstStepValidationSchema } from 'validation-schemas/validation-schemas';
 import { useAppForm } from 'hooks/hooks';
 import { DEFAULT_FIRST_STEP_PAYLOAD } from './common/constants';
-import { FirstStepPayloadKey, UserPayloadKey } from 'common/enums/enums';
+import { FirstStepForm } from './common/types';
 
-interface Props extends IProfileSettingStep {}
-
-const FirstStep: React.FC<Props> = ({
+const FirstStep: React.FC<IProfileSettingStep> = ({
   isDisablePrevious,
   onPrevious,
   onNext,
 }) => {
-  const { control, errors, isValid, handleSubmit } = useAppForm({
+  const { control, errors, isValid, handleSubmit } = useAppForm<FirstStepForm>({
     defaultValues: DEFAULT_FIRST_STEP_PAYLOAD,
     validationSchema: profileFirstStepValidationSchema,
   });
 
-  const onSaveSettings = (values: object): void => {
+  const onSaveSettings = (values: FirstStepForm): void => {
     // eslint-disable-next-line no-console
     console.log('save settings:', values);
   };
@@ -32,18 +30,18 @@ const FirstStep: React.FC<Props> = ({
     <div className="stepper__form">
       <TextField
         label="First name"
-        name={UserPayloadKey.FIRST_NAME}
+        name={'firstName'}
         control={control}
         errors={errors}
       />
       <TextField
-        name={UserPayloadKey.LAST_NAME}
+        name={'lastName'}
         label="Last name"
         control={control}
         errors={errors}
       />
       <TextField
-        name={FirstStepPayloadKey.POSITION}
+        name={'position'}
         label="Position"
         control={control}
         errors={errors}
