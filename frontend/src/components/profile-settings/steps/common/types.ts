@@ -1,4 +1,4 @@
-export interface FirstStepForm {
+export interface FirstStepFormType {
   firstName: string;
   lastName: string;
   position: string;

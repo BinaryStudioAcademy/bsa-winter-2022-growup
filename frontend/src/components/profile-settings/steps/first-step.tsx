@@ -7,19 +7,20 @@ import StepControl from './step-control';
 import { profileFirstStep as profileFirstStepValidationSchema } from 'validation-schemas/validation-schemas';
 import { useAppForm } from 'hooks/hooks';
 import { DEFAULT_FIRST_STEP_PAYLOAD } from './common/constants';
-import { FirstStepForm } from './common/types';
+import { FirstStepFormType } from './common/types';
 
 const FirstStep: React.FC<IProfileSettingStep> = ({
   isDisablePrevious,
   onPrevious,
   onNext,
 }) => {
-  const { control, errors, isValid, handleSubmit } = useAppForm<FirstStepForm>({
-    defaultValues: DEFAULT_FIRST_STEP_PAYLOAD,
-    validationSchema: profileFirstStepValidationSchema,
-  });
+  const { control, errors, isValid, handleSubmit } =
+    useAppForm<FirstStepFormType>({
+      defaultValues: DEFAULT_FIRST_STEP_PAYLOAD,
+      validationSchema: profileFirstStepValidationSchema,
+    });
 
-  const onSaveSettings = (values: FirstStepForm): void => {
+  const onSaveSettings = (values: FirstStepFormType): void => {
     // eslint-disable-next-line no-console
     console.log('save settings:', values);
   };

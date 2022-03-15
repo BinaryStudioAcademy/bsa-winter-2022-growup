@@ -13,7 +13,7 @@ import { NotificationManager } from 'react-notifications';
 import { Eye, EyeSlash } from 'react-bootstrap-icons';
 import { loginUser } from 'store/auth/actions';
 import { Link } from '../common/common';
-import { LoginForm } from './common/types';
+import { LoginFormType } from './common/types';
 import { login as loginValidationSchema } from 'validation-schemas/validation-schemas';
 import { DEFAULT_LOGIN_PAYLOAD } from './common/constants';
 import './styles.scss';
@@ -25,7 +25,7 @@ const Login: React.FC = () => {
 
   const [isHiddenPassword, setIsHiddenPassword] = useState(true);
 
-  const { control, errors, handleSubmit } = useAppForm<LoginForm>({
+  const { control, errors, handleSubmit } = useAppForm<LoginFormType>({
     defaultValues: DEFAULT_LOGIN_PAYLOAD,
     validationSchema: loginValidationSchema,
   });
@@ -35,7 +35,7 @@ const Login: React.FC = () => {
     [dispatch],
   );
 
-  const onLogin = (values: LoginForm): void => {
+  const onLogin = (values: LoginFormType): void => {
     handleLogin(values)
       .unwrap()
       .then(() => {
