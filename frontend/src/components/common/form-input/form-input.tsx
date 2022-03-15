@@ -1,24 +1,35 @@
 import { ErrorMessage } from '@hookform/error-message';
 import { Form } from 'react-bootstrap';
-import { Control, useController } from 'react-hook-form';
+import {
+  Control,
+  DeepMap,
+  FieldError,
+  FieldPath,
+  FieldValues,
+  Path,
+  useController,
+  UseControllerReturn,
+} from 'react-hook-form';
 import './styles.scss';
 
-interface Props {
-  name: string;
-  errors: object;
-  control: Control;
+interface Props<T> {
+  name: FieldPath<T>;
+  errors: DeepMap<FieldValues, FieldError>;
+  control: Control<T>;
   type: string;
   placeholder: string;
 }
 
-const FormInput = ({
+function FormInput<T>({
   name,
   errors,
   control,
   type,
   placeholder,
-}: Props): JSX.Element => {
-  const { field } = useController({ name, control });
+}: Props<T>): JSX.Element {
+  const {
+    field,
+  }: UseControllerReturn<T, Path<T>> = useController<T>({ name, control });
 
   return (
     <>
@@ -28,6 +39,6 @@ const FormInput = ({
       </span>
     </>
   );
-};
+}
 
 export default FormInput;

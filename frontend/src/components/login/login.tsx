@@ -1,8 +1,4 @@
-import {
-  AppRoute,
-  MentorMenteeRoute,
-  UserPayloadKey,
-} from 'common/enums/enums';
+import { AppRoute, MentorMenteeRoute } from 'common/enums/enums';
 import {
   useAppDispatch,
   useAppForm,
@@ -17,6 +13,7 @@ import { NotificationManager } from 'react-notifications';
 import { Eye, EyeSlash } from 'react-bootstrap-icons';
 import { loginUser } from 'store/auth/actions';
 import { Link } from '../common/common';
+import { LoginForm } from './common/types';
 import { login as loginValidationSchema } from 'validation-schemas/validation-schemas';
 import { DEFAULT_LOGIN_PAYLOAD } from './common/constants';
 import './styles.scss';
@@ -28,7 +25,7 @@ const Login: React.FC = () => {
 
   const [isHiddenPassword, setIsHiddenPassword] = useState(true);
 
-  const { control, errors, handleSubmit } = useAppForm({
+  const { control, errors, handleSubmit } = useAppForm<LoginForm>({
     defaultValues: DEFAULT_LOGIN_PAYLOAD,
     validationSchema: loginValidationSchema,
   });
@@ -38,7 +35,7 @@ const Login: React.FC = () => {
     [dispatch],
   );
 
-  const onLogin = (values: object): void => {
+  const onLogin = (values: LoginForm): void => {
     handleLogin(values)
       .unwrap()
       .then(() => {
@@ -61,7 +58,7 @@ const Login: React.FC = () => {
             className="mb-3"
           >
             <FormInput
-              name={UserPayloadKey.EMAIL}
+              name={'email'}
               control={control}
               errors={errors}
               type="email"
@@ -75,7 +72,7 @@ const Login: React.FC = () => {
             className="mb-3 d-flex flex-wrap"
           >
             <FormInput
-              name={UserPayloadKey.PASSWORD}
+              name={'password'}
               control={control}
               errors={errors}
               type={isHiddenPassword ? 'password' : 'text'}
