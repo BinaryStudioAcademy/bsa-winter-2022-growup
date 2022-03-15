@@ -11,7 +11,6 @@ import { FirstStepFormType } from './common/types';
 
 const FirstStep: React.FC<IProfileSettingStep> = ({
   isDisablePrevious,
-  onPrevious,
   onNext,
 }) => {
   const { control, errors, isValid, handleSubmit } =
@@ -53,7 +52,6 @@ const FirstStep: React.FC<IProfileSettingStep> = ({
       <StepControl
         isValid={isValid}
         isDisablePrevious={isDisablePrevious}
-        onPrevious={onPrevious}
         onNext={onNext}
         onSubmit={onSubmit}
       />

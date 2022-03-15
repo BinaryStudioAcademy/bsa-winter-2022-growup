@@ -11,7 +11,7 @@ import { NotFound } from '../../not-found';
 import ProfileSettings from '../../profile-settings/profile-settings';
 import ControlledTabs from 'components/okr/tabs/two-tabs';
 import SkillOverview from 'components/skills/skill-overview';
-import OpprotunitiesPage from 'components/opportunities-page/opportunitiesPage';
+import OpprotunitiesPage from 'components/opportunities-page/opportunities-page';
 import { IRoute } from '../common/interfaces';
 
 export const mentorMenteeRoutes: IRoute[] = [
