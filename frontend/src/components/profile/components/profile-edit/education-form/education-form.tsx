@@ -1,6 +1,6 @@
-import { FloatingLabel, Form } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { useAppForm } from 'hooks/hooks';
-import { FormInput, FormInputDate, Modal } from 'components/common/common';
+import { FormInputDate, Modal, TextField } from 'components/common/common';
 import { DEFAULT_EDUCATION_PAYLOAD } from './common/constants';
 import { EducationPayloadKey } from 'common/enums/user/education-payload-key.enum';
 import { education as educationValidationSchema } from 'validation-schemas/validation-schemas';
@@ -29,48 +29,24 @@ const EducationForm: React.FC<Props> = (props) => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <Form className="w-100">
-        <FloatingLabel
-          controlId="education-specialization"
-          label="Specialization"
-          className="mb-3"
-        >
-          <FormInput
-            name={EducationPayloadKey.SPECIALIZATION}
-            control={control}
-            errors={errors}
-            type="text"
-            placeholder="Specialization"
-          />
-        </FloatingLabel>
-
-        <FloatingLabel
-          controlId="education-university"
-          label="University"
-          className="mb-3"
-        >
-          <FormInput
-            name={EducationPayloadKey.UNIVERSITY}
-            control={control}
-            errors={errors}
-            type="text"
-            placeholder="University"
-          />
-        </FloatingLabel>
-
-        <FloatingLabel
-          controlId="education-degree"
-          label="Degree"
-          className="mb-3"
-        >
-          <FormInput
-            name={EducationPayloadKey.DEGREE}
-            control={control}
-            errors={errors}
-            type="text"
-            placeholder="Degree"
-          />
-        </FloatingLabel>
-
+        <TextField
+          label={'Specialization'}
+          name={EducationPayloadKey.SPECIALIZATION}
+          control={control}
+          errors={errors}
+        />
+        <TextField
+          label={'University'}
+          name={EducationPayloadKey.UNIVERSITY}
+          control={control}
+          errors={errors}
+        />
+        <TextField
+          label={'Degree'}
+          name={EducationPayloadKey.DEGREE}
+          control={control}
+          errors={errors}
+        />
         <div className="mb-3">
           <FormInputDate
             name={EducationPayloadKey.START_DATE}
@@ -79,7 +55,6 @@ const EducationForm: React.FC<Props> = (props) => {
             placeholder="Start date"
           />
         </div>
-
         <FormInputDate
           name={EducationPayloadKey.END_DATE}
           control={control}

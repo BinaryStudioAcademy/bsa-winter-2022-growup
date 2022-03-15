@@ -1,6 +1,6 @@
-import { FloatingLabel, Form } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { useAppForm } from 'hooks/hooks';
-import { FormInput, FormInputDate, Modal } from 'components/common/common';
+import { FormInputDate, Modal, TextField } from 'components/common/common';
 import { DEFAULT_CAREER_JOURNEY_PAYLOAD } from './common/constants';
 import { CareerJourneyPayloadKey } from 'common/enums/user/career-journey-payload-key.enum';
 import { careerJourney as careerJourneyValidationSchema } from 'validation-schemas/validation-schemas';
@@ -29,34 +29,18 @@ const CareerJourneyForm: React.FC<Props> = (props) => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <Form className="w-100">
-        <FloatingLabel
-          controlId="career-journey-position"
-          label="Position"
-          className="mb-3"
-        >
-          <FormInput
-            name={CareerJourneyPayloadKey.POSITION}
-            control={control}
-            errors={errors}
-            type="text"
-            placeholder="Position"
-          />
-        </FloatingLabel>
-
-        <FloatingLabel
-          controlId="career-journey-company"
-          label="Company"
-          className="mb-3"
-        >
-          <FormInput
-            name={CareerJourneyPayloadKey.COMPANY}
-            control={control}
-            errors={errors}
-            type="text"
-            placeholder="Company"
-          />
-        </FloatingLabel>
-
+        <TextField
+          label={'Position'}
+          name={CareerJourneyPayloadKey.POSITION}
+          control={control}
+          errors={errors}
+        />
+        <TextField
+          label={'Company'}
+          name={CareerJourneyPayloadKey.COMPANY}
+          control={control}
+          errors={errors}
+        />
         <div className="mb-3">
           <FormInputDate
             name={CareerJourneyPayloadKey.START_DATE}
@@ -65,7 +49,6 @@ const CareerJourneyForm: React.FC<Props> = (props) => {
             placeholder="Start date"
           />
         </div>
-
         <FormInputDate
           name={CareerJourneyPayloadKey.END_DATE}
           control={control}
