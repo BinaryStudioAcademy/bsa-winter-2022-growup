@@ -10,17 +10,16 @@ import { Link } from 'components/common/common';
 import './styles.scss';
 import { useAppSelector } from 'hooks/hooks';
 import { RoleType } from 'growup-shared';
+
 const Sidebar: React.FC = () => {
   const { user } = useAppSelector((state) => state.auth);
-  const userProfile = useAppSelector((state) => state.profile.user);
+  const isBlockedButton = user?.firstName && user?.isCompleteTest;
+
   return (
     <aside className="sidebar-section position-fixed h-100 bg-gu-blue">
       <div className="sidebar-container d-flex flex-column pt-2 pt-md-3">
         <Link to={MentorMenteeRoute.HOME}>
-          <a
-            className="logo-section d-flex align-items-center text-decoration-none px-2 ps-md-4 mb-5"
-            href=""
-          >
+          <div className="logo-section d-flex align-items-center text-decoration-none px-2 ps-md-4 mb-5">
             <img
               className="logo-section__icon logo-icon me-md-3"
               src={logo}
@@ -29,16 +28,15 @@ const Sidebar: React.FC = () => {
             <span className="logo-section__title logo-title fs-1 text-gu-white m-0 d-none d-md-block">
               Grow Up
             </span>
-          </a>
+          </div>
         </Link>
         <nav className="navigation-section px-md-3">
           <ul className="navigation-section__list navigation-list d-flex flex-column m-0 p-0">
             <li
-              className={`navigation-list__item navigation-item mb-4
-            ${userProfile?.firstName ? '' : 'navigation-list-item--blocked'}
-            ${
-              userProfile?.isCompleteTest ? '' : 'navigation-list-item--blocked'
-            }`}
+              className={`navigation-list__item navigation-item mb-4 ${
+                isBlockedButton ? '' : 'navigation-list-item--blocked'
+              }
+            `}
             >
               <Link to={MentorMenteeRoute.HOME}>
                 <span className="navigation-item__link navigation-link d-flex align-items-center p-2 ps-md-4 fs-4 font-weight-normal text-gu-white">
@@ -50,11 +48,9 @@ const Sidebar: React.FC = () => {
               </Link>
             </li>
             <li
-              className={`navigation-list__item navigation-item mb-4
-            ${userProfile?.firstName ? '' : 'navigation-list-item--blocked'}
-            ${
-              userProfile?.isCompleteTest ? '' : 'navigation-list-item--blocked'
-            }
+              className={`navigation-list__item navigation-item mb-4 ${
+                isBlockedButton ? '' : 'navigation-list-item--blocked'
+              }
             `}
             >
               <Link to={MentorMenteeRoute.OPPORTUNITIES}>
@@ -77,11 +73,9 @@ const Sidebar: React.FC = () => {
               </Link>
             </li>
             <li
-              className={`navigation-list__item navigation-item mb-4
-            ${userProfile?.firstName ? '' : 'navigation-list-item--blocked'}
-            ${
-              userProfile?.isCompleteTest ? '' : 'navigation-list-item--blocked'
-            }
+              className={`navigation-list__item navigation-item mb-4 ${
+                isBlockedButton ? '' : 'navigation-list-item--blocked'
+              }
             `}
             >
               <Link to={MentorMenteeRoute.OKR}>
@@ -94,11 +88,9 @@ const Sidebar: React.FC = () => {
               </Link>
             </li>
             <li
-              className={`navigation-list__item navigation-item mb-4
-            ${userProfile?.firstName ? '' : 'navigation-list-item--blocked'}
-            ${
-              userProfile?.isCompleteTest ? '' : 'navigation-list-item--blocked'
-            }
+              className={`navigation-list__item navigation-item mb-4 ${
+                isBlockedButton ? '' : 'navigation-list-item--blocked'
+              }
             `}
             >
               <Link to={MentorMenteeRoute.CAREER_PATH}>
@@ -110,15 +102,11 @@ const Sidebar: React.FC = () => {
                 </span>
               </Link>
             </li>
-            {user && user.roleType === RoleType.MENTOR && (
+            {user?.roleType === RoleType.MENTOR && (
               <li
-                className={`navigation-list__item navigation-item mb-4
-              ${userProfile?.firstName ? '' : 'navigation-list-item--blocked'}
-              ${
-                userProfile?.isCompleteTest
-                  ? ''
-                  : 'navigation-list-item--blocked'
-              }
+                className={`navigation-list__item navigation-item mb-4 ${
+                  isBlockedButton ? '' : 'navigation-list-item--blocked'
+                }
               `}
               >
                 <Link to={MentorMenteeRoute.MENTEE_PROFILES}>
