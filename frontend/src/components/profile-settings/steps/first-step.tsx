@@ -8,22 +8,19 @@ import { profileFirstStep as profileFirstStepValidationSchema } from 'validation
 import { useAppForm } from 'hooks/hooks';
 import { DEFAULT_FIRST_STEP_PAYLOAD } from './common/constants';
 import { FirstStepPayloadKey, UserPayloadKey } from 'common/enums/enums';
+import * as userAction from '../../../store/profile/actions';
+import { useAppDispatch } from 'hooks/store/store.hooks';
 
 interface Props extends IProfileSettingStep {}
 
-const FirstStep: React.FC<Props> = ({
-  isDisablePrevious,
-  onPrevious,
-  onNext,
-}) => {
+const FirstStep: React.FC<Props> = ({ isDisablePrevious, onNext }) => {
   const { control, errors, isValid, handleSubmit } = useAppForm({
     defaultValues: DEFAULT_FIRST_STEP_PAYLOAD,
     validationSchema: profileFirstStepValidationSchema,
   });
-
+  const dispatch = useAppDispatch();
   const onSaveSettings = (values: object): void => {
-    // eslint-disable-next-line no-console
-    console.log('save settings:', values);
+    dispatch(userAction.insertPIB(values));
   };
 
   const onSubmit = handleSubmit(onSaveSettings);
@@ -54,7 +51,6 @@ const FirstStep: React.FC<Props> = ({
       <StepControl
         isValid={isValid}
         isDisablePrevious={isDisablePrevious}
-        onPrevious={onPrevious}
         onNext={onNext}
         onSubmit={onSubmit}
       />
