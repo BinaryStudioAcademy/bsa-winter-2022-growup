@@ -1,6 +1,3 @@
-export type CareerJourneyFormType = {
-  position: string;
-  company: string;
-  startDate: Date;
-  endDate: Date;
-};
+import { ICareerJourney } from '../../../../common/interfaces';
+
+export type CareerJourneyFormType = Omit<ICareerJourney, 'id' | 'title'>;
