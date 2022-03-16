@@ -119,7 +119,7 @@ const CareerPath: React.FC = () => {
         />
         <input
           onClick={(): void => addDomain(inputDomain)}
-          className="btn btn-primary tree-action__add-button"
+          className="btn btn-primary"
           value="+ Add domain"
           type="submit"
         />
