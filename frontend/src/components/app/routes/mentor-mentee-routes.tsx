@@ -12,6 +12,7 @@ import ProfileSettings from '../../profile-settings/profile-settings';
 import ControlledTabs from 'components/okr/tabs/two-tabs';
 import SkillOverview from 'components/skills/skill-overview';
 import OpprotunitiesPage from 'components/opportunities-page/opportunities-page';
+import CareerPath from '../../career-path/career-path';
 import { IRoute } from '../common/interfaces';
 
 export const mentorMenteeRoutes: IRoute[] = [
@@ -37,7 +38,7 @@ export const mentorMenteeRoutes: IRoute[] = [
   },
   {
     path: MentorMenteeRoute.CAREER_PATH,
-    element: <div>Career Path</div>,
+    element: <CareerPath />,
   },
   {
     path: MentorMenteeRoute.OPPORTUNITIES,
