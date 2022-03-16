@@ -9,7 +9,6 @@ const createEducationSchema = object({
 });
 
 const updateEducationSchema = object({
-  id: string().required(),
   specialization: string().required(),
   university: string().required(),
   degree: string().required(),

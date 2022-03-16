@@ -1,6 +1,6 @@
-import { FloatingLabel, Form } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { useAppForm } from 'hooks/hooks';
-import { FormInput, FormInputDate, Modal } from 'components/common/common';
+import { FormInputDate, Modal, TextField } from 'components/common/common';
 import { DEFAULT_EDUCATION_PAYLOAD } from './common/constants';
 import { education as educationValidationSchema } from 'validation-schemas/validation-schemas';
 import { IEducation } from '../../../common/interfaces';
@@ -29,48 +29,24 @@ const EducationForm: React.FC<Props> = (props) => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <Form className="w-100">
-        <FloatingLabel
-          controlId="education-specialization"
-          label="Specialization"
-          className="mb-3"
-        >
-          <FormInput
-            name={'specialization'}
-            control={control}
-            errors={errors}
-            type="text"
-            placeholder="Specialization"
-          />
-        </FloatingLabel>
-
-        <FloatingLabel
-          controlId="education-university"
-          label="University"
-          className="mb-3"
-        >
-          <FormInput
-            name={'university'}
-            control={control}
-            errors={errors}
-            type="text"
-            placeholder="University"
-          />
-        </FloatingLabel>
-
-        <FloatingLabel
-          controlId="education-degree"
-          label="Degree"
-          className="mb-3"
-        >
-          <FormInput
-            name={'degree'}
-            control={control}
-            errors={errors}
-            type="text"
-            placeholder="Degree"
-          />
-        </FloatingLabel>
-
+        <TextField
+          label={'Specialization'}
+          name={'specialization'}
+          control={control}
+          errors={errors}
+        />
+        <TextField
+          label={'University'}
+          name={'university'}
+          control={control}
+          errors={errors}
+        />
+        <TextField
+          label={'Degree'}
+          name={'degree'}
+          control={control}
+          errors={errors}
+        />
         <div className="mb-3">
           <FormInputDate
             name={'startDate'}
@@ -79,7 +55,6 @@ const EducationForm: React.FC<Props> = (props) => {
             placeholder="Start date"
           />
         </div>
-
         <FormInputDate
           name={'endDate'}
           control={control}
