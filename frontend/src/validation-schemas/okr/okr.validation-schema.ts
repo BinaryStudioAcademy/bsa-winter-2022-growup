@@ -18,6 +18,9 @@ const okrValidationSchema = Joi.object({
       'string.min': OkrValidationMessage.NAME_MIN_LENGTH,
       'string.max': OkrValidationMessage.NAME_MAX_LENGTH,
     }),
+  [OkrPayloadKey.TYPE]: Joi.string().required().messages({
+    'string.empty': OkrValidationMessage.TYPE_REQUIRE,
+  }),
   [OkrPayloadKey.START_DATE]: Joi.date()
     .required()
     .min(MIN_DATE)

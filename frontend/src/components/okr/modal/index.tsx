@@ -5,8 +5,9 @@ import { useAppForm, useDispatch } from 'hooks/hooks';
 import { okrValidationSchema } from 'validation-schemas/okr/okr.validation-schema';
 import { OkrPayloadKey } from 'common/enums/user/okr-payload-key.enum';
 import { okrActions } from 'store/okr/actions';
-
-import { IOkr } from 'common/interfaces/okr';
+import { FormSelect } from 'components/common/common';
+import { IOkr, OkrTypes } from 'common/interfaces/okr';
+import { selectOptions } from './selectOptions';
 
 import './styles.scss';
 
@@ -17,7 +18,12 @@ interface Props {
 }
 
 const OkrModal: FC<Props> = ({ okr, showModal, closeModal }) => {
-  const defaultOkr = { name: '', startDate: '', endDate: '' } as IOkr;
+  const defaultOkr = {
+    name: '',
+    type: OkrTypes.MY_OKR,
+    startDate: '',
+    endDate: '',
+  } as IOkr;
 
   const dispatch = useDispatch();
 
@@ -63,6 +69,8 @@ const OkrModal: FC<Props> = ({ okr, showModal, closeModal }) => {
           errors={errors}
           label={'Name'}
         />
+
+        <FormSelect name="type" options={selectOptions} errors={errors} />
 
         <FloatingLabel
           controlId="education-university"

@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ReducerName } from 'common/enums/app/reducer-name.enum';
 import { IUser, IOkr } from 'components/okr/common/interfaces';
+import { OkrTypes } from 'common/interfaces/okr';
 
 type State = {
   user: IUser;
@@ -22,6 +23,7 @@ const initialState: State = {
     {
       id: 1,
       name: 'Q1',
+      type: OkrTypes.MY_OKR,
       startDate: `${new Date().getDate()}th ${new Date().getMonth()} ${new Date().getFullYear()}`,
       endDate: `${new Date().getDate()}th ${new Date().getMonth()} ${new Date().getFullYear()}`,
       userId: 1,
@@ -74,6 +76,7 @@ const initialState: State = {
     {
       id: 2,
       name: 'Q2',
+      type: OkrTypes.MY_OKR,
       startDate: `${new Date().getDate()}th ${new Date().getMonth()} ${new Date().getFullYear()}`,
       endDate: `${new Date().getDate()}th ${new Date().getMonth()} ${new Date().getFullYear()}`,
       userId: 2,
@@ -97,6 +100,7 @@ const initialState: State = {
     {
       id: 3,
       name: 'Q3',
+      type: OkrTypes.MY_OKR,
       startDate: `${new Date().getDate()}th ${new Date().getMonth()} ${new Date().getFullYear()}`,
       endDate: `${new Date().getDate()}th ${new Date().getMonth()} ${new Date().getFullYear()}`,
       userId: 1,
@@ -106,6 +110,7 @@ const initialState: State = {
     {
       id: 4,
       name: 'Q4',
+      type: OkrTypes.MY_OKR,
       startDate: `${new Date().getDate()}th ${new Date().getMonth()} ${new Date().getFullYear()}`,
       endDate: `${new Date().getDate()}th ${new Date().getMonth()} ${new Date().getFullYear()}`,
       userId: 1,
@@ -115,6 +120,7 @@ const initialState: State = {
     {
       id: 5,
       name: 'Q5',
+      type: OkrTypes.MY_OKR,
       startDate: `${new Date().getDate()}th ${new Date().getMonth()} ${new Date().getFullYear()}`,
       endDate: `${new Date().getDate()}th ${new Date().getMonth()} ${new Date().getFullYear()}`,
       userId: 2,
@@ -124,6 +130,7 @@ const initialState: State = {
     {
       id: 6,
       name: 'Q6',
+      type: OkrTypes.MY_OKR,
       startDate: `${new Date().getDate()}th ${new Date().getMonth()} ${new Date().getFullYear()}`,
       endDate: `${new Date().getDate()}th ${new Date().getMonth()} ${new Date().getFullYear()}`,
       userId: 1,

@@ -9,6 +9,7 @@ const OkrValidationMessage = {
   NAME_REQUIRE: 'Name is required',
   NAME_MIN_LENGTH: `Name must be at least ${OkrValidationRule.OKR_NAME_MIN_LENGTH} characters long`,
   NAME_MAX_LENGTH: `Name must be at most ${OkrValidationRule.OKR_NAME_MAX_LENGTH} characters long`,
+  TYPE_REQUIRE: 'Type is required',
   START_DATE_REQUIRE: 'Start date is required',
   MIN_START_DATE: `Start date must be at least ${formatDate(MIN_DATE)}`,
   MAX_START_DATE: 'Start date must be less than or equal to end date',
