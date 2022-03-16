@@ -8,7 +8,9 @@ const router: Router = Router();
 router
   .get(
     '/question',
-    run(() => getQuestions()),
+    run((req) => {
+      return getQuestions(req.companyId);
+    }),
   )
   .post(
     '/result',
