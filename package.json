@@ -57,6 +57,7 @@
     "shared/**/*.{ts,tsx}": "npm run lint:shared"
   },
   "dependencies": {
+    "chartjs-react": "^3.4.0",
     "yup": "0.32.11"
   }
 }
