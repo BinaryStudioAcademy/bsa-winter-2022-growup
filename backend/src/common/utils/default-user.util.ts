@@ -1,10 +1,17 @@
 import { User } from '~/data/entities/user';
 import { UserRegisterForm } from '../forms/user.forms';
 
-const DEFAULT_USER_DATA = {
+interface IDefaultProps {
+  password: string;
+  firstName: null;
+  lastName: null;
+  position: null;
+}
+const DEFAULT_USER_DATA: IDefaultProps = {
   'password': 'password123',
-  'firstName': 'New',
-  'lastName': 'User',
+  'firstName': null,
+  'lastName': null,
+  'position': null,
 };
 
 const createDefaultUser = (email: User['email']): UserRegisterForm => {

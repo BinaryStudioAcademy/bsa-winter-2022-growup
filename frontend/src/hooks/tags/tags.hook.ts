@@ -1,11 +1,13 @@
 import { useCallback, useState, useRef } from 'hooks/hooks';
 import { NotificationManager } from 'react-notifications';
+import { useAppSelector } from 'hooks/hooks';
 
 import type { TagCreation, TagVisibleInfo } from 'common/types/types';
 import type { UseTagList } from './common';
 
 const useTagList = (): UseTagList => {
   const [list, setList] = useState<TagCreation[]>([]);
+  const { tags } = useAppSelector((state) => state.tags);
 
   const listRef = useRef<TagCreation[]>([]);
   listRef.current = list;
@@ -16,9 +18,12 @@ const useTagList = (): UseTagList => {
       return;
     }
 
-    const isExist = listRef.current.some((item) => item.name === tag.name);
+    const isExistInList = listRef.current.some(
+      (item) => item.name === tag.name,
+    );
+    const isExistInTags = tags.some((item) => item.name === tag.name);
 
-    if (isExist) {
+    if (isExistInList || isExistInTags) {
       NotificationManager.error('Tag name is exist');
       return;
     }
