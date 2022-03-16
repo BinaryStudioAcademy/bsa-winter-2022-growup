@@ -1,6 +1,6 @@
 import './styles.scss';
 import Node from './path-node/path-node';
-import { Plus as AddIcon } from 'react-bootstrap-icons';
+// import { Plus as AddIcon } from 'react-bootstrap-icons';
 import {
   useAppDispatch,
   useAppSelector,
@@ -109,16 +109,20 @@ const CareerPath: React.FC = () => {
 
   return (
     <div className="path-tree">
-      <div className="path-tree-action">
+      <div className="d-flex tree-action">
         <input
           type="text"
           placeholder="Domain"
           onChange={(e): void => handleChangeInput(e)}
           value={inputDomain}
+          className="form-control me-4"
         />
-        <button onClick={(): void => addDomain(inputDomain)}>
-          <AddIcon />
-        </button>
+        <input
+          onClick={(): void => addDomain(inputDomain)}
+          className="btn btn-primary tree-action__add-button"
+          value="+ Add domain"
+          type="submit"
+        />
       </div>
       <div className="tree-level">
         {domains.map((domain, domainIndex) => (
