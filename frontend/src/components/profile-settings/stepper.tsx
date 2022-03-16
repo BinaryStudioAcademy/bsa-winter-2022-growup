@@ -12,7 +12,7 @@ const Stepper: React.FC<Props> = ({ steps, activeStep, changeStepClicker }) => {
   return (
     <div className="stepper__panel position-relative d-table w-100">
       {steps.map((step, i) => {
-        const isComplete = activeStep > i ? true : false;
+        const isComplete = activeStep > i;
         return (
           <div
             key={i}

@@ -23,7 +23,7 @@ const OpportunityPageItem: React.FC<Props> = ({
         tagsData={tagsData}
         type={type}
       />
-      <Follow isFollow={isFollow} id={id}></Follow>
+      <Follow isFollow={isFollow} id={id} />
     </div>
   );
 };
