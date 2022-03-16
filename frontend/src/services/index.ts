@@ -11,6 +11,7 @@ import { TagsApi } from './tags-api/tags-api.service';
 import { UsersApi } from './user-api/user-api.service';
 import { ProfileApi } from './profile-api/profile-api.service';
 import { WorkStyleQuiz } from './work-style-quiz-api/work-style-quiz-api.service';
+import { CareerPath } from './career-path-api/career-path-api.service';
 
 const storage = new Storage({
   storage: localStorage,
@@ -35,6 +36,7 @@ const profile = new ProfileApi(apiConfig);
 const objective = new ObjectiveApi(apiConfig);
 const keyResult = new KeyResultApi(apiConfig);
 const workStyleQuiz = new WorkStyleQuiz(apiConfig);
+const careerPath = new CareerPath(apiConfig);
 
 export { tags as TagsApi };
 export {
@@ -49,4 +51,5 @@ export {
   objective,
   keyResult,
   workStyleQuiz,
+  careerPath,
 };

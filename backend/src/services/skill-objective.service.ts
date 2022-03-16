@@ -33,3 +33,17 @@ export const getObjectives = async (
   });
   return objectives;
 };
+
+export const updateObjectiveById = async (
+  id: SkillObjective['id'],
+  name: SkillObjective['name'],
+): Promise<SkillObjective> => {
+  const skillObjectiveRepository = getCustomRepository(
+    SkillObjectiveRepository,
+  );
+
+  await skillObjectiveRepository.update({ id }, { name });
+
+  const objectiveInstance = skillObjectiveRepository.findOne({ id });
+  return objectiveInstance;
+};
