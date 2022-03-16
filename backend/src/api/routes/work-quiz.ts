@@ -15,12 +15,12 @@ router
   .post(
     '/result',
     run((req) => {
-      const { userId, userRole, body } = req;
+      const { userId, userRole, companyId, body } = req;
 
       const tokenPayload: ITokenPayload = {
         userId,
         role: userRole,
-        companyId: null,
+        companyId,
       };
 
       const data = { body, tokenPayload };

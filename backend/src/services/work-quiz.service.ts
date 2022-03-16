@@ -58,7 +58,7 @@ export const sendResults = async ({
   body,
   tokenPayload,
 }: IWorkQuizProps): Promise<User_QuizCategory[]> => {
-  const { userId } = tokenPayload;
+  const { userId, companyId } = tokenPayload;
   const questions = body;
 
   const userQuizCategoryRepository = await getCustomRepository(
@@ -71,7 +71,11 @@ export const sendResults = async ({
     QuizQuestionRepository,
   );
 
-  const categories = await quizCategoryRepository.find();
+  const categories = await quizCategoryRepository
+    .createQueryBuilder('root')
+    .innerJoin('root.quiz', 'workQuiz')
+    .where('workQuiz.companyId = :id', { id: companyId })
+    .getMany();
 
   const summary: ITestSummary[] = [];
 
