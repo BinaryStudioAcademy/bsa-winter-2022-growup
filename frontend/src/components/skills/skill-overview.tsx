@@ -7,11 +7,10 @@ import {
   useEffect,
 } from 'hooks/hooks';
 import { RootState } from 'common/types/types';
-// import { ISkill } from './common/interfaces';
 import { ISkill } from 'common/interfaces/skill/skill';
 import ProfileHeader from './header-user';
 import SkillElement from './rating/skill-rating';
-import { FormInput } from '../common/common';
+import { Button, FormInput } from '../common/common';
 import { ReactComponent as SortUp } from 'assets/img/icons/skill-icons/sortUp-icon.svg';
 import { ReactComponent as SortDown } from 'assets/img/icons/skill-icons/sortDown-icon.svg';
 import { SkillPayloadKey } from 'common/enums/enums';
@@ -172,11 +171,9 @@ const SkillOverview = (): React.ReactElement => {
             />
           </div>
           <div className="col-auto">
-            <input
-              className="btn btn-primary"
-              type="submit"
-              value="+ Add Skill"
-            />
+            <Button themeType={'btn-primary'} type={'submit'}>
+              + Add Skill
+            </Button>
           </div>
         </Form>
       </div>
@@ -185,39 +182,39 @@ const SkillOverview = (): React.ReactElement => {
           <tr>
             <th scope="col">
               Skill
-              <button
-                className="border-0 bg-gu-white sort-button"
-                onClick={(): void => sortSkillNames()}
+              <Button
+                themeType={'border-0 bg-gu-white sort-button'}
+                onSubmit={(): void => sortSkillNames()}
               >
                 {isSortName ? <SortDown /> : <SortUp />}
-              </button>
+              </Button>
             </th>
             <th scope="col" className="text-center">
               Self Rating
-              <button
-                className="border-0 bg-gu-white sort-button"
-                onClick={(): void => sortSelfRating()}
+              <Button
+                themeType={'border-0 bg-gu-white sort-button'}
+                onSubmit={(): void => sortSelfRating()}
               >
                 {isSortSelf ? <SortDown /> : <SortUp />}
-              </button>
+              </Button>
             </th>
             <th scope="col" className="text-center">
               Manager Rating
-              <button
-                className="border-0 bg-gu-white sort-button"
-                onClick={(): void => sortManagerRating()}
+              <Button
+                themeType={'border-0 bg-gu-white sort-button'}
+                onSubmit={(): void => sortManagerRating()}
               >
                 {isManager ? <SortDown /> : <SortUp />}
-              </button>
+              </Button>
             </th>
             <th scope="col" className="text-center">
               Skill Review
-              <button
-                className="border-0 bg-gu-white sort-button"
-                onClick={(): void => sortSkillReview()}
+              <Button
+                themeType={'border-0 bg-gu-white sort-button'}
+                onSubmit={(): void => sortSkillReview()}
               >
                 {isSkillReview ? <SortDown /> : <SortUp />}
-              </button>
+              </Button>
             </th>
           </tr>
         </thead>

@@ -11,7 +11,7 @@ import {
   useNavigate,
   useState,
 } from 'hooks/hooks';
-import { FormInput } from 'components/common/common';
+import { Button, FormInput } from 'components/common/common';
 import { Container, FloatingLabel, Form } from 'react-bootstrap';
 import { NotificationManager } from 'react-notifications';
 import { Eye, EyeSlash } from 'react-bootstrap-icons';
@@ -108,19 +108,19 @@ const SignUp: React.FC = () => {
               type={isHiddenPassword ? 'password' : 'text'}
               placeholder="Password"
             />
-            <button
-              type="button"
-              className="auth-form__icon input-group-text position-absolute"
-              onClick={(): void => setIsHiddenPassword(!isHiddenPassword)}
+            <Button
+              themeType={'auth-form__icon input-group-text position-absolute'}
+              type={'button'}
+              onSubmit={(): void => setIsHiddenPassword(!isHiddenPassword)}
             >
               {isHiddenPassword ? <EyeSlash /> : <Eye />}
-            </button>
+            </Button>
           </FloatingLabel>
 
           <div className="d-grid gap-2">
-            <button className="btn btn-gu-pink text-gu-white" type="submit">
+            <Button themeType={'btn-gu-pink text-gu-white'} type={'submit'}>
               Sign up
-            </button>
+            </Button>
             <Form.Text className="mt-2 text-center fs-5">
               Already have an account?
               <Link to={AppRoute.LOGIN}>

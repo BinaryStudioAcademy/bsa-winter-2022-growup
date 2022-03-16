@@ -3,6 +3,7 @@ import { Card } from 'react-bootstrap';
 import type { ICompany } from 'common/interfaces/company/company';
 import CompanyCard from './company-card';
 import AddEditCompany from './addedit-company';
+import { Button } from 'components/common/common';
 
 type Props = {
   companyList: ICompany[];
@@ -18,12 +19,14 @@ const Company: React.FC<Props> = ({ companyList }) => {
     <>
       <Card className="growup-card-primary">
         <Card.Header className="d-flex justify-content-end growup-card-header">
-          <button
-            className="btn btn-outline-gu-white btn-hover-gu-purple border-2 fs-5 fw-bold"
-            onClick={handleShow}
+          <Button
+            themeType={
+              'btn-outline-gu-white btn-hover-gu-purple border-2 fs-5 fw-bold'
+            }
+            onSubmit={handleShow}
           >
             + Add Company
-          </button>
+          </Button>
         </Card.Header>
         <Card.Body>
           {companyList.length ? (

@@ -1,4 +1,4 @@
-import OpportunityItem from './opportunityItem';
+import OpportunityItem from './opportunity-item';
 import './styles.scss';
 import { useAppSelector } from 'hooks/hooks';
 import { IOpportunity } from 'store/opportunities/common';

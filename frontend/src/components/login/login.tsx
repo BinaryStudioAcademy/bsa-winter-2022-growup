@@ -11,7 +11,7 @@ import {
   useNavigate,
   useState,
 } from 'hooks/hooks';
-import { FormInput } from 'components/common/common';
+import { Button, FormInput } from 'components/common/common';
 import { Container, FloatingLabel, Form } from 'react-bootstrap';
 import { NotificationManager } from 'react-notifications';
 import { Eye, EyeSlash } from 'react-bootstrap-icons';
@@ -81,13 +81,13 @@ const Login: React.FC = () => {
               type={isHiddenPassword ? 'password' : 'text'}
               placeholder="Password"
             />
-            <button
-              type="button"
-              className="auth-form__icon input-group-text position-absolute"
-              onClick={(): void => setIsHiddenPassword(!isHiddenPassword)}
+            <Button
+              themeType={'auth-form__icon input-group-text position-absolute'}
+              onSubmit={(): void => setIsHiddenPassword(!isHiddenPassword)}
+              type={'button'}
             >
               {isHiddenPassword ? <EyeSlash /> : <Eye />}
-            </button>
+            </Button>
           </FloatingLabel>
 
           <Form.Group
@@ -103,9 +103,9 @@ const Login: React.FC = () => {
           </Form.Group>
 
           <div className="d-grid gap-2">
-            <button className="btn btn-gu-pink text-gu-white" type="submit">
+            <Button themeType={'btn-gu-pink text-gu-white'} type={'submit'}>
               Sign in
-            </button>
+            </Button>
             <Form.Text className="mt-2 text-center fs-5">
               Don't have a GrowUp account?
               <Link to={AppRoute.SIGN_UP}>

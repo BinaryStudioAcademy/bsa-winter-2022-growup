@@ -4,7 +4,7 @@ import { NotificationManager } from 'react-notifications';
 import { useAppDispatch, useTagList } from 'hooks/hooks';
 import { adminActions } from 'store/actions';
 
-import { Modal } from 'components/common/common';
+import { Button, Modal } from 'components/common/common';
 
 import TagForm from './form';
 import TagList from './tag-list';
@@ -44,12 +44,14 @@ const TagModal: React.FC<Props> = ({ show, onClose }) => {
       <TagForm onSubmit={addItem} />
       <TagList tagList={tagList} onDelete={deleteItem} />
 
-      <button
-        className="btn btn-outline-gu-purple btn-hover-gu-white fw-bold fs-5 border-2"
-        onClick={clickHandler}
+      <Button
+        themeType={
+          'btn-outline-gu-purple btn-hover-gu-white fw-bold fs-5 border-2'
+        }
+        onSubmit={clickHandler}
       >
         Save
-      </button>
+      </Button>
     </Modal>
   );
 };

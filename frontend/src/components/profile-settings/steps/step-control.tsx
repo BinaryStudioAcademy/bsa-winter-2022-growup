@@ -1,3 +1,4 @@
+import { Button } from 'components/common/common';
 import { IProfileSettingStep } from './common/interfaces';
 
 interface Props extends IProfileSettingStep {
@@ -14,17 +15,17 @@ const StepControl: React.FC<Props> = ({
 }) => {
   return (
     <div className="stepper__actions d-flex justify-content-between w-100 mt-4">
-      <button
-        className="btn btn-gu-pink text-gu-white"
-        onClick={(): void => onPrevious?.()}
+      <Button
+        themeType={'btn-gu-pink text-gu-white'}
+        onSubmit={(): void => onPrevious?.()}
         disabled={isDisablePrevious}
       >
         Previous
-      </button>
+      </Button>
 
-      <button
-        className="btn btn-gu-blue text-gu-white"
-        onClick={async (): Promise<void> => {
+      <Button
+        themeType={'btn-gu-blue text-gu-white'}
+        onSubmit={async (): Promise<void> => {
           await onSubmit?.();
           if (isValid) {
             onNext?.();
@@ -32,7 +33,7 @@ const StepControl: React.FC<Props> = ({
         }}
       >
         Go to Questionnaire
-      </button>
+      </Button>
     </div>
   );
 };

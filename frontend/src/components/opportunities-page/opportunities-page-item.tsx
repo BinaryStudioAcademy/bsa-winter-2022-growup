@@ -1,5 +1,5 @@
-import Follow from './Follow';
-import OpportunityItem from 'components/main-page/opportunities/opportunityItem';
+import Follow from './follow';
+import OpportunityItem from 'components/main-page/opportunities/opportunity-item';
 import { IOpportunity } from 'store/opportunities/common';
 
 interface Props extends IOpportunity {}

@@ -10,6 +10,7 @@ import { ReactComponent as Delete } from '../../../assets/img/icons/skill-icons/
 import { ReactComponent as Save } from '../../../assets/img/icons/skill-icons/save-icon.svg';
 import { ReactComponent as Edit } from '../../../assets/img/icons/skill-icons/edit-icon.svg';
 import { skillActions } from 'store/skill';
+import { Button } from 'components/common/common';
 
 interface Props {
   id: string;
@@ -79,9 +80,9 @@ const SkillElement = (props: Props): React.ReactElement => {
         ) : (
           `${props.name}`
         )}{' '}
-        <button
-          className="border-0 bg-gu-white sort-button"
-          onClick={(): void =>
+        <Button
+          themeType={'border-0 bg-gu-white sort-button'}
+          onSubmit={(): void =>
             isEdit ? setIsStar(!isStar) : console.warn('Warning')
           }
         >
@@ -90,26 +91,26 @@ const SkillElement = (props: Props): React.ReactElement => {
           ) : (
             <img alt="star" src={starDisable} />
           )}
-        </button>
+        </Button>
         {isHover ? (
-          <button
-            className="btn btn-gu-white btn-outline-gu-black button-group"
-            type="button"
-            onClick={(): void => saveEdits(props.id)}
+          <Button
+            themeType={'btn-gu-white btn-outline-gu-black button-group'}
+            type={'button'}
+            onSubmit={(): void => saveEdits(props.id)}
           >
             {isEdit ? <Save /> : <Edit />}
-          </button>
+          </Button>
         ) : (
           true
         )}
         {isHover ? (
-          <button
-            className="btn btn-gu-white btn-outline-gu-black mx-2"
-            type="button"
-            onClick={(): void => deleteSkill(props.id)}
+          <Button
+            themeType={'btn-gu-white btn-outline-gu-black mx-2'}
+            type={'button'}
+            onSubmit={(): void => deleteSkill(props.id)}
           >
             <Delete />
-          </button>
+          </Button>
         ) : (
           true
         )}

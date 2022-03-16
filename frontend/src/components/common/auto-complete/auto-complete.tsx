@@ -1,6 +1,7 @@
 import { useState } from 'hooks/hooks';
-import { ClearButton, Option, Typeahead } from 'react-bootstrap-typeahead';
+import { Option, Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
+import { Button } from '../common';
 import './styles.scss';
 
 interface Props {
@@ -28,9 +29,9 @@ const AutoComplete: React.FC<Props> = ({
       {({ onClear, selected }): JSX.Element => (
         <div className="rbt-aux">
           {!!selected.length && (
-            <ClearButton
-              className="btn bg-transparent border-0 fs-1"
-              onClick={onClear}
+            <Button
+              themeType={'bg-transparent border-0 fs-1'}
+              onSubmit={onClear}
             />
           )}
         </div>

@@ -12,6 +12,7 @@ import { adminActions } from 'store/actions';
 
 import UserModal from './modal/user-modal';
 import UserList from './list/user-list';
+import { Button } from 'components/common/common';
 
 const Users: React.FC = () => {
   const [show, setShow] = useState(false);
@@ -30,12 +31,14 @@ const Users: React.FC = () => {
       <div className="col">
         <Card className="growup-card-primary">
           <Card.Header className="d-flex justify-content-end growup-card-header">
-            <button
-              className="btn btn-outline-gu-white btn-hover-gu-purple fw-bold fs-5 border-2"
-              onClick={showWindow}
+            <Button
+              themeType={
+                'btn-outline-gu-white btn-hover-gu-purple fw-bold fs-5 border-2'
+              }
+              onSubmit={showWindow}
             >
               + Add User
-            </button>
+            </Button>
           </Card.Header>
           <Card.Body>
             <UserList list={users} />
