@@ -8,6 +8,8 @@ interface Props {
   control: Control;
   errors: object;
   type?: string;
+  floatingLabelStyles?: string;
+  children?: JSX.Element;
 }
 
 const TextField = ({
@@ -16,9 +18,11 @@ const TextField = ({
   control,
   errors,
   type = 'text',
+  floatingLabelStyles = '',
+  children,
 }: Props): JSX.Element => {
   return (
-    <FloatingLabel label={label} className="mb-3">
+    <FloatingLabel label={label} className={`mb-3 ${floatingLabelStyles}`}>
       <FormInput
         name={name}
         control={control}
@@ -26,6 +30,7 @@ const TextField = ({
         type={type}
         placeholder={label}
       />
+      {children}
     </FloatingLabel>
   );
 };
