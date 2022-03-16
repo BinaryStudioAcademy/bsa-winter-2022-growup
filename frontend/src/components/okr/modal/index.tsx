@@ -18,7 +18,7 @@ interface Props {
 }
 
 const OkrModal: FC<Props> = ({ okr, showModal, closeModal }) => {
-  const defaultOkr = {
+  let defaultOkr = {
     name: '',
     type: OkrTypes.MY_OKR,
     startDate: '',
@@ -28,7 +28,7 @@ const OkrModal: FC<Props> = ({ okr, showModal, closeModal }) => {
   const dispatch = useDispatch();
 
   if (okr) {
-    defaultOkr.name = okr.name;
+    defaultOkr = { ...defaultOkr, ...okr };
     defaultOkr.startDate = new Date(okr.startDate);
     defaultOkr.endDate = new Date(okr.endDate);
   }
@@ -70,7 +70,12 @@ const OkrModal: FC<Props> = ({ okr, showModal, closeModal }) => {
           label={'Name'}
         />
 
-        <FormSelect name="type" options={selectOptions} errors={errors} />
+        <FormSelect
+          name="type"
+          control={control}
+          options={selectOptions}
+          errors={errors}
+        />
 
         <FloatingLabel
           controlId="education-university"

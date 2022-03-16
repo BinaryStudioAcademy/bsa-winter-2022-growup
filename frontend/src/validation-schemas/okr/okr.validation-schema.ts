@@ -2,10 +2,7 @@ import * as Joi from 'joi';
 import { OkrPayloadKey } from 'common/enums/enums';
 import { SkillValidationRule } from 'common/enums/validation/skill-validation-rule.enum';
 import { OkrValidationMessage } from 'common/enums/validation/okr-validation.enum';
-import {
-  MAX_DATE,
-  MIN_DATE,
-} from 'components/profile/components/profile-edit/common/constants';
+import { MAX_DATE, MIN_DATE } from 'components/okr/common/constants';
 
 const okrValidationSchema = Joi.object({
   [OkrPayloadKey.NAME]: Joi.string()

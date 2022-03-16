@@ -1,5 +1,6 @@
 import { Form, FloatingLabel } from 'react-bootstrap';
 import { ErrorMessage } from '@hookform/error-message';
+import { Control, useController } from 'react-hook-form';
 
 import './styles.scss';
 
@@ -10,11 +11,14 @@ interface IOptions {
 
 interface Props {
   name: string;
+  control: Control;
   errors: object;
   options: IOptions[];
 }
 
-const FormSelect: React.FC<Props> = ({ name, errors, options }) => {
+const FormSelect: React.FC<Props> = ({ name, control, errors, options }) => {
+  const { field } = useController({ name, control });
+
   return (
     <>
       <Form.Group controlId="formBasicSelect">
@@ -23,7 +27,7 @@ const FormSelect: React.FC<Props> = ({ name, errors, options }) => {
           label={name.charAt(0).toUpperCase() + name.slice(1)}
           className="mb-3"
         >
-          <Form.Select>
+          <Form.Select {...field}>
             {options.map((option) => (
               <option value={option.value} key={option.value}>
                 {option.label}
