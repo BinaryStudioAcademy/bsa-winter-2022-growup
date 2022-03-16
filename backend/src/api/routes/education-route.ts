@@ -42,8 +42,10 @@ router
     validatePermissions([RoleType.MENTEE, RoleType.MENTOR]),
     validateBody(updateEducationSchema),
     run(async (req: Request) => {
+      const { id } = req.params;
       const { body } = req;
-      return updateEducation(body);
+      const data = { id, body };
+      return updateEducation(data);
     }),
   )
   .delete(

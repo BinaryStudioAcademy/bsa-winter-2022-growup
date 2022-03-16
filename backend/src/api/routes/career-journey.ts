@@ -42,8 +42,10 @@ router
     validatePermissions([RoleType.MENTEE, RoleType.MENTOR]),
     validateBody(updateCareerJourneySchema),
     run(async (req: Request) => {
+      const { id } = req.params;
       const { body } = req;
-      return updateCareerJourney(body);
+      const data = { id, body };
+      return updateCareerJourney(data);
     }),
   )
   .delete(

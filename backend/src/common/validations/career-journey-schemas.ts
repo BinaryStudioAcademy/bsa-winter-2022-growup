@@ -8,7 +8,6 @@ const createCareerJourneySchema = object({
 });
 
 const updateCareerJourneySchema = object({
-  id: string().required(),
   startDate: date().required(),
   endDate: date().nullable(),
   company: string().required(),

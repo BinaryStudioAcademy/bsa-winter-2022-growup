@@ -20,13 +20,18 @@ export const createEducation = async (data: Education): Promise<Education> => {
   return educationInstance;
 };
 
-export const updateEducation = async (data: Education): Promise<Education> => {
-  const { id } = data;
+export const updateEducation = async ({
+  id,
+  body,
+}: {
+  id: string;
+  body: Education;
+}): Promise<Education> => {
   const educationRepository = getCustomRepository(EducationRepository);
   const education = await educationRepository.findOne({ id });
 
   if (education) {
-    const newEducation = Object.assign(education, data);
+    const newEducation = Object.assign(education, body);
     await newEducation.save();
     return newEducation;
   }
