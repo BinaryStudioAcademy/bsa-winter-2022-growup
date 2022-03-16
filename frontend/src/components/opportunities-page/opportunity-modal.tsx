@@ -23,7 +23,7 @@ const OpportunityModal: React.FC = () => {
   };
   const sendData = (): void => {
     dispatch(
-      opportunitiesActions.fetchNewOpp({
+      opportunitiesActions.fetchNewOpportunity({
         name: opportunityName.current?.value,
         type: type.current?.value,
         organization: organizationName.current?.value,
@@ -65,7 +65,7 @@ const OpportunityModal: React.FC = () => {
               <Form.Select className="opportunity_type">
                 <option disabled>Chose opportunity type</option>
                 <option value="Project/Lecture">Project/Lecture</option>
-                <option value="Lectury/HomeWork">Lectury/HomeWork</option>
+                <option value="Lecture/HomeWork">Lecture/HomeWork</option>
                 <option value="Lecture">Lecture</option>
               </Form.Select>
             </Form.Group>

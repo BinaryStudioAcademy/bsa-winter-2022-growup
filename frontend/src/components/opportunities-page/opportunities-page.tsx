@@ -32,7 +32,7 @@ const OpprotunitiesPage: React.FC = () => {
   }, [user]);
 
   useEffect(() => {
-    isLoaded ? null : dispatch(opportunityActions.fetchLoadOpp());
+    isLoaded ? null : dispatch(opportunityActions.fetchLoadOpportunities());
   }, []);
 
   return (
