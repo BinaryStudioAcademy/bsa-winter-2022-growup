@@ -21,15 +21,18 @@ export const createCareerJourney = async (
   return companyInstance;
 };
 
-export const updateCareerJourney = async (
-  data: CareerJourney,
-): Promise<CareerJourney> => {
-  const { id } = data;
+export const updateCareerJourney = async ({
+  id,
+  body,
+}: {
+  id: string;
+  body: CareerJourney;
+}): Promise<CareerJourney> => {
   const careerJourneyRepository = getCustomRepository(CareerJourneyRepository);
   const careerJourney = await careerJourneyRepository.findOne({ id });
 
   if (careerJourney) {
-    const newCareerJourney = Object.assign(careerJourney, data);
+    const newCareerJourney = Object.assign(careerJourney, body);
     await newCareerJourney.save();
     return newCareerJourney;
   }
