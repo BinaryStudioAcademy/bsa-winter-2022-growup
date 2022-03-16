@@ -19,7 +19,7 @@ class OkrRepository extends Repository<OKR> {
       .getMany();
   }
 
-  getOneByUserId(): Promise<OKR> {
+  getOneById(okrId: string): Promise<OKR> {
     return this.createQueryBuilder('okr')
       .leftJoinAndSelect(
         'okr.objectives',
@@ -31,6 +31,7 @@ class OkrRepository extends Repository<OKR> {
         'keyresult',
         'objective.id = keyresult.objective',
       )
+      .where('okr.id = :id', { id: okrId })
       .getOne();
   }
 }
