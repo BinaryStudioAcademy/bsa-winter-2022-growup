@@ -24,9 +24,7 @@ const OkrList: React.FC<Props> = ({ collection }) => (
       return (
         <OrkItem
           key={okr.id}
-          name={okr.name}
-          endDate={okr.endDate}
-          startDate={okr.startDate}
+          okr={okr}
           objectivesCounter={objectivesCounter}
           resultsCounter={resultsCounter}
         />

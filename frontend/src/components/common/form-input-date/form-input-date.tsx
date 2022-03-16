@@ -9,10 +9,14 @@ interface Props {
   errors: object;
   control: Control;
   placeholder: string;
+  minDate?: Date;
+  maxDate?: Date;
 }
 
 const FormInputDate: React.FC<Props> = ({
   name,
+  minDate,
+  maxDate,
   errors,
   control,
   placeholder,
@@ -26,8 +30,8 @@ const FormInputDate: React.FC<Props> = ({
       name={name}
       dateFormat="dd.MM.yyyy"
       customInputRef="dateRef"
-      minDate={null}
-      maxDate={null}
+      minDate={minDate}
+      maxDate={maxDate}
       selected={value}
       onChange={onChange}
       placeholderText={placeholder}

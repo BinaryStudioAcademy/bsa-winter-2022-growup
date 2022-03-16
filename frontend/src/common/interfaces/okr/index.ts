@@ -3,7 +3,7 @@ import { IObjective } from '../objective';
 
 export interface IOkr extends IBaseObject {
   name: string;
-  endDate: string;
-  startDate: string;
+  endDate: Date | string;
+  startDate: Date | string;
   objectives: Array<IObjective> | null;
 }

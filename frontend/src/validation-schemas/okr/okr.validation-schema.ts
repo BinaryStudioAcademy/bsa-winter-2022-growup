@@ -7,7 +7,7 @@ import {
   MIN_DATE,
 } from 'components/profile/components/profile-edit/common/constants';
 
-const okr = Joi.object({
+const okrValidationSchema = Joi.object({
   [OkrPayloadKey.NAME]: Joi.string()
     .trim()
     .min(SkillValidationRule.NAME_MIN_LENGTH)
@@ -38,4 +38,4 @@ const okr = Joi.object({
     }),
 });
 
-export { okr };
+export { okrValidationSchema };
