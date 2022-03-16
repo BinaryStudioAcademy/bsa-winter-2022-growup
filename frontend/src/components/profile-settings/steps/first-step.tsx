@@ -8,19 +8,19 @@ import { profileFirstStep as profileFirstStepValidationSchema } from 'validation
 import { useAppForm, useDispatch } from 'hooks/hooks';
 import { DEFAULT_FIRST_STEP_PAYLOAD } from './common/constants';
 import { insertPIB } from 'store/profile/actions';
+import { FirstStepFormType } from './common/types';
 
 const FirstStep: React.FC<IProfileSettingStep> = ({
   isDisablePrevious,
   onNext,
 }) => {
-  const { control, errors, isValid, handleSubmit } = useAppForm({
-    defaultValues: DEFAULT_FIRST_STEP_PAYLOAD,
-    validationSchema: profileFirstStepValidationSchema,
-  });
+  const { control, errors, isValid, handleSubmit } =
+    useAppForm<FirstStepFormType>({
+      defaultValues: DEFAULT_FIRST_STEP_PAYLOAD,
+      validationSchema: profileFirstStepValidationSchema,
+    });
   const dispatch = useDispatch();
-  const onSaveSettings = (values: object): void => {
-    // eslint-disable-next-line no-console
-    console.log('save settings:', values);
+  const onSaveSettings = (values: FirstStepFormType): void => {
     dispatch(insertPIB(values));
   };
 
@@ -60,3 +60,6 @@ const FirstStep: React.FC<IProfileSettingStep> = ({
 };
 
 export default FirstStep;
+// function useAppForm<T>(arg0: { defaultValues: { [x: string]: string; }; validationSchema: import("joi").ObjectSchema<any>; }): { control: any; errors: any; isValid: any; handleSubmit: any; } {
+//   throw new Error('Function not implemented.');
+// }

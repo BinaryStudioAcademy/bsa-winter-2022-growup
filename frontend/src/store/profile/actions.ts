@@ -29,7 +29,7 @@ const updateAvatar = createAsyncThunk(
 
 const insertPIB = createAsyncThunk(
   ActionType.INSERT_PIB,
-  async (data: object, { rejectWithValue }) => {
+  async (data: FirstStepFormType, { rejectWithValue }) => {
     try {
       const result: FirstStepFormType = await profile.setPIB(data);
       return {
