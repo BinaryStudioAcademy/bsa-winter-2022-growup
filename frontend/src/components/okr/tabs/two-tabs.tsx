@@ -14,13 +14,15 @@ function ControlledTabs(): React.ReactElement {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user?.firstName) {
-      navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/1`);
-      return;
-    }
-    if (!user?.isCompleteTest) {
-      navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/2`);
-      return;
+    if (user) {
+      if (!user?.firstName) {
+        navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/1`);
+        return;
+      }
+      if (!user?.isCompleteTest) {
+        navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/2`);
+        return;
+      }
     }
   }, [user]);
 
