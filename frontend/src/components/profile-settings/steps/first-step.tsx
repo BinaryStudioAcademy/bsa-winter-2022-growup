@@ -5,23 +5,23 @@ import Education from './education';
 import InterestingTags from './interesting-tags';
 import StepControl from './step-control';
 import { profileFirstStep as profileFirstStepValidationSchema } from 'validation-schemas/validation-schemas';
-import { useAppForm } from 'hooks/hooks';
+import { useAppForm, useDispatch } from 'hooks/hooks';
 import { DEFAULT_FIRST_STEP_PAYLOAD } from './common/constants';
-import { FirstStepFormType } from './common/types';
+import { insertPIB } from 'store/profile/actions';
 
 const FirstStep: React.FC<IProfileSettingStep> = ({
   isDisablePrevious,
   onNext,
 }) => {
-  const { control, errors, isValid, handleSubmit } =
-    useAppForm<FirstStepFormType>({
-      defaultValues: DEFAULT_FIRST_STEP_PAYLOAD,
-      validationSchema: profileFirstStepValidationSchema,
-    });
-
-  const onSaveSettings = (values: FirstStepFormType): void => {
+  const { control, errors, isValid, handleSubmit } = useAppForm({
+    defaultValues: DEFAULT_FIRST_STEP_PAYLOAD,
+    validationSchema: profileFirstStepValidationSchema,
+  });
+  const dispatch = useDispatch();
+  const onSaveSettings = (values: object): void => {
     // eslint-disable-next-line no-console
     console.log('save settings:', values);
+    dispatch(insertPIB(values));
   };
 
   const onSubmit = handleSubmit(onSaveSettings);
