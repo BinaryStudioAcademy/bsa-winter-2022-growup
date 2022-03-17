@@ -1,8 +1,4 @@
-import {
-  AppRoute,
-  MentorMenteeRoute,
-  UserPayloadKey,
-} from 'common/enums/enums';
+import { AppRoute, MentorMenteeRoute } from 'common/enums/enums';
 import {
   useAppDispatch,
   useAppForm,
@@ -17,6 +13,7 @@ import { NotificationManager } from 'react-notifications';
 import { Eye, EyeSlash } from 'react-bootstrap-icons';
 import { loginUser } from 'store/auth/actions';
 import { Link } from '../common/common';
+import { IUserLoginForm } from '../../common/interfaces/user';
 import { login as loginValidationSchema } from 'validation-schemas/validation-schemas';
 import { DEFAULT_LOGIN_PAYLOAD } from './common/constants';
 import './styles.scss';
@@ -28,7 +25,7 @@ const Login: React.FC = () => {
 
   const [isHiddenPassword, setIsHiddenPassword] = useState(true);
 
-  const { control, errors, handleSubmit } = useAppForm({
+  const { control, errors, handleSubmit } = useAppForm<IUserLoginForm>({
     defaultValues: DEFAULT_LOGIN_PAYLOAD,
     validationSchema: loginValidationSchema,
   });
@@ -38,7 +35,7 @@ const Login: React.FC = () => {
     [dispatch],
   );
 
-  const onLogin = (values: object): void => {
+  const onLogin = (values: IUserLoginForm): void => {
     handleLogin(values)
       .unwrap()
       .then(() => {
@@ -56,14 +53,14 @@ const Login: React.FC = () => {
         <fieldset disabled={isLoading}>
           <TextField
             label={'Email address'}
-            name={UserPayloadKey.EMAIL}
+            name={'email'}
             control={control}
             errors={errors}
             type="email"
           />
           <TextField
             label={'Password'}
-            name={UserPayloadKey.PASSWORD}
+            name={'password'}
             control={control}
             errors={errors}
             type={isHiddenPassword ? 'password' : 'text'}

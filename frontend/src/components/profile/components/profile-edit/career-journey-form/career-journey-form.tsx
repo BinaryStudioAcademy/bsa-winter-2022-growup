@@ -2,20 +2,20 @@ import { Form } from 'react-bootstrap';
 import { useAppForm } from 'hooks/hooks';
 import { FormInputDate, Modal, TextField } from 'components/common/common';
 import { DEFAULT_CAREER_JOURNEY_PAYLOAD } from './common/constants';
-import { CareerJourneyPayloadKey } from 'common/enums/user/career-journey-payload-key.enum';
 import { careerJourney as careerJourneyValidationSchema } from 'validation-schemas/validation-schemas';
 import { ICareerJourney } from '../../../common/interfaces';
+import { CareerJourneyFormType } from './common/types';
 
 type Props = {
   careerJourney: ICareerJourney | null;
   onClose: () => void;
-  onSubmit: (values: object) => void;
+  onSubmit: (values: CareerJourneyFormType) => void;
 };
 
 const CareerJourneyForm: React.FC<Props> = (props) => {
   const { careerJourney, onSubmit } = props;
 
-  const { control, errors, handleSubmit } = useAppForm({
+  const { control, errors, handleSubmit } = useAppForm<CareerJourneyFormType>({
     defaultValues: careerJourney || DEFAULT_CAREER_JOURNEY_PAYLOAD,
     validationSchema: careerJourneyValidationSchema,
   });
@@ -31,26 +31,26 @@ const CareerJourneyForm: React.FC<Props> = (props) => {
       <Form className="w-100">
         <TextField
           label={'Position'}
-          name={CareerJourneyPayloadKey.POSITION}
+          name={'position'}
           control={control}
           errors={errors}
         />
         <TextField
           label={'Company'}
-          name={CareerJourneyPayloadKey.COMPANY}
+          name={'company'}
           control={control}
           errors={errors}
         />
         <div className="mb-3">
           <FormInputDate
-            name={CareerJourneyPayloadKey.START_DATE}
+            name={'startDate'}
             control={control}
             errors={errors}
             placeholder="Start date"
           />
         </div>
         <FormInputDate
-          name={CareerJourneyPayloadKey.END_DATE}
+          name={'endDate'}
           control={control}
           errors={errors}
           placeholder="End date"

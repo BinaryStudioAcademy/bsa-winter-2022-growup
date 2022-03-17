@@ -7,20 +7,21 @@ import StepControl from './step-control';
 import { profileFirstStep as profileFirstStepValidationSchema } from 'validation-schemas/validation-schemas';
 import { useAppForm } from 'hooks/hooks';
 import { DEFAULT_FIRST_STEP_PAYLOAD } from './common/constants';
-import { FirstStepPayloadKey, UserPayloadKey } from 'common/enums/enums';
-import * as userAction from '../../../store/profile/actions';
-import { useAppDispatch } from 'hooks/store/store.hooks';
+import { FirstStepFormType } from './common/types';
 
-interface Props extends IProfileSettingStep {}
+const FirstStep: React.FC<IProfileSettingStep> = ({
+  isDisablePrevious,
+  onNext,
+}) => {
+  const { control, errors, isValid, handleSubmit } =
+    useAppForm<FirstStepFormType>({
+      defaultValues: DEFAULT_FIRST_STEP_PAYLOAD,
+      validationSchema: profileFirstStepValidationSchema,
+    });
 
-const FirstStep: React.FC<Props> = ({ isDisablePrevious, onNext }) => {
-  const { control, errors, isValid, handleSubmit } = useAppForm({
-    defaultValues: DEFAULT_FIRST_STEP_PAYLOAD,
-    validationSchema: profileFirstStepValidationSchema,
-  });
-  const dispatch = useAppDispatch();
-  const onSaveSettings = (values: object): void => {
-    dispatch(userAction.insertPIB(values));
+  const onSaveSettings = (values: FirstStepFormType): void => {
+    // eslint-disable-next-line no-console
+    console.log('save settings:', values);
   };
 
   const onSubmit = handleSubmit(onSaveSettings);
@@ -29,18 +30,18 @@ const FirstStep: React.FC<Props> = ({ isDisablePrevious, onNext }) => {
     <div className="stepper__form">
       <TextField
         label="First name"
-        name={UserPayloadKey.FIRST_NAME}
+        name={'firstName'}
         control={control}
         errors={errors}
       />
       <TextField
-        name={UserPayloadKey.LAST_NAME}
+        name={'lastName'}
         label="Last name"
         control={control}
         errors={errors}
       />
       <TextField
-        name={FirstStepPayloadKey.POSITION}
+        name={'position'}
         label="Position"
         control={control}
         errors={errors}
