@@ -9,7 +9,7 @@ import {
 import * as opportunityActions from '../../store/opportunities/actions';
 import './styles.scss';
 import { IOpportunity } from 'store/opportunities/common';
-import { MentorMenteeRoute } from 'common/enums/mentor-mentee-route/mentor-mentee-route.enum';
+import isFirstLogged from 'helpers/check-is-first-logged';
 
 const OpprotunitiesPage: React.FC = () => {
   const opportunities = useAppSelector(
@@ -19,18 +19,8 @@ const OpprotunitiesPage: React.FC = () => {
   const isLoaded = useAppSelector((state) => state.opportunities.isLoaded);
   const user = useAppSelector((store) => store.profile.user);
   const navigate = useNavigate();
-
   useEffect(() => {
-    if (user) {
-      if (!user?.firstName) {
-        navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/1`);
-        return;
-      }
-      if (!user?.isCompleteTest) {
-        navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/2`);
-        return;
-      }
-    }
+    isFirstLogged(user, navigate);
   }, [user]);
 
   useEffect(() => {

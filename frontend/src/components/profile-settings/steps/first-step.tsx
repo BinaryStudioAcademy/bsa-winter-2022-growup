@@ -60,6 +60,3 @@ const FirstStep: React.FC<IProfileSettingStep> = ({
 };
 
 export default FirstStep;
-// function useAppForm<T>(arg0: { defaultValues: { [x: string]: string; }; validationSchema: import("joi").ObjectSchema<any>; }): { control: any; errors: any; isValid: any; handleSubmit: any; } {
-//   throw new Error('Function not implemented.');
-// }
