@@ -1,10 +1,8 @@
-import { FormEvent } from 'react';
-
-import { NotificationManager } from 'react-notifications';
-import { useAppDispatch, useTagList } from 'hooks/hooks';
-import { adminActions } from 'store/actions';
-
+import { FormEvent, useCallback } from 'react';
+import { useAppDispatch, useAppSelector, useTagList } from 'hooks/hooks';
+import { tagsActions } from 'store/actions';
 import { Button, Modal } from 'components/common/common';
+import { ITag } from 'common/interfaces/tag/tag';
 
 import TagForm from './form';
 import TagList from './tag-list';
@@ -15,24 +13,21 @@ type Props = {
 };
 
 const TagModal: React.FC<Props> = ({ show, onClose }) => {
+  const { tags } = useAppSelector((state) => state.tags);
   const { list: tagList, addItem, deleteItem, clearItems } = useTagList();
 
   const dispatch = useAppDispatch();
 
   const clickHandler = (e: FormEvent): void => {
     e.preventDefault();
-
     onClose();
     clearItems();
-    dispatch(adminActions.createTags(tagList))
-      .unwrap()
-      .then((result) => {
-        if (result && result?.existingTags.length)
-          NotificationManager.error(
-            `Tags already exist: ${result.existingTags.join(', ')}`,
-          );
-      });
+    dispatch(tagsActions.createTags(tagList));
   };
+
+  const deleteTag = useCallback((id: ITag['id']) => {
+    dispatch(tagsActions.deleteTag(id));
+  }, []);
 
   return (
     <Modal
@@ -43,6 +38,7 @@ const TagModal: React.FC<Props> = ({ show, onClose }) => {
     >
       <TagForm onSubmit={addItem} />
       <TagList tagList={tagList} onDelete={deleteItem} />
+      <TagList tagList={tags} onDelete={deleteTag} />
 
       <Button
         themeType={

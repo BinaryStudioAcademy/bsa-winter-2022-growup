@@ -1,9 +1,15 @@
 import OpportunityPageItem from './opportunities-page-item';
 import OpportunityModal from './opportunity-modal';
-import { useAppSelector, useAppDispatch, useEffect } from 'hooks/hooks';
+import {
+  useAppSelector,
+  useAppDispatch,
+  useEffect,
+  useNavigate,
+} from 'hooks/hooks';
 import * as opportunityActions from '../../store/opportunities/actions';
 import './styles.scss';
 import { IOpportunity } from 'store/opportunities/common';
+import { MentorMenteeRoute } from 'common/enums/mentor-mentee-route/mentor-mentee-route.enum';
 
 const OpprotunitiesPage: React.FC = () => {
   const opportunities = useAppSelector(
@@ -11,9 +17,24 @@ const OpprotunitiesPage: React.FC = () => {
   );
   const dispatch = useAppDispatch();
   const isLoaded = useAppSelector((state) => state.opportunities.isLoaded);
+  const user = useAppSelector((store) => store.profile.user);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user?.firstName) {
+      navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/1`);
+      return;
+    }
+    if (!user?.isCompleteTest) {
+      navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/2`);
+      return;
+    }
+  }, [user]);
+
   useEffect(() => {
     isLoaded ? null : dispatch(opportunityActions.fetchLoadOpp());
   }, []);
+
   return (
     <section className="d-flex flex-column">
       <div className=" d-flex align-items-center px-3 py-3 rounded-top bg-gu-blue text-gu-white">

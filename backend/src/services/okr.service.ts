@@ -13,10 +13,9 @@ export const getAllOkr = async (userId: string): Promise<OKR[]> => {
 export const getOkrById = async (okrId: string): Promise<OKR> => {
   const okrRepository = getCustomRepository(Okrepository);
 
-  const okr = await okrRepository.findOne({ id: okrId });
+  const okr = await okrRepository.getOneById(okrId);
 
   if (okr) {
-    const okr = okrRepository.getOneByUserId();
     return okr;
   }
 
@@ -67,8 +66,7 @@ export const updateOkrById = async ({
     okr.updatedAt = new Date();
     await okr.save();
 
-    const responceOkr = okrRepository.getOneByUserId();
-    return responceOkr;
+    return okr;
   }
 
   throw badRequestError('Okr isn`t exist!!!');

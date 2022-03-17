@@ -13,7 +13,7 @@ import SkillElement from './rating/skill-rating';
 import { Button, FormInput } from '../common/common';
 import { ReactComponent as SortUp } from 'assets/img/icons/skill-icons/sortUp-icon.svg';
 import { ReactComponent as SortDown } from 'assets/img/icons/skill-icons/sortDown-icon.svg';
-import { SkillPayloadKey } from 'common/enums/enums';
+import { SkillFormType } from './common/types';
 import { DEFAULT_SKILL_PAYLOAD } from './common/constants';
 import { actions } from 'store/skill/slice';
 import { skill as skillValidationSchema } from 'validation-schemas/validation-schemas';
@@ -37,7 +37,7 @@ const SkillOverview = (): React.ReactElement => {
     dispatch(skillActions.fetchSkills());
   }, []);
 
-  const { control, errors, handleSubmit, reset } = useAppForm({
+  const { control, errors, handleSubmit, reset } = useAppForm<SkillFormType>({
     defaultValues: DEFAULT_SKILL_PAYLOAD,
     validationSchema: skillValidationSchema,
     mode: 'onSubmit',
@@ -61,13 +61,12 @@ const SkillOverview = (): React.ReactElement => {
       }
   };
 
-  const onAdd = (values: object): void => {
-    const name: { name: string } = values as { name: string };
+  const onAdd = (values: SkillFormType): void => {
     const skill = {
       id: '',
       type: 'Soft skills',
     };
-    const newSkill = { ...skill, name: name.name };
+    const newSkill = { ...skill, name: values.name };
     handleAdd(newSkill);
     reset?.();
   };
@@ -163,7 +162,7 @@ const SkillOverview = (): React.ReactElement => {
         <Form className="d-flex" onSubmit={handleSubmit(onAdd)}>
           <div className="col form-input mx-4">
             <FormInput
-              name={SkillPayloadKey.NAME}
+              name={'name'}
               control={control}
               errors={errors}
               type="text"
