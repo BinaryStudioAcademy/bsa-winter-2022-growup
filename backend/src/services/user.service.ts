@@ -213,12 +213,12 @@ export const fetchUser = async (id: User['id']): Promise<UserWithRole> => {
 
   const { password: _password, ...user } = await userRepository.geUserById(id);
   const { role } = await roleRepository.findOne({ user });
-  const userQuizeCategoryInstance = await userQuizRepository.findOne({
+  const userQuizCategoryInstance = await userQuizRepository.findOne({
     where: {
       userId: id,
     },
   });
-  const isCompleteTest = userQuizeCategoryInstance ? true : false;
+  const isCompleteTest = !!userQuizCategoryInstance;
   return {
     ...user,
     roleType: role,

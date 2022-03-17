@@ -418,7 +418,7 @@
         }
       }
     },
-    "/api/company/okr/{id}/objective/{id}/keyresult": {
+    "/api/company/okr/{okrId}/objective/{objectiveId}/keyresult": {
       "post": {
         "tags": ["Okr"],
         "summary": "Add new keyresult to the objective",
@@ -434,7 +434,7 @@
           },
           {
             "in": "path",
-            "name": "id",
+            "name": "okrId",
             "required": true,
             "schema": {
               "type": "string"
@@ -443,7 +443,7 @@
           },
           {
             "in": "path",
-            "name": "id1",
+            "name": "objectiveId",
             "required": true,
             "schema": {
               "type": "string"
@@ -964,6 +964,15 @@
             "description": "JWT Token"
           },
           {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID of the career-journey to ypdate"
+          },
+          {
             "in": "body",
             "name": "body",
             "required": true,
@@ -1125,6 +1134,15 @@
             },
             "required": true,
             "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID of the education to update"
           },
           {
             "in": "body",
@@ -1885,7 +1903,7 @@
         "specialization": {
           "type": "string"
         },
-        "university:": {
+        "university": {
           "type": "string"
         },
         "degree": {
@@ -1910,7 +1928,7 @@
         "specialization": {
           "type": "string"
         },
-        "university:": {
+        "university": {
           "type": "string"
         },
         "degree": {
