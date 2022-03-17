@@ -3,7 +3,7 @@ import { Route, Routes } from 'components/common/common';
 import { IRoute } from './common/interfaces';
 import Sidebar from '../sidebar/sidebar';
 import Header from '../header/header';
-import './app.scss';
+import './styles.scss';
 import { RoleType } from 'growup-shared';
 
 interface Props {

@@ -1,4 +1,4 @@
-export interface IUser {
+interface IUser {
   id: number;
   email: string;
   password: number;
@@ -9,7 +9,7 @@ export interface IUser {
   domenLevelId: number;
 }
 
-export interface IOkr {
+interface IOkr {
   id: number;
   name: string;
   startDate: string;
@@ -32,3 +32,5 @@ interface IKeyResult {
   name: string;
   objectiveId: number;
 }
+
+export type { IUser, IOkr };

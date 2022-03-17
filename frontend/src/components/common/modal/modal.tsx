@@ -2,7 +2,7 @@ import { Modal as ModalWindow } from 'react-bootstrap';
 import { Button } from '../common';
 import './styles.scss';
 
-type PropTypes = {
+type Props = {
   show: boolean;
   onClose: () => void;
   title: string;
@@ -12,7 +12,7 @@ type PropTypes = {
   footer?: boolean;
 };
 
-const Modal: React.FC<PropTypes> = ({
+const Modal: React.FC<Props> = ({
   show,
   onClose,
   title,
@@ -29,7 +29,7 @@ const Modal: React.FC<PropTypes> = ({
       </ModalWindow.Header>
       <ModalWindow.Body className={className}>{children}</ModalWindow.Body>
       {footer && (
-        <ModalWindow.Footer className="fw-bold fs-3">
+        <ModalWindow.Footer className="w-100 bg-gu-white justify-content-start fw-bold fs-3">
           <Button
             themeType={'btn-gu-pink text-gu-white'}
             text={buttonText || 'Save'}

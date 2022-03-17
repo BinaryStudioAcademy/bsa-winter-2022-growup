@@ -1,16 +1,19 @@
-import { MentorMenteeRoute, UserPayloadKey } from 'common/enums/enums';
-import FormInput from 'components/common/form-input/form-input';
+import { AppRoute, MentorMenteeRoute } from 'common/enums/enums';
 import {
   useAppDispatch,
   useAppForm,
   useAppSelector,
   useCallback,
   useNavigate,
+  useState,
 } from 'hooks/hooks';
-import { Container, FloatingLabel, Form } from 'react-bootstrap';
-import { Google } from 'react-bootstrap-icons';
+import { TextField } from 'components/common/common';
+import { Container, Form } from 'react-bootstrap';
 import { NotificationManager } from 'react-notifications';
+import { Eye, EyeSlash } from 'react-bootstrap-icons';
 import { loginUser } from 'store/auth/actions';
+import { Link } from '../common/common';
+import { IUserLoginForm } from '../../common/interfaces/user';
 import { login as loginValidationSchema } from 'validation-schemas/validation-schemas';
 import { DEFAULT_LOGIN_PAYLOAD } from './common/constants';
 import './styles.scss';
@@ -20,7 +23,9 @@ const Login: React.FC = () => {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector((state) => state.auth.isLoading);
 
-  const { control, errors, handleSubmit } = useAppForm({
+  const [isHiddenPassword, setIsHiddenPassword] = useState(true);
+
+  const { control, errors, handleSubmit } = useAppForm<IUserLoginForm>({
     defaultValues: DEFAULT_LOGIN_PAYLOAD,
     validationSchema: loginValidationSchema,
   });
@@ -30,7 +35,7 @@ const Login: React.FC = () => {
     [dispatch],
   );
 
-  const onLogin = (values: object): void => {
+  const onLogin = (values: IUserLoginForm): void => {
     handleLogin(values)
       .unwrap()
       .then(() => {
@@ -45,35 +50,31 @@ const Login: React.FC = () => {
     <Container>
       <Form className="auth-form w-100" onSubmit={handleSubmit(onLogin)}>
         <p className="fs-1 text-center mb-4">Sign in</p>
-
         <fieldset disabled={isLoading}>
-          <FloatingLabel
-            controlId="authEmail"
-            label="Email address"
-            className="mb-3"
-          >
-            <FormInput
-              name={UserPayloadKey.EMAIL}
-              control={control}
-              errors={errors}
-              type="email"
-              placeholder="Email address"
-            />
-          </FloatingLabel>
-
-          <FloatingLabel
-            controlId="authPassword"
-            label="Password"
-            className="mb-3"
-          >
-            <FormInput
-              name={UserPayloadKey.PASSWORD}
-              control={control}
-              errors={errors}
-              type="password"
-              placeholder="Password"
-            />
-          </FloatingLabel>
+          <TextField
+            label={'Email address'}
+            name={'email'}
+            control={control}
+            errors={errors}
+            type="email"
+          />
+          <TextField
+            label={'Password'}
+            name={'password'}
+            control={control}
+            errors={errors}
+            type={isHiddenPassword ? 'password' : 'text'}
+            floatingLabelStyles={'d-flex flex-wrap'}
+            children={
+              <button
+                type="button"
+                className="auth-form__icon input-group-text position-absolute"
+                onClick={(): void => setIsHiddenPassword(!isHiddenPassword)}
+              >
+                {isHiddenPassword ? <EyeSlash /> : <Eye />}
+              </button>
+            }
+          />
 
           <Form.Group
             className="auth-form__checkbox-container mb-4"
@@ -91,10 +92,14 @@ const Login: React.FC = () => {
             <button className="btn btn-gu-pink text-gu-white" type="submit">
               Sign in
             </button>
-            <Form.Text className="mb-1 text-center">or</Form.Text>
-            <button className="btn btn-gu-blue" type="submit">
-              <Google className="mx-2" /> Sign in with Google
-            </button>
+            <Form.Text className="mt-2 text-center fs-5">
+              Don't have a GrowUp account?
+              <Link to={AppRoute.SIGN_UP}>
+                <b className="text-decoration-underline text-gu-blue mx-2">
+                  Sign up
+                </b>
+              </Link>
+            </Form.Text>
           </div>
         </fieldset>
       </Form>

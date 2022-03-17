@@ -12,6 +12,10 @@
 
 .stepper__step {
   text-align: center;
+
+  &--cursor-active {
+    cursor: pointer;
+  }
 }
 
 .stepper__info {

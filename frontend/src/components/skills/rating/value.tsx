@@ -1,12 +1,12 @@
-import { defaultSkillLvlCount } from '../constants';
+import { defaultSkillLvlCount } from '../common/constants';
 import ProgressActive from './progress-active';
 import ProgressPassive from './progress-passive';
 
-interface ValueTypes {
-  value: string;
+interface Props {
+  value: string | number;
 }
 
-function arraylength(count: number, rating: string): number {
+function arraylength(count: number, rating: string | number): number {
   if (count === 0) {
     return rating ? Number(rating) : 0;
   } else {
@@ -14,7 +14,7 @@ function arraylength(count: number, rating: string): number {
   }
 }
 
-const RatingValue = (props: ValueTypes): React.ReactElement => {
+const RatingValue = (props: Props): React.ReactElement => {
   return (
     <div className="container-progress-bar">
       <div className="b-progress-bar position-relative text-center overflow-hidden">

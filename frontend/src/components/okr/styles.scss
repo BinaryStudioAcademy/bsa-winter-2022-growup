@@ -1,7 +1,9 @@
+@import '~assets/scss/utils';
+
 .okr-container {
   width: 285px;
   height: 175px;
-  border: 2px solid #ff9900;
+  border: 2px solid $gu-pink;
   border-radius: 10px;
   display: grid;
   grid-template-columns: 1fr 1fr 30px;
@@ -30,5 +32,4 @@
 
 .timestamp {
   grid-area: time;
-  color: silver;
 }

@@ -10,6 +10,7 @@ import { workStyleQuizActions } from 'store/actions';
 import { IQuestion, IAnswer } from 'common/interfaces/user-quiz';
 import TestItem from './work-quiz-item/work-quiz-item';
 import './styles.scss';
+import * as profileActions from '../../store/profile/actions';
 
 const StyleTest: React.FC = () => {
   const { questions, isLoading, result } = useAppSelector(
@@ -17,7 +18,7 @@ const StyleTest: React.FC = () => {
   );
 
   const [answersCount, setAnswersCount] = useState(0);
-  const [isPassedTest, setIsPassedTest] = useState(false);
+  const user = useAppSelector((store) => store.profile.user);
 
   const dispatch = useAppDispatch();
 
@@ -65,11 +66,9 @@ const StyleTest: React.FC = () => {
     if (questions) {
       dispatch(workStyleQuizActions.sendWorkStyleQuizResults(questions));
     }
-
-    setIsPassedTest(true);
+    dispatch(profileActions.completeTest());
   };
-
-  if (isPassedTest && result) {
+  if (user?.isCompleteTest && result) {
     const sortedByScore = [...result];
     sortedByScore.sort((res1, res2) => res2.score - res1.score);
     const maxCategories = sortedByScore.filter(

@@ -48,7 +48,7 @@ type DomainLevelResponse = DomainLevel & {
   skills: Skill[];
 };
 
-type CareeerPathResponse = {
+type CareerPathResponse = {
   domain: Domain;
   levels: DomainLevelResponse[];
 };
@@ -76,7 +76,7 @@ const getLevelsAndSkills = async (domain: Domain): Promise<DomainLevel[]> => {
 export const createDomainTree = async (
   data: CareerPath,
   company: Company,
-): Promise<CareeerPathResponse> => {
+): Promise<CareerPathResponse> => {
   const domain = await createDomain(data.name, company);
 
   const domainLevels = data.levels;
@@ -131,13 +131,13 @@ export const createDomainTree = async (
   return {
     domain,
     levels: levels,
-  } as unknown as CareeerPathResponse;
+  } as unknown as CareerPathResponse;
 };
 
 export const getDomainTrees = async (
   company: Company,
-): Promise<CareeerPathResponse[]> => {
-  const careeerPathResponse: CareeerPathResponse[] = [];
+): Promise<CareerPathResponse[]> => {
+  const careeerPathResponse: CareerPathResponse[] = [];
   const domains = await getDomains(company);
 
   await asyncForEach(async (domain) => {
@@ -145,7 +145,7 @@ export const getDomainTrees = async (
     careeerPathResponse.push({
       domain,
       levels,
-    } as unknown as CareeerPathResponse);
+    } as unknown as CareerPathResponse);
   }, domains);
 
   return careeerPathResponse;

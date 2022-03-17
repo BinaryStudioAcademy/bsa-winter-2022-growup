@@ -1,4 +1,4 @@
-import { StepProps } from './common/step-props';
+import { IProfileSettingStep } from './common/interfaces';
 import { TextField } from 'components/common/common';
 import Experience from './experience';
 import Education from './education';
@@ -7,19 +7,19 @@ import StepControl from './step-control';
 import { profileFirstStep as profileFirstStepValidationSchema } from 'validation-schemas/validation-schemas';
 import { useAppForm } from 'hooks/hooks';
 import { DEFAULT_FIRST_STEP_PAYLOAD } from './common/constants';
-import { FirstStepPayloadKey, UserPayloadKey } from 'common/enums/enums';
+import { FirstStepFormType } from './common/types';
 
-const FirstStep: React.FC<StepProps> = ({
+const FirstStep: React.FC<IProfileSettingStep> = ({
   isDisablePrevious,
-  onPrevious,
   onNext,
 }) => {
-  const { control, errors, isValid, handleSubmit } = useAppForm({
-    defaultValues: DEFAULT_FIRST_STEP_PAYLOAD,
-    validationSchema: profileFirstStepValidationSchema,
-  });
+  const { control, errors, isValid, handleSubmit } =
+    useAppForm<FirstStepFormType>({
+      defaultValues: DEFAULT_FIRST_STEP_PAYLOAD,
+      validationSchema: profileFirstStepValidationSchema,
+    });
 
-  const onSaveSettings = (values: object): void => {
+  const onSaveSettings = (values: FirstStepFormType): void => {
     // eslint-disable-next-line no-console
     console.log('save settings:', values);
   };
@@ -30,18 +30,18 @@ const FirstStep: React.FC<StepProps> = ({
     <div className="stepper__form">
       <TextField
         label="First name"
-        name={UserPayloadKey.FIRST_NAME}
+        name={'firstName'}
         control={control}
         errors={errors}
       />
       <TextField
-        name={UserPayloadKey.LAST_NAME}
+        name={'lastName'}
         label="Last name"
         control={control}
         errors={errors}
       />
       <TextField
-        name={FirstStepPayloadKey.POSITION}
+        name={'position'}
         label="Position"
         control={control}
         errors={errors}
@@ -52,7 +52,6 @@ const FirstStep: React.FC<StepProps> = ({
       <StepControl
         isValid={isValid}
         isDisablePrevious={isDisablePrevious}
-        onPrevious={onPrevious}
         onNext={onNext}
         onSubmit={onSubmit}
       />

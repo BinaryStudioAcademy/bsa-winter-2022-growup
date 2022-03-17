@@ -1,25 +1,31 @@
-import { MentorMenteeRoute, UserPayloadKey } from 'common/enums/enums';
-import FormInput from 'components/common/form-input/form-input';
+import { AppRoute, MentorMenteeRoute } from 'common/enums/enums';
 import {
   useAppDispatch,
   useAppForm,
   useAppSelector,
   useCallback,
   useNavigate,
+  useState,
 } from 'hooks/hooks';
-import { Container, FloatingLabel, Form } from 'react-bootstrap';
+import { TextField } from 'components/common/common';
+import { Container, Form } from 'react-bootstrap';
 import { NotificationManager } from 'react-notifications';
+import { Eye, EyeSlash } from 'react-bootstrap-icons';
 import { signUpUser } from 'store/auth/actions';
+import { Link } from '../common/common';
+import { IUserSignUpForm } from 'common/interfaces/user';
 import { signUp as signUpValidationSchema } from 'validation-schemas/validation-schemas';
-import '../login/styles.scss';
 import { DEFAULT_SIGN_UP_PAYLOAD } from './common/constants';
+import '../login/styles.scss';
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector((state) => state.auth.isLoading);
 
-  const { control, errors, handleSubmit } = useAppForm({
+  const [isHiddenPassword, setIsHiddenPassword] = useState(true);
+
+  const { control, errors, handleSubmit } = useAppForm<IUserSignUpForm>({
     defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
     validationSchema: signUpValidationSchema,
   });
@@ -29,7 +35,7 @@ const SignUp: React.FC = () => {
     [dispatch],
   );
 
-  const onSignUp = (values: object): void => {
+  const onSignUp = (values: IUserSignUpForm): void => {
     handleSignUp(values)
       .unwrap()
       .then(() => {
@@ -45,68 +51,56 @@ const SignUp: React.FC = () => {
       <Form className="auth-form w-100" onSubmit={handleSubmit(onSignUp)}>
         <p className="fs-1 text-center mb-4">Sign up</p>
         <fieldset disabled={isLoading}>
-          <FloatingLabel
-            controlId="signUpEmail"
-            label="Email address"
-            className="mb-3"
-          >
-            <FormInput
-              name={UserPayloadKey.EMAIL}
-              control={control}
-              errors={errors}
-              type="email"
-              placeholder="Email address"
-            />
-          </FloatingLabel>
+          <TextField
+            label={'Email address'}
+            name={'email'}
+            control={control}
+            errors={errors}
+            type="email"
+          />
+          <TextField
+            label={'First name'}
+            name={'firstName'}
+            control={control}
+            errors={errors}
+          />
+          <TextField
+            label={'Last name'}
+            name={'lastName'}
+            control={control}
+            errors={errors}
+          />
+          <TextField
+            label={'Password'}
+            name={'password'}
+            control={control}
+            errors={errors}
+            type={isHiddenPassword ? 'password' : 'text'}
+            floatingLabelStyles={'d-flex flex-wrap'}
+            children={
+              <button
+                type="button"
+                className="auth-form__icon input-group-text position-absolute"
+                onClick={(): void => setIsHiddenPassword(!isHiddenPassword)}
+              >
+                {isHiddenPassword ? <EyeSlash /> : <Eye />}
+              </button>
+            }
+          />
 
-          <FloatingLabel
-            controlId="signUpFirstName"
-            label="First name"
-            className="mb-3"
-          >
-            <FormInput
-              name={UserPayloadKey.FIRST_NAME}
-              control={control}
-              errors={errors}
-              type="text"
-              placeholder="First name"
-            />
-          </FloatingLabel>
-
-          <FloatingLabel
-            controlId="signUpLastName"
-            label="Last name"
-            className="mb-3"
-          >
-            <FormInput
-              name={UserPayloadKey.LAST_NAME}
-              control={control}
-              errors={errors}
-              type="text"
-              placeholder="Last name"
-            />
-          </FloatingLabel>
-
-          <FloatingLabel
-            controlId="signUpPassword"
-            label="Password"
-            className="mb-3"
-          >
-            <FormInput
-              name={UserPayloadKey.PASSWORD}
-              control={control}
-              errors={errors}
-              type="password"
-              placeholder="Password"
-            />
-          </FloatingLabel>
-
-          <button
-            className="btn btn-gu-pink text-gu-white form-control"
-            type="submit"
-          >
-            Sign up
-          </button>
+          <div className="d-grid gap-2">
+            <button className="btn btn-gu-pink text-gu-white" type="submit">
+              Sign up
+            </button>
+            <Form.Text className="mt-2 text-center fs-5">
+              Already have an account?
+              <Link to={AppRoute.LOGIN}>
+                <b className="text-decoration-underline text-gu-blue mx-2">
+                  Login here
+                </b>
+              </Link>
+            </Form.Text>
+          </div>
         </fieldset>
       </Form>
     </Container>

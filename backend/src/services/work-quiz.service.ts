@@ -10,6 +10,7 @@ import UserRepository from '~/data/repositories/user.repository';
 
 import { asyncForEach } from '~/common/helpers/array.helper';
 import { ITokenPayload } from '~/common/models/middlewares/token-payload';
+import { Company } from '~/data/entities/company';
 
 interface IAnswer {
   id: string;
@@ -29,12 +30,14 @@ interface ITestSummary {
   score: number;
 }
 
-interface WorkQuizProps {
+interface IWorkQuizProps {
   body: IQuestion[];
   tokenPayload: ITokenPayload;
 }
 
-export const getQuestions = async (): Promise<QuizQuestion[]> => {
+export const getQuestions = async (
+  companyId: Company['id'],
+): Promise<QuizQuestion[]> => {
   const quizQuestionRepository = await getCustomRepository(
     QuizQuestionRepository,
   );
@@ -42,8 +45,10 @@ export const getQuestions = async (): Promise<QuizQuestion[]> => {
   const questions = await quizQuestionRepository
     .createQueryBuilder('root')
     .innerJoinAndSelect('root.answers', 'quizAnswers')
-    .where('category.name = :name', { name: 'driver' })
     .innerJoin('root.category', 'category')
+    .innerJoin('category.quiz', 'workQuiz')
+    .where('category.name = :name', { name: 'driver' })
+    .andWhere('workQuiz.companyId = :id', { id: companyId })
     .getMany();
 
   return questions;
@@ -52,8 +57,8 @@ export const getQuestions = async (): Promise<QuizQuestion[]> => {
 export const sendResults = async ({
   body,
   tokenPayload,
-}: WorkQuizProps): Promise<User_QuizCategory[]> => {
-  const { userId } = tokenPayload;
+}: IWorkQuizProps): Promise<User_QuizCategory[]> => {
+  const { userId, companyId } = tokenPayload;
   const questions = body;
 
   const userQuizCategoryRepository = await getCustomRepository(
@@ -66,7 +71,11 @@ export const sendResults = async ({
     QuizQuestionRepository,
   );
 
-  const categories = await quizCategoryRepository.find();
+  const categories = await quizCategoryRepository
+    .createQueryBuilder('root')
+    .innerJoin('root.quiz', 'workQuiz')
+    .where('workQuiz.companyId = :id', { id: companyId })
+    .getMany();
 
   const summary: ITestSummary[] = [];
 

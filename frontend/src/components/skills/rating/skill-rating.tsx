@@ -4,36 +4,36 @@ import starDisable from 'assets/img/icons/skill-icons/starDisable.png';
 import { useState } from 'react';
 import RatingValue from './value';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
-import { actions } from 'store/skill/slice';
 import { RootState } from 'common/types/types';
 import { validRating } from '../validations/rating';
 import { ReactComponent as Delete } from '../../../assets/img/icons/skill-icons/delete-icon.svg';
 import { ReactComponent as Save } from '../../../assets/img/icons/skill-icons/save-icon.svg';
 import { ReactComponent as Edit } from '../../../assets/img/icons/skill-icons/edit-icon.svg';
+import { skillActions } from 'store/skill';
 
-interface SkillTypes {
+interface Props {
   id: string;
   name: string;
-  rating: Array<string>;
+  rating: Array<string | number>;
+  isStarred: boolean | undefined;
 }
 
 const column = [0, 1, 2];
 
-const SkillElement = (props: SkillTypes): React.ReactElement => {
+const SkillElement = (props: Props): React.ReactElement => {
   const [isHover, setIsHover] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [ratingValues, setRatingValues] = useState([
-    props.rating[0],
-    props.rating[1],
-    props.rating[2],
+    props.rating[0].toString(),
+    props.rating[1].toString(),
+    props.rating[2].toString(),
   ]);
   const [nameSkill, setNameSkill] = useState(props.name);
-  const [isStar, setIsStar] = useState(false);
+  const [isStar, setIsStar] = useState(props.isStarred);
   const user = useAppSelector((state: RootState) => state.auth.user);
   const dispatch = useAppDispatch();
-
   function deleteSkill(id: string): void {
-    dispatch(actions.REMOVE_SKILL(id));
+    dispatch(skillActions.deleteSkill(id));
   }
   function editSkill(text: string, el: number): void {
     if (validRating(text)) {
@@ -45,12 +45,19 @@ const SkillElement = (props: SkillTypes): React.ReactElement => {
   function saveEdits(id: string): void {
     if (isEdit && user) {
       dispatch(
-        actions.EDIT_SKILL({
-          id: id,
-          name: nameSkill,
-          userId: user.id,
-          rating: ratingValues,
-        }),
+        skillActions.updateSkill([
+          {
+            id,
+            name: nameSkill,
+            type: 'Soft skills',
+          },
+          {
+            id,
+            name: nameSkill,
+            rating: ratingValues,
+            isStarred: isStar,
+          },
+        ]),
       );
     }
     setIsEdit(!isEdit);
@@ -74,7 +81,9 @@ const SkillElement = (props: SkillTypes): React.ReactElement => {
         )}{' '}
         <button
           className="border-0 bg-gu-white sort-button"
-          onClick={(): void => setIsStar(!isStar)}
+          onClick={(): void =>
+            isEdit ? setIsStar(!isStar) : console.warn('Warning')
+          }
         >
           {isStar ? (
             <img alt="star" src={star} />

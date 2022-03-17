@@ -20,14 +20,17 @@ const ProfileSettings: React.FC = () => {
       navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/${activeStep + 1}`);
     }
   };
-
-  const onPrevious = (): void => {
-    navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/${activeStep - 1}`);
+  const changeStep = (num: number): void => {
+    navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/${num + 1}`);
   };
 
   return (
     <div className="stepper position-relative">
-      <Stepper steps={steps} activeStep={activeStep - 1} />
+      <Stepper
+        steps={steps}
+        activeStep={activeStep - 1}
+        changeStepClicker={changeStep}
+      />
       <div className="stepper__actions d-flex justify-content-center w-100">
         <Routes>
           <Route
@@ -36,21 +39,15 @@ const ProfileSettings: React.FC = () => {
           >
             <Route
               path={ProfileSettingsRoute.PROFILE_SETTINGS_STEP_ONE}
-              element={
-                <FirstStep
-                  onNext={onNext}
-                  onPrevious={onPrevious}
-                  isDisablePrevious={true}
-                />
-              }
+              element={<FirstStep onNext={onNext} isDisablePrevious={true} />}
             />
             <Route
               path={ProfileSettingsRoute.PROFILE_SETTINGS_STEP_TWO}
-              element={<SecondStep onNext={onNext} onPrevious={onPrevious} />}
+              element={<SecondStep onNext={onNext} />}
             />
             <Route
               path={ProfileSettingsRoute.PROFILE_SETTINGS_STEP_THREE}
-              element={<ThirdStep onNext={onNext} onPrevious={onPrevious} />}
+              element={<ThirdStep onNext={onNext} />}
             />
             <Route
               path="*"

@@ -1,10 +1,11 @@
-import { getCustomRepository, Not } from 'typeorm';
+import { getCustomRepository } from 'typeorm';
 
 import { HttpCode, HttpError } from 'growup-shared';
 
 import UserRepository from '../data/repositories/user.repository';
 import UserRoleRepository from '~/data/repositories/role.repository';
 import CompanyRepository from '~/data/repositories/company.repository';
+import User_QuizCategoryRepository from '~/data/repositories/user-quiz-category.repository';
 import RefreshTokenRepository from '~/data/repositories/refresh-token.repository';
 
 import { refreshTokenSchema } from '~/common/models/tokens/refresh-token.model';
@@ -48,6 +49,7 @@ type UserRegistrationType = {
 
 type UserWithRole = Omit<User, 'password'> & {
   roleType: RoleType;
+  isCompleteTest: boolean;
 };
 
 const getUserJWT = async (user: User): Promise<TokenResponse> => {
@@ -139,13 +141,9 @@ export const authenticateUser = async (
 ): Promise<TokenResponse> => {
   const userRepository = getCustomRepository(UserRepository);
 
-  const user = await userRepository.findOne({
-    relations: ['company'],
-    where: {
-      email: data.email,
-    },
+  const user = await userRepository.getUserWithPassword({
+    email: data.email,
   });
-
   if (!user)
     throw new HttpError({
       status: HttpCode.NOT_FOUND,
@@ -167,26 +165,24 @@ export const authenticateUser = async (
 export const getCommonUserList = async (
   companyId: User['company']['id'],
 ): Promise<IListUser[]> => {
-  const roleRepository = getCustomRepository(UserRoleRepository);
+  const userRepository = getCustomRepository(UserRepository);
 
-  const roleList = await roleRepository.find({
-    relations: ['user', 'user.company'],
-    where: {
-      role: Not(RoleType.ADMIN),
-      user: {
-        company: {
-          id: companyId,
-        },
-      },
-    },
+  const usersList = await userRepository.getUsersByCompamyId(companyId);
+
+  const list = usersList.map((user) => {
+    const roles = user.role.reduce((roles, role) => {
+      roles.push(role.role);
+      return roles;
+    }, []);
+
+    delete user.role;
+
+    return {
+      ...user,
+      roleType: roles,
+    };
   });
-
-  const userList = roleList.map((role) => ({
-    ...role.user,
-    roleType: role.role,
-  }));
-
-  return userList as unknown as IListUser[];
+  return list as unknown as IListUser[];
 };
 
 export const registerUserAdmin = async (
@@ -213,14 +209,43 @@ export const registerCommonUsers = async (
 export const fetchUser = async (id: User['id']): Promise<UserWithRole> => {
   const userRepository = getCustomRepository(UserRepository);
   const roleRepository = getCustomRepository(UserRoleRepository);
+  const userQuizRepository = getCustomRepository(User_QuizCategoryRepository);
 
-  const { password: _password, ...user } = await userRepository.findOne(id);
+  const { password: _password, ...user } = await userRepository.geUserById(id);
   const { role } = await roleRepository.findOne({ user });
-
+  const userQuizCategoryInstance = await userQuizRepository.findOne({
+    where: {
+      userId: id,
+    },
+  });
+  const isCompleteTest = !!userQuizCategoryInstance;
   return {
     ...user,
     roleType: role,
+    isCompleteTest: isCompleteTest,
   } as UserWithRole;
+};
+
+interface NameAndPosition {
+  firstName: string;
+  lastName: string;
+  position: string;
+}
+
+export const insertFirstNameLastName = async (
+  id: User['id'],
+  { firstName, lastName, position }: NameAndPosition,
+): Promise<User> => {
+  const userRepository = getCustomRepository(UserRepository);
+  const userInstance = await userRepository.findOne({
+    where: {
+      id: id,
+    },
+  });
+  userInstance.firstName = firstName;
+  userInstance.lastName = lastName;
+  userInstance.position = position;
+  return userInstance.save();
 };
 
 export const updateUserAvatar = async (

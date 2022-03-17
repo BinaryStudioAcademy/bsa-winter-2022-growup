@@ -1,10 +1,11 @@
-import { StepProps } from './common/step-props';
+import { IProfileSettingStep } from './common/interfaces';
 import StepControl from './step-control';
 
-const ThirdStep: React.FC<StepProps> = ({
+interface Props extends IProfileSettingStep {}
+
+const ThirdStep: React.FC<Props> = ({
   children,
   isDisablePrevious,
-  onPrevious,
   onNext,
 }) => {
   const onSubmit = (): void => {
@@ -18,7 +19,6 @@ const ThirdStep: React.FC<StepProps> = ({
       <StepControl
         isValid={true}
         isDisablePrevious={isDisablePrevious}
-        onPrevious={onPrevious}
         onNext={onNext}
         onSubmit={onSubmit}
       />
