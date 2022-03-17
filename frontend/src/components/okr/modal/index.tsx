@@ -22,7 +22,7 @@ const OkrModal: FC<Props> = ({ okr, showModal, closeModal }) => {
 
   let defaultOkr = {
     name: '',
-    type: OkrTypes.MY_OKR,
+    type: OkrTypes.TEAM_OKR,
     startDate: '',
     endDate: '',
   } as IOkr;
