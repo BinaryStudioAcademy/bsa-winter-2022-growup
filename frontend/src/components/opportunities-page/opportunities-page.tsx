@@ -20,7 +20,7 @@ const OpprotunitiesPage: React.FC = () => {
   const user = useAppSelector((store) => store.profile.user);
   const navigate = useNavigate();
   useEffect(() => {
-    isFirstLogged(user, navigate);
+    isFirstLogged({ user, navigate });
   }, [user]);
 
   useEffect(() => {

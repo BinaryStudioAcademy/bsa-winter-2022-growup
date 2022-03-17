@@ -9,7 +9,7 @@ const MainPage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    isFirstLogged(user, navigate);
+    isFirstLogged({ user, navigate });
   }, [user]);
 
   return (

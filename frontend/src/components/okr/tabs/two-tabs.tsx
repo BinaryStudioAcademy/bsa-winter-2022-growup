@@ -14,7 +14,7 @@ function ControlledTabs(): React.ReactElement {
   const navigate = useNavigate();
 
   useEffect(() => {
-    isFirstLogged(user, navigate);
+    isFirstLogged({ user, navigate });
   }, [user]);
   return (
     <Tabs
