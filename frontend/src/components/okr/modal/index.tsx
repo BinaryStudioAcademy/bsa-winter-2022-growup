@@ -6,7 +6,7 @@ import { okrValidationSchema } from 'validation-schemas/okr/okr.validation-schem
 import { okrActions } from 'store/okr/actions';
 import { FormSelect } from 'components/common/common';
 import { IOkr, OkrTypes } from 'common/interfaces/okr';
-import { selectOptions } from './selectOptions';
+import { selectOptions } from './select-options';
 
 import './styles.scss';
 
