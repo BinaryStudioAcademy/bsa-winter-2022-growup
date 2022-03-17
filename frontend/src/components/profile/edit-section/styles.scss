@@ -63,6 +63,13 @@ button:focus {
       color: #fff;
       border: 2px solid #fff;
     }
+    &__edit:hover {
+      color: $gu-white !important;
+      background-color: #fff !important;
+      border-color: #fff !important;
+      transition: all 0.2s ease 0s;
+      color: #463da8 !important;
+    }
   }
 }
 
