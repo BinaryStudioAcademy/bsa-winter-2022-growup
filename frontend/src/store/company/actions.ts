@@ -14,7 +14,6 @@ const get_allCompanisesAsync = createAsyncThunk(
   ActionType.GET_ALL_COMPANIES,
   async (_, { dispatch }) => {
     const result = await companyApi.getAllCompamies();
-
     if (result) {
       const { token, companies } = result;
 

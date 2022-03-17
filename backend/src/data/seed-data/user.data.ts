@@ -7,6 +7,7 @@ export const users = [
     email: 'test@test.com',
     password: 'test',
     role: RoleType.ADMIN,
+    position: 'Junior',
   },
   {
     firstName: 'Rick',
@@ -14,6 +15,7 @@ export const users = [
     email: 'mentor@mentor.com',
     password: 'test',
     role: RoleType.MENTOR,
+    position: 'Junior',
   },
   {
     firstName: 'Morty',
@@ -21,5 +23,6 @@ export const users = [
     email: 'mentee@mentee.com',
     password: 'test',
     role: RoleType.MENTEE,
+    position: 'Junior',
   },
 ];

@@ -13,9 +13,9 @@ async function Connection(): Promise<void> {
   await createConnection(ormconfig);
   await CompanySeeder.execute();
   await UserSeeder.execute();
+  await SkillSeeder.execute();
   await OpportunitySeeder.execute();
   await TagsSeeder.execute();
   await OpportunityTagSeeder.execute();
-  await SkillSeeder.execute();
 }
 Connection();

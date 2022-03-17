@@ -4,7 +4,6 @@ import ControlledTabs from './tabs/two-tabs';
 
 const Okr: React.FC = () => {
   const dispatch = useAppDispatch();
-
   useEffect(() => {
     dispatch(okrActions.getAllOkrsByUser_async());
   }, [dispatch]);
