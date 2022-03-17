@@ -13,7 +13,7 @@ import ControlledTabs from 'components/okr/tabs/two-tabs';
 import SkillOverview from 'components/skills/skill-overview';
 import OpprotunitiesPage from 'components/opportunities-page/opportunitiesPage';
 import { IRoute } from '../common/interfaces';
-import CareerPath from 'components/career-path/career-path';
+
 export const mentorMenteeRoutes: IRoute[] = [
   {
     path: MentorMenteeRoute.OKR,
@@ -37,7 +37,7 @@ export const mentorMenteeRoutes: IRoute[] = [
   },
   {
     path: MentorMenteeRoute.CAREER_PATH,
-    element: <CareerPath />,
+    element: <div>Mentee Profiles</div>,
   },
   {
     path: MentorMenteeRoute.OPPORTUNITIES,

@@ -81,6 +81,18 @@ const updateLevel = createAsyncThunk(
   },
 );
 
+const deleteLevel = createAsyncThunk(
+  ActionType.DELETE_LEVEL,
+  async (level: ILevelSetting & { id: string }, { rejectWithValue }) => {
+    try {
+      const result = await careerPath.deleteLevel(level.id);
+      return result;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
 const createSkill = createAsyncThunk(
   ActionType.ADD_SKILL,
   async (skill: ISkillSetting, { rejectWithValue }) => {
@@ -98,6 +110,18 @@ const updateSkill = createAsyncThunk(
   async (skill: ISkillSetting & { id: string }, { rejectWithValue }) => {
     try {
       const result = await careerPath.updateSkill(skill);
+      return result;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
+const deleteSkill = createAsyncThunk(
+  ActionType.DELETE_SKILL,
+  async (skill: ISkillSetting & { id: string }, { rejectWithValue }) => {
+    try {
+      const result = await careerPath.deleteSkill(skill.id);
       return result;
     } catch (err) {
       return rejectWithValue(err);
@@ -132,15 +156,33 @@ const updateObjective = createAsyncThunk(
   },
 );
 
+const deleteObjective = createAsyncThunk(
+  ActionType.DELETE_OBJECTIVE,
+  async (
+    objective: IObjectiveSetting & { id: string },
+    { rejectWithValue },
+  ) => {
+    try {
+      const result = await careerPath.deleteObjective(objective.id);
+      return result;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
 export {
   fetchDomains,
   createDomain,
   updateDomain,
+  deleteDomain,
   createLevel,
   updateLevel,
+  deleteLevel,
   createSkill,
   updateSkill,
+  deleteSkill,
   createObjective,
   updateObjective,
-  deleteDomain,
+  deleteObjective,
 };

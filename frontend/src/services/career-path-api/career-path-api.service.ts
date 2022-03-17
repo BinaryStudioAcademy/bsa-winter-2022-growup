@@ -72,7 +72,9 @@ class CareerPath {
     }
   }
 
-  async deleteDomain(id: string): Promise<IDomain | null> {
+  async deleteDomain(
+    id: string,
+  ): Promise<(IDomainSetting & { id: string }) | null> {
     try {
       const result = await this.http.load(
         `${this.apiPath}/career-path/domain/${id}`,
@@ -83,7 +85,7 @@ class CareerPath {
         },
       );
 
-      return result as IDomain;
+      return result as IDomainSetting & { id: string };
     } catch {
       return null;
     }
@@ -118,6 +120,23 @@ class CareerPath {
           payload: JSON.stringify({ name: level.name }),
         },
       );
+      return result as ILevel;
+    } catch {
+      return null;
+    }
+  }
+
+  async deleteLevel(id: string): Promise<ILevel | null> {
+    try {
+      const result = await this.http.load(
+        `${this.apiPath}/career-path/level/${id}`,
+        {
+          contentType: ContentType.JSON,
+          method: HttpMethod.DELETE,
+          payload: null,
+        },
+      );
+
       return result as ILevel;
     } catch {
       return null;
@@ -163,6 +182,23 @@ class CareerPath {
     }
   }
 
+  async deleteSkill(id: string): Promise<ISkill | null> {
+    try {
+      const result = await this.http.load(
+        `${this.apiPath}/career-path/skill/${id}`,
+        {
+          contentType: ContentType.JSON,
+          method: HttpMethod.DELETE,
+          payload: null,
+        },
+      );
+
+      return result as ISkill;
+    } catch {
+      return null;
+    }
+  }
+
   async createObjective(
     objective: IObjectiveSetting,
   ): Promise<IObjective | null> {
@@ -200,6 +236,23 @@ class CareerPath {
       );
       const objectiveResult = { ...result, domainId, levelId, skillId };
       return objectiveResult as IObjectiveSetting & { id: string };
+    } catch {
+      return null;
+    }
+  }
+
+  async deleteObjective(id: string): Promise<IObjective | null> {
+    try {
+      const result = await this.http.load(
+        `${this.apiPath}/career-path/objective/${id}`,
+        {
+          contentType: ContentType.JSON,
+          method: HttpMethod.DELETE,
+          payload: null,
+        },
+      );
+
+      return result as IObjective;
     } catch {
       return null;
     }

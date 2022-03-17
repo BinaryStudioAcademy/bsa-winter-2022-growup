@@ -1,6 +1,5 @@
 import './styles.scss';
-import Node from './path-node/path-node';
-// import { Plus as AddIcon } from 'react-bootstrap-icons';
+import Node from '../path-node/path-node';
 import {
   useAppDispatch,
   useAppSelector,
@@ -8,9 +7,9 @@ import {
   useState,
 } from 'hooks/hooks';
 import { careerPathActions } from 'store/career-path';
-import { CareerPathPlaceholders as Placeholder } from './common/enums';
+import { CareerPathPlaceholders as Placeholder } from '../common/enums';
 
-const CareerPath: React.FC = () => {
+const PathFlow: React.FC = () => {
   const domains = useAppSelector((state) => state.careerPath.domains) || [];
 
   const dispatch = useAppDispatch();
@@ -47,9 +46,23 @@ const CareerPath: React.FC = () => {
     dispatch(careerPathActions.updateDomain({ id: domainItemId, name }));
   };
 
+  const deleteDomain = (domainId: string): void => {
+    dispatch(careerPathActions.deleteDomain(domainId));
+  };
+
   const addLevel = (domainId: string): void => {
     dispatch(
       careerPathActions.createLevel({ domainId, name: Placeholder.LEVEL }),
+    );
+  };
+
+  const deleteLevel = (levelId: string): void => {
+    dispatch(
+      careerPathActions.deleteLevel({
+        id: levelId,
+        domainId: domainItemId,
+        name: '',
+      }),
     );
   };
 
@@ -84,10 +97,21 @@ const CareerPath: React.FC = () => {
     );
   };
 
-  const addObjective = (): void => {
+  const deleteSkill = (skillId: string): void => {
+    dispatch(
+      careerPathActions.deleteSkill({
+        id: skillId,
+        levelId: levelItemId,
+        domainId: domainItemId,
+        name: '',
+      }),
+    );
+  };
+
+  const addObjective = (skillId: string): void => {
     dispatch(
       careerPathActions.createObjective({
-        skillId: skillItemId,
+        skillId,
         levelId: levelItemId,
         domainId: domainItemId,
         name: Placeholder.OBJECTIVE,
@@ -103,6 +127,18 @@ const CareerPath: React.FC = () => {
         levelId: levelItemId,
         domainId: domainItemId,
         name,
+      }),
+    );
+  };
+
+  const deleteObjective = (objectiveId: string): void => {
+    dispatch(
+      careerPathActions.deleteObjective({
+        id: objectiveId,
+        skillId: skillItemId,
+        levelId: levelItemId,
+        domainId: domainItemId,
+        name: '',
       }),
     );
   };
@@ -125,49 +161,53 @@ const CareerPath: React.FC = () => {
         />
       </div>
       <div className="tree-level">
-        {domains.map((domain, domainIndex) => (
+        {domains.map(({ domain }, domainIndex) => (
           <Node
             key={domainIndex}
-            name={domain.domain.name}
-            onClick={(): void => setDomainItemId(domain.domain.id)}
-            onAdd={(): void => addLevel(domain.domain.id)}
+            name={domain.name}
+            onClick={(): void => setDomainItemId(domain.id)}
+            onAdd={(): void => addLevel(domain.id)}
             onEdit={editDomain}
-            className={domain.domain.id === domainItemId ? 'bg-gu-purple' : ''}
+            onDelete={(): void => deleteDomain(domain.id)}
+            className={domain.id === domainItemId ? 'bg-gu-purple' : ''}
           />
         ))}
       </div>
       <div className="tree-level">
-        {levels.map((level, levelIndex) => (
+        {levels.map(({ id, name }, levelIndex) => (
           <Node
             key={levelIndex}
-            name={level.name}
-            onClick={(): void => setLevelItemId(level.id)}
-            onAdd={(): void => addSkill(level.id)}
+            name={name}
+            onClick={(): void => setLevelItemId(id)}
+            onAdd={(): void => addSkill(id)}
             onEdit={editLevel}
-            className={level.id === levelItemId ? 'bg-gu-purple' : ''}
+            onDelete={(): void => deleteLevel(id)}
+            className={id === levelItemId ? 'bg-gu-purple' : ''}
           />
         ))}
       </div>
       <div className="tree-level">
-        {skills.map((skill, skillIndex) => (
+        {skills.map(({ id, name }, skillIndex) => (
           <Node
             key={skillIndex}
-            name={skill.name}
-            onClick={(): void => setSkillItemId(skill.id)}
-            onAdd={addObjective}
+            name={name}
+            onClick={(): void => setSkillItemId(id)}
+            onAdd={(): void => addObjective(id)}
             onEdit={editSkill}
-            className={skill.id === skillItemId ? 'bg-gu-purple' : ''}
+            onDelete={(): void => deleteSkill(id)}
+            className={id === skillItemId ? 'bg-gu-purple' : ''}
           />
         ))}
       </div>
       <div className="tree-level">
-        {objectives.map((objective, objectiveIndex) => (
+        {objectives.map(({ id, name }, objectiveIndex) => (
           <Node
             key={objectiveIndex}
-            name={objective.name}
+            name={name}
             className="bg-gu-pink"
-            onClick={(): void => setObjectiveItemId(objective.id)}
+            onClick={(): void => setObjectiveItemId(id)}
             onEdit={editObjective}
+            onDelete={(): void => deleteObjective(id)}
             leaf
           />
         ))}
@@ -176,4 +216,4 @@ const CareerPath: React.FC = () => {
   );
 };
 
-export default CareerPath;
+export default PathFlow;

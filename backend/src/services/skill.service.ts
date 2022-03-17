@@ -50,3 +50,12 @@ export const updateSkillById = async (
 
   return updatedSkill;
 };
+
+export const deleteSkillById = async (id: Skill['id']): Promise<Skill> => {
+  const skillRepository = getCustomRepository(SkillRepository);
+  const skill = await skillRepository.findOne({ id });
+
+  await skillRepository.delete({ id });
+
+  return skill;
+};

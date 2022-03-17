@@ -87,3 +87,14 @@ export const updateLevelById = async (
 
   return updatedLevel;
 };
+
+export const deleteLevelById = async (
+  id: DomainLevel['id'],
+): Promise<DomainLevel> => {
+  const domainLevelRepository = getCustomRepository(DomainLevelRepository);
+
+  const level = await domainLevelRepository.findOne({ id });
+  await domainLevelRepository.delete({ id });
+
+  return level;
+};

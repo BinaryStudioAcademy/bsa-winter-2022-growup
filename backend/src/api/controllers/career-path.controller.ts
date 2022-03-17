@@ -13,22 +13,27 @@ import {
   getLevels,
   updateLevelById,
   getLevelById,
+  deleteLevelById,
 } from '~/services/domain-level.service';
 import {
   createSkill as createDomainSkill,
   upsertSkills,
   updateSkillById,
   getSkillById,
+  deleteSkillById,
 } from '~/services/skill.service';
 import {
   getObjectives,
   upsertObjectives,
   updateObjectiveById,
+  deleteObjectiveById,
 } from '~/services/skill-objective.service';
 import {
   createSkillCategories,
-  getCategories,
+  getCategoriesByLevel,
+  getCategoriesBySkill,
   getCategory,
+  deleteSkillCategoryById,
 } from '~/services/skill-category.service';
 
 import { asyncForEach } from '~/common/helpers/array.helper';
@@ -53,7 +58,7 @@ const getLevelsAndSkills = async (domain: Domain): Promise<DomainLevel[]> => {
   const currentLevels: DomainLevelResponse[] = levels as DomainLevelResponse[];
 
   await asyncForEach(async (currentLevel) => {
-    const categories = await getCategories(currentLevel);
+    const categories = await getCategoriesByLevel(currentLevel);
 
     const skillObjectives: SkillObjective[] = [];
     await asyncForEach(async (category) => {
@@ -156,7 +161,19 @@ export const updateDomain = async (
 };
 
 export const deleteDomain = async (id: string): Promise<Domain> => {
-  const domain = await deleteDomainById(id);
+  const domain = await getDomainById(id);
+  const levels = await getLevels(domain);
+
+  await asyncForEach(async (level) => {
+    const categories = await getCategoriesByLevel(level);
+
+    await asyncForEach(async (category) => {
+      await deleteSkillCategoryById(category.id);
+      await deleteSkillById(category.skill.id);
+    }, categories);
+  }, levels);
+
+  await deleteDomainById(id);
 
   return domain;
 };
@@ -179,6 +196,19 @@ export const updateLevel = async (
 
   return level;
 };
+export const deleteLevel = async (id: string): Promise<DomainLevel> => {
+  const level = await getLevelById(id);
+  const categories = await getCategoriesByLevel(level);
+
+  await asyncForEach(async (category) => {
+    await deleteSkillCategoryById(category.id);
+    await deleteSkillById(category.skill.id);
+  }, categories);
+
+  await deleteLevelById(id);
+
+  return level;
+};
 
 export const createSkill = async (
   company: Company,
@@ -187,6 +217,7 @@ export const createSkill = async (
 ): Promise<Skill> => {
   const skill = await createDomainSkill(company, data);
   const level = await getLevelById(levelId);
+
   await createSkillCategories([{ level, skill }]);
 
   return skill;
@@ -194,6 +225,20 @@ export const createSkill = async (
 
 export const updateSkill = async (id: string, data: Skill): Promise<Skill> => {
   const skill = await updateSkillById(id, data);
+
+  return skill;
+};
+
+export const deleteSkill = async (id: string): Promise<Skill> => {
+  const skill = await getSkillById(id);
+
+  const categories = await getCategoriesBySkill(skill);
+
+  await asyncForEach(async (category) => {
+    await deleteSkillCategoryById(category.id);
+  }, categories);
+
+  await deleteSkillById(id);
 
   return skill;
 };
@@ -206,9 +251,11 @@ export const createObjective = async (
   const level = await getLevelById(levelId);
   const skill = await getSkillById(skillId);
   const category = await getCategory(level, skill);
+
   const objectives = await upsertObjectives(category, [
     { name: data.name, category },
   ]);
+
   const objective = objectives[0];
 
   return objective;
@@ -221,4 +268,10 @@ export const updateObjective = async (
   const skill = await updateObjectiveById(id, data.name);
 
   return skill;
+};
+
+export const deleteObjective = async (id: string): Promise<SkillObjective> => {
+  const objective = await deleteObjectiveById(id);
+
+  return objective;
 };

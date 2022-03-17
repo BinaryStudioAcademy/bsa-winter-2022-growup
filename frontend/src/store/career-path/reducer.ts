@@ -34,6 +34,14 @@ const ProfileReducer = (builder: ActionReducerMapBuilder<State>): void => {
     }
   });
 
+  builder.addCase(actions.deleteDomain.fulfilled, (state, action) => {
+    if (action.payload && state.domains) {
+      state.domains = state.domains?.filter(
+        (domain) => domain.domain.id !== action.payload?.id,
+      );
+    }
+  });
+
   builder.addCase(actions.createLevel.fulfilled, (state, action) => {
     if (action.payload) {
       const domain = state.domains?.find(
@@ -56,6 +64,20 @@ const ProfileReducer = (builder: ActionReducerMapBuilder<State>): void => {
 
       if (level) {
         level.name = action.payload.name;
+      }
+    }
+  });
+
+  builder.addCase(actions.deleteLevel.fulfilled, (state, action) => {
+    if (action.payload) {
+      const domain = state.domains?.find(
+        (domain) => domain.domain.id === action.meta.arg.domainId,
+      );
+
+      if (domain?.levels) {
+        domain.levels = domain.levels?.filter(
+          (level) => level.id !== action.payload?.id,
+        );
       }
     }
   });
@@ -91,6 +113,23 @@ const ProfileReducer = (builder: ActionReducerMapBuilder<State>): void => {
 
       if (skill) {
         skill.name = action.payload.name;
+      }
+    }
+  });
+
+  builder.addCase(actions.deleteSkill.fulfilled, (state, action) => {
+    if (action.payload) {
+      const domain = state.domains?.find(
+        (domain) => domain.domain.id === action.meta.arg.domainId,
+      );
+      const level = domain?.levels.find(
+        (level) => level.id === action.meta.arg.levelId,
+      );
+
+      if (level?.skills) {
+        level.skills = level.skills?.filter(
+          (skill) => skill.id !== action.payload?.id,
+        );
       }
     }
   });
@@ -134,6 +173,26 @@ const ProfileReducer = (builder: ActionReducerMapBuilder<State>): void => {
 
       if (objective) {
         objective.name = action.payload.name;
+      }
+    }
+  });
+
+  builder.addCase(actions.deleteObjective.fulfilled, (state, action) => {
+    if (action.payload) {
+      const domain = state.domains?.find(
+        (domain) => domain.domain.id === action.meta.arg.domainId,
+      );
+      const level = domain?.levels.find(
+        (level) => level.id === action.meta.arg.levelId,
+      );
+      const skill = level?.skills.find(
+        (skill) => skill.id === action.meta.arg.skillId,
+      );
+
+      if (skill?.objectives) {
+        skill.objectives = skill.objectives?.filter(
+          (objective) => objective.id !== action.payload?.id,
+        );
       }
     }
   });

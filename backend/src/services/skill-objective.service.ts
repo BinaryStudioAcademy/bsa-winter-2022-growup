@@ -44,6 +44,19 @@ export const updateObjectiveById = async (
 
   await skillObjectiveRepository.update({ id }, { name });
 
-  const objectiveInstance = skillObjectiveRepository.findOne({ id });
-  return objectiveInstance;
+  const objective = skillObjectiveRepository.findOne({ id });
+  return objective;
+};
+
+export const deleteObjectiveById = async (
+  id: SkillObjective['id'],
+): Promise<SkillObjective> => {
+  const skillObjectiveRepository = getCustomRepository(
+    SkillObjectiveRepository,
+  );
+  const objective = await skillObjectiveRepository.findOne({ id });
+
+  await skillObjectiveRepository.delete({ id });
+
+  return objective;
 };

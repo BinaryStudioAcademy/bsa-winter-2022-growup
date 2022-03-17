@@ -13,6 +13,9 @@ import {
   updateSkill,
   createObjective,
   updateObjective,
+  deleteLevel,
+  deleteSkill,
+  deleteObjective,
 } from '../controllers/career-path.controller';
 
 const router = Router();
@@ -72,6 +75,15 @@ router.put(
   }),
 );
 
+router.delete(
+  '/level/:levelId',
+  run(async (req: Request) => {
+    const { levelId } = req.params;
+
+    return deleteLevel(levelId);
+  }),
+);
+
 router.post(
   '/domain/:domainId/level/:levelId/skill',
   run(async (req: Request) => {
@@ -93,6 +105,15 @@ router.put(
   }),
 );
 
+router.delete(
+  '/skill/:skillId',
+  run(async (req: Request) => {
+    const { skillId } = req.params;
+
+    return deleteSkill(skillId);
+  }),
+);
+
 router.post(
   '/domain/:domainId/level/:levelId/skill/:skillId/objective',
   run(async (req: Request) => {
@@ -108,6 +129,15 @@ router.put(
     const { objectiveId } = req.params;
 
     return updateObjective(objectiveId, req.body);
+  }),
+);
+
+router.delete(
+  '/objective/:objectiveId',
+  run(async (req: Request) => {
+    const { objectiveId } = req.params;
+
+    return deleteObjective(objectiveId);
   }),
 );
 

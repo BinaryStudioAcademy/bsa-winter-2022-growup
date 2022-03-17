@@ -15,6 +15,7 @@ interface Props {
   leaf?: boolean;
   onClick?: () => void;
   onAdd?: () => void;
+  onDelete?: () => void;
   onEdit?: (name: string) => void;
 }
 
@@ -26,6 +27,7 @@ const PathBlock: React.FC<Props> = ({
   leaf,
   onAdd,
   onEdit,
+  onDelete,
 }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [editedValue, setEditedValue] = useState(name);
@@ -53,7 +55,7 @@ const PathBlock: React.FC<Props> = ({
             name
           )}
         </div>
-        <div className="node-actions-wrapper">
+        <div className={`node-actions-wrapper ${isEditMode ? 'd-block' : ''}`}>
           <div className="node-actions">
             {!isEditMode ? (
               <>
@@ -71,14 +73,17 @@ const PathBlock: React.FC<Props> = ({
                 >
                   <EditIcon />
                 </button>
-                <button className="node__delete node-action fs-5">
+                <button
+                  className="node__delete node-action fs-5"
+                  onClick={onDelete}
+                >
                   <DeleteIcon />
                 </button>
               </>
             ) : (
               <>
                 <button
-                  className="node__save node-action fs-5"
+                  className="node__save node-action d-block fs-5"
                   onClick={(): void => {
                     if (onEdit) {
                       onEdit(editedValue);
@@ -89,7 +94,7 @@ const PathBlock: React.FC<Props> = ({
                   <SaveIcon />
                 </button>
                 <button
-                  className="node__save node-action fs-5"
+                  className="node__save node-action d-block fs-5"
                   onClick={(): void => setIsEditMode(false)}
                 >
                   <CancelIcon style={{ transform: 'rotate(45deg)' }} />
