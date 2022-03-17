@@ -1,20 +1,21 @@
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import './styles.scss';
 
 interface Props {
   percentage?: number;
   textColor?: string;
-  textSize?: string;
+  textSize?: string | number;
+  styles?: string;
 }
 
 const Progressbar: React.FC<Props> = ({
   percentage = 0,
   textColor = '',
-  textSize = '',
+  textSize = 20,
+  styles = '',
 }) => (
   <CircularProgressbar
-    className="progressbar"
+    className={styles}
     value={percentage}
     text={`${percentage}%`}
     styles={buildStyles({
