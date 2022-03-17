@@ -7,8 +7,9 @@ import {
   MIN_CREATE_DATE,
   MIN_EDIT_DATE,
 } from 'components/okr/common/constants';
+import { IOkr } from 'common/interfaces/okr';
 
-const okrValidationSchema = (isEdit: boolean): Joi.Schema => {
+const okrValidationSchema = (isEdit: boolean): Joi.ObjectSchema<IOkr> => {
   const minDate = isEdit ? MIN_EDIT_DATE : MIN_CREATE_DATE;
   const message = OkrValidationMessage(isEdit);
 

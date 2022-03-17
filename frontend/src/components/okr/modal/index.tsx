@@ -3,7 +3,6 @@ import { FloatingLabel, Form } from 'react-bootstrap';
 import { Modal, TextField, FormInputDate } from 'components/common/common';
 import { useAppForm, useDispatch } from 'hooks/hooks';
 import { okrValidationSchema } from 'validation-schemas/okr/okr.validation-schema';
-import { OkrPayloadKey } from 'common/enums/user/okr-payload-key.enum';
 import { okrActions } from 'store/okr/actions';
 import { FormSelect } from 'components/common/common';
 import { IOkr, OkrTypes } from 'common/interfaces/okr';
@@ -22,7 +21,7 @@ const OkrModal: FC<Props> = ({ okr, showModal, closeModal }) => {
 
   let defaultOkr = {
     name: '',
-    type: OkrTypes.TEAM_OKR,
+    type: OkrTypes.MY_OKR,
     startDate: '',
     endDate: '',
   } as IOkr;
@@ -44,7 +43,7 @@ const OkrModal: FC<Props> = ({ okr, showModal, closeModal }) => {
     defaultOkr = newDefaultOkr;
   }
 
-  const { control, errors, handleSubmit } = useAppForm({
+  const { control, errors, handleSubmit } = useAppForm<IOkr>({
     defaultValues: defaultOkr,
     validationSchema: okrValidationSchema(okr ? true : false),
   });
@@ -57,11 +56,13 @@ const OkrModal: FC<Props> = ({ okr, showModal, closeModal }) => {
       submitData.endDate = submitData.endDate.toString();
 
       dispatch(okrActions.updateOkrById_async(submitData));
+      closeModal();
       return;
     }
 
     const submitData = { ...data } as IOkr;
     dispatch(okrActions.createOkr_async(submitData));
+    closeModal();
   };
 
   return (
@@ -75,7 +76,7 @@ const OkrModal: FC<Props> = ({ okr, showModal, closeModal }) => {
     >
       <Form className="w-100">
         <TextField
-          name={OkrPayloadKey.NAME}
+          name="name"
           control={control}
           errors={errors}
           label={'Name'}
@@ -94,7 +95,7 @@ const OkrModal: FC<Props> = ({ okr, showModal, closeModal }) => {
           className="mb-3"
         >
           <FormInputDate
-            name={OkrPayloadKey.START_DATE}
+            name="startDate"
             control={control}
             errors={errors}
             placeholder="Start date"
@@ -108,7 +109,7 @@ const OkrModal: FC<Props> = ({ okr, showModal, closeModal }) => {
           className="mb-3"
         >
           <FormInputDate
-            name={OkrPayloadKey.END_DATE}
+            name="endDate"
             control={control}
             errors={errors}
             placeholder="End date"
