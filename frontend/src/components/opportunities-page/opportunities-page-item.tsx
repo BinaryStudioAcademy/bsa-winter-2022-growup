@@ -1,4 +1,4 @@
-import Follow from './follow';
+import Follow from './Follow';
 import OpportunityItem from 'components/main-page/opportunities/opportunity-item';
 import { IOpportunity } from 'store/opportunities/common';
 
