@@ -36,15 +36,17 @@ const fetchNewOpportunity = createAsyncThunk<
   async (request, { extra: { services } }) => {
     const result = await services.opportunities.fetchNewOpportunity(request);
 
-    return {
-      name: result[0].name,
-      organization: result[0].organization,
-      type: result[0].type,
-      startDate: result[0].startDate,
-      id: result[0].id,
-      tags: [],
-      isFollow: false,
-    };
+    return result.length
+      ? {
+          name: result[0].name,
+          organization: result[0].organization,
+          type: result[0].type,
+          startDate: result[0].startDate,
+          id: result[0].id,
+          tags: [],
+          isFollow: false,
+        }
+      : {};
   },
 );
 
