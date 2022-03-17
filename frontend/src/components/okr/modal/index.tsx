@@ -18,6 +18,8 @@ interface Props {
 }
 
 const OkrModal: FC<Props> = ({ okr, showModal, closeModal }) => {
+  const dispatch = useDispatch();
+
   let defaultOkr = {
     name: '',
     type: OkrTypes.MY_OKR,
@@ -25,17 +27,26 @@ const OkrModal: FC<Props> = ({ okr, showModal, closeModal }) => {
     endDate: '',
   } as IOkr;
 
-  const dispatch = useDispatch();
-
   if (okr) {
-    defaultOkr = { ...defaultOkr, ...okr };
-    defaultOkr.startDate = new Date(okr.startDate);
-    defaultOkr.endDate = new Date(okr.endDate);
+    const newDefaultOkr = { ...defaultOkr };
+
+    for (const key in defaultOkr) {
+      if (key in defaultOkr) {
+        Object.defineProperty(newDefaultOkr, key, {
+          value: okr[key as keyof IOkr],
+        });
+      }
+    }
+
+    newDefaultOkr.startDate = new Date(okr.startDate);
+    newDefaultOkr.endDate = new Date(okr.endDate);
+
+    defaultOkr = newDefaultOkr;
   }
 
   const { control, errors, handleSubmit } = useAppForm({
     defaultValues: defaultOkr,
-    validationSchema: okrValidationSchema,
+    validationSchema: okrValidationSchema(okr ? true : false),
   });
 
   const onSubmit = (data: object): void => {

@@ -1,6 +1,9 @@
 import { formatDate } from 'helpers/format-date';
 import { CareerJourneyValidationRule } from './career-journey-validation-rule.enum';
-import { MAX_DATE, MIN_DATE } from 'components/okr/common/constants';
+import {
+  MAX_DATE,
+  MIN_DATE,
+} from 'components/profile/components/profile-edit/common/constants';
 
 const CareerJourneyValidationMessage = {
   POSITION_REQUIRE: 'Position is required',
