@@ -8,9 +8,11 @@ const tab: React.FC<Props> = ({ title, isActive, changeComponent, index }) => {
   return (
     <div className="nav-item">
       <a
-        className={`nav-link  text-decoration-none ${isActive ? 'active' : ''}`}
+        className={`nav-link  text-decoration-none ${
+          isActive ? 'active' : ''
+        } ${index == 0 ? 'ps-0' : ''}`}
         onClick={(): void => {
-          changeComponent(Number(index));
+          changeComponent(+index);
         }}
       >
         {title}

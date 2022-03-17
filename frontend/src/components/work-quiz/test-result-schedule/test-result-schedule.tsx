@@ -8,10 +8,8 @@ import {
   Legend,
   ChartData,
 } from 'chart.js';
-import { IUserQuizResult } from 'common/interfaces/user-quiz';
-import { useAppSelector } from 'hooks/hooks';
 import { Radar } from 'react-chartjs-2';
-import { Data } from '../common/interface';
+import { ITestTypeData } from '../common/interface';
 
 ChartJS.register(
   RadialLinearScale,
@@ -23,11 +21,13 @@ ChartJS.register(
 );
 
 const formatData = (
-  data: Data[],
+  data: ITestTypeData[],
 ): ChartData<'radar', (number | null)[], unknown> => {
-  const labels = ['driver', 'amiable', 'analytical', 'expressive'];
+  const labels = ['Driver', 'Amiable', 'Analytical', 'Expressive'];
   const chartData = labels.map((lbl: string) => {
-    const currentEl = data.find((el: Data) => el.name == lbl) as Data;
+    const currentEl = data.find(
+      (el: ITestTypeData) => el.name == lbl,
+    ) as ITestTypeData;
     return currentEl.value;
   });
   return {
@@ -80,29 +80,14 @@ const options = {
     },
   },
 };
-
-export function Schedule(): JSX.Element {
-  const result = useAppSelector(
-    (state) => state.workStyleQuiz.result,
-  ) as IUserQuizResult[];
-  const data: Data[] = result.map((item) => {
-    return {
-      name: item.quizCategory.name,
-      value: item.score,
-    };
-  });
+interface Props {
+  data: ITestTypeData[];
+}
+export function Schedule({ data }: Props): JSX.Element {
   const chartData = formatData(data);
-
-  const maxPoints = Math.max(...data.map((item) => item.value));
-  const maxItem = data.find((item) => item.value == maxPoints) as Data;
-  const title = maxItem.name[0].toUpperCase() + maxItem.name.slice(1);
-
   return (
-    <>
-      <span className="fs-3 mt-1 fw-bold ps-3">{title}</span>
-      <div className="w-75 ms-auto me-auto schedule">
-        <Radar data={chartData} options={options} />
-      </div>
-    </>
+    <div className="w-75 ms-auto me-auto schedule">
+      <Radar data={chartData} options={options} />
+    </div>
   );
 }

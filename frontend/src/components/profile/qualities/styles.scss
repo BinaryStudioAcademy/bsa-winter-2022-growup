@@ -1,0 +1,9 @@
+@import '../../../assets/scss/variables.scss';
+
+.quality__more-info {
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    color: $gu-blue !important;
+  }
+}

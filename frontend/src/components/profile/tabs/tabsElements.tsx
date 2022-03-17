@@ -1,6 +1,5 @@
 import ProfileMain from '../profile-main/profile-main';
 import Qualities from '../qualities/qualities';
-import Interests from '../interests/interests';
 
 export const tabsElements = [
   {
@@ -8,8 +7,5 @@ export const tabsElements = [
   },
   {
     component: <Qualities />,
-  },
-  {
-    component: <Interests />,
   },
 ];

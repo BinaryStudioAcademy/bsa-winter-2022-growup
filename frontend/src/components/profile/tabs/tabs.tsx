@@ -6,7 +6,7 @@ interface Props {
   changeComponent: (id: number) => void;
 }
 const Tabs: React.FC<Props> = ({ changeComponent, activeId }): JSX.Element => {
-  const tabTitles = ['Summary', 'Qualities', 'Interests'];
+  const tabTitles = ['Summary', 'Qualities'];
   const tabItems = tabTitles.map((title: string, index: number) => {
     return (
       <Tab
