@@ -36,7 +36,7 @@ const TestResultComponent: React.FC = (): JSX.Element => {
       <span className="fs-3 mt-1 fw-bold">{theBestTestType.name}</span>
       <p className="mt-1 mb-1">{preDescription}</p>
       <span
-        className="d-flex align-items-center text-secondary quality__more-info "
+        className="d-flex align-items-center text-secondary cursor-pointer quality__more-info "
         onClick={handleShow}
       >
         <span>

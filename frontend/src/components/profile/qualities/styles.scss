@@ -1,7 +1,6 @@
-@import '../../../assets/scss/variables';
+@import '~assets/scss/utils';
 
 .quality__more-info {
-  cursor: pointer;
   transition: all 0.2s ease-in-out;
   &:hover {
     color: $gu-blue !important;
