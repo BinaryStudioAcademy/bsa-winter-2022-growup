@@ -1,0 +1,24 @@
+{
+  "types": [
+    {
+      "type": "Amiable",
+      "preDescription": "Amiables are people-oriented, relatively unassertive, warm, and reliable. Amiables are sometimes seen by others as compliant, softhearted, and acquiescent.",
+      "description": " Amiables seek security. They take action and make decisions slowly. This pace stems from their desire to avoid risky or unknown situations. Before they take action or make a decision, they have to know how other people feel about their decision"
+    },
+    {
+      "type": "Analytical",
+      "preDescription": "Analyticals are task-oriented and unassertive. They are concerned with analytical processes and are persistent, systematic problem solvers.",
+      "description": " They can also be seen as aloof, picky, and critical. Analyticals are very securityconscious and have a high need to be right, leading them to an over reliance on data collection. In their quest for data, they tend to ask many questions about specifics. Their actions and decisions tend to be slow and extremely cautious, but they will rarely miss a deadline. Although they are great problem solvers, Analyticals could be better decision-makers."
+    },
+    {
+      "type": "Driver",
+      "preDescription": "Dominant Drivers are task-oriented and assertive. They exhibit firmness in their relationships with others, are oriented toward productivity and goals, and are concerned with bottom line results.",
+      "description": " Drivers accept challenges, take authority, and go head first into solving problems. They tend to exhibit great administrative and operational skills and work quickly and impressively on their own. They tend to be cool, independent, and competitive with others, especially in a business environment."
+    },
+    {
+      "type": "Expressive",
+      "preDescription": "Expressives are people-oriented and assertive exhibiting characteristics such as animation, intuitiveness, and liveliness. However, they can also be viewed as manipulative, impetuous, and excitable when displaying behavior inappropriate to the situation.",
+      "description": "Expressives are fast-paced. Their actions and decisions are spontaneous, and are seldom concerned about facts and details, which they try to avoid as much as possible."
+    }
+  ]
+}

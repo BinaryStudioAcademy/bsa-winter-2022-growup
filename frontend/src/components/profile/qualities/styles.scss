@@ -1,0 +1,8 @@
+@import '~assets/scss/utils';
+
+.quality__more-info {
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    color: $gu-blue !important;
+  }
+}

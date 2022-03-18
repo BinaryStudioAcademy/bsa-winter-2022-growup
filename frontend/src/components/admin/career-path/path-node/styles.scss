@@ -1,0 +1,65 @@
+@import 'assets/scss/utils';
+
+.tree-wrapper {
+  display: flex;
+}
+.tree-wrapper:active {
+  color: aqua !important;
+}
+
+.tree-node {
+  position: relative;
+  &__item {
+    border: none !important;
+    display: inline-block;
+    padding: 0.4em 1em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 11em;
+  }
+
+  .node-action {
+    background-color: $white;
+    color: $gu-purple;
+    border: 0.1em solid $purple-light;
+    border-radius: 50%;
+    width: 2em;
+    height: 2em;
+    margin-left: 0.2em;
+  }
+
+  .node-action:hover {
+    background-color: $purple-light;
+  }
+
+  &__item-input {
+    width: 100%;
+  }
+
+  &__item-input:focus {
+    outline: none;
+  }
+}
+
+.node-actions-wrapper {
+  position: absolute;
+  right: 0;
+  right: -2.1em;
+  top: 50%;
+  transform: translateY(-50%);
+  display: none;
+
+  .node-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+  }
+}
+
+.tree-node:hover {
+  .node-actions-wrapper {
+    display: block;
+    z-index: 1;
+  }
+}
