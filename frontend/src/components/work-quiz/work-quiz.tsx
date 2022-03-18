@@ -73,7 +73,7 @@ const StyleTest: React.FC<Props> = ({ onNext }) => {
   return (
     <>
       {!isLoading && questions && questions.length ? (
-        <div>
+        <div className="d-flex flex-column">
           {questions.map((question, i) => (
             <div key={question.id} className="test mb-3">
               <p>
@@ -90,7 +90,7 @@ const StyleTest: React.FC<Props> = ({ onNext }) => {
             </div>
           ))}
           <Button
-            className={`test-submit ${
+            className={`align-self-center test-submit ${
               answersCount !== questions.length ? 'test-submit_disabled' : ''
             }`}
             variant="primary"

@@ -7,12 +7,9 @@ const getAllCareerJourneys = createAsyncThunk<
   ICareerJourney[],
   void,
   ThunkApiType
->(
-  ActionType.GET_ALL_CAREER_JOURNEYS,
-  async (request, { extra: { services } }) => {
-    return services.careerJourney.getAllCareerJourneys();
-  },
-);
+>(ActionType.GET_ALL_CAREER_JOURNEYS, (request, { extra: { services } }) => {
+  return services.careerJourney.getAllCareerJourneys();
+});
 
 const createCareerJourney = createAsyncThunk<
   void,

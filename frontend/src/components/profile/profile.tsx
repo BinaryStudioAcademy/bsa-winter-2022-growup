@@ -10,8 +10,8 @@ import { profileActions } from 'store/actions';
 import Tabs from './tabs/tabs';
 import Header from './header/header';
 import './styles.scss';
-import { MentorMenteeRoute } from 'common/enums/mentor-mentee-route/mentor-mentee-route.enum';
 import { tabsElements } from './tabs/tabsElements';
+import isFirstLogged from 'helpers/check-is-first-logged';
 
 const ProfileInfo: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -20,14 +20,7 @@ const ProfileInfo: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user?.firstName) {
-      navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/1`);
-      return;
-    }
-    if (!user?.isCompleteTest) {
-      navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/2`);
-      return;
-    }
+    isFirstLogged({ user, navigate });
   }, [user]);
 
   useEffect(() => {

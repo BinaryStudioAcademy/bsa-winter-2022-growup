@@ -5,7 +5,7 @@ import { IEducation } from '../../components/profile/common/interfaces';
 
 const getAllEducations = createAsyncThunk<IEducation[], void, ThunkApiType>(
   ActionType.GET_ALL_EDUCATIONS,
-  async (request, { extra: { services } }) => {
+  (request, { extra: { services } }) => {
     return services.education.getAllEducations();
   },
 );
