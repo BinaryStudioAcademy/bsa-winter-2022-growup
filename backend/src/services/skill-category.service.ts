@@ -22,7 +22,7 @@ export const createSkillCategories = async (
   );
 };
 
-export const getCategories = async (
+export const getCategoriesByLevel = async (
   level: SkillCategory['level'],
 ): Promise<SkillCategory[]> => {
   const skillCategoryRepository = getCustomRepository(SkillCategoryRepository);
@@ -31,4 +31,38 @@ export const getCategories = async (
     relations: ['skill'],
   });
   return categories;
+};
+
+export const getCategoriesBySkill = async (
+  skill: SkillCategory['skill'],
+): Promise<SkillCategory[]> => {
+  const skillCategoryRepository = getCustomRepository(SkillCategoryRepository);
+  const categories = await skillCategoryRepository.find({
+    where: { skill },
+    relations: ['skill'],
+  });
+  return categories;
+};
+
+export const getCategory = async (
+  level: SkillCategory['level'],
+  skill: SkillCategory['skill'],
+): Promise<SkillCategory> => {
+  const skillCategoryRepository = getCustomRepository(SkillCategoryRepository);
+  const categories = await skillCategoryRepository.findOne({
+    where: { level, skill },
+    relations: ['skill'],
+  });
+  return categories;
+};
+
+export const deleteSkillCategoryById = async (
+  id: SkillCategory['id'],
+): Promise<SkillCategory> => {
+  const skillCategoryRepository = getCustomRepository(SkillCategoryRepository);
+
+  const skillCategory = await skillCategoryRepository.findOne({ id });
+  await skillCategoryRepository.delete({ id });
+
+  return skillCategory;
 };

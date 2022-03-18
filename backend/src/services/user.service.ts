@@ -2,14 +2,18 @@ import { getCustomRepository } from 'typeorm';
 
 import { HttpCode, HttpError } from 'growup-shared';
 
-import UserRepository from '../data/repositories/user.repository';
+import UserRepository from '~/data/repositories/user.repository';
 import UserRoleRepository from '~/data/repositories/role.repository';
 import CompanyRepository from '~/data/repositories/company.repository';
+import User_QuizCategoryRepository from '~/data/repositories/user-quiz-category.repository';
 import RefreshTokenRepository from '~/data/repositories/refresh-token.repository';
 
 import { refreshTokenSchema } from '~/common/models/tokens/refresh-token.model';
 import { IListUser } from '~/common/models/user/user';
 import { RoleType } from '~/common/enums/role-type';
+
+import { UserMissingDataForm } from '~/common/forms/user.forms';
+
 import { User } from '~/data/entities/user';
 import { UserRole } from '~/data/entities/user-role';
 
@@ -24,7 +28,6 @@ import {
 } from '~/common/utils/upload-image.util';
 import { getCurrentTimeMS } from '~/common/utils/time.util';
 import { signToken, generateRefreshToken } from '~/common/utils/token.util';
-import { convertForUserList } from '~/common/utils/user.util';
 
 import type {
   UserLoginForm,
@@ -48,9 +51,10 @@ type UserRegistrationType = {
 
 type UserWithRole = Omit<User, 'password'> & {
   roleType: RoleType;
+  isCompleteTest: boolean;
 };
 
-const getUserJWT = async (user: User): Promise<TokenResponse> => {
+export const getUserJWT = async (user: User): Promise<TokenResponse> => {
   const roleRepository = getCustomRepository(UserRoleRepository);
   const role = await roleRepository.findOne({ user });
 
@@ -144,7 +148,6 @@ export const authenticateUser = async (
   const user = await userRepository.getUserWithPassword({
     email: data.email,
   });
-
   if (!user)
     throw new HttpError({
       status: HttpCode.NOT_FOUND,
@@ -154,7 +157,6 @@ export const authenticateUser = async (
   // Copmares hashed password and entered by user
   // If they do not match, return null
   const isPasswordMatch = await comparePasswords(data.password, user.password);
-
   if (!isPasswordMatch)
     throw new HttpError({
       status: HttpCode.NOT_FOUND,
@@ -195,30 +197,39 @@ export const registerUserAdmin = async (
   return getUserJWT(user);
 };
 
-export const registerCommonUsers = async (
-  data: UserRegisterForm,
-  role: RoleType,
-  companyId: User['company']['id'],
-): Promise<IListUser> => {
-  const { user, role: roleInstance } = await registerUser(
-    data,
-    role,
-    companyId,
-  );
-  return convertForUserList(user, roleInstance);
-};
-
 export const fetchUser = async (id: User['id']): Promise<UserWithRole> => {
   const userRepository = getCustomRepository(UserRepository);
   const roleRepository = getCustomRepository(UserRoleRepository);
+  const userQuizRepository = getCustomRepository(User_QuizCategoryRepository);
 
   const { password: _password, ...user } = await userRepository.geUserById(id);
   const { role } = await roleRepository.findOne({ user });
-
+  const userQuizCategoryInstance = await userQuizRepository.findOne({
+    where: {
+      userId: id,
+    },
+  });
+  const isCompleteTest = !!userQuizCategoryInstance;
   return {
     ...user,
     roleType: role,
+    isCompleteTest: isCompleteTest,
   } as UserWithRole;
+};
+
+export const updateUserMissingData = async (
+  id: User['id'],
+  { password, firstName, lastName, position }: UserMissingDataForm,
+): Promise<User> => {
+  const userRepository = getCustomRepository(UserRepository);
+  const user = await userRepository.getUserWithPassword({ id });
+
+  user.password = await hashPassword(password);
+  user.firstName = firstName;
+  user.lastName = lastName;
+  user.position = position;
+
+  return user.save();
 };
 
 export const updateUserAvatar = async (

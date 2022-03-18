@@ -13,6 +13,7 @@ enum AppRoute {
   MENTEE_PROFILES = '/mentee',
   EXPLORE = '/explore',
   SKILLS = '/skills',
+  VERIFICATION = '/registration-complete/:token',
   ANY = '/*',
 }
 

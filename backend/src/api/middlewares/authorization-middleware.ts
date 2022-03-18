@@ -10,7 +10,12 @@ const verifyToken = (
   _response: Response,
   next: NextFunction,
 ): void => {
-  if (whitelist.some((path) => RegExp(path).test(request.path))) {
+  if (
+    whitelist.some((path) => {
+      if (path.includes('/*')) return RegExp(path).test(request.path);
+      return path === request.path;
+    })
+  ) {
     next();
   } else {
     const token = request.headers.authorization;

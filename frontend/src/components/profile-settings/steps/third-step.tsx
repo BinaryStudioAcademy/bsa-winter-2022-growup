@@ -6,7 +6,6 @@ interface Props extends IProfileSettingStep {}
 const ThirdStep: React.FC<Props> = ({
   children,
   isDisablePrevious,
-  onPrevious,
   onNext,
 }) => {
   const onSubmit = (): void => {
@@ -20,7 +19,6 @@ const ThirdStep: React.FC<Props> = ({
       <StepControl
         isValid={true}
         isDisablePrevious={isDisablePrevious}
-        onPrevious={onPrevious}
         onNext={onNext}
         onSubmit={onSubmit}
       />

@@ -1,79 +1,52 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { ContentType } from 'common/enums/enums';
-import { http } from 'services';
-import {
-  IOpportunity,
-  IPostOppData,
-  OpportunityActions,
-  IOpportunityBase,
-} from './common';
+import { IOpportunity, IOpportunityBase, OpportunityActions } from './common';
+import { ThunkApiType } from '../store';
 
-const fetchLoadOpp = createAsyncThunk(
+const fetchLoadOpportunities = createAsyncThunk<
+  IOpportunityBase[],
+  void,
+  ThunkApiType
+>(
   OpportunityActions.LOAD_OPPORTUNITIES,
-  async (_, { rejectWithValue }) => {
-    try {
-      const result: IOpportunityBase[] = await http.load(
-        'http://localhost:3001/api/company/opportunities',
-        {
-          method: 'GET',
-          payload: null,
-          contentType: ContentType.JSON,
-        },
-      );
-      const opportunities = result.map((item) => {
-        const tags = item.tags?.map((item) => item.name);
-        return {
-          id: item.id,
-          name: item.name,
-          organization: item.organization,
-          startDate: item.startDate,
-          isFollow: false,
-          tagsData: tags,
-          type: item.type,
-        };
-      });
-      return opportunities;
-    } catch (err) {
-      return rejectWithValue(err);
-    }
+  async (request, { extra: { services } }) => {
+    const result: IOpportunityBase[] =
+      await services.opportunities.fetchLoadOpportunities();
+
+    return result.map((item) => {
+      const tags = item.tags?.map((item) => item.name);
+      return {
+        id: item.id,
+        name: item.name,
+        organization: item.organization,
+        startDate: item.startDate,
+        isFollow: false,
+        tagsData: tags,
+        type: item.type,
+      };
+    });
   },
 );
-const fetchNewOpp = createAsyncThunk(
-  OpportunityActions.ADD_OPPORTUNITY,
-  async (data: IOpportunity, { rejectWithValue }) => {
-    try {
-      const oppData = {
-        opportunities: [
-          {
-            name: data.name,
-            organization: data.organization,
-            type: data.type,
-            startDate: data.startDate,
-          },
-        ],
-      };
-      const res: IPostOppData[] = await http.post(
-        'http://localhost:3001/api/company/opportunities',
-        {
-          method: 'POST',
-          payload: JSON.stringify(oppData),
-          contentType: ContentType.JSON,
-        },
-      );
 
-      const newOpp = {
-        name: res[0].name,
-        organization: res[0].organization,
-        type: res[0].type,
-        startDate: res[0].startDate,
-        id: res[0].id,
-        tags: [],
-        isFollow: false,
-      };
-      return newOpp;
-    } catch (err) {
-      return rejectWithValue(err);
-    }
+const fetchNewOpportunity = createAsyncThunk<
+  IOpportunity,
+  IOpportunityBase,
+  ThunkApiType
+>(
+  OpportunityActions.ADD_OPPORTUNITY,
+  async (request, { extra: { services } }) => {
+    const result = await services.opportunities.fetchNewOpportunity(request);
+
+    return result.length
+      ? {
+          name: result[0].name,
+          organization: result[0].organization,
+          type: result[0].type,
+          startDate: result[0].startDate,
+          id: result[0].id,
+          tags: [],
+          isFollow: false,
+        }
+      : {};
   },
 );
 
@@ -105,6 +78,6 @@ export {
   unSubscribeFollow,
   showModal,
   closeModal,
-  fetchNewOpp,
-  fetchLoadOpp,
+  fetchNewOpportunity,
+  fetchLoadOpportunities,
 };

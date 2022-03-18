@@ -2,6 +2,7 @@ import { Request, Router } from 'express';
 import multer from 'multer';
 
 import { run } from '~/common/helpers/route.helper';
+
 import { fetchUser, updateUserAvatar } from '~/services/user.service';
 import careerJourneyRoute from './career-journey';
 import educationRoute from './education-route';

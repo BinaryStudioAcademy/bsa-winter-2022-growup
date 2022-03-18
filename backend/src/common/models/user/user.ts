@@ -6,4 +6,6 @@ interface IListUser extends Omit<User, 'password' | 'company'> {
   roleType: UserRole['role'];
 }
 
-export { IListUser };
+type ShortUser = Pick<User, 'firstName' | 'lastName' | 'position'>;
+
+export { IListUser, ShortUser };

@@ -1,5 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { profile } from 'services/index';
 import { ActionType } from './common';
 
@@ -27,4 +26,5 @@ const updateAvatar = createAsyncThunk(
   },
 );
 
-export { fetchProfile, updateAvatar };
+const completeTest = createAction(ActionType.COMPLETE_TEST);
+export { fetchProfile, updateAvatar, completeTest };

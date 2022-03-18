@@ -1,6 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { StorageKey } from 'common/enums/app/storage-key.enum';
-import { IUser, IUserLoginForm, IUserSignUpForm } from 'common/interfaces/user';
+import {
+  IToken,
+  IUser,
+  IUserLoginForm,
+  IUserSignUpForm,
+} from 'common/interfaces/user';
+import { FirstStepFormType } from 'components/profile-settings/steps/common/types';
 import { ThunkApiType } from 'store/store';
 import { ActionType } from './common';
 
@@ -38,4 +44,39 @@ const getCurrentUser = createAsyncThunk<IUser, void, ThunkApiType>(
   },
 );
 
-export { getCurrentUser, loginUser, signUpUser };
+const verifyRegistrationToken = createAsyncThunk<IToken, string, ThunkApiType>(
+  ActionType.VERIFY_REGISTER_TOKEN,
+  async (token, { rejectWithValue, extra: { services } }) => {
+    try {
+      const result = await services.auth.verifyRegistrationToken(token);
+      services.storage.setItem(StorageKey.TOKEN, result.token);
+      return result;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
+const finishRegistration = createAsyncThunk<
+  IUser,
+  FirstStepFormType,
+  ThunkApiType
+>(
+  ActionType.FINISH_REGISTRATION,
+  async (data, { rejectWithValue, extra: { services } }) => {
+    try {
+      const result = await services.auth.finishRegistration(data);
+      return result;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
+export {
+  getCurrentUser,
+  loginUser,
+  signUpUser,
+  verifyRegistrationToken,
+  finishRegistration,
+};

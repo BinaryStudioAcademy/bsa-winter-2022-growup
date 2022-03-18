@@ -5,25 +5,23 @@ import Education from './education';
 import InterestingTags from './interesting-tags';
 import StepControl from './step-control';
 import { profileFirstStep as profileFirstStepValidationSchema } from 'validation-schemas/validation-schemas';
-import { useAppForm } from 'hooks/hooks';
+import { useAppForm, useDispatch } from 'hooks/hooks';
 import { DEFAULT_FIRST_STEP_PAYLOAD } from './common/constants';
-import { FirstStepPayloadKey, UserPayloadKey } from 'common/enums/enums';
+import { finishRegistration } from 'store/auth/actions';
+import { FirstStepFormType } from './common/types';
 
-interface Props extends IProfileSettingStep {}
-
-const FirstStep: React.FC<Props> = ({
+const FirstStep: React.FC<IProfileSettingStep> = ({
   isDisablePrevious,
-  onPrevious,
   onNext,
 }) => {
-  const { control, errors, isValid, handleSubmit } = useAppForm({
-    defaultValues: DEFAULT_FIRST_STEP_PAYLOAD,
-    validationSchema: profileFirstStepValidationSchema,
-  });
-
-  const onSaveSettings = (values: object): void => {
-    // eslint-disable-next-line no-console
-    console.log('save settings:', values);
+  const { control, errors, isValid, handleSubmit } =
+    useAppForm<FirstStepFormType>({
+      defaultValues: DEFAULT_FIRST_STEP_PAYLOAD,
+      validationSchema: profileFirstStepValidationSchema,
+    });
+  const dispatch = useDispatch();
+  const onSaveSettings = (values: FirstStepFormType): void => {
+    dispatch(finishRegistration(values));
   };
 
   const onSubmit = handleSubmit(onSaveSettings);
@@ -32,24 +30,25 @@ const FirstStep: React.FC<Props> = ({
     <div className="stepper__form">
       <TextField
         label="Password"
-        name={UserPayloadKey.PASSWORD}
+        type="password"
+        name="password"
         control={control}
         errors={errors}
       />
       <TextField
         label="First name"
-        name={UserPayloadKey.FIRST_NAME}
+        name="firstName"
         control={control}
         errors={errors}
       />
       <TextField
-        name={UserPayloadKey.LAST_NAME}
+        name="lastName"
         label="Last name"
         control={control}
         errors={errors}
       />
       <TextField
-        name={FirstStepPayloadKey.POSITION}
+        name="position"
         label="Position"
         control={control}
         errors={errors}
@@ -60,7 +59,6 @@ const FirstStep: React.FC<Props> = ({
       <StepControl
         isValid={isValid}
         isDisablePrevious={isDisablePrevious}
-        onPrevious={onPrevious}
         onNext={onNext}
         onSubmit={onSubmit}
       />

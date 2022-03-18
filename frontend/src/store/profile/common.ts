@@ -8,6 +8,7 @@ type State = {
 enum ActionType {
   FETCH = 'fetch-profile/',
   UPDATE_AVATAR = 'update-avatar/',
+  COMPLETE_TEST = 'complete-test/',
 }
 
 export type { State };

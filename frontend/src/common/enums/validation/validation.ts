@@ -6,3 +6,5 @@ export * from './career-journey-validation.enum';
 export * from './career-journey-validation-rule.enum';
 export * from './education-validation.enum';
 export * from './education-validation-rule.enum';
+export * from './opportunity-validation-rule.enum';
+export * from './opportunity-validation.enum';

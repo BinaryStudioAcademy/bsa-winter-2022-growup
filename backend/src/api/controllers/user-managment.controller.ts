@@ -1,13 +1,26 @@
-import { createRegistrationToken } from '~/services/registration-token.service';
-import { registerUser } from '~/services/user.service';
+import {
+  createRegistrationToken,
+  deleteRegistrationToken,
+  verifyRegistrationToken,
+} from '~/services/registration-token.service';
+import {
+  getUserJWT,
+  registerUser,
+  updateUserMissingData,
+} from '~/services/user.service';
 import { sendMail } from '~/services/mail.service';
 
 import { Company } from '~/data/entities/company';
+import { User } from '~/data/entities/user';
 
 import { createDefaultUser } from '~/common/utils/default-user.util';
 import { RoleType } from '~/common/enums/role-type';
 
-import { SuccessResponse } from '~/common/models/responses/success';
+import { UserMissingDataForm } from '~/common/forms/user.forms';
+
+import { convertForUserList } from '~/common/utils/user.util';
+import { IListUser, ShortUser } from '~/common/models/user/user';
+import { toShortUser } from '~/common/mappers/user.mapper';
 
 type RegistrationUserProps = {
   email: string;
@@ -19,7 +32,7 @@ const registerUserController = async ({
   email,
   roleType,
   companyId,
-}: RegistrationUserProps): Promise<SuccessResponse> => {
+}: RegistrationUserProps): Promise<IListUser> => {
   const data = await registerUser(
     createDefaultUser(email),
     roleType,
@@ -27,7 +40,29 @@ const registerUserController = async ({
   );
 
   const token = await createRegistrationToken(data.user);
-  return await sendMail(data.user.email, token.value);
+  await sendMail(data.user.email, token.value);
+  return convertForUserList(data.user, data.role);
 };
 
-export { registerUserController };
+const verifyRegistrationTokenController = async (
+  token: string,
+): ReturnType<typeof getUserJWT> => {
+  const user = await verifyRegistrationToken(token);
+  return getUserJWT(user);
+};
+
+const updateUserMissingDataController = async (
+  id: User['id'],
+  data: UserMissingDataForm,
+): Promise<ShortUser> => {
+  const updatedUser = await updateUserMissingData(id, data);
+  await deleteRegistrationToken(updatedUser.id);
+
+  return toShortUser(updatedUser);
+};
+
+export {
+  registerUserController,
+  updateUserMissingDataController,
+  verifyRegistrationTokenController,
+};

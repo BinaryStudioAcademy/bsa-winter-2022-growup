@@ -37,4 +37,24 @@ const verifyRegistrationToken = async (token: string): Promise<User> => {
   return tokenInstance.user;
 };
 
-export { createRegistrationToken, verifyRegistrationToken };
+const deleteRegistrationToken = async (id: User['id']): Promise<void> => {
+  const tokenRepository = getCustomRepository(RegistrationTokenRepository);
+  const tokenInstance = await tokenRepository.findOne({
+    relations: ['user'],
+    where: { user: { id } },
+  });
+
+  if (!tokenInstance)
+    throw new HttpError({
+      status: HttpCode.NOT_FOUND,
+      message: 'Invalid registration token',
+    });
+
+  await tokenInstance.remove();
+};
+
+export {
+  createRegistrationToken,
+  verifyRegistrationToken,
+  deleteRegistrationToken,
+};
