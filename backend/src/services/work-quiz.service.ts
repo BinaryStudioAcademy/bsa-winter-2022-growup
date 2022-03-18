@@ -137,3 +137,19 @@ export const sendResults = async ({
 
   return userResults;
 };
+
+export const getResults = async (
+  userId: string,
+): Promise<User_QuizCategory[]> => {
+  const userQuizCategoryRepository = await getCustomRepository(
+    UserQuizCategoryRepository,
+  );
+  const results = await userQuizCategoryRepository
+    .createQueryBuilder('root')
+    .innerJoin('root.user', 'user')
+    .innerJoinAndSelect('root.quizCategory', 'category')
+    .where('user.id = :id', { id: userId })
+    .getMany();
+
+  return results;
+};

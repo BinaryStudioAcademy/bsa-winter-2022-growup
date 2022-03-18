@@ -7,8 +7,7 @@ import { RootState } from 'common/types/types';
 import { OkrTypes } from 'common/interfaces/okr';
 import { MentorMenteeRoute } from 'common/enums/mentor-mentee-route/mentor-mentee-route.enum';
 import { useAppSelector, useNavigate } from 'hooks/hooks';
-
-import OkrList from './okr-list';
+import isFirstLogged from 'helpers/check-is-first-logged';
 
 function ControlledTabs(): React.ReactElement {
   const navigate = useNavigate();
@@ -20,16 +19,8 @@ function ControlledTabs(): React.ReactElement {
   const ownOkr = okrs.filter((okr) => okr.type === OkrTypes.MY_OKR);
 
   useEffect(() => {
-    if (!user?.firstName) {
-      navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/1`);
-      return;
-    }
-    if (!user?.isCompleteTest) {
-      navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/2`);
-      return;
-    }
+    isFirstLogged({ user, navigate });
   }, [user]);
-
   return (
     <Tabs
       id="controlled-tab-example"

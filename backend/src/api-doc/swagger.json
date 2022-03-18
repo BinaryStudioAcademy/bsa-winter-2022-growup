@@ -1440,6 +1440,37 @@
           }
         }
       }
+    },
+    "/api/work-quiz/result/": {
+      "get": {
+        "tags": ["Work Quiz"],
+        "summary": "Get quiz results",
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "string"
+                  },
+                  "quizCategoryId": {
+                    "type": "string"
+                  },
+                  "score": {
+                    "type": "number"
+                  },
+                  "quizCategory": {
+                    "type": "object",
+                    "$ref": "#/definitions/Category"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {

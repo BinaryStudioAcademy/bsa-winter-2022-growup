@@ -5,8 +5,9 @@ import Education from './education';
 import InterestingTags from './interesting-tags';
 import StepControl from './step-control';
 import { profileFirstStep as profileFirstStepValidationSchema } from 'validation-schemas/validation-schemas';
-import { useAppForm } from 'hooks/hooks';
+import { useAppForm, useDispatch } from 'hooks/hooks';
 import { DEFAULT_FIRST_STEP_PAYLOAD } from './common/constants';
+import { insertPIB } from 'store/profile/actions';
 import { FirstStepFormType } from './common/types';
 
 const FirstStep: React.FC<IProfileSettingStep> = ({
@@ -18,10 +19,9 @@ const FirstStep: React.FC<IProfileSettingStep> = ({
       defaultValues: DEFAULT_FIRST_STEP_PAYLOAD,
       validationSchema: profileFirstStepValidationSchema,
     });
-
+  const dispatch = useDispatch();
   const onSaveSettings = (values: FirstStepFormType): void => {
-    // eslint-disable-next-line no-console
-    console.log('save settings:', values);
+    dispatch(insertPIB(values));
   };
 
   const onSubmit = handleSubmit(onSaveSettings);

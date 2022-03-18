@@ -33,6 +33,7 @@ import {
   updateObjectiveById,
 } from '~/services/objective.service';
 import { addNewKeyresultToObjective } from '~/services/key-result.service';
+import { Objective } from '~/data/entities/objective';
 
 const router: Router = Router();
 
@@ -112,7 +113,7 @@ router
     '/okr/:okrId/objective',
     validatePermissions([RoleType.MENTEE, RoleType.MENTOR]),
     validateBody(createObjectiveSchema),
-    run((req): Promise<OKR> => {
+    run((req): Promise<Objective> => {
       const { body } = req;
       const { okrId } = req.params;
       const data = { okrId, body };
