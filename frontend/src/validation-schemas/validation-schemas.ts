@@ -6,3 +6,4 @@ export * from './career-journey/career-journey.validation-schema';
 export * from './education/education.validation-schema';
 export * from './okr/okr.validation-schema';
 export * from './opportunity/opportunity.validation-schema';
+export * from './opportunity/opportunity.validation-schema';

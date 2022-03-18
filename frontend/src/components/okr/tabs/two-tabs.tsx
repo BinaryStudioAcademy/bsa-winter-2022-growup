@@ -4,7 +4,6 @@ import Tab from 'react-bootstrap/Tab';
 import { useSelector } from 'react-redux';
 import { RootState } from 'common/types/types';
 import { OkrTypes } from 'common/interfaces/okr';
-
 import { useAppSelector, useNavigate } from 'hooks/hooks';
 import OkrList from './okr-list';
 import isFirstLogged from 'helpers/check-is-first-logged';
