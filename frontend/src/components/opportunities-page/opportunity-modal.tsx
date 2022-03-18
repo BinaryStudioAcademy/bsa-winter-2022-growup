@@ -23,7 +23,7 @@ const OpportunityModal: React.FC = () => {
   };
   const sendData = (): void => {
     dispatch(
-      opportunitiesActions.fetchNewOpp({
+      opportunitiesActions.fetchNewOpportunity({
         name: opportunityName.current?.value,
         type: type.current?.value,
         organization: organizationName.current?.value,
