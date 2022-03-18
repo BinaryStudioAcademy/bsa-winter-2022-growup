@@ -3,13 +3,14 @@ import { RoleType } from 'common/enums/user/roles.enum';
 import {
   ICareerJourney,
   IEducation,
-} from '../../../components/profile/common/interfaces';
+} from 'components/profile/common/interfaces';
+import type { ICompany } from 'common/interfaces/company/company';
 
 interface IUser extends IUserDefault {
   firstName: string;
   lastName: string;
   avatar: string | null;
-  companyId: string;
+  company?: ICompany;
   position: string;
   createdAt: string;
   updatedAt: string;
