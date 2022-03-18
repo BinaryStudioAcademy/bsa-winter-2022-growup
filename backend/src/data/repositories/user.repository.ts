@@ -16,6 +16,7 @@ class UserRepository extends Repository<User> {
         'education',
         'user.id = education.user',
       )
+      .leftJoinAndSelect('user.company', 'company', 'user.company = company.id')
       .where({ id: userId })
       .getOne();
   }
