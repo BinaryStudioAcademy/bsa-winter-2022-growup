@@ -20,7 +20,7 @@ const Company: React.FC<Props> = ({ companyList }) => {
       <Card className="growup-card-primary">
         <Card.Header className="d-flex justify-content-end growup-card-header">
           <Button
-            themeType={
+            props={
               'btn-outline-gu-white btn-hover-gu-purple border-2 fs-5 fw-bold'
             }
             onSubmit={handleShow}

@@ -1,8 +1,8 @@
 import { FormEvent } from 'react';
 
 interface Props {
-  themeType?: string;
-  themeWithoutBtn?: string;
+  props?: string;
+  className?: string;
   text?: string;
   onSubmit?: (a: FormEvent) => void;
   type?: string;
@@ -10,13 +10,13 @@ interface Props {
 }
 
 const Button: React.FC<Props> = ({
-  themeType = '',
-  themeWithoutBtn = '',
+  props = '',
+  className = '',
   onSubmit,
   children,
 }) => (
   <button
-    className={themeType ? `btn ${themeType}` : `${themeWithoutBtn}`}
+    className={props ? `btn ${props}` : `${className}`}
     onClick={onSubmit}
   >
     {children}

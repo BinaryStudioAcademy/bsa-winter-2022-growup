@@ -10,7 +10,7 @@ const InterestsBlock: React.FC = ({ children }) => {
           Interests
         </p>
         <Button
-          themeType={
+          props={
             'interests-header__edit fw-bold bg-transparent d-flex align-items-center fs-5 position-relative'
           }
         >

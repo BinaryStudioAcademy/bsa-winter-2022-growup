@@ -12,7 +12,7 @@ const AddSection: React.FC<Props> = ({ children, title, onAdd }) => (
     <div className="add-section-header text-white d-flex justify-content-between align-items-center bg-gu-blue">
       <p className="add-section-header__title m-0 fw-bold fs-4">{title}</p>
       <Button
-        themeWithoutBtn={
+        className={
           'add-section-header__add fw-bold d-flex align-items-center fs-5'
         }
         onSubmit={onAdd}

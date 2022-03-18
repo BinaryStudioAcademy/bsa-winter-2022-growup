@@ -41,9 +41,7 @@ const TagModal: React.FC<Props> = ({ show, onClose }) => {
       <TagList tagList={tags} onDelete={deleteTag} />
 
       <Button
-        themeType={
-          'btn-outline-gu-purple btn-hover-gu-white fw-bold fs-5 border-2'
-        }
+        props={'btn-outline-gu-purple btn-hover-gu-white fw-bold fs-5 border-2'}
         onSubmit={clickHandler}
       >
         Save

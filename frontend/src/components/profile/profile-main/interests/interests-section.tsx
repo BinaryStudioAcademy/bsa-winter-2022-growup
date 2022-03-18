@@ -34,7 +34,7 @@ const Interests: React.FC<PropTypes> = ({ tagList }) => {
             Interests
           </h3>
           <Button
-            themeWithoutBtn={
+            className={
               'edit-section-header__edit fw-bold bg-transparent d-flex align-items-center fs-5'
             }
             onSubmit={showModal}

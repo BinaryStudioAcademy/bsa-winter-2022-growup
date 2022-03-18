@@ -170,7 +170,7 @@ const SkillOverview = (): React.ReactElement => {
             />
           </div>
           <div className="col-auto">
-            <Button themeType={'btn-primary'} type={'submit'}>
+            <Button props={'btn-primary'} type={'submit'}>
               + Add Skill
             </Button>
           </div>
@@ -182,7 +182,7 @@ const SkillOverview = (): React.ReactElement => {
             <th scope="col">
               Skill
               <Button
-                themeType={'border-0 bg-gu-white sort-button'}
+                props={'border-0 bg-gu-white sort-button'}
                 onSubmit={(): void => sortSkillNames()}
               >
                 {isSortName ? <SortDown /> : <SortUp />}
@@ -191,7 +191,7 @@ const SkillOverview = (): React.ReactElement => {
             <th scope="col" className="text-center">
               Self Rating
               <Button
-                themeType={'border-0 bg-gu-white sort-button'}
+                props={'border-0 bg-gu-white sort-button'}
                 onSubmit={(): void => sortSelfRating()}
               >
                 {isSortSelf ? <SortDown /> : <SortUp />}
@@ -200,7 +200,7 @@ const SkillOverview = (): React.ReactElement => {
             <th scope="col" className="text-center">
               Manager Rating
               <Button
-                themeType={'border-0 bg-gu-white sort-button'}
+                props={'border-0 bg-gu-white sort-button'}
                 onSubmit={(): void => sortManagerRating()}
               >
                 {isManager ? <SortDown /> : <SortUp />}
@@ -209,7 +209,7 @@ const SkillOverview = (): React.ReactElement => {
             <th scope="col" className="text-center">
               Skill Review
               <Button
-                themeType={'border-0 bg-gu-white sort-button'}
+                props={'border-0 bg-gu-white sort-button'}
                 onSubmit={(): void => sortSkillReview()}
               >
                 {isSkillReview ? <SortDown /> : <SortUp />}

@@ -67,7 +67,7 @@ const Login: React.FC = () => {
             floatingLabelStyles={'d-flex flex-wrap'}
             children={
               <Button
-                themeType={'auth-form__icon input-group-text position-absolute'}
+                props={'auth-form__icon input-group-text position-absolute'}
                 onSubmit={(): void => setIsHiddenPassword(!isHiddenPassword)}
                 type={'button'}
               >
@@ -89,7 +89,7 @@ const Login: React.FC = () => {
           </Form.Group>
 
           <div className="d-grid gap-2">
-            <Button themeType={'btn-gu-pink text-gu-white'} type={'submit'}>
+            <Button props={'btn-gu-pink text-gu-white'} type={'submit'}>
               Sign in
             </Button>
             <Form.Text className="mt-2 text-center fs-5">

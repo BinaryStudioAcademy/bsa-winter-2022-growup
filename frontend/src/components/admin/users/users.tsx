@@ -32,7 +32,7 @@ const Users: React.FC = () => {
         <Card className="growup-card-primary">
           <Card.Header className="d-flex justify-content-end growup-card-header">
             <Button
-              themeType={
+              props={
                 'btn-outline-gu-white btn-hover-gu-purple fw-bold fs-5 border-2'
               }
               onSubmit={showWindow}

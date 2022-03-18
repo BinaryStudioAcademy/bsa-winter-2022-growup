@@ -65,14 +65,14 @@ const EducationCard: React.FC<Props> = ({ education, onEdit }) => {
         </div>
         <div className="education-action-buttons d-flex align-items-center text-gu-purple">
           <Button
-            themeType={'border-0 p-0 bg-transparent text-gu-purple'}
+            props={'border-0 p-0 bg-transparent text-gu-purple'}
             onSubmit={(): void => onEdit(education)}
             type={'button'}
           >
             <PencilFill className="education-action-buttons__edit" />
           </Button>
           <Button
-            themeType={'border-0 p-0 bg-transparent text-gu-purple'}
+            props={'border-0 p-0 bg-transparent text-gu-purple'}
             onSubmit={onRemove}
             type={'button'}
           >

@@ -71,7 +71,7 @@ const UserForm: React.FC<Props> = ({ onSubmit: submit }) => {
       </div>
       <div className="d-flex">
         <Button
-          themeType={
+          props={
             'btn-outline-gu-purple btn-hover-gu-white fw-bold fs-5 border-2 flex-fill'
           }
         >
