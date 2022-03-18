@@ -5,6 +5,7 @@ enum ActionType {
   LOGIN_USER = 'LOGIN_USER',
   SIGN_UP_USER = 'SIGN_UP_USER',
   LOGOUT_USER = 'LOGOUT_USER',
+  UPDATE_COMPANY = 'UPDATE_COMPANY',
 }
 
 export { ActionType };
