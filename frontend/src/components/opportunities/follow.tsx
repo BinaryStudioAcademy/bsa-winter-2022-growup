@@ -1,7 +1,7 @@
 import { Bookmark, BookmarkFill } from 'react-bootstrap-icons';
 import { IOpportunity } from 'store/opportunities/common';
 import { useAppDispatch } from 'hooks/hooks';
-import * as opportunitiesActions from '../../store/opportunities/actions';
+import * as opportunitiesActions from 'store/opportunities/actions';
 
 interface Props extends IOpportunity {}
 
