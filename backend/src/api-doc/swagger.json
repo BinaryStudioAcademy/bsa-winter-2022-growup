@@ -415,7 +415,7 @@
         }
       }
     },
-    "/api/company/okr/{id}/objective/{id}/keyresult": {
+    "/api/company/okr/{okrId}/objective/{objectiveId}/keyresult": {
       "post": {
         "tags": ["Okr"],
         "summary": "Add new keyresult to the objective",
@@ -431,7 +431,7 @@
           },
           {
             "in": "path",
-            "name": "id",
+            "name": "okrId",
             "required": true,
             "schema": {
               "type": "string"
@@ -440,7 +440,7 @@
           },
           {
             "in": "path",
-            "name": "id1",
+            "name": "objectiveId",
             "required": true,
             "schema": {
               "type": "string"

@@ -1,15 +1,18 @@
+@import '~assets/scss/utils';
+
 .follow {
   cursor: pointer;
-  background-color: rgba(70, 61, 168, 0.2);
   width: 30px;
   height: 30px;
+
   svg {
     width: 20px;
     height: 20px;
   }
+
   &:hover {
     svg {
-      color: #4f00b5;
+      color: $gu-blue;
     }
   }
 }
