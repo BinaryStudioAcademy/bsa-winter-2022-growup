@@ -1,9 +1,23 @@
-import { EntityRepository, ObjectLiteral, Repository } from 'typeorm';
+import {
+  EntityRepository,
+  ObjectLiteral,
+  Repository,
+  UpdateResult,
+} from 'typeorm';
 import { User } from '../entities/user';
 import { RoleType } from '~/common/enums/role-type';
+import { Company } from '~/data/entities/company';
 
 @EntityRepository(User)
 class UserRepository extends Repository<User> {
+  setCompanyIdToUser(company: Company, userId: string): Promise<UpdateResult> {
+    return this.createQueryBuilder()
+      .update(User)
+      .set({ company })
+      .where({ id: userId })
+      .execute();
+  }
+
   geUserById(userId: string): Promise<User> {
     return this.createQueryBuilder('user')
       .leftJoinAndSelect(

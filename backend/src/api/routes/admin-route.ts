@@ -30,13 +30,13 @@ router.get(
 
 router.post(
   '/users',
-  run((req) =>
-    registerCommonUsers(
+  run((req) => {
+    console.warn(req.body);
+    return registerCommonUsers(
       createDefaultUser(req.body.email),
       req.body.roleType,
-      req.companyId,
-    ),
-  ),
+    );
+  }),
 );
 
 export default router;

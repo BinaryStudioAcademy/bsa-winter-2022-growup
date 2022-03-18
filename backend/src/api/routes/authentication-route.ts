@@ -16,9 +16,7 @@ router
   )
   .post(
     '/register',
-    run(
-      async (req: Request) => await registerUserAdmin(req.body, req.companyId),
-    ),
+    run(async (req: Request) => await registerUserAdmin(req.body)),
   )
   .post(
     '/auth/refresh',

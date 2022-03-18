@@ -2,9 +2,8 @@ import { getCustomRepository } from 'typeorm';
 
 import { HttpCode, HttpError } from 'growup-shared';
 
-import UserRepository from '../data/repositories/user.repository';
+import UserRepository from '~/data/repositories/user.repository';
 import UserRoleRepository from '~/data/repositories/role.repository';
-import CompanyRepository from '~/data/repositories/company.repository';
 import User_QuizCategoryRepository from '~/data/repositories/user-quiz-category.repository';
 import RefreshTokenRepository from '~/data/repositories/refresh-token.repository';
 
@@ -68,11 +67,9 @@ const getUserJWT = async (user: User): Promise<TokenResponse> => {
 const registerUser = async (
   data: UserRegisterForm,
   role: RoleType,
-  companyId: User['company']['id'],
 ): Promise<UserRegistrationType> => {
   const userRepository = getCustomRepository(UserRepository);
   const roleRepository = getCustomRepository(UserRoleRepository);
-  const companyRepository = getCustomRepository(CompanyRepository);
 
   // Check if user with this email already exists
   // If it does, return null
@@ -87,12 +84,10 @@ const registerUser = async (
     });
 
   const hashedPassword = await hashPassword(data.password);
-  const company = await companyRepository.findOne(companyId);
 
   const userInstance = userRepository.create({
     ...data,
     password: hashedPassword,
-    company,
   });
 
   const user = await userInstance.save();
@@ -187,22 +182,16 @@ export const getCommonUserList = async (
 
 export const registerUserAdmin = async (
   data: UserRegisterForm,
-  companyId: User['company']['id'],
 ): Promise<TokenResponse> => {
-  const { user } = await registerUser(data, RoleType.ADMIN, companyId);
+  const { user } = await registerUser(data, RoleType.ADMIN);
   return getUserJWT(user);
 };
 
 export const registerCommonUsers = async (
   data: UserRegisterForm,
   role: RoleType,
-  companyId: User['company']['id'],
 ): Promise<IListUser> => {
-  const { user, role: roleInstance } = await registerUser(
-    data,
-    role,
-    companyId,
-  );
+  const { user, role: roleInstance } = await registerUser(data, role);
   return convertForUserList(user, roleInstance);
 };
 
