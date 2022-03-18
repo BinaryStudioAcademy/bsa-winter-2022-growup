@@ -1,23 +1,25 @@
 import './styles.scss';
+import Tab from './tab';
 
-const Tabs: React.FC = () => (
-  <nav className="nav-tabs profile-nav-tabs d-flex">
-    <div className="nav-item">
-      <a className="nav-link active text-decoration-none" href="#">
-        Summary
-      </a>
-    </div>
-    <div className="nav-item">
-      <a className="nav-link text-decoration-none" href="#">
-        Qualities
-      </a>
-    </div>
-    <div className="nav-item">
-      <a className="nav-link text-decoration-none" href="#">
-        Interests
-      </a>
-    </div>
-  </nav>
-);
+interface Props {
+  activeId: number;
+  changeComponent: (id: number) => void;
+}
+const Tabs: React.FC<Props> = ({ changeComponent, activeId }): JSX.Element => {
+  const tabTitles = ['Summary', 'Qualities'];
+  const tabItems = tabTitles.map((title: string, index: number) => {
+    return (
+      <Tab
+        title={title}
+        isActive={index == activeId}
+        changeComponent={changeComponent}
+        index={index}
+        key={index}
+      />
+    );
+  });
+
+  return <nav className="nav-tabs profile-nav-tabs d-flex">{tabItems}</nav>;
+};
 
 export default Tabs;

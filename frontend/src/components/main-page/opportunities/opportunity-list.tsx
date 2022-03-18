@@ -1,4 +1,4 @@
-import OpportunityItem from './opportunityItem';
+import OpportunityItem from './opportunity-item';
 import './styles.scss';
 import { useAppSelector } from 'hooks/hooks';
 import { IOpportunity } from 'store/opportunities/common';
@@ -15,16 +15,16 @@ const OpportunityList: React.FC = () => {
           + Add Opportunity
         </span>
       </div>
-      <div className="oppotunities__list">
+      <div>
         {opportunities.map((item: IOpportunity, index: number) => {
           return (
             <OpportunityItem
+              key={index}
               name={item.name}
               organization={item.organization}
-              startDate={item.startDate}
-              key={index}
-              tagsData={item.tagsData}
               type={item.type}
+              startDate={item.startDate}
+              tagsData={item.tagsData}
             />
           );
         })}

@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'common/types/types';
 import OkrList from './okr-list';
 import { useAppSelector, useNavigate } from 'hooks/hooks';
-import { MentorMenteeRoute } from 'common/enums/mentor-mentee-route/mentor-mentee-route.enum';
+import isFirstLogged from 'helpers/check-is-first-logged';
 
 function ControlledTabs(): React.ReactElement {
   const [key, setKey] = useState('my-OKR');
@@ -14,16 +14,8 @@ function ControlledTabs(): React.ReactElement {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user?.firstName) {
-      navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/1`);
-      return;
-    }
-    if (!user?.isCompleteTest) {
-      navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/2`);
-      return;
-    }
+    isFirstLogged({ user, navigate });
   }, [user]);
-
   return (
     <Tabs
       id="controlled-tab-example"

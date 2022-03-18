@@ -12,7 +12,7 @@ export enum OpportunityActions {
   LOAD_OPPORTUNITIES = 'LOAD_OPPORTUNITIES',
 }
 
-export interface IPostOppData extends IOpportunityBase {
+export interface IPostOpportunityData extends IOpportunityBase {
   createdAt: string;
   updatedAt: string;
   deletedAt?: null | string;
