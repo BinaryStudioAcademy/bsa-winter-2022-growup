@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import type { ICompany } from 'common/interfaces/company/company';
+import { useAppSelector } from 'hooks/hooks';
 import CompanyCard from './company-card';
 import AddEditCompany from './addedit-company';
 
@@ -9,7 +10,22 @@ type Props = {
 };
 
 const Company: React.FC<Props> = ({ companyList }) => {
+  const { user } = useAppSelector((state) => state.auth);
+
+  const [isDisabled, setIsDisabled] = useState(false);
   const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const companyId = user?.company?.id;
+
+    if (companyId) {
+      const company = companyList.filter((company) => company.id === companyId);
+
+      if (company.length) {
+        setIsDisabled(true);
+      }
+    }
+  }, [companyList]);
 
   const handleClose = (): void => setShow(false);
   const handleShow = (): void => setShow(true);
@@ -21,6 +37,7 @@ const Company: React.FC<Props> = ({ companyList }) => {
           <button
             className="btn btn-outline-gu-white btn-hover-gu-purple border-2 fs-5 fw-bold"
             onClick={handleShow}
+            disabled={isDisabled}
           >
             + Add Company
           </button>
