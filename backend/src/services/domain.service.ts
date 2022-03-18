@@ -23,9 +23,39 @@ export const createDomain = async (
   return domain;
 };
 
-export const getDomain = async (id: Domain['id']): Promise<Domain> => {
+export const getDomainById = async (id: Domain['id']): Promise<Domain> => {
   const domainRepository = getCustomRepository(DomainRepository);
 
   const domain = domainRepository.findOne(id);
+  return domain;
+};
+
+export const getDomains = async (company: Company): Promise<Domain[]> => {
+  const domainRepository = getCustomRepository(DomainRepository);
+
+  const domain = await domainRepository.find({
+    where: { company },
+    relations: ['company'],
+  });
+  return domain;
+};
+
+export const updateDomainById = async (
+  id: string,
+  domain: Domain,
+): Promise<Domain> => {
+  const domainRepository = getCustomRepository(DomainRepository);
+  await domainRepository.update({ id }, domain);
+  const updatedDomain = await domainRepository.findOne(id);
+
+  return updatedDomain;
+};
+
+export const deleteDomainById = async (id: Domain['id']): Promise<Domain> => {
+  const domainRepository = getCustomRepository(DomainRepository);
+
+  const domain = await domainRepository.findOne({ id });
+  await domainRepository.delete({ id });
+
   return domain;
 };

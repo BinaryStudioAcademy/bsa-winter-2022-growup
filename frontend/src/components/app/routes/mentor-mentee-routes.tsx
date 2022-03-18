@@ -37,7 +37,7 @@ export const mentorMenteeRoutes: IRoute[] = [
   },
   {
     path: MentorMenteeRoute.CAREER_PATH,
-    element: <div>Career Path</div>,
+    element: <div>Mentee Profiles</div>,
   },
   {
     path: MentorMenteeRoute.OPPORTUNITIES,
