@@ -9,6 +9,8 @@ export class SkillCategory extends AbstractEntity {
   @ManyToOne(() => Skill, (skill) => skill.id)
   skill: Skill;
 
-  @ManyToOne(() => DomainLevel, (domainLevel) => domainLevel.id)
+  @ManyToOne(() => DomainLevel, (domainLevel) => domainLevel.id, {
+    onDelete: 'CASCADE',
+  })
   level: DomainLevel;
 }
