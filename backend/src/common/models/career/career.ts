@@ -16,6 +16,6 @@ type Level = {
 };
 
 export type CareerPath = {
-  domain: string;
+  name: string;
   levels: Level[];
 };

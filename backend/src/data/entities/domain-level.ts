@@ -20,7 +20,7 @@ export class DomainLevel extends AbstractEntity {
   @TreeChildren()
   nextLevel: DomainLevel[];
 
-  @ManyToOne(() => Domain, (domain) => domain.id)
+  @ManyToOne(() => Domain, (domain) => domain.id, { onDelete: 'CASCADE' })
   domain: Domain;
 
   @Column({ type: 'varchar', length: 100 })

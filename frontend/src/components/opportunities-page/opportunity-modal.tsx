@@ -1,7 +1,6 @@
 import DatePicker from 'react-datepicker';
 import { useAppDispatch, useAppSelector, useState } from 'hooks/hooks';
 import { useRef } from 'react';
-
 import * as opportunitiesActions from 'store/opportunities/actions';
 import { Button, Form, Modal } from 'react-bootstrap';
 

@@ -25,7 +25,7 @@ const OpportunityItem: React.FC<Props> = ({
           : 'mt-3 px-3 py-3 flex-wrap rounded-1 shadow-lg border border-1 bg-gu-white justify-content-between opportunities__cart'
       }`}
     >
-      <div className="opportunities__cart--text d-flex flex-column flex-shrink-1 flex-grow-1 fs-7 me-3 oveflow-hidden">
+      <div className="opportunities__cart--text d-flex flex-column flex-shrink-1 flex-grow-1 fs-7 me-3 overflow-hidden">
         <span className="opportunities__cart--text-item fw-bold fs-5 mb-2 overflow-hidden">
           {name}
         </span>
