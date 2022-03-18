@@ -3,18 +3,20 @@ import {
   useAppDispatch,
   useAppSelector,
   useNavigate,
+  useState,
 } from 'hooks/hooks';
 import { profileActions } from 'store/actions';
 
 import Tabs from './tabs/tabs';
 import Header from './header/header';
-import ProfileMain from './profile-main/profile-main';
 import './styles.scss';
+import { tabsElements } from './tabs/tabsElements';
 import isFirstLogged from 'helpers/check-is-first-logged';
 
-const ProfileInfo: React.FC = () => {
+const ProfileInfo: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const { user, isLoading } = useAppSelector((state) => state.profile);
+  const [activeComponentId, setActiveComponentId] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,6 +26,10 @@ const ProfileInfo: React.FC = () => {
   useEffect(() => {
     dispatch(profileActions.fetchProfile());
   }, [dispatch]);
+
+  const changeComponent = (id: number): void => {
+    setActiveComponentId(id);
+  };
 
   return (
     <div className="profile-info gu-white">
@@ -38,10 +44,13 @@ const ProfileInfo: React.FC = () => {
             />
           </div>
           <div className="profile-container profile-container_tabs">
-            <Tabs />
+            <Tabs
+              changeComponent={changeComponent}
+              activeId={activeComponentId}
+            />
           </div>
           <div className="profile-container profile-container_main">
-            <ProfileMain />
+            {tabsElements[activeComponentId].component}
           </div>
         </>
       )}
