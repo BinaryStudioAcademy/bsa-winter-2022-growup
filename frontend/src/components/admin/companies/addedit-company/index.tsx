@@ -43,11 +43,16 @@ const AddEditCompany: FC<Props> = ({ show, handleClose, company }) => {
 
     newCompany = { ...newCompany, ...{ description, name } };
 
+    const data = {
+      newCompany: newCompany as ICompany,
+      handleClose,
+    };
+
     if (company) {
-      dispatch(companyActions.edit_companyAsync(newCompany as ICompany));
+      dispatch(companyActions.edit_companyAsync(data));
       return;
     }
-    dispatch(companyActions.add_companyAsync(newCompany as ICompany));
+    dispatch(companyActions.add_companyAsync(data));
   };
 
   return (
