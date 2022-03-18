@@ -1,6 +1,7 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { FirstStepFormType } from 'components/profile-settings/steps/common/types';
 import { profile } from 'services/index';
-import { ActionType, NameAndPosition } from './common';
+import { ActionType } from './common';
 
 const fetchProfile = createAsyncThunk(
   ActionType.FETCH,
@@ -28,9 +29,9 @@ const updateAvatar = createAsyncThunk(
 
 const insertPIB = createAsyncThunk(
   ActionType.INSERT_PIB,
-  async (data: object, { rejectWithValue }) => {
+  async (data: FirstStepFormType, { rejectWithValue }) => {
     try {
-      const result: NameAndPosition = await profile.setPIB(data);
+      const result: FirstStepFormType = await profile.setPIB(data);
       return {
         firstName: result.firstName,
         lastName: result.lastName,

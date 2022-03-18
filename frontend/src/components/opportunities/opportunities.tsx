@@ -3,6 +3,7 @@ import {
   useAppSelector,
   useCallback,
   useEffect,
+  useNavigate,
 } from 'hooks/hooks';
 import { NotificationManager } from 'react-notifications';
 import * as opportunityActions from 'store/opportunities/actions';
@@ -11,10 +12,12 @@ import OpportunityItem from '../main-page/opportunities/opportunity-item';
 import AddSection from '../profile/add-section/add-section';
 import OpportunityForm from './opportunity-form';
 import Follow from './follow';
+import isFirstLogged from 'helpers/check-is-first-logged';
 
 const Opportunities: React.FC = () => {
   const dispatch = useAppDispatch();
-
+  const user = useAppSelector((store) => store.profile.user);
+  const navigate = useNavigate();
   const isLoaded = useAppSelector((state) => state.opportunities.isLoaded);
   const isShowModal = useAppSelector(
     (state) => state.opportunities.isShowModal,
@@ -22,6 +25,10 @@ const Opportunities: React.FC = () => {
   const opportunityData = useAppSelector(
     (state) => state.opportunities.opportunities,
   );
+
+  useEffect(() => {
+    isFirstLogged({ user, navigate });
+  }, [user]);
 
   useEffect(() => {
     if (!isLoaded) {
