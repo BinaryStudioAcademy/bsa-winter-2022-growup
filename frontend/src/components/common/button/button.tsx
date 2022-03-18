@@ -1,7 +1,6 @@
 import { FormEvent } from 'react';
 
 interface Props {
-  props?: string;
   className?: string;
   text?: string;
   onSubmit?: (a: FormEvent) => void;
@@ -9,16 +8,8 @@ interface Props {
   disabled?: boolean;
 }
 
-const Button: React.FC<Props> = ({
-  props = '',
-  className = '',
-  onSubmit,
-  children,
-}) => (
-  <button
-    className={props ? `btn ${props}` : `${className}`}
-    onClick={onSubmit}
-  >
+const Button: React.FC<Props> = ({ className = '', onSubmit, children }) => (
+  <button className={`${className}`} onClick={onSubmit}>
     {children}
   </button>
 );

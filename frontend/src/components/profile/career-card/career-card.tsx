@@ -66,14 +66,14 @@ const CareerCard: React.FC<Props> = ({ careerJourney, onEdit }) => {
         </div>
         <div className="career-action-buttons d-flex align-self-center text-gu-purple">
           <Button
-            props={'border-0 p-0 bg-transparent text-gu-purple'}
+            className={'btn border-0 p-0 bg-transparent text-gu-purple'}
             onSubmit={(): void => onEdit(careerJourney)}
             type={'button'}
           >
             <PencilFill className="career-action-buttons__edit" />
           </Button>
           <Button
-            props={'border-0 p-0 bg-transparent text-gu-purple'}
+            className={'btn border-0 p-0 bg-transparent text-gu-purple'}
             onSubmit={onRemove}
             type={'button'}
           >

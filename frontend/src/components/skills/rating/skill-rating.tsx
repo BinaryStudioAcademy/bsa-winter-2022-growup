@@ -81,7 +81,7 @@ const SkillElement = (props: Props): React.ReactElement => {
           `${props.name}`
         )}{' '}
         <Button
-          props={'border-0 bg-gu-white sort-button'}
+          className={'border-0 bg-gu-white sort-button'}
           onSubmit={(): void =>
             isEdit ? setIsStar(!isStar) : console.warn('Warning')
           }
@@ -94,7 +94,7 @@ const SkillElement = (props: Props): React.ReactElement => {
         </Button>
         {isHover ? (
           <Button
-            props={'btn-gu-white btn-outline-gu-black button-group'}
+            className={'btn btn-gu-white btn-outline-gu-black button-group'}
             type={'button'}
             onSubmit={(): void => saveEdits(props.id)}
           >
@@ -105,7 +105,7 @@ const SkillElement = (props: Props): React.ReactElement => {
         )}
         {isHover ? (
           <Button
-            props={'btn-gu-white btn-outline-gu-black mx-2'}
+            className={'btn btn-gu-white btn-outline-gu-black mx-2'}
             type={'button'}
             onSubmit={(): void => deleteSkill(props.id)}
           >

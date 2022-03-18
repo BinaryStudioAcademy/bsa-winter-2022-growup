@@ -79,7 +79,7 @@ export const Demo: React.FC<Props> = ({
 
       <div className="d-flex">
         <Button
-          props={'btn-outline-gu-purple flex-fill border-2 fw-bold'}
+          className={'btn btn-outline-gu-purple flex-fill border-2 fw-bold'}
           onSubmit={getCropData}
         >
           {isLoading ? 'Loading...' : 'Save'}
