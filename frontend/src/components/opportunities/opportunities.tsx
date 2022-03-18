@@ -25,7 +25,7 @@ const Opportunities: React.FC = () => {
 
   useEffect(() => {
     if (!isLoaded) {
-      dispatch(opportunityActions.fetchLoadOpp());
+      dispatch(opportunityActions.fetchLoadOpportunities());
     }
   }, []);
 
@@ -38,7 +38,7 @@ const Opportunities: React.FC = () => {
   }, []);
 
   const handleSave = useCallback(
-    (payload) => dispatch(opportunityActions.fetchNewOpp(payload)),
+    (payload) => dispatch(opportunityActions.fetchNewOpportunity(payload)),
     [dispatch],
   );
 
