@@ -29,13 +29,14 @@ router.get(
 
 router.post(
   '/users',
-  run((req) =>
-    registerUserController({
+  run((req) => {
+    return registerUserController({
+      host: req.headers['x-forwarded-host'] as string,
       email: req.body.email,
       roleType: req.body.roleType,
       companyId: req.companyId,
-    }),
-  ),
+    });
+  }),
 );
 
 export default router;

@@ -1,38 +1,55 @@
-// import nodemailer from 'nodemailer';
+import fs from 'fs';
+import path from 'path';
+import { promisify } from 'util';
+
+import nodemailer from 'nodemailer';
+import { compile } from 'handlebars';
+
+import { HttpCode, HttpError } from 'growup-shared';
+
 import { SuccessResponse } from '~/common/models/responses/success';
+import { env } from '~/config/env';
+
+const readFile = promisify(fs.readFile);
 
 const sendMail = async (
-  _email: string,
+  host: string,
+  email: string,
   token: string,
 ): Promise<SuccessResponse> => {
-  // const testAccount = await nodemailer.createTestAccount();
+  const html = await readFile(
+    path.join(__dirname, '..', 'data/local/mail/registration.html'),
+    'utf-8',
+  );
+  const template = compile(html);
 
-  // const transporter = nodemailer.createTransport({
-  //   host: 'smtp.ethereal.email',
-  //   port: 587,
-  //   secure: false,
-  //   auth: {
-  //     user: testAccount.user,
-  //     pass: testAccount.pass,
-  //   },
-  // });
+  const transport = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: env.email.name,
+      pass: env.email.password,
+    },
+  });
 
-  // const info = await transporter.sendMail({
-  //   from: '"Test" <no-reply@growup.com>',
-  //   to: email,
-  //   subject: 'Growup Registration',
-  //   html: `
-  //   <h1>Hello</h1>
-  //   <p>
-  //     You've recieved this email, because someone used this email while registrating
-  //     on our growup website. If it was you, then confirm and continue your
-  //     registration by link http://localhost:3000/signup/${token}
-  //   </p>`,
-  // });
+  const url = `http://${host}/registration-complete/${token}`;
 
-  console.info(`http://localhost:3000/signup/${token}`);
-  // console.info(nodemailer.getTestMessageUrl(info));
+  const mail = {
+    from: env.email.name,
+    to: email,
+    subject: 'Complete registration',
+    html: template({ url }),
+  };
 
+  try {
+    await transport.sendMail(mail);
+  } catch {
+    throw new HttpError({
+      status: HttpCode.INTERNAL_SERVER_ERROR,
+      message: 'Email can not be sent',
+    });
+  }
+
+  console.info(`[user link] ${url}`);
   return { success: true, message: 'Email is sent' };
 };
 

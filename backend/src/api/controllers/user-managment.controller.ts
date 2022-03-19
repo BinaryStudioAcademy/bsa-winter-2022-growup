@@ -23,12 +23,14 @@ import { IListUser, ShortUser } from '~/common/models/user/user';
 import { toShortUser } from '~/common/mappers/user.mapper';
 
 type RegistrationUserProps = {
+  host: string;
   email: string;
   roleType: RoleType;
   companyId: Company['id'];
 };
 
 const registerUserController = async ({
+  host,
   email,
   roleType,
   companyId,
@@ -40,7 +42,7 @@ const registerUserController = async ({
   );
 
   const token = await createRegistrationToken(data.user);
-  await sendMail(data.user.email, token.value);
+  await sendMail(host, data.user.email, token.value);
   return convertForUserList(data.user, data.role);
 };
 

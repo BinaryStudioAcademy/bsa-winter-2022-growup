@@ -23,8 +23,6 @@ const UserAvatar: React.FC<Props> = memo(
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    console.info(firstName, lastName);
-
     const onClick = (): void => {
       dispatch(actions.LOGOUT_USER());
       navigate(AppRoute.LOGIN);
