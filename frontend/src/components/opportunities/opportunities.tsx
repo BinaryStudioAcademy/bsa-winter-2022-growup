@@ -13,6 +13,7 @@ import AddSection from '../profile/add-section/add-section';
 import OpportunityForm from './opportunity-form';
 import Follow from './follow';
 import isFirstLogged from 'helpers/check-is-first-logged';
+import { parseDate } from '../../helpers/parse-date/index';
 
 const Opportunities: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -74,7 +75,7 @@ const Opportunities: React.FC = () => {
             name={item.name}
             organization={item.organization}
             type={item.type}
-            startDate={item.startDate}
+            startDate={parseDate(item.startDate as string)}
             tagsData={item.tagsData}
             isFollow={item.isFollow}
             isOpportunitiesPage={true}

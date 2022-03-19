@@ -6,6 +6,7 @@ import { useState, useAppDispatch } from 'hooks/hooks';
 import { RoleType } from 'common/enums/enums';
 
 import { adminActions } from 'store/admin';
+import { IUser } from 'common/interfaces/user/user';
 
 type Props = {
   onSubmit: () => void;
@@ -32,10 +33,13 @@ const UserForm: React.FC<Props> = ({ onSubmit: submit }) => {
       }),
     )
       .unwrap()
-      .then(() => {
-        NotificationManager.success('User invited successfully');
+      .then((res: IUser | null) => {
+        if (!res) {
+          NotificationManager.error('User with this email already exists');
+        } else {
+          NotificationManager.success('User invited successfully');
+        }
       });
-
     setEmail('');
     setRole(RoleType.MENTOR);
     submit();
