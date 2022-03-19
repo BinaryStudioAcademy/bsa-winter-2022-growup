@@ -30,8 +30,9 @@ const Modal: React.FC<Props> = ({
       <ModalWindow.Body className={className}>{children}</ModalWindow.Body>
       {footer && (
         <ModalWindow.Footer className="w-100 bg-gu-white justify-content-start fw-bold fs-3">
+          <Button themeType="btn-secondary" text="Close" onSubmit={onClose} />
           <Button
-            themeType={'btn-gu-pink text-gu-white'}
+            themeType="btn-gu-pink text-gu-white"
             text={buttonText || 'Save'}
             onSubmit={onSubmit}
           />
