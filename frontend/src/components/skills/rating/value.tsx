@@ -3,10 +3,10 @@ import ProgressActive from './progress-active';
 import ProgressPassive from './progress-passive';
 
 interface Props {
-  value: string;
+  value: string | number;
 }
 
-function arraylength(count: number, rating: string): number {
+function arraylength(count: number, rating: string | number): number {
   if (count === 0) {
     return rating ? Number(rating) : 0;
   } else {

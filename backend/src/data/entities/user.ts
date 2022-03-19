@@ -3,6 +3,7 @@ import { AbstractEntity } from '~/data/abstract/abstract.entity';
 import { DomainLevel } from './domain-level';
 import { Company } from './company';
 import { UserRole } from './user-role';
+import { UserSkill } from './user-skill';
 import { CareerJourney } from './career-journey';
 import { Education } from './education';
 
@@ -23,7 +24,10 @@ export class User extends AbstractEntity {
   @Column({ type: 'varchar', length: 150, nullable: true })
   avatar: string;
 
-  @ManyToOne(() => Company, (company) => company.users)
+  @Column({ type: 'varchar', length: 150, nullable: true })
+  position: string;
+
+  @ManyToOne(() => Company, (company) => company.id)
   company: Company;
 
   @ManyToOne(() => User, (user) => user.id)
@@ -31,6 +35,9 @@ export class User extends AbstractEntity {
 
   @ManyToOne(() => DomainLevel, (domainLevel) => domainLevel.id)
   domain: DomainLevel;
+
+  @OneToMany(() => UserSkill, (userSkill) => userSkill.user)
+  userSkills: UserSkill[];
 
   @OneToMany(() => UserRole, (userRole) => userRole.user)
   role: UserRole[];

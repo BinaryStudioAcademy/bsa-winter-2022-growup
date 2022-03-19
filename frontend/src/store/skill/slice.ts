@@ -2,44 +2,16 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ReducerName } from 'common/enums/app/reducer-name.enum';
 import { ISkill } from 'components/skills/common/interfaces';
 import { ActionType } from './common';
+import SkillReducer from './reducer';
 
 type State = {
   userSkill: ISkill[];
+  allSkills: ISkill[];
 };
 
 const initialState: State = {
-  userSkill: [
-    {
-      id: '1',
-      name: 'UX Design',
-      userId: '1',
-      rating: ['1', '', '1'],
-    },
-    {
-      id: '2',
-      name: 'InVision',
-      userId: '1',
-      rating: ['8', '7', '8'],
-    },
-    {
-      id: '3',
-      name: 'UX Design',
-      userId: '2',
-      rating: ['3', '10', '8'],
-    },
-    {
-      id: '4',
-      name: 'Data Visualization',
-      userId: '1',
-      rating: ['7', '', '7'],
-    },
-    {
-      id: '5',
-      name: 'Mathematical',
-      userId: '2',
-      rating: ['8', '2', '5'],
-    },
-  ],
+  userSkill: [],
+  allSkills: [],
 };
 
 const { reducer, actions } = createSlice({
@@ -66,6 +38,7 @@ const { reducer, actions } = createSlice({
       state.userSkill = action.payload;
     },
   },
+  extraReducers: SkillReducer,
 });
 
 export { reducer, actions };

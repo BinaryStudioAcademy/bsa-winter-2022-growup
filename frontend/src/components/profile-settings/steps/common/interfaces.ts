@@ -1,6 +1,5 @@
 interface IProfileSettingStep {
   isDisablePrevious?: boolean;
-  onPrevious?: () => void;
   onNext?: () => void;
 }
 

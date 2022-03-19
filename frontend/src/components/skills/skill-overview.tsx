@@ -1,27 +1,47 @@
+import { Form } from 'react-bootstrap';
+import {
+  useAppDispatch,
+  useAppForm,
+  useAppSelector,
+  useState,
+  useEffect,
+} from 'hooks/hooks';
 import { RootState } from 'common/types/types';
+import { ISkill } from 'common/interfaces/skill/skill';
 import ProfileHeader from './header-user';
 import SkillElement from './rating/skill-rating';
-import { ISkill } from './common/interfaces';
+import { FormInput } from '../common/common';
+import { ReactComponent as SortUp } from 'assets/img/icons/skill-icons/sortUp-icon.svg';
+import { ReactComponent as SortDown } from 'assets/img/icons/skill-icons/sortDown-icon.svg';
+import { SkillFormType } from './common/types';
+import { DEFAULT_SKILL_PAYLOAD } from './common/constants';
+import { actions } from 'store/skill/slice';
+import { skill as skillValidationSchema } from 'validation-schemas/validation-schemas';
+import { skillActions } from 'store/skill';
 import './styles.scss';
-import { useState } from 'react';
-import { useAppDispatch, useAppSelector } from 'hooks/hooks';
-import { actions } from '../../store/skill/slice';
-import { validSkillName } from './validations/skill-name';
-import { ReactComponent as SortUp } from '../../assets/img/icons/skill-icons/sortUp-icon.svg';
-import { ReactComponent as SortDown } from '../../assets/img/icons/skill-icons/sortDown-icon.svg';
 
 const SkillOverview = (): React.ReactElement => {
-  const user = useAppSelector((state: RootState) => state.auth.user);
-  const skillList = useAppSelector((state: RootState) =>
-    state.skill.userSkill.filter((skill) => skill.userId === user?.id),
-  );
+  const skills = useAppSelector((state: RootState) => state.skill.userSkill);
+  const allSkills = useAppSelector((state: RootState) => state.skill.allSkills);
   const [textFind, setTextFind] = useState('');
-  const [textAdd, setTextAdd] = useState('');
   const [isManager, setIsManager] = useState(true);
   const [isSkillReview, setIsSkillReview] = useState(true);
   const [isSortName, setIsSortName] = useState(true);
   const [isSortSelf, setIsSortSelf] = useState(true);
   const dispatch = useAppDispatch();
+  const skillStarred = skills.filter((skill: ISkill) => skill.isStarred);
+  const skillNotStarred = skills.filter((skill: ISkill) => !skill.isStarred);
+
+  useEffect(() => {
+    dispatch(skillActions.fetchUserSkills());
+    dispatch(skillActions.fetchSkills());
+  }, []);
+
+  const { control, errors, handleSubmit, reset } = useAppForm<SkillFormType>({
+    defaultValues: DEFAULT_SKILL_PAYLOAD,
+    validationSchema: skillValidationSchema,
+    mode: 'onSubmit',
+  });
 
   function isFind(text: string): boolean {
     const partName = text.slice(0, textFind.length);
@@ -30,20 +50,26 @@ const SkillOverview = (): React.ReactElement => {
     );
   }
 
-  function handleSubmit(e: React.SyntheticEvent): void {
-    if (validSkillName(textAdd) && user) {
-      dispatch(
-        actions.ADD_SKILL({
-          id: new Date().getMilliseconds().toString(),
-          name: textAdd,
-          userId: user.id,
-          rating: ['', '', ''],
-        }),
-      );
-      setTextAdd('');
-    }
-    e.preventDefault();
-  }
+  const handleAdd = (payload: ISkill): void => {
+    const isName = allSkills.find((skill) => skill.name === payload.name);
+    const isUserName = skills.find((skill) => skill.name === payload.name);
+    if (!isUserName)
+      if (!isName) {
+        dispatch(skillActions.createSkill([payload]));
+      } else {
+        dispatch(skillActions.connectSkill([payload]));
+      }
+  };
+
+  const onAdd = (values: SkillFormType): void => {
+    const skill = {
+      id: '',
+      type: 'Soft skills',
+    };
+    const newSkill = { ...skill, name: values.name };
+    handleAdd(newSkill);
+    reset?.();
+  };
 
   function sortByName(x: ISkill, y: ISkill): number {
     let upDown;
@@ -58,47 +84,59 @@ const SkillOverview = (): React.ReactElement => {
   }
 
   function sortBySelfRating(x: ISkill, y: ISkill): number {
-    if (isSortSelf) {
-      return +y.rating[0] - +x.rating[0];
-    } else {
-      return +x.rating[0] - +y.rating[0];
-    }
+    if (y.rating && x.rating)
+      if (isSortSelf) {
+        return +y.rating[0] - +x.rating[0];
+      } else {
+        return +x.rating[0] - +y.rating[0];
+      }
+    return 0;
   }
+
   function sortByManager(x: ISkill, y: ISkill): number {
-    if (isManager) {
-      return +y.rating[1] - +x.rating[1];
-    } else {
-      return +x.rating[1] - +y.rating[1];
-    }
+    if (y.rating && x.rating)
+      if (isManager) {
+        return +y.rating[1] - +x.rating[1];
+      } else {
+        return +x.rating[1] - +y.rating[1];
+      }
+    return 0;
   }
+
   function sortBySkillReview(x: ISkill, y: ISkill): number {
-    if (isSkillReview) {
-      return +y.rating[2] - +x.rating[2];
-    } else {
-      return +x.rating[2] - +y.rating[2];
-    }
+    if (y.rating && x.rating)
+      if (isSkillReview) {
+        return +y.rating[2] - +x.rating[2];
+      } else {
+        return +x.rating[2] - +y.rating[2];
+      }
+    return 0;
   }
 
   function sortSkillNames(): void {
-    const sortNames = skillList.sort(sortByName);
+    const copySkills = [...skills];
+    const sortNames = copySkills.sort(sortByName);
     setIsSortName(!isSortName);
     dispatch(actions.SORT_NAME(sortNames));
   }
 
   function sortSelfRating(): void {
-    const sortSelfRating = skillList.sort(sortBySelfRating);
+    const copySkills = [...skills];
+    const sortSelfRating = copySkills.sort(sortBySelfRating);
     setIsSortSelf(!isSortSelf);
     dispatch(actions.SORT_NAME(sortSelfRating));
   }
 
   function sortManagerRating(): void {
-    const sortManager = skillList.sort(sortByManager);
+    const copySkills = [...skills];
+    const sortManager = copySkills.sort(sortByManager);
     setIsManager(!isManager);
     dispatch(actions.SORT_NAME(sortManager));
   }
 
   function sortSkillReview(): void {
-    const sortSkillReview = skillList.sort(sortBySkillReview);
+    const copySkills = [...skills];
+    const sortSkillReview = copySkills.sort(sortBySkillReview);
     setIsSkillReview(!isSkillReview);
     dispatch(actions.SORT_NAME(sortSkillReview));
   }
@@ -117,19 +155,18 @@ const SkillOverview = (): React.ReactElement => {
               id="inputName"
               placeholder="Search skill"
               value={textFind}
-              onChange={(k): void => setTextFind(k.target.value)}
+              onChange={(e): void => setTextFind(e.target.value)}
             />
           </div>
         </form>
-        <form className="d-flex" onSubmit={handleSubmit}>
-          <div className="col-auto mx-4">
-            <input
+        <Form className="d-flex" onSubmit={handleSubmit(onAdd)}>
+          <div className="col form-input mx-4">
+            <FormInput
+              name={'name'}
+              control={control}
+              errors={errors}
               type="text"
-              className="form-control"
-              id="inputSkill"
               placeholder="Enter name of the skill"
-              value={textAdd}
-              onChange={(k): void => setTextAdd(k.target.value)}
             />
           </div>
           <div className="col-auto">
@@ -139,7 +176,7 @@ const SkillOverview = (): React.ReactElement => {
               value="+ Add Skill"
             />
           </div>
-        </form>
+        </Form>
       </div>
       <table className="table">
         <thead>
@@ -183,17 +220,36 @@ const SkillOverview = (): React.ReactElement => {
           </tr>
         </thead>
         <tbody>
-          {skillList.map((skill: ISkill) => {
-            if (isFind(skill.name))
-              return (
-                <SkillElement
-                  key={skill.id}
-                  name={skill.name}
-                  rating={skill.rating}
-                  id={skill.id}
-                />
-              );
-          })}
+          {skills
+            ? skillStarred.map((skill: ISkill) => {
+                if (skill.name)
+                  if (isFind(skill.name) && skill.rating)
+                    return (
+                      <SkillElement
+                        key={skill.id}
+                        name={skill.name}
+                        rating={skill.rating}
+                        id={skill.id}
+                        isStarred={skill.isStarred}
+                      />
+                    );
+              })
+            : true}
+          {skills
+            ? skillNotStarred.map((skill: ISkill) => {
+                if (skill.name)
+                  if (isFind(skill.name) && skill.rating)
+                    return (
+                      <SkillElement
+                        key={skill.id}
+                        name={skill.name}
+                        rating={skill.rating}
+                        id={skill.id}
+                        isStarred={skill.isStarred}
+                      />
+                    );
+              })
+            : true}
         </tbody>
       </table>
     </div>

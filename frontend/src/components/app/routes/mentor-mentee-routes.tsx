@@ -4,14 +4,14 @@ import {
   AppRoute,
   MentorMenteeRoute,
   ProfileSettingsRoute,
-} from '../../../common/enums/enums';
+} from 'common/enums/enums';
 import Profile from '../../profile/profile';
 import MainPage from '../../main-page/main-page';
 import { NotFound } from '../../not-found';
 import ProfileSettings from '../../profile-settings/profile-settings';
 import ControlledTabs from 'components/okr/tabs/two-tabs';
 import SkillOverview from 'components/skills/skill-overview';
-import OpprotunitiesPage from 'components/opportunities-page/opportunitiesPage';
+import Opportunities from 'components/opportunities/opportunities';
 import { IRoute } from '../common/interfaces';
 
 export const mentorMenteeRoutes: IRoute[] = [
@@ -37,11 +37,11 @@ export const mentorMenteeRoutes: IRoute[] = [
   },
   {
     path: MentorMenteeRoute.CAREER_PATH,
-    element: <div>Career Path</div>,
+    element: <div>Mentee Profiles</div>,
   },
   {
     path: MentorMenteeRoute.OPPORTUNITIES,
-    element: <OpprotunitiesPage />,
+    element: <Opportunities />,
   },
   {
     path: MentorMenteeRoute.MENTEE_PROFILES,

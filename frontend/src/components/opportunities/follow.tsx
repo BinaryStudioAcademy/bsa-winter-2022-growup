@@ -1,7 +1,7 @@
 import { Bookmark, BookmarkFill } from 'react-bootstrap-icons';
 import { IOpportunity } from 'store/opportunities/common';
 import { useAppDispatch } from 'hooks/hooks';
-import * as opportunitiesActions from '../../store/opportunities/actions';
+import * as opportunitiesActions from 'store/opportunities/actions';
 
 interface Props extends IOpportunity {}
 
@@ -16,13 +16,13 @@ const Follow: React.FC<Props> = ({ isFollow, id }) => {
       };
   return (
     <span
-      className="follow px-1 py-1 align-self-start position-relative rounded-1"
+      className="follow px-1 py-1 align-self-start position-relative bg-transparent text-gu-blue"
       onClick={(): void => {
         followHandler();
       }}
     >
       {isFollow ? (
-        <BookmarkFill className="text-gu-blue position-absolute top-50 start-50 translate-middle" />
+        <BookmarkFill className="position-absolute top-50 start-50 translate-middle" />
       ) : (
         <Bookmark className="position-absolute top-50 start-50 translate-middle" />
       )}

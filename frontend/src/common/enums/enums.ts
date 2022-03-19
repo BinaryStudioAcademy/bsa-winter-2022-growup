@@ -11,3 +11,5 @@ export {
 } from './validation/validation';
 export { FirstStepPayloadKey } from './steps/steps';
 export { RoleType } from './user/roles.enum';
+export { SkillPayloadKey } from './skill/skill-payload-key.enum';
+export { OpportunityPayloadKey } from './opportunity/opportunity-payload-key.enum';

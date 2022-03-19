@@ -64,6 +64,10 @@ $defaultSkillLvlCount: 10;
   background-color: rgba($gu-black, 0.2);
 }
 
+.form-input {
+  width: 265px;
+}
+
 $variable: 277.5deg;
 $sizeProgress: math.div(360deg, $defaultSkillLvlCount);
 $sizeProgressOne: math.div($sizeProgress - 15deg, 3);

@@ -23,7 +23,7 @@ export const getOpportunities = async (
     relations: ['company', 'user', 'tags'],
   } as FindManyOptions);
 
-  return opportunities.map((opportunitie) => opportunityMapper(opportunitie));
+  return opportunities.map((opportunity) => opportunityMapper(opportunity));
 };
 interface Props {
   name: string;
@@ -61,5 +61,5 @@ export const createOpportunities = async (
     opportunities.push(opportunitiesInstance);
   }, data);
 
-  return opportunities.map((opportunitie) => opportunityMapper(opportunitie));
+  return opportunities.map((opportunity) => opportunityMapper(opportunity));
 };

@@ -1,5 +1,5 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { FirstStepFormType } from 'components/profile-settings/steps/common/types';
 import { profile } from 'services/index';
 import { ActionType } from './common';
 
@@ -27,4 +27,21 @@ const updateAvatar = createAsyncThunk(
   },
 );
 
-export { fetchProfile, updateAvatar };
+const insertPIB = createAsyncThunk(
+  ActionType.INSERT_PIB,
+  async (data: FirstStepFormType, { rejectWithValue }) => {
+    try {
+      const result: FirstStepFormType = await profile.setPIB(data);
+      return {
+        firstName: result.firstName,
+        lastName: result.lastName,
+        position: result.position,
+      };
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
+const completeTest = createAction(ActionType.COMPLETE_TEST);
+export { fetchProfile, updateAvatar, insertPIB, completeTest };

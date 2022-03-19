@@ -8,9 +8,9 @@ import EditAvatar from './edit-avatar';
 
 import './styles.scss';
 
-type Props = Pick<IUser, 'avatar' | 'firstName' | 'lastName'>;
+type Props = Pick<IUser, 'avatar' | 'firstName' | 'lastName' | 'position'>;
 
-const Header: React.FC<Props> = ({ avatar, firstName, lastName }) => {
+const Header: React.FC<Props> = ({ avatar, firstName, lastName, position }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const closeModal = useCallback(() => setIsModalVisible(false), []);
@@ -34,9 +34,7 @@ const Header: React.FC<Props> = ({ avatar, firstName, lastName }) => {
           <p className="profile-description__name fs-2 text-gu-black fw-bold">
             {firstName} {lastName}
           </p>
-          <p className="profile-description__position fs-4">
-            Fullstack JS Engineer
-          </p>
+          <p className="profile-description__position fs-4">{position}</p>
           <div className="level d-flex align-items-center">
             <ShieldFillCheck className="level__icon" />
             <p className="level__text fs-6">Level 2</p>
