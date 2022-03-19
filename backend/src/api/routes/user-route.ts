@@ -3,8 +3,9 @@ import multer from 'multer';
 
 import { run } from '~/common/helpers/route.helper';
 
+import { fetchUserController } from '../controllers/auth.controller';
+
 import {
-  fetchUser,
   updateUserAvatar,
   insertFirstNameLastName,
 } from '~/services/user.service';
@@ -24,7 +25,7 @@ router
   )
   .get(
     '/',
-    run((req: Request) => fetchUser(req.userId)),
+    run((req: Request) => fetchUserController(req.userId)),
   )
   .use('/career-journey', careerJourneyRoute)
   .use('/education', educationRoute);
