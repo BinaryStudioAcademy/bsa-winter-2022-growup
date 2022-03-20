@@ -31,6 +31,11 @@ const Modal: React.FC<Props> = ({
       {footer && (
         <ModalWindow.Footer className="w-100 bg-gu-white justify-content-start fw-bold fs-3">
           <Button
+            className="btn btn-secondary"
+            text="Close"
+            onSubmit={onClose}
+          />
+          <Button
             className={'btn btn-gu-pink text-gu-white'}
             onSubmit={onSubmit}
           >

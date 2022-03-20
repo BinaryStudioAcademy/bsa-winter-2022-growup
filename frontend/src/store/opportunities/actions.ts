@@ -1,5 +1,10 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { IOpportunity, IOpportunityBase, OpportunityActions } from './common';
+import {
+  IOpportunity,
+  IOpportunityBase,
+  OpportunityActions,
+  SortOption,
+} from './common';
 import { ThunkApiType } from '../store';
 
 const fetchLoadOpportunities = createAsyncThunk<
@@ -51,7 +56,9 @@ const fetchNewOpportunity = createAsyncThunk<
 );
 
 const showModal = createAction(OpportunityActions.SHOW_MODAL);
+
 const closeModal = createAction(OpportunityActions.CLOSE_MODAL);
+
 const subscribeFollow = createAction(
   OpportunityActions.SUBSCRIBE_FOLLOW,
   (id?: string) => {
@@ -62,6 +69,7 @@ const subscribeFollow = createAction(
     };
   },
 );
+
 const unSubscribeFollow = createAction(
   OpportunityActions.UNSUBSCRIBE_FOLLOW,
   (id?: string) => {
@@ -73,6 +81,11 @@ const unSubscribeFollow = createAction(
   },
 );
 
+const sortOpportunities = createAction(
+  OpportunityActions.SORT_OPPORTUNITIES,
+  (by: SortOption) => ({ payload: { by } }),
+);
+
 export {
   subscribeFollow,
   unSubscribeFollow,
@@ -80,4 +93,5 @@ export {
   closeModal,
   fetchNewOpportunity,
   fetchLoadOpportunities,
+  sortOpportunities,
 };
