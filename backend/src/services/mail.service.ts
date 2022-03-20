@@ -49,7 +49,6 @@ const sendMail = async (
     });
   }
 
-  console.info(`[user link] ${url}`);
   return { success: true, message: 'Email is sent' };
 };
 

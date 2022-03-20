@@ -8,6 +8,8 @@ import { registerUserController } from '../controllers/user-managment.controller
 import { deleteTag, getTags } from '~/services/tag.service';
 import { getCommonUserList } from '~/services/user.service';
 
+import { Headers } from '~/common/enums/headers';
+
 const router: Router = Router();
 
 router.get(
@@ -31,7 +33,7 @@ router.post(
   '/users',
   run((req) => {
     return registerUserController({
-      host: req.headers['x-forwarded-host'] as string,
+      host: req.headers[Headers.FORWARDED_HOST] as string,
       email: req.body.email,
       roleType: req.body.roleType,
       companyId: req.companyId,
