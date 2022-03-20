@@ -7,6 +7,7 @@ import {
   fetchUser,
   updateUserAvatar,
   insertFirstNameLastName,
+  addProfile,
 } from '~/services/user.service';
 import careerJourneyRoute from './career-journey';
 import educationRoute from './education-route';
@@ -25,6 +26,12 @@ router
   .get(
     '/',
     run((req: Request) => fetchUser(req.userId)),
+  )
+  .post(
+    '/profile',
+    run((req) => {
+      return addProfile(req.body, req.userId);
+    }),
   )
   .use('/career-journey', careerJourneyRoute)
   .use('/education', educationRoute);

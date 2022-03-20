@@ -280,3 +280,16 @@ export const updateUserAvatar = async (
 
   return user as User;
 };
+
+export const addProfile = async (data: User, userId: string): Promise<User> => {
+  const userRepository = getCustomRepository(UserRepository);
+
+  const userInstance = await userRepository.findOne({
+    where: { id: userId },
+  });
+
+  const user = Object.assign(userInstance, data);
+  user.save();
+
+  return user;
+};
