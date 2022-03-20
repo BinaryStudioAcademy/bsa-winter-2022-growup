@@ -1,8 +1,7 @@
-import { FormEvent, useCallback } from 'react';
-import { useAppDispatch, useAppSelector, useTagList } from 'hooks/hooks';
+import { FormEvent } from 'react';
+import { useAppDispatch, useTagList } from 'hooks/hooks';
 import { tagsActions } from 'store/actions';
 import { Modal } from 'components/common/common';
-import { ITag } from 'common/interfaces/tag/tag';
 
 import TagForm from './form';
 import TagList from './tag-list';
@@ -13,7 +12,6 @@ type Props = {
 };
 
 const TagModal: React.FC<Props> = ({ show, onClose }) => {
-  const { tags } = useAppSelector((state) => state.tags);
   const { list: tagList, addItem, deleteItem, clearItems } = useTagList();
 
   const dispatch = useAppDispatch();
@@ -25,10 +23,6 @@ const TagModal: React.FC<Props> = ({ show, onClose }) => {
     dispatch(tagsActions.createTags(tagList));
   };
 
-  const deleteTag = useCallback((id: ITag['id']) => {
-    dispatch(tagsActions.deleteTag(id));
-  }, []);
-
   return (
     <Modal
       show={show}
@@ -37,8 +31,7 @@ const TagModal: React.FC<Props> = ({ show, onClose }) => {
       className="d-flex flex-column gap-4"
     >
       <TagForm onSubmit={addItem} />
-      <TagList tagList={tagList} onDelete={deleteItem} />
-      <TagList tagList={tags} onDelete={deleteTag} />
+      {!!tagList.length && <TagList tagList={tagList} onDelete={deleteItem} />}
 
       <button
         className="btn btn-outline-gu-purple btn-hover-gu-white fw-bold fs-5 border-2"
