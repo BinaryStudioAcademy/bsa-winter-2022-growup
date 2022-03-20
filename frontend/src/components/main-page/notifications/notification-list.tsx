@@ -1,7 +1,7 @@
-import './notification.scss';
+import './styles.scss';
 import { ReactChild, useState } from 'react';
 import { ArrowDown, ArrowUp } from 'react-bootstrap-icons';
-import Notification from './notificationItem';
+import Notification from './notification-item';
 import { useAppSelector } from 'hooks/hooks';
 import { INotifications } from 'store/home-page/common';
 

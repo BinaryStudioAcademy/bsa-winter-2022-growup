@@ -1,12 +1,16 @@
+import { FormEvent } from 'react';
+
 interface Props {
-  themeType: string;
-  text: string;
-  onSubmit?: () => void;
+  className?: string;
+  text?: string;
+  onSubmit?: (a: FormEvent) => void;
+  type?: string;
+  disabled?: boolean;
 }
 
-const Button: React.FC<Props> = ({ themeType = '', text, onSubmit }) => (
-  <button className={`btn ${themeType}`} onClick={onSubmit}>
-    {text}
+const Button: React.FC<Props> = ({ className = '', onSubmit, children }) => (
+  <button className={`${className}`} onClick={onSubmit}>
+    {children}
   </button>
 );
 
