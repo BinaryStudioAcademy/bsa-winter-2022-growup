@@ -17,7 +17,11 @@ const LevelNode: React.FC<Props> = ({ data }) => {
 
   return (
     <>
-      <Handle type="target" position={Position.Top} />
+      <Handle
+        style={{ visibility: 'hidden' }}
+        type="target"
+        position={Position.Left}
+      />
       <LevelCard
         icon={
           <Progressbar
@@ -28,8 +32,6 @@ const LevelNode: React.FC<Props> = ({ data }) => {
         title={`Level ${level}`}
         subtitle={`${acquiredSkills} / ${totalSkills} skill archived`}
       />
-      <Handle type="source" position={Position.Bottom} id="a" />
-      <Handle type="source" position={Position.Bottom} id="b" />
     </>
   );
 };

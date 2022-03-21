@@ -1,14 +1,9 @@
-import Level from './level/level';
+import LevelFlow from './flow/level-flow';
 
 const CareerPath: React.FC = () => {
   return (
     <div>
-      <Level
-        acquiredSkills={33}
-        totalSkills={35}
-        level={1}
-        progressColor={'green'}
-      />
+      <LevelFlow />
     </div>
   );
 };
