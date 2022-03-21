@@ -40,11 +40,11 @@ export const createLanguage = async (
   });
 
   const languages: Language[] = [];
-  await asyncForEach(async ({ name, level }: Language) => {
+  await asyncForEach(async ({ name, level, certificate }: Language) => {
     const language = languageRepository.create({
       name,
       level,
-      certificate: 'certificate',
+      certificate,
       user: user,
     });
     await language.save();
@@ -53,20 +53,4 @@ export const createLanguage = async (
   await user.save();
 
   return languages;
-};
-
-export const addLanguageCertificate = async (
-  id: Language['id'],
-  file: Express.Multer.File,
-): Promise<Language> => {
-  const languageRepository = getCustomRepository(LanguageRepository);
-
-  const language = await languageRepository.findOne({
-    where: { id },
-  });
-
-  language.certificate = file.originalname;
-  language.save();
-
-  return language;
 };

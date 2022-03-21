@@ -1,14 +1,8 @@
 import { Router } from 'express';
 import { run } from '~/common/helpers/route.helper';
-import {
-  getUserLanguages,
-  createLanguage,
-  addLanguageCertificate,
-} from '~/services/language.service';
-import multer from 'multer';
+import { getUserLanguages, createLanguage } from '~/services/language.service';
 
 const router: Router = Router();
-const upload = multer();
 
 router
   .get(
@@ -21,13 +15,6 @@ router
     '/',
     run((req) => {
       return createLanguage(req.body, req.userId);
-    }),
-  )
-  .put(
-    '/:id/certificate',
-    upload.single('certificate'),
-    run((req) => {
-      return addLanguageCertificate(req.params.id, req.file);
     }),
   );
 
