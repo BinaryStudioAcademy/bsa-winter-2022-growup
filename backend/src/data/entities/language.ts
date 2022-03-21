@@ -13,6 +13,9 @@ export class Language extends AbstractEntity {
   @Column({ type: 'varchar', length: 250 })
   certificate: string;
 
+  @Column({ nullable: true })
+  certificateImage: string;
+
   @ManyToOne(() => User, (user) => user.id)
   user: User;
 }
