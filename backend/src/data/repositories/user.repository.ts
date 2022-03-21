@@ -58,6 +58,16 @@ class UserRepository extends Repository<User> {
     return this.createQueryBuilder('user')
       .select()
       .leftJoinAndSelect(
+        'user.careerJourneys',
+        'career_journey',
+        'user.id = career_journey.user',
+      )
+      .leftJoinAndSelect(
+        'user.educations',
+        'education',
+        'user.id = education.user',
+      )
+      .leftJoinAndSelect(
         'user.company',
         'company',
         'user.companyId = company.id',

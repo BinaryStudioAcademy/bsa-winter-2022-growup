@@ -8,7 +8,6 @@ type State = {
 enum ActionType {
   FETCH = 'fetch-profile/',
   UPDATE_AVATAR = 'update-avatar/',
-  INSERT_PIB = 'insertPIB/',
   COMPLETE_TEST = 'complete-test/',
 }
 

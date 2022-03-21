@@ -6,6 +6,8 @@ import {
   loginUser,
   signUpUser,
   updateUserCompany,
+  finishRegistration,
+  verifyRegistrationToken,
 } from './actions';
 import { ActionType } from './common';
 import { StorageKey } from 'common/enums/app/storage-key.enum';
@@ -41,6 +43,12 @@ const { reducer, actions } = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(finishRegistration.fulfilled, (state, action) => {
+        state.user = action.payload;
+      })
+      .addCase(verifyRegistrationToken.fulfilled, (state, _) => {
+        state.isAuthenticated = true;
+      })
       .addCase(getCurrentUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isAuthenticated = true;

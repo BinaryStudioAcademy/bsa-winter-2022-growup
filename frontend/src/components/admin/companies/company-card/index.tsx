@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
-import { Button, Card } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
+import { Button } from 'components/common/common';
 import { ICompany } from 'common/interfaces/company/company';
 import AddEditCompany from '../addedit-company';
 
@@ -24,7 +25,7 @@ const CompanyCard: FC<Props> = ({ company }) => {
               <Card.Img src="holder.js/100px180" alt={company.name} />
               <Card.Title className="fs-1">{company.name}</Card.Title>
             </div>
-            <Button onClick={handleShow}>edit</Button>
+            <Button onSubmit={handleShow}>edit</Button>
           </div>
           <Card.Text className="mt-2">{company.description}</Card.Text>
         </Card.Body>

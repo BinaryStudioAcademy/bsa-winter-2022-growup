@@ -1,13 +1,14 @@
 import { Router } from 'express';
-import { run } from '~/common/helpers/route.helper';
-import { createTagsController } from '../controllers/tags.controller';
-import { deleteTag, getTags } from '~/services/tag.service';
-import {
-  getCommonUserList,
-  registerCommonUsers,
-} from '~/services/user.service';
 
-import { createDefaultUser } from '~/common/utils/default-user.util';
+import { run } from '~/common/helpers/route.helper';
+
+import { createTagsController } from '../controllers/tags.controller';
+import { registerUserController } from '../controllers/user-managment.controller';
+
+import { deleteTag, getTags } from '~/services/tag.service';
+import { getCommonUserList } from '~/services/user.service';
+
+import { Headers } from '~/common/enums/headers';
 
 const router: Router = Router();
 
@@ -31,11 +32,12 @@ router.get(
 router.post(
   '/users',
   run((req) => {
-    console.warn(req.body);
-    return registerCommonUsers(
-      createDefaultUser(req.body.email),
-      req.body.roleType,
-    );
+    return registerUserController({
+      host: req.headers[Headers.FORWARDED_HOST] as string,
+      email: req.body.email,
+      roleType: req.body.roleType,
+      companyId: req.companyId,
+    });
   }),
 );
 

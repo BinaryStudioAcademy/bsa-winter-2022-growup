@@ -10,6 +10,7 @@ export enum OpportunityActions {
   SUBSCRIBE_FOLLOW = 'SUBSCRIBE_FOLLOW',
   UNSUBSCRIBE_FOLLOW = 'UNSUBSCRIBE_FOLLOW',
   LOAD_OPPORTUNITIES = 'LOAD_OPPORTUNITIES',
+  SORT_OPPORTUNITIES = 'SORT_OPPORTUNITIES',
 }
 
 export interface IPostOpportunityData extends IOpportunityBase {
@@ -22,7 +23,7 @@ export interface IOpportunityBase {
   id?: string;
   name?: string;
   organization?: string;
-  startDate?: string;
+  startDate?: string | Date;
   tags?: ITagsData[];
   type?: string;
 }
@@ -52,4 +53,10 @@ export interface IOpportunitiesAction {
   isLoaded: boolean | undefined;
   isShowModal: boolean | undefined;
   payload?: ILoadAction;
+}
+
+export enum SortOption {
+  ORGANIZATION = 'Organization',
+  PROGRAM = 'Program',
+  DATE = 'Date',
 }

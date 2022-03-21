@@ -1,13 +1,38 @@
-interface Props {
-  themeType: string;
-  text: string;
-  onSubmit?: () => void;
+import { FormEvent } from 'react';
+import { Button as BSButton } from 'react-bootstrap';
+
+enum ButtonTypes {
+  button = 'button',
+  submit = 'submit',
+  reset = 'reset',
 }
 
-const Button: React.FC<Props> = ({ themeType = '', text, onSubmit }) => (
-  <button className={`btn ${themeType}`} onClick={onSubmit}>
-    {text}
-  </button>
+interface Props {
+  className?: string;
+  text?: string;
+  onSubmit?: (a: FormEvent) => void;
+  type?: string;
+  disabled?: boolean;
+  variant?: string;
+}
+
+const Button: React.FC<Props> = ({
+  className = '',
+  children,
+  disabled = false,
+  variant = '',
+  type = 'button',
+  onSubmit,
+}) => (
+  <BSButton
+    className={className}
+    onClick={onSubmit}
+    disabled={disabled}
+    variant={variant}
+    type={type as ButtonTypes}
+  >
+    {children}
+  </BSButton>
 );
 
 export default Button;

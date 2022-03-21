@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FC } from 'react';
-import { Form, Button, Modal, Card } from 'react-bootstrap';
+import { Form, Modal, Card } from 'react-bootstrap';
+import { Button } from 'components/common/common';
 import { useDispatch, useState } from 'hooks/hooks';
 import { ICompany } from 'common/interfaces/company/company';
 import { companyActions } from 'store/company/actions';
@@ -92,15 +93,10 @@ const AddEditCompany: FC<Props> = ({ show, handleClose, company }) => {
         </Form.Group>
       </Modal.Body>
       <Modal.Footer className="border-0 justify-content-between">
-        <Button className="mg-0" variant="gu-blue" type="submit" onClick={send}>
+        <Button className={'btn btn-gu-blue mg-0'} onSubmit={send}>
           {company ? 'Edit' : 'Save'}
         </Button>
-        <Button
-          className="mg-0"
-          variant="gu-pink"
-          type="submit"
-          onClick={onCloseCancel}
-        >
+        <Button className={'btn btn-gu-pink mg-0'} onSubmit={onCloseCancel}>
           Cancel
         </Button>
       </Modal.Footer>
