@@ -16,6 +16,7 @@ import Follow from './follow';
 import isFirstLogged from 'helpers/check-is-first-logged';
 import { Dropdown } from 'react-bootstrap';
 import { SortOption } from 'store/opportunities/common';
+import { parseDate } from '../../helpers/parse-date/index';
 
 const Opportunities: React.FC = () => {
   const [sort, setSort] = useState<SortOption | null>(null);
@@ -107,7 +108,7 @@ const Opportunities: React.FC = () => {
             name={item.name}
             organization={item.organization}
             type={item.type}
-            startDate={item.startDate}
+            startDate={parseDate(item.startDate as string)}
             tagsData={item.tagsData}
             isFollow={item.isFollow}
             isOpportunitiesPage={true}
