@@ -1,5 +1,6 @@
 import { Handle, Position } from 'react-flow-renderer';
 import LevelCard from '../level-card/level-card';
+import './node.scss';
 
 interface Props {
   data: {
@@ -17,7 +18,7 @@ const UserNode: React.FC<Props> = ({ data, sourcePosition }) => {
     <>
       <LevelCard icon={icon} title={title} subtitle={subtitle} />
       <Handle
-        style={{ visibility: 'hidden' }}
+        className="node__handle"
         type="source"
         position={sourcePosition}
       />
