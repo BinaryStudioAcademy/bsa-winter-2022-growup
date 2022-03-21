@@ -1,9 +1,15 @@
 import { IBaseObject } from '../base-object';
 import { IObjective } from '../objective';
 
+export enum OkrTypes {
+  MY_OKR = 'my_okr',
+  TEAM_OKR = 'team_okr',
+}
+
 export interface IOkr extends IBaseObject {
   name: string;
-  endDate: string;
-  startDate: string;
+  type: OkrTypes;
+  endDate: Date | string;
+  startDate: Date | string;
   objectives: Array<IObjective> | null;
 }

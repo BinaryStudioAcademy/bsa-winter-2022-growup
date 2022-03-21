@@ -166,6 +166,9 @@
                 "name": {
                   "type": "string"
                 },
+                "type": {
+                  "type": "string"
+                },
                 "startDate": {
                   "type": "string"
                 },
@@ -1656,6 +1659,9 @@
           "type": "string"
         },
         "name": {
+          "type": "string"
+        },
+        "type": {
           "type": "string"
         },
         "startDate": {

@@ -1,37 +1,60 @@
-import './styles.scss';
-import { parseDate } from 'helpers/parse-date';
+import React, { useState } from 'react';
 import { Calendar, PencilFill } from 'react-bootstrap-icons';
+import { parseDate } from 'helpers/parse-date';
+import { IOkr } from 'common/interfaces/okr';
+
+import OkrModal from './modal';
+
+import './styles.scss';
 
 interface Props {
-  name: string;
-  startDate: string;
-  endDate: string;
+  okr: IOkr;
   objectivesCounter: number;
   resultsCounter: number;
 }
 
-const OrkItem: React.FC<Props> = (props) => (
-  <div className="okr-container bg-white ms-3 mb-3 py-2 px-3">
-    <div className="OKR-name fs-2 mt-2 fw-bold">{props.name}</div>
-    <div className="reached fs-5 fw-bold align-bottom text-end">0.85</div>
-    <div className="objectives fs-6 mb-4 fw-bold">
-      Objectives: {props.objectivesCounter},
-    </div>
-    <div className="key-result fs-6 fw-bold">
-      KeyResults: {props.resultsCounter}
-    </div>
-    <div className="timestamp fs-6 mt-3 d-flex justify-content-evenly text-secondary">
-      <div>
-        <Calendar className="mb-1" />
+const OrkItem: React.FC<Props> = ({
+  okr,
+  objectivesCounter,
+  resultsCounter,
+}) => {
+  const [showModal, setShowModal] = useState(false);
+
+  const openModal = (): void => setShowModal(true);
+  const closeModal = (): void => setShowModal(false);
+
+  return (
+    <>
+      <div className="okr-container bg-white ms-3 mb-3 py-2 px-3">
+        <div className="OKR-name fs-2 mt-2 fw-bold">{okr.name}</div>
+        <div className="reached fs-5 fw-bold align-bottom text-end">0.85</div>
+        <div className="objectives fs-6 mb-4 fw-bold">
+          Objectives: {objectivesCounter},
+        </div>
+        <div className="key-result fs-6 fw-bold">
+          KeyResults: {resultsCounter}
+        </div>
+        <div className="timestamp fs-6 mt-3 d-flex justify-content-evenly text-secondary">
+          <div>
+            <Calendar className="mb-1" />
+          </div>
+          <div>
+            {parseDate(okr.startDate as string)} -{' '}
+            {parseDate(okr.endDate as string)}
+          </div>
+          <div>
+            <PencilFill
+              className="mb-1 ms-1 text-gu-purple"
+              onClick={openModal}
+            />
+          </div>
+        </div>
       </div>
-      <div>
-        {parseDate(props.startDate)} - {parseDate(props.endDate)}
-      </div>
-      <div>
-        <PencilFill className="mb-1 ms-1 text-gu-purple" />
-      </div>
-    </div>
-  </div>
-);
+      {showModal && (
+        <OkrModal showModal={showModal} closeModal={closeModal} okr={okr} />
+      )}
+    </>
+  );
+};
 
 export default OrkItem;
