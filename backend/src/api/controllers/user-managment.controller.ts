@@ -32,6 +32,7 @@ type RegistrationUserProps = {
 
 const registerUserController = async ({
   host,
+  origin,
   email,
   roleType,
   companyId,
