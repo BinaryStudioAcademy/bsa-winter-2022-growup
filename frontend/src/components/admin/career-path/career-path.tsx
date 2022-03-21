@@ -8,6 +8,7 @@ import {
   useAppDispatch,
 } from 'hooks/hooks';
 import { careerPathActions } from 'store/career-path';
+import { Button } from 'components/common/common';
 
 const CareerPath: React.FC = () => {
   const domains = useAppSelector((state) => state.careerPath.domains) || [];
@@ -36,14 +37,14 @@ const CareerPath: React.FC = () => {
     <div className="col">
       <Card className="growup-card-primary">
         <Card.Header className="d-flex justify-content-end growup-card-header">
-          <button
+          <Button
             className={`btn btn-outline-gu-white btn-hover-gu-purple fw-bold fs-5 border-2 ${
               !isFlowVisible || 'invisible'
             }`}
-            onClick={handleAddCareerPath}
+            onSubmit={handleAddCareerPath}
           >
             + Add Career Path
-          </button>
+          </Button>
         </Card.Header>
         <Card.Body>
           {isFlowVisible || isButtonClicked ? (
