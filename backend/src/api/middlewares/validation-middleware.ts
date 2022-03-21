@@ -1,5 +1,7 @@
 import { NextFunction, Response, Request } from 'express';
 import { HttpCode, HttpError, RoleType } from 'growup-shared';
+import { errorHandlerMiddleware } from '../middlewares/error-handler-middleware';
+
 import * as yup from 'yup';
 
 const validatePermissions = (
@@ -31,10 +33,14 @@ const validateBody = (
         validationError.errors.length > 1
           ? `${validationError.message},\n${validationError.errors.join(',\n')}`
           : validationError.message;
-      throw new HttpError({
+
+      const newError = new HttpError({
         status: HttpCode.BAD_REQUEST,
         message: message,
       });
+
+      errorHandlerMiddleware(newError, request, _response, next);
+      return;
     }
     next();
   };
