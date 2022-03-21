@@ -1,5 +1,11 @@
 @import '~assets/scss/utils';
 
+.delete-user {
+  transition: all 0.5s ease-in;
+  &:hover {
+    color: $pink;
+  }
+}
 @include media-breakpoint-down(lg) {
   .btn-responsive {
     & > span {

@@ -29,4 +29,8 @@ export const env = {
     secret: getOsEnv('AWS_SECRET_KEY'),
     bucket: getOsEnv('AWS_BUCKET_NAME'),
   },
+  email: {
+    name: getOsEnv('EMAIL_NAME'),
+    password: getOsEnv('EMAIL_PASSWORD'),
+  },
 } as const;

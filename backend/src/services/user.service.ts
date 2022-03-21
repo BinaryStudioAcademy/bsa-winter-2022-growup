@@ -2,7 +2,7 @@ import { getCustomRepository } from 'typeorm';
 
 import { HttpCode, HttpError } from 'growup-shared';
 
-import UserRepository from '../data/repositories/user.repository';
+import UserRepository from '~/data/repositories/user.repository';
 import UserRoleRepository from '~/data/repositories/role.repository';
 import CompanyRepository from '~/data/repositories/company.repository';
 import RefreshTokenRepository from '~/data/repositories/refresh-token.repository';
@@ -10,6 +10,9 @@ import RefreshTokenRepository from '~/data/repositories/refresh-token.repository
 import { refreshTokenSchema } from '~/common/models/tokens/refresh-token.model';
 import { IListUser } from '~/common/models/user/user';
 import { RoleType } from '~/common/enums/role-type';
+
+import { UserMissingDataForm } from '~/common/forms/user.forms';
+
 import { User } from '~/data/entities/user';
 import { UserRole } from '~/data/entities/user-role';
 
@@ -24,7 +27,6 @@ import {
 } from '~/common/utils/upload-image.util';
 import { getCurrentTimeMS } from '~/common/utils/time.util';
 import { signToken, generateRefreshToken } from '~/common/utils/token.util';
-import { convertForUserList } from '~/common/utils/user.util';
 
 import type {
   UserLoginForm,
@@ -83,7 +85,9 @@ export const registerUser = async (
       message: 'User with this email already exists',
     });
 
-  const hashedPassword = await hashPassword(data.password);
+  const hashedPassword = data.password
+    ? await hashPassword(data.password)
+    : null;
   const company = await companyRepository.findOne(companyId);
 
   const user = await userRepository
@@ -96,7 +100,8 @@ export const registerUser = async (
     })
     .save();
 
-  await roleRepository.create({ user, role }).save();
+  const roleInstance = await roleRepository.create({ user, role }).save();
+  user.role = [roleInstance];
 
   return user;
 };
@@ -190,18 +195,6 @@ export const registerUserAdmin = async (
   return getUserJWT(user);
 };
 
-export const registerCommonUsers = async (
-  data: UserRegisterForm,
-  role: RoleType,
-  companyId: User['company']['id'],
-): Promise<IListUser> => {
-  const roleRepository = getCustomRepository(UserRoleRepository);
-  const user = await registerUser(data, role, companyId);
-
-  const roleInstance = await roleRepository.findOne({ user });
-  return convertForUserList(user, roleInstance);
-};
-
 export const fetchUser = async (id: User['id']): Promise<User> => {
   const userRepository = getCustomRepository(UserRepository);
   const user = await userRepository.findOne({
@@ -211,26 +204,19 @@ export const fetchUser = async (id: User['id']): Promise<User> => {
   return user;
 };
 
-interface NameAndPosition {
-  firstName: string;
-  lastName: string;
-  position: string;
-}
-
-export const insertFirstNameLastName = async (
+export const updateUserMissingData = async (
   id: User['id'],
-  { firstName, lastName, position }: NameAndPosition,
+  { password, firstName, lastName, position }: UserMissingDataForm,
 ): Promise<User> => {
   const userRepository = getCustomRepository(UserRepository);
-  const userInstance = await userRepository.findOne({
-    where: {
-      id: id,
-    },
-  });
-  userInstance.firstName = firstName;
-  userInstance.lastName = lastName;
-  userInstance.position = position;
-  return userInstance.save();
+  const user = await userRepository.getUserWithPassword({ id });
+
+  user.password = await hashPassword(password);
+  user.firstName = firstName;
+  user.lastName = lastName;
+  user.position = position;
+
+  return user.save();
 };
 
 export const updateUserAvatar = async (

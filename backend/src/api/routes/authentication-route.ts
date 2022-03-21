@@ -8,6 +8,11 @@ import {
   registrationController,
 } from '../controllers/auth.controller';
 
+import {
+  verifyRegistrationTokenController,
+  updateUserMissingDataController,
+} from '../controllers/user-managment.controller';
+
 const router: Router = Router();
 
 router
@@ -24,7 +29,17 @@ router
   )
   .post(
     '/auth/refresh',
-    run(async (req: Request) => await refreshToken(req.body)),
+    run((req: Request) => refreshToken(req.body)),
+  )
+  .get(
+    '/register/verify/:token',
+    run((req) => verifyRegistrationTokenController(req.params.token)),
+  )
+  .patch(
+    '/register/finish',
+    run((req: Request) =>
+      updateUserMissingDataController(req.userId, req.body),
+    ),
   );
 
 export default router;

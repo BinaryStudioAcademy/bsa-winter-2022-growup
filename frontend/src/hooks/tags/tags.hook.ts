@@ -1,4 +1,4 @@
-import { useCallback, useState, useRef } from 'hooks/hooks';
+import { useCallback, useState } from 'hooks/hooks';
 import { NotificationManager } from 'react-notifications';
 import { useAppSelector } from 'hooks/hooks';
 
@@ -9,26 +9,29 @@ const useTagList = (): UseTagList => {
   const [list, setList] = useState<TagCreation[]>([]);
   const { tags } = useAppSelector((state) => state.tags);
 
-  const listRef = useRef<TagCreation[]>([]);
-  listRef.current = list;
+  const addItem = useCallback(
+    (tag: TagCreation) => {
+      if (tag.name === '') {
+        NotificationManager.error('Tag name is empty');
+        return;
+      }
 
-  const addItem = useCallback((tag: TagCreation) => {
-    if (tag.name === '') {
-      NotificationManager.error('Tag name is empty');
-      return;
-    }
+      const isExistInList = list.find(
+        (existingTag) =>
+          tag.name.toLowerCase() === existingTag.name.toLowerCase(),
+      );
+      const isExistInTags = tags.some(
+        (item) => item.name.toLowerCase() === tag.name.toLowerCase(),
+      );
 
-    const isExistInList = listRef.current.some(
-      (item) => item.name === tag.name,
-    );
-    const isExistInTags = tags.some((item) => item.name === tag.name);
-
-    if (isExistInList || isExistInTags) {
-      NotificationManager.error('Tag name is exist');
-      return;
-    }
-    setList((state) => [...state, tag]);
-  }, []);
+      if (isExistInList || isExistInTags) {
+        NotificationManager.error('Tag name is exist');
+        return;
+      }
+      setList((state) => [...state, tag]);
+    },
+    [list],
+  );
 
   const deleteItem = useCallback(
     (id: TagVisibleInfo['id']) =>
