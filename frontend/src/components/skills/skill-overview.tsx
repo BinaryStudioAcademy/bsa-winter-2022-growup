@@ -24,11 +24,14 @@ const SkillOverview = (): React.ReactElement => {
   const skills = useAppSelector((state: RootState) => state.skill.userSkill);
   const allSkills = useAppSelector((state: RootState) => state.skill.allSkills);
   const [textFind, setTextFind] = useState('');
+  const [selectSkills, setSelectSkills] = useState('all');
   const [isManager, setIsManager] = useState(true);
   const [isSkillReview, setIsSkillReview] = useState(true);
   const [isSortName, setIsSortName] = useState(true);
   const [isSortSelf, setIsSortSelf] = useState(true);
   const dispatch = useAppDispatch();
+  const UNIMPORTANT = 'unimportant';
+  const IMPORTANT = 'important';
   const skillStarred = skills.filter((skill: ISkill) => skill.isStarred);
   const skillNotStarred = skills.filter((skill: ISkill) => !skill.isStarred);
 
@@ -146,7 +149,7 @@ const SkillOverview = (): React.ReactElement => {
       <div className="mb-5">
         <ProfileHeader />
       </div>
-      <div className="d-flex justify-content-between mb-4">
+      <div className="d-flex justify-content-between mb-4 flex-wrap gap-3">
         <form className="row g-3">
           <div className="col-auto">
             <input
@@ -159,8 +162,19 @@ const SkillOverview = (): React.ReactElement => {
             />
           </div>
         </form>
+        <div className="select-favorite">
+          <select
+            className="form-control rounded"
+            onChange={(e): void => setSelectSkills(e.target.value)}
+            aria-label="Default select example"
+          >
+            <option>All Skills</option>
+            <option value={`${IMPORTANT}`}>Important Skills</option>
+            <option value={`${UNIMPORTANT}`}>Unimportant Skills</option>
+          </select>
+        </div>
         <Form className="d-flex" onSubmit={handleSubmit(onAdd)}>
-          <div className="col form-input mx-4">
+          <div className="col form-input me-4">
             <FormInput
               name={'name'}
               control={control}
@@ -220,7 +234,7 @@ const SkillOverview = (): React.ReactElement => {
         <tbody>
           {skills
             ? skillStarred.map((skill: ISkill) => {
-                if (skill.name)
+                if (skill.name && selectSkills !== UNIMPORTANT)
                   if (isFind(skill.name) && skill.rating)
                     return (
                       <SkillElement
@@ -235,7 +249,7 @@ const SkillOverview = (): React.ReactElement => {
             : true}
           {skills
             ? skillNotStarred.map((skill: ISkill) => {
-                if (skill.name)
+                if (skill.name && selectSkills !== IMPORTANT)
                   if (isFind(skill.name) && skill.rating)
                     return (
                       <SkillElement
