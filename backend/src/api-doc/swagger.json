@@ -1468,6 +1468,90 @@
           }
         }
       }
+    },
+    "/api/user/languages": {
+      "get": {
+        "tags": ["Language"],
+        "summary": "Get all languages information",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return array of languages information if everything is ok",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Language"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Language"],
+        "summary": "Create new language information",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "allOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "level": {
+                        "type": "string"
+                      },
+                      "certificate": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "required": true,
+            "description": "Company credentials"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns created language if everything is ok.",
+            "schema": {
+              "$ref": "#/definitions/Language"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -1555,7 +1639,6 @@
     },
     "Okr": {
       "required": ["token"],
-
       "type": "object",
       "properties": {
         "id": {
@@ -1717,7 +1800,9 @@
             }
           }
         },
-        { "$ref": "#/definitions/Default" }
+        {
+          "$ref": "#/definitions/Default"
+        }
       ]
     },
     "Skill": {
@@ -1733,7 +1818,9 @@
             }
           }
         },
-        { "$ref": "#/definitions/Default" }
+        {
+          "$ref": "#/definitions/Default"
+        }
       ]
     },
     "Skill Objective": {
@@ -1746,7 +1833,9 @@
             }
           }
         },
-        { "$ref": "#/definitions/Default" }
+        {
+          "$ref": "#/definitions/Default"
+        }
       ]
     },
     "Level": {
@@ -1787,22 +1876,30 @@
                                     }
                                   }
                                 },
-                                { "$ref": "#/definitions/Default" }
+                                {
+                                  "$ref": "#/definitions/Default"
+                                }
                               ]
                             }
                           }
                         }
                       },
-                      { "$ref": "#/definitions/Default" }
+                      {
+                        "$ref": "#/definitions/Default"
+                      }
                     ]
                   }
                 },
-                { "$ref": "#/definitions/Default" }
+                {
+                  "$ref": "#/definitions/Default"
+                }
               ]
             }
           }
         },
-        { "$ref": "#/definitions/Default" }
+        {
+          "$ref": "#/definitions/Default"
+        }
       ]
     },
     "Skill Type": {
@@ -1975,6 +2072,42 @@
         },
         "deletedAt": {
           "type": "string"
+        }
+      }
+    },
+    "Language": {
+      "required": ["token"],
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "level": {
+          "type": "string"
+        },
+        "certificate": {
+          "type": "string"
+        },
+        "certificateImage": {
+          "type": "string",
+          "nullable": true,
+          "default": null
+        },
+        "deletedAt": {
+          "type": "string",
+          "nullable": true,
+          "default": null
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string",
+          "nullable": true,
+          "default": null
         }
       }
     }
