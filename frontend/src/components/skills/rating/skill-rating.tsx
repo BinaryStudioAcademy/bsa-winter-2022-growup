@@ -94,7 +94,9 @@ const SkillElement = (props: Props): React.ReactElement => {
         </Button>
         {isHover ? (
           <Button
-            className={'btn btn-gu-white btn-outline-gu-black button-group'}
+            className={
+              'btn btn-gu-white btn-outline-gu-black button-group border-0'
+            }
             type={'button'}
             onSubmit={(): void => saveEdits(props.id)}
           >
@@ -105,7 +107,7 @@ const SkillElement = (props: Props): React.ReactElement => {
         )}
         {isHover ? (
           <Button
-            className={'btn btn-gu-white btn-outline-gu-black mx-2'}
+            className={'btn btn-gu-white btn-outline-gu-black mx-2 border-0'}
             type={'button'}
             onSubmit={(): void => deleteSkill(props.id)}
           >
