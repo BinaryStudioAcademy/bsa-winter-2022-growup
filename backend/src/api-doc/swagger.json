@@ -167,7 +167,8 @@
                   "type": "string"
                 },
                 "type": {
-                  "type": "string"
+                  "type": "string",
+                  "enun": ["my_okr", "team_okr"]
                 },
                 "startDate": {
                   "type": "string"
@@ -266,6 +267,10 @@
               "properties": {
                 "name": {
                   "type": "string"
+                },
+                "type": {
+                  "type": "string",
+                  "enun": ["my_okr", "team_okr"]
                 },
                 "startDate": {
                   "type": "string"
