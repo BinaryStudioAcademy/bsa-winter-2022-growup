@@ -56,13 +56,14 @@ class CareerPath {
   async updateDomain(
     domain: IDomainSetting & { id: string },
   ): Promise<(IDomainSetting & { id: string }) | null> {
+    const { id, name } = domain;
     try {
       const result = await this.http.load(
-        `${this.apiPath}/career-path/domain/${domain.id}`,
+        `${this.apiPath}/career-path/domain/${id}`,
         {
           contentType: ContentType.JSON,
           method: HttpMethod.PUT,
-          payload: JSON.stringify(domain),
+          payload: JSON.stringify({ name }),
         },
       );
 
