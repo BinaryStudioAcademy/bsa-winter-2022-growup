@@ -3,6 +3,7 @@ import {
   useAppSelector,
   useCallback,
   useEffect,
+  useState,
   useNavigate,
 } from 'hooks/hooks';
 import { NotificationManager } from 'react-notifications';
@@ -13,9 +14,12 @@ import AddSection from '../profile/add-section/add-section';
 import OpportunityForm from './opportunity-form';
 import Follow from './follow';
 import isFirstLogged from 'helpers/check-is-first-logged';
+import { Dropdown } from 'react-bootstrap';
+import { SortOption } from 'store/opportunities/common';
 import { parseDate } from '../../helpers/parse-date/index';
 
 const Opportunities: React.FC = () => {
+  const [sort, setSort] = useState<SortOption | null>(null);
   const dispatch = useAppDispatch();
   const user = useAppSelector((store) => store.profile.user);
   const navigate = useNavigate();
@@ -61,16 +65,45 @@ const Opportunities: React.FC = () => {
       });
   };
 
+  const handleSort = (option: SortOption): void => {
+    dispatch(opportunityActions.sortOpportunities(option));
+    setSort(option);
+  };
+
   return (
     <AddSection
       title="Opportunities"
       buttonName={'Add opportunity'}
       onAdd={showModal}
     >
+      <Dropdown>
+        <Dropdown.Toggle
+          as="button"
+          className="btn btn-outline-gu-pink btn-responsive btn-hover-gu-white fw-bold fs-5 border-2"
+        >
+          {sort ? sort : 'Sort'}
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          <Dropdown.Item
+            onClick={(): void => handleSort(SortOption.ORGANIZATION)}
+          >
+            Organization
+          </Dropdown.Item>
+          <Dropdown.Item onClick={(): void => handleSort(SortOption.PROGRAM)}>
+            Program
+          </Dropdown.Item>
+          <Dropdown.Item onClick={(): void => handleSort(SortOption.DATE)}>
+            Date
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+
       {opportunityData.map((item: IOpportunity, index: number) => (
-        <div className="mt-3 px-3 py-3 rounded-1 shadow-lg border border-1 bg-gu-white d-flex">
+        <div
+          key={index}
+          className="mt-3 px-3 py-3 rounded-1 shadow-lg border border-1 bg-gu-white d-flex"
+        >
           <OpportunityItem
-            key={index}
             id={item.id}
             name={item.name}
             organization={item.organization}
