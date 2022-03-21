@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { IOkr } from 'common/interfaces/okr';
 import OrkItem from '../workspace-item';
 
-import Button from 'components/common/button/button';
+import { Button } from 'components/common/common';
 import OkrModal from '../modal';
 
 import './styles.scss';
@@ -20,7 +20,7 @@ const OkrList: React.FC<Props> = ({ collection }) => {
   return (
     <>
       <Button
-        themeType="btn-gu-pink text-gu-white mb-2 align-self-end"
+        className="btn-gu-pink text-gu-white mb-2 align-self-end"
         onSubmit={openModal}
         text="Create Okr"
       />
