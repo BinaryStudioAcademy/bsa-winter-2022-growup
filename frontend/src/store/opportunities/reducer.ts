@@ -73,33 +73,6 @@ const opportunityReducer = (builder: ActionReducerMapBuilder<State>): void => {
         return 0;
       });
     })
-    .addCase(actions.sortOpportunities, (state, action) => {
-      if (action.payload.by === SortOption.DATE) {
-        state.opportunities = state.opportunities.sort(
-          (a, b) =>
-            new Date(a.startDate || '').getTime() -
-            new Date(b.startDate || '').getTime(),
-        );
-
-        return;
-      }
-
-      if (action.payload.by === SortOption.ORGANIZATION) {
-        state.opportunities = state.opportunities.sort((a, b) => {
-          if ((a.organization || '') < (b.organization || '')) return -1;
-          if ((a.organization || '') > (b.organization || '')) return 1;
-          return 0;
-        });
-
-        return;
-      }
-
-      state.opportunities = state.opportunities.sort((a, b) => {
-        if ((a.name || '') < (b.name || '')) return -1;
-        if ((a.name || '') < (b.name || '')) return 1;
-        return 0;
-      });
-    })
     .addMatcher(
       isAnyOf(
         actions.fetchLoadOpportunities.rejected,
