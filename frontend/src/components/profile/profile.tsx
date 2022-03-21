@@ -2,7 +2,7 @@ import {
   useEffect,
   useAppDispatch,
   useAppSelector,
-  // useNavigate,
+  useNavigate,
   useState,
 } from 'hooks/hooks';
 import { profileActions } from 'store/actions';
@@ -11,17 +11,17 @@ import Tabs from './tabs/tabs';
 import Header from './header/header';
 import './styles.scss';
 import { tabsElements } from './tabs/tabsElements';
-// import isFirstLogged from 'helpers/check-is-first-logged';
+import isFirstLogged from 'helpers/check-is-first-logged';
 
 const ProfileInfo: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const { user, isLoading } = useAppSelector((state) => state.profile);
   const [activeComponentId, setActiveComponentId] = useState(0);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   isFirstLogged({ user, navigate });
-  // }, [user]);
+  useEffect(() => {
+    isFirstLogged({ user, navigate });
+  }, [user]);
 
   useEffect(() => {
     dispatch(profileActions.fetchProfile());
