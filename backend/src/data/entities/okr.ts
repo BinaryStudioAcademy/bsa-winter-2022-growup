@@ -3,13 +3,22 @@ import { AbstractEntity } from '~/data/abstract/abstract.entity';
 import { User } from './user';
 import { Objective } from './objective';
 
+enum OkrTypes {
+  MY_OKR = 'my_okr',
+  TEAM_OKR = 'team_okr',
+}
+
 @Entity()
 export class OKR extends AbstractEntity {
   @Column({ type: 'varchar', length: 50 })
   name: string;
 
-  @Column({ type: 'varchar', length: 50 })
-  type: string;
+  @Column({
+    type: 'enum',
+    enum: OkrTypes,
+    default: OkrTypes.MY_OKR,
+  })
+  type: OkrTypes;
 
   @Column()
   endDate: Date;
