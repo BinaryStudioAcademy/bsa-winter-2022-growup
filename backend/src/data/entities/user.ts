@@ -1,4 +1,4 @@
-import { Entity, Column, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, Column, ManyToOne, OneToMany, ManyToMany } from 'typeorm';
 import { AbstractEntity } from '~/data/abstract/abstract.entity';
 import { DomainLevel } from './domain-level';
 import { Company } from './company';
@@ -6,6 +6,7 @@ import { UserRole } from './user-role';
 import { UserSkill } from './user-skill';
 import { CareerJourney } from './career-journey';
 import { Education } from './education';
+import { Tags } from './tags';
 
 @Entity()
 export class User extends AbstractEntity {
@@ -53,4 +54,7 @@ export class User extends AbstractEntity {
     eager: true,
   })
   educations: Education[];
+
+  @ManyToMany(() => Tags, (tag) => tag.opportunities)
+  tags: Tags[];
 }
