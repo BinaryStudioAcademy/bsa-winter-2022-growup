@@ -54,3 +54,19 @@ export const createLanguage = async (
 
   return languages;
 };
+
+export const addLanguageCertificate = async (
+  id: Language['id'],
+  file: Express.Multer.File,
+): Promise<Language> => {
+  const languageRepository = getCustomRepository(LanguageRepository);
+
+  const language = await languageRepository.findOne({
+    where: { id },
+  });
+
+  language.certificate = file.originalname;
+  language.save();
+
+  return language;
+};
