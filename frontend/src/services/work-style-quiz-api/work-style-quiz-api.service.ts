@@ -44,6 +44,20 @@ class WorkStyleQuiz {
       return null;
     }
   }
+
+  async getWorkStyleQuizRestult(): Promise<IUserQuizResult[] | null> {
+    try {
+      const results = await this.http.load(`${this.apiPath}/work-quiz/result`, {
+        contentType: ContentType.JSON,
+        method: HttpMethod.GET,
+        payload: null,
+      });
+
+      return results as IUserQuizResult[];
+    } catch {
+      return null;
+    }
+  }
 }
 
 export { WorkStyleQuiz };
