@@ -55,7 +55,7 @@ const inviteUser = createAsyncThunk(
 
 const fetchUsers = createAsyncThunk(
   ActionType.FETCH_USERS,
-  async (data, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       return await users.fetchUsers();
     } catch (err) {
@@ -64,4 +64,15 @@ const fetchUsers = createAsyncThunk(
   },
 );
 
-export { fetchTags, createTags, deleteTag, inviteUser, fetchUsers };
+const deleteUser = createAsyncThunk(
+  ActionType.DELETE_USER,
+  async (id: string, { rejectWithValue }) => {
+    try {
+      await users.deleteUser(id);
+      return id;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+export { fetchTags, createTags, deleteTag, inviteUser, fetchUsers, deleteUser };

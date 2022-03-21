@@ -14,6 +14,7 @@ enum ActionType {
 
   INVITE_USER = 'invite-user',
   FETCH_USERS = 'fetch-users',
+  DELETE_USER = 'delete-user',
 }
 
 export { ActionType };

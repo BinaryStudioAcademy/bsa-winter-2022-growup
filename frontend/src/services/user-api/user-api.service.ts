@@ -42,6 +42,22 @@ class UsersApi {
       return null;
     }
   }
+
+  public async deleteUser(id: string): Promise<any> {
+    try {
+      const response = await this.http.load(
+        `${this.apiPath}/company/users/${id}`,
+        {
+          contentType: ContentType.JSON,
+          method: HttpMethod.DELETE,
+          hasAuth: true,
+        },
+      );
+      return response;
+    } catch (_) {
+      throw new Error('Can`t delete this user');
+    }
+  }
 }
 
 export { UsersApi };

@@ -31,6 +31,7 @@ import type {
   UserRegisterForm,
 } from '~/common/forms/user.forms';
 import { env } from '~/config/env';
+import { SuccessResponse } from '~/common/models/responses/success';
 
 type TokenResponse = {
   token: string;
@@ -263,4 +264,27 @@ export const updateUserAvatar = async (
   const { password: _password, ...user } = await userInstance.save();
 
   return user as User;
+};
+
+export const deleteUser = async (id: User['id']): Promise<SuccessResponse> => {
+  const userRepository = getCustomRepository(UserRepository);
+  const userInstance = await userRepository.findOne(id);
+
+  const userRoleRepository = getCustomRepository(UserRoleRepository);
+  const userRoleInstance = await userRoleRepository.find({
+    where: {
+      user: id,
+    },
+  });
+
+  if (!userInstance)
+    throw new HttpError({
+      status: HttpCode.NOT_FOUND,
+      message: 'User with this id does not exist',
+    });
+
+  userRoleInstance[0].remove();
+  userInstance.remove();
+
+  return { success: true, message: 'User deleted successfully' };
 };

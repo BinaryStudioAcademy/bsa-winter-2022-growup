@@ -5,6 +5,7 @@ import { deleteTag, getTags } from '~/services/tag.service';
 import {
   getCommonUserList,
   registerCommonUsers,
+  deleteUser,
 } from '~/services/user.service';
 
 import { createDefaultUser } from '~/common/utils/default-user.util';
@@ -37,6 +38,11 @@ router.post(
       req.companyId,
     ),
   ),
+);
+
+router.delete(
+  '/users/:id',
+  run((req) => deleteUser(req.params.id)),
 );
 
 export default router;
