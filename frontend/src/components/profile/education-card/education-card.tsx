@@ -5,6 +5,7 @@ import { IEducation } from '../common/interfaces';
 import { useAppDispatch, useCallback, useNavigate } from 'hooks/hooks';
 import { removeEducation } from 'store/education/actions';
 import { MentorMenteeRoute } from 'common/enums/mentor-mentee-route/mentor-mentee-route.enum';
+import { Button } from 'components/common/common';
 
 interface Props {
   education: IEducation;
@@ -63,20 +64,20 @@ const EducationCard: React.FC<Props> = ({ education, onEdit }) => {
           </span>
         </div>
         <div className="education-action-buttons d-flex align-items-center text-gu-purple">
-          <button
-            type="button"
-            className="border-0 p-0 bg-transparent text-gu-purple"
-            onClick={(): void => onEdit(education)}
+          <Button
+            className={'border-0 p-0 bg-transparent text-gu-purple'}
+            onSubmit={(): void => onEdit(education)}
+            type={'button'}
           >
             <PencilFill className="education-action-buttons__edit" />
-          </button>
-          <button
-            type="button"
-            className="border-0 p-0 bg-transparent text-gu-purple"
-            onClick={onRemove}
+          </Button>
+          <Button
+            className={'border-0 p-0 bg-transparent text-gu-purple'}
+            onSubmit={onRemove}
+            type={'button'}
           >
             <TrashFill className="education-action-buttons__delete" />
-          </button>
+          </Button>
         </div>
       </div>
     </div>

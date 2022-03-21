@@ -3,11 +3,9 @@ import multer from 'multer';
 
 import { run } from '~/common/helpers/route.helper';
 
-import {
-  fetchUser,
-  updateUserAvatar,
-  insertFirstNameLastName,
-} from '~/services/user.service';
+import { updateUserAvatar } from '~/services/user.service';
+import { fetchUserController } from '../controllers/auth.controller';
+
 import careerJourneyRoute from './career-journey';
 import educationRoute from './education-route';
 
@@ -24,14 +22,9 @@ router
   )
   .get(
     '/',
-    run((req: Request) => fetchUser(req.userId)),
+    run((req: Request) => fetchUserController(req.userId)),
   )
   .use('/career-journey', careerJourneyRoute)
   .use('/education', educationRoute);
-
-router.put(
-  '/pib',
-  run((req: Request) => insertFirstNameLastName(req.userId, req.body.pibInfo)),
-);
 
 export default router;

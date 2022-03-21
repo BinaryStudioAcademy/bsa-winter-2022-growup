@@ -37,9 +37,21 @@ const sendWorkStyleQuizResults = createAsyncThunk(
     }
   },
 );
+const getWorkStyleQuizResults = createAsyncThunk(
+  ActionType.GET,
+  async (_, { rejectWithValue }) => {
+    try {
+      const result = await workStyleQuiz.getWorkStyleQuizRestult();
+      return result;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
 
 export {
   fetchWorkStyleQuiz,
   updateWorkStyleQuizQuestion,
   sendWorkStyleQuizResults,
+  getWorkStyleQuizResults,
 };

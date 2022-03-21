@@ -11,6 +11,16 @@ import {
 } from 'common/enums/enums';
 
 const profileFirstStep = Joi.object({
+  [UserPayloadKey.PASSWORD]: Joi.string()
+    .trim()
+    .min(UserValidationRule.PASSWORD_MIN_LENGTH)
+    .max(UserValidationRule.PASSWORD_MAX_LENGTH)
+    .required()
+    .messages({
+      'string.empty': UserValidationMessage.PASSWORD_REQUIRE,
+      'string.min': UserValidationMessage.PASSWORD_MIN_LENGTH,
+      'string.max': UserValidationMessage.PASSWORD_MAX_LENGTH,
+    }),
   [UserPayloadKey.FIRST_NAME]: Joi.string()
     .trim()
     .min(UserValidationRule.FIRST_NAME_MIN_LENGTH)
