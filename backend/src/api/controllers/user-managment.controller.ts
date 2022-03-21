@@ -24,6 +24,7 @@ import { toShortUser } from '~/common/mappers/user.mapper';
 
 type RegistrationUserProps = {
   host: string;
+  origin: string;
   email: string;
   roleType: RoleType;
   companyId: Company['id'];
@@ -42,7 +43,7 @@ const registerUserController = async ({
   );
 
   const token = await createRegistrationToken(user);
-  await sendMail(host, user.email, token.value);
+  await sendMail(host, origin, user.email, token.value);
   return convertForUserList(user, user.role[0]);
 };
 
