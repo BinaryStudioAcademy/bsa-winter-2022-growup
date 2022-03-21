@@ -30,6 +30,8 @@ const SkillOverview = (): React.ReactElement => {
   const [isSortName, setIsSortName] = useState(true);
   const [isSortSelf, setIsSortSelf] = useState(true);
   const dispatch = useAppDispatch();
+  const UNIMPORTANT = 'unimportant';
+  const IMPORTANT = 'important';
   const skillStarred = skills.filter((skill: ISkill) => skill.isStarred);
   const skillNotStarred = skills.filter((skill: ISkill) => !skill.isStarred);
 
@@ -167,8 +169,8 @@ const SkillOverview = (): React.ReactElement => {
             aria-label="Default select example"
           >
             <option>All Skills</option>
-            <option value="important">Important Skills</option>
-            <option value="unimportant">Unimportant Skills</option>
+            <option value={`${IMPORTANT}`}>Important Skills</option>
+            <option value={`${UNIMPORTANT}`}>Unimportant Skills</option>
           </select>
         </div>
         <Form className="d-flex" onSubmit={handleSubmit(onAdd)}>
@@ -234,7 +236,7 @@ const SkillOverview = (): React.ReactElement => {
         <tbody>
           {skills
             ? skillStarred.map((skill: ISkill) => {
-                if (skill.name && selectSkills !== 'unimportant')
+                if (skill.name && selectSkills !== UNIMPORTANT)
                   if (isFind(skill.name) && skill.rating)
                     return (
                       <SkillElement
@@ -249,7 +251,7 @@ const SkillOverview = (): React.ReactElement => {
             : true}
           {skills
             ? skillNotStarred.map((skill: ISkill) => {
-                if (skill.name && selectSkills !== 'important')
+                if (skill.name && selectSkills !== IMPORTANT)
                   if (isFind(skill.name) && skill.rating)
                     return (
                       <SkillElement
