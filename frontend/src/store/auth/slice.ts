@@ -1,7 +1,13 @@
 import { createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
 import { ReducerName } from 'common/enums/app/reducer-name.enum';
 import { IUser } from 'common/interfaces/user';
-import { getCurrentUser, loginUser, signUpUser } from './actions';
+import {
+  finishRegistration,
+  getCurrentUser,
+  loginUser,
+  signUpUser,
+  verifyRegistrationToken,
+} from './actions';
 import { ActionType } from './common';
 import { StorageKey } from '../../common/enums/app/storage-key.enum';
 import { storage } from '../../services';
@@ -40,6 +46,13 @@ const { reducer, actions } = createSlice({
       state.isAuthenticated = true;
       state.user = action.payload;
     });
+    builder
+      .addCase(finishRegistration.fulfilled, (state, action) => {
+        state.user = action.payload;
+      })
+      .addCase(verifyRegistrationToken.fulfilled, (state, _) => {
+        state.isAuthenticated = true;
+      });
 
     builder
       .addMatcher(
