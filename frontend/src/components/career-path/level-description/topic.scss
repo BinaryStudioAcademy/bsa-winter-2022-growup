@@ -1,7 +1,7 @@
 @import '~assets/scss/utils';
 
 .topic {
-  white-space: pre;
+  white-space: pre-line;
   border-radius: 20px;
   padding: 2px 8px;
   font-weight: 600;
@@ -16,7 +16,7 @@
 }
 
 .required-topic {
-  white-space: pre;
+  white-space: pre-line;
   border-radius: 20px;
   border: 1px solid $gu-pink;
   padding: 2px 8px;
