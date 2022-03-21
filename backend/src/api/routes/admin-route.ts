@@ -33,7 +33,7 @@ router.post(
   '/users',
   run((req) => {
     return registerUserController({
-      host: req.headers[Headers.FORWARDED_HOST] as string,
+      host: req.headers[Headers.FORWARDED_HOST || Headers.ORIGIN] as string,
       email: req.body.email,
       roleType: req.body.roleType,
       companyId: req.companyId,
