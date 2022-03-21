@@ -1,0 +1,39 @@
+@import 'src/assets/scss/utils';
+
+.level-description {
+  border-radius: 10px;
+  min-width: 500px;
+  max-height: 825px;
+}
+
+.level-description__title {
+  border-radius: 10px 10px 0 0;
+  padding: 25px 35px;
+}
+
+.level-description__subtitle {
+  color: #808c9c;
+}
+
+.level-description__content {
+  padding: 40px 40px 120px;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  position: absolute;
+  width: 3px;
+  height: 15px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $purple-gray;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $purple;
+}
