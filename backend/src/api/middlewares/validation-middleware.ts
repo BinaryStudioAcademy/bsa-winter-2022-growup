@@ -40,7 +40,7 @@ const validateBody = (
       });
 
       errorHandlerMiddleware(newError, request, _response, next);
-      return;
+      return next(newError);
     }
     next();
   };
