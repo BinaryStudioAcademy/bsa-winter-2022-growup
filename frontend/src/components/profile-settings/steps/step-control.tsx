@@ -1,4 +1,5 @@
 import { IProfileSettingStep } from './common/interfaces';
+import { Button } from 'components/common/common';
 
 interface Props extends IProfileSettingStep {
   isValid: boolean;
@@ -8,9 +9,9 @@ interface Props extends IProfileSettingStep {
 const StepControl: React.FC<Props> = ({ isValid, onSubmit, onNext }) => {
   return (
     <div className="stepper__actions d-flex justify-content-center w-100 mt-4 align-items-center">
-      <button
-        className="btn btn-gu-blue text-gu-white"
-        onClick={async (): Promise<void> => {
+      <Button
+        className={'btn btn-gu-blue text-gu-white'}
+        onSubmit={async (): Promise<void> => {
           await onSubmit?.();
           if (isValid) {
             onNext?.();
@@ -18,7 +19,7 @@ const StepControl: React.FC<Props> = ({ isValid, onSubmit, onNext }) => {
         }}
       >
         Submit
-      </button>
+      </Button>
     </div>
   );
 };

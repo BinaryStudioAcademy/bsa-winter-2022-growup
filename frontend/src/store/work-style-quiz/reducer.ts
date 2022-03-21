@@ -19,6 +19,14 @@ const WorkStyleQuizReducer = (
   });
 
   builder.addCase(
+    actions.getWorkStyleQuizResults.fulfilled,
+    (state, action) => {
+      state.isLoading = false;
+      state.result = action.payload;
+    },
+  );
+
+  builder.addCase(
     actions.updateWorkStyleQuizQuestion.fulfilled,
     (state, action) => {
       const question = state.questions?.find(

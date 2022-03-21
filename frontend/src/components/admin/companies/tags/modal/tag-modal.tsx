@@ -1,7 +1,7 @@
 import { FormEvent, useCallback } from 'react';
 import { useAppDispatch, useAppSelector, useTagList } from 'hooks/hooks';
 import { tagsActions } from 'store/actions';
-import { Modal } from 'components/common/common';
+import { Button, Modal } from 'components/common/common';
 import { ITag } from 'common/interfaces/tag/tag';
 
 import TagForm from './form';
@@ -40,12 +40,14 @@ const TagModal: React.FC<Props> = ({ show, onClose }) => {
       <TagList tagList={tagList} onDelete={deleteItem} />
       <TagList tagList={tags} onDelete={deleteTag} />
 
-      <button
-        className="btn btn-outline-gu-purple btn-hover-gu-white fw-bold fs-5 border-2"
-        onClick={clickHandler}
+      <Button
+        className={
+          'btn btn-outline-gu-purple btn-hover-gu-white fw-bold fs-5 border-2'
+        }
+        onSubmit={clickHandler}
       >
         Save
-      </button>
+      </Button>
     </Modal>
   );
 };

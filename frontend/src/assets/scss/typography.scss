@@ -11,3 +11,11 @@ $custom-font-sizes: (
 
 $font-sizes: map-merge($font-sizes, $custom-font-sizes);
 /* stylelint-enable */
+
+.text-purple {
+  color: $gu-purple !important;
+}
+
+.text-blue {
+  color: $gu-blue !important;
+}

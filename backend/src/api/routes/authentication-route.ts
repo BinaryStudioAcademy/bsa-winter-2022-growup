@@ -1,11 +1,13 @@
 import { Request, Router } from 'express';
 
 import { run } from '~/common/helpers/route.helper';
+import { refreshToken } from '~/services/user.service';
+
 import {
-  authenticateUser,
-  registerUserAdmin,
-  refreshToken,
-} from '~/services/user.service';
+  loginController,
+  registrationController,
+} from '../controllers/auth.controller';
+
 import {
   verifyRegistrationTokenController,
   updateUserMissingDataController,
@@ -16,11 +18,14 @@ const router: Router = Router();
 router
   .post(
     '/login',
-    run((req: Request) => authenticateUser(req.body)),
+    run(async (req: Request) => await loginController(req.body)),
   )
   .post(
     '/register',
-    run((req: Request) => registerUserAdmin(req.body, req.companyId)),
+    run(
+      async (req: Request) =>
+        await registrationController(req.body, req.companyId),
+    ),
   )
   .post(
     '/auth/refresh',
