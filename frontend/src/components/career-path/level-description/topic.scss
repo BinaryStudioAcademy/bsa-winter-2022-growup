@@ -1,0 +1,27 @@
+@import '~assets/scss/utils';
+
+.topic {
+  white-space: pre;
+  border-radius: 20px;
+  padding: 2px 8px;
+  font-weight: 600;
+  line-height: 18px;
+  text-align: left;
+  background-color: $purple-light;
+}
+
+.topic__icon {
+  position: relative;
+  top: -1px;
+}
+
+.required-topic {
+  white-space: pre;
+  border-radius: 20px;
+  border: 1px solid $gu-pink;
+  padding: 2px 8px;
+  font-weight: 600;
+  line-height: 18px;
+  text-align: left;
+  background-color: $pink-100;
+}
