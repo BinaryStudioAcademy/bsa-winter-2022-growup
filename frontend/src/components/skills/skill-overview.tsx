@@ -10,7 +10,7 @@ import { RootState } from 'common/types/types';
 import { ISkill } from 'common/interfaces/skill/skill';
 import ProfileHeader from './header-user';
 import SkillElement from './rating/skill-rating';
-import { FormInput } from '../common/common';
+import { Button, FormInput } from '../common/common';
 import { ReactComponent as SortUp } from 'assets/img/icons/skill-icons/sortUp-icon.svg';
 import { ReactComponent as SortDown } from 'assets/img/icons/skill-icons/sortDown-icon.svg';
 import { SkillFormType } from './common/types';
@@ -24,11 +24,14 @@ const SkillOverview = (): React.ReactElement => {
   const skills = useAppSelector((state: RootState) => state.skill.userSkill);
   const allSkills = useAppSelector((state: RootState) => state.skill.allSkills);
   const [textFind, setTextFind] = useState('');
+  const [selectSkills, setSelectSkills] = useState('all');
   const [isManager, setIsManager] = useState(true);
   const [isSkillReview, setIsSkillReview] = useState(true);
   const [isSortName, setIsSortName] = useState(true);
   const [isSortSelf, setIsSortSelf] = useState(true);
   const dispatch = useAppDispatch();
+  const UNIMPORTANT = 'unimportant';
+  const IMPORTANT = 'important';
   const skillStarred = skills.filter((skill: ISkill) => skill.isStarred);
   const skillNotStarred = skills.filter((skill: ISkill) => !skill.isStarred);
 
@@ -146,7 +149,7 @@ const SkillOverview = (): React.ReactElement => {
       <div className="mb-5">
         <ProfileHeader />
       </div>
-      <div className="d-flex justify-content-between mb-4">
+      <div className="d-flex justify-content-between mb-4 flex-wrap gap-3">
         <form className="row g-3">
           <div className="col-auto">
             <input
@@ -159,8 +162,19 @@ const SkillOverview = (): React.ReactElement => {
             />
           </div>
         </form>
+        <div className="select-favorite">
+          <select
+            className="form-control rounded"
+            onChange={(e): void => setSelectSkills(e.target.value)}
+            aria-label="Default select example"
+          >
+            <option>All Skills</option>
+            <option value={`${IMPORTANT}`}>Important Skills</option>
+            <option value={`${UNIMPORTANT}`}>Unimportant Skills</option>
+          </select>
+        </div>
         <Form className="d-flex" onSubmit={handleSubmit(onAdd)}>
-          <div className="col form-input mx-4">
+          <div className="col form-input me-4">
             <FormInput
               name={'name'}
               control={control}
@@ -170,11 +184,9 @@ const SkillOverview = (): React.ReactElement => {
             />
           </div>
           <div className="col-auto">
-            <input
-              className="btn btn-primary"
-              type="submit"
-              value="+ Add Skill"
-            />
+            <Button className={'btn btn-primary'} type={'submit'}>
+              + Add Skill
+            </Button>
           </div>
         </Form>
       </div>
@@ -183,46 +195,46 @@ const SkillOverview = (): React.ReactElement => {
           <tr>
             <th scope="col">
               Skill
-              <button
-                className="border-0 bg-gu-white sort-button"
-                onClick={(): void => sortSkillNames()}
+              <Button
+                className={'border-0 bg-gu-white sort-button'}
+                onSubmit={(): void => sortSkillNames()}
               >
                 {isSortName ? <SortDown /> : <SortUp />}
-              </button>
+              </Button>
             </th>
             <th scope="col" className="text-center">
               Self Rating
-              <button
-                className="border-0 bg-gu-white sort-button"
-                onClick={(): void => sortSelfRating()}
+              <Button
+                className={'border-0 bg-gu-white sort-button'}
+                onSubmit={(): void => sortSelfRating()}
               >
                 {isSortSelf ? <SortDown /> : <SortUp />}
-              </button>
+              </Button>
             </th>
             <th scope="col" className="text-center">
               Manager Rating
-              <button
-                className="border-0 bg-gu-white sort-button"
-                onClick={(): void => sortManagerRating()}
+              <Button
+                className={'border-0 bg-gu-white sort-button'}
+                onSubmit={(): void => sortManagerRating()}
               >
                 {isManager ? <SortDown /> : <SortUp />}
-              </button>
+              </Button>
             </th>
             <th scope="col" className="text-center">
               Skill Review
-              <button
-                className="border-0 bg-gu-white sort-button"
-                onClick={(): void => sortSkillReview()}
+              <Button
+                className={'border-0 bg-gu-white sort-button'}
+                onSubmit={(): void => sortSkillReview()}
               >
                 {isSkillReview ? <SortDown /> : <SortUp />}
-              </button>
+              </Button>
             </th>
           </tr>
         </thead>
         <tbody>
           {skills
             ? skillStarred.map((skill: ISkill) => {
-                if (skill.name)
+                if (skill.name && selectSkills !== UNIMPORTANT)
                   if (isFind(skill.name) && skill.rating)
                     return (
                       <SkillElement
@@ -237,7 +249,7 @@ const SkillOverview = (): React.ReactElement => {
             : true}
           {skills
             ? skillNotStarred.map((skill: ISkill) => {
-                if (skill.name)
+                if (skill.name && selectSkills !== IMPORTANT)
                   if (isFind(skill.name) && skill.rating)
                     return (
                       <SkillElement

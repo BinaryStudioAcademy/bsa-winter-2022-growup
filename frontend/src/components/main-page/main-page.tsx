@@ -1,5 +1,5 @@
 import './styles.scss';
-import Notifications from './notifications/notificationList';
+import Notifications from './notifications/notification-list';
 import { useAppSelector, useEffect, useNavigate } from 'hooks/hooks';
 import isFirstLogged from 'helpers/check-is-first-logged';
 import OpportunityList from './opportunities/opportunity-list';

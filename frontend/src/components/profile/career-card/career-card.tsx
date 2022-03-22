@@ -5,6 +5,7 @@ import { useAppDispatch, useCallback, useNavigate } from 'hooks/hooks';
 import { removeCareerJourney } from 'store/career-journey/actions';
 import { ICareerJourney } from '../common/interfaces';
 import { MentorMenteeRoute } from 'common/enums/mentor-mentee-route/mentor-mentee-route.enum';
+import { Button } from 'components/common/common';
 
 interface Props {
   careerJourney: ICareerJourney;
@@ -64,20 +65,20 @@ const CareerCard: React.FC<Props> = ({ careerJourney, onEdit }) => {
           </span>
         </div>
         <div className="career-action-buttons d-flex align-self-center text-gu-purple">
-          <button
-            type="button"
-            className="border-0 p-0 bg-transparent text-gu-purple"
-            onClick={(): void => onEdit(careerJourney)}
+          <Button
+            className={'btn border-0 p-0 bg-transparent text-gu-purple'}
+            onSubmit={(): void => onEdit(careerJourney)}
+            type={'button'}
           >
             <PencilFill className="career-action-buttons__edit" />
-          </button>
-          <button
-            type="button"
-            className="border-0 p-0 bg-transparent text-gu-purple"
-            onClick={onRemove}
+          </Button>
+          <Button
+            className={'btn border-0 p-0 bg-transparent text-gu-purple'}
+            onSubmit={onRemove}
+            type={'button'}
           >
             <TrashFill className="career-action-buttons__delete" />
-          </button>
+          </Button>
         </div>
       </div>
     </div>

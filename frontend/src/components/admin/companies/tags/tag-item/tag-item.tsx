@@ -10,7 +10,7 @@ type Props = {
 
 const Tag: React.FC<Props> = ({ tag, onDelete }) => {
   return (
-    <div className="row tag g-0">
+    <div className="row tag g-0 m-0">
       <div className="col">
         {tag.name}{' '}
         <Icon.XLg

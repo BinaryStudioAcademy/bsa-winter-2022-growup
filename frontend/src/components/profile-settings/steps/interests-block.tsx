@@ -1,3 +1,4 @@
+import { Button } from 'components/common/common';
 import { Plus } from 'react-bootstrap-icons';
 import './styles.scss';
 
@@ -8,10 +9,14 @@ const InterestsBlock: React.FC = ({ children }) => {
         <p className="interests-header__title m-0 fw-bold fs-4 text-gu-white">
           Interests
         </p>
-        <button className="interests-header__edit fw-bold bg-transparent d-flex align-items-center fs-5 position-relative">
+        <Button
+          className={
+            'interests-header__edit fw-bold bg-transparent d-flex align-items-center fs-5 position-relative'
+          }
+        >
           <Plus className="interests-header__edit-icon text-gu-white" />
           <span className="text-gu-white">Add Interests</span>
-        </button>
+        </Button>
       </div>
       <div className="position-relative add-section-content">{children}</div>
     </div>

@@ -166,6 +166,9 @@
                 "name": {
                   "type": "string"
                 },
+                "type": {
+                  "type": "string"
+                },
                 "startDate": {
                   "type": "string"
                 },
@@ -505,7 +508,7 @@
             "description": "User credentials"
           }
         ],
-        "tags": ["Users"],
+        "tags": ["Users", "Authentication"],
         "summary": "Create new user",
         "responses": {
           "200": {
@@ -544,7 +547,7 @@
             "description": "User credentials"
           }
         ],
-        "tags": ["Users"],
+        "tags": ["Users", "Authentication"],
         "summary": "Authenticate user",
         "responses": {
           "200": {
@@ -580,7 +583,7 @@
             "description": "The refresh token"
           }
         ],
-        "tags": ["Users"],
+        "tags": ["Users", "Authentication"],
         "summary": "Use a refresh token to generate a new JWT token and a new refresh token",
         "responses": {
           "200": {
@@ -591,6 +594,100 @@
           },
           "404": {
             "description": "Returns error if token are invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/register/verify/{token}": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "token",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Token that was sent to user via email"
+          }
+        ],
+        "tags": ["Users", "Authentication"],
+        "summary": "Verifies user token for completing registration",
+        "responses": {
+          "200": {
+            "description": "Returns token if everything is ok. Token contains userId and role. It expires in 24h.",
+            "schema": {
+              "$ref": "#/definitions/Token"
+            }
+          },
+          "404": {
+            "description": "Returns error if token is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/register/finish": {
+      "patch": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Authorization token"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "type": "string"
+                },
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "position": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "tags": ["Users", "Authentication"],
+        "summary": "Completes user registration and fills in user missing data(e. g. password, firstName, lastName and position)",
+        "responses": {
+          "200": {
+            "description": "Returns updated user fields(except for password)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "position": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Returns error if token is invalid.",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -1562,6 +1659,9 @@
           "type": "string"
         },
         "name": {
+          "type": "string"
+        },
+        "type": {
           "type": "string"
         },
         "startDate": {

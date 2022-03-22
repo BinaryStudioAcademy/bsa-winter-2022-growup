@@ -3,15 +3,19 @@ import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import { useSelector } from 'react-redux';
 import { RootState } from 'common/types/types';
-import OkrList from './okr-list';
+import { OkrTypes } from 'common/interfaces/okr';
 import { useAppSelector, useNavigate } from 'hooks/hooks';
+import OkrList from './okr-list';
 import isFirstLogged from 'helpers/check-is-first-logged';
 
 function ControlledTabs(): React.ReactElement {
-  const [key, setKey] = useState('my-OKR');
-  const userOkrs = useSelector((state: RootState) => state.okr.okrs);
-  const user = useAppSelector((store) => store.profile.user);
   const navigate = useNavigate();
+
+  const [key, setKey] = useState('my-OKR');
+
+  const { okrs } = useSelector((state: RootState) => state.okr);
+  const user = useAppSelector((store) => store.profile.user);
+  const ownOkr = okrs.filter((okr) => okr.type === OkrTypes.MY_OKR);
 
   useEffect(() => {
     isFirstLogged({ user, navigate });
@@ -24,10 +28,10 @@ function ControlledTabs(): React.ReactElement {
       className="mb-3"
     >
       <Tab eventKey="my-OKR" title="My OKR">
-        <OkrList collection={userOkrs} />
+        <OkrList collection={ownOkr} />
       </Tab>
       <Tab eventKey="all-OKR" title="All OKRs">
-        <OkrList collection={[]} />
+        <OkrList collection={okrs} />
       </Tab>
     </Tabs>
   );

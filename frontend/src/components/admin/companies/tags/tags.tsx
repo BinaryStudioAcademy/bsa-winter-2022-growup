@@ -9,6 +9,7 @@ import { adminActions } from 'store/actions';
 
 import Tag from './tag-item/tag-item';
 import TagModal from './modal/tag-modal';
+import { Button } from 'components/common/common';
 
 type Props = {
   tagList: ITag[];
@@ -37,12 +38,14 @@ const Tags: React.FC<Props> = ({ tagList }) => {
               <h3 className="m-0">Tags</h3>
             </div>
             <div className="col d-flex align-items-center justify-content-end">
-              <button
-                className="btn btn-outline-gu-pink btn-responsive btn-hover-gu-white fw-bold fs-5 border-2"
-                onClick={showModal}
+              <Button
+                className={
+                  'btn btn-outline-gu-pink btn-responsive btn-hover-gu-white fw-bold fs-5 border-2'
+                }
+                onSubmit={showModal}
               >
-                + <span>Add Tag</span>
-              </button>
+                + Add Tag
+              </Button>
             </div>
           </div>
         </Card.Header>

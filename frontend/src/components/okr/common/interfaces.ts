@@ -1,3 +1,5 @@
+import { OkrTypes } from 'common/interfaces/okr';
+
 interface IUser {
   id: number;
   email: string;
@@ -12,6 +14,7 @@ interface IUser {
 interface IOkr {
   id: number;
   name: string;
+  type: OkrTypes;
   startDate: string;
   endDate: string;
   userId: number;

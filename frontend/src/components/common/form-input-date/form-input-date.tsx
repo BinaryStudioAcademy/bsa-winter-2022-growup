@@ -18,10 +18,14 @@ interface Props<T> {
   errors: DeepMap<FieldValues, FieldError>;
   control: Control<T>;
   placeholder: string;
+  minDate?: Date;
+  maxDate?: Date;
 }
 
 function FormInputDate<T>({
   name,
+  minDate,
+  maxDate,
   errors,
   control,
   placeholder,
@@ -37,8 +41,8 @@ function FormInputDate<T>({
       name={name}
       dateFormat="dd.MM.yyyy"
       customInputRef="dateRef"
-      minDate={null}
-      maxDate={null}
+      minDate={minDate}
+      maxDate={maxDate}
       selected={value}
       onChange={onChange}
       placeholderText={placeholder}

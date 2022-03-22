@@ -8,6 +8,9 @@ export class OKR extends AbstractEntity {
   @Column({ type: 'varchar', length: 50 })
   name: string;
 
+  @Column({ type: 'varchar', length: 50 })
+  type: string;
+
   @Column()
   endDate: Date;
 

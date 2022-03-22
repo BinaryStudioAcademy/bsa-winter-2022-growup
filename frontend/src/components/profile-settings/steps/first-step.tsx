@@ -7,7 +7,7 @@ import StepControl from './step-control';
 import { profileFirstStep as profileFirstStepValidationSchema } from 'validation-schemas/validation-schemas';
 import { useAppForm, useDispatch } from 'hooks/hooks';
 import { DEFAULT_FIRST_STEP_PAYLOAD } from './common/constants';
-import { insertPIB } from 'store/profile/actions';
+import { finishRegistration } from 'store/auth/actions';
 import { FirstStepFormType } from './common/types';
 
 const FirstStep: React.FC<IProfileSettingStep> = ({
@@ -21,7 +21,7 @@ const FirstStep: React.FC<IProfileSettingStep> = ({
     });
   const dispatch = useDispatch();
   const onSaveSettings = (values: FirstStepFormType): void => {
-    dispatch(insertPIB(values));
+    dispatch(finishRegistration(values));
   };
 
   const onSubmit = handleSubmit(onSaveSettings);
@@ -29,19 +29,26 @@ const FirstStep: React.FC<IProfileSettingStep> = ({
   return (
     <div className="stepper__form">
       <TextField
-        label="First name"
-        name={'firstName'}
+        label="Password"
+        type="password"
+        name="password"
         control={control}
         errors={errors}
       />
       <TextField
-        name={'lastName'}
+        label="First name"
+        name="firstName"
+        control={control}
+        errors={errors}
+      />
+      <TextField
+        name="lastName"
         label="Last name"
         control={control}
         errors={errors}
       />
       <TextField
-        name={'position'}
+        name="position"
         label="Position"
         control={control}
         errors={errors}
