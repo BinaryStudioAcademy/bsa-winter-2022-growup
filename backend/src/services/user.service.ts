@@ -66,7 +66,7 @@ export const getUserJWT = async (
 export const registerUser = async (
   data: UserRegisterForm,
   role: RoleType,
-  companyId: User['company']['id'],
+  companyId?: User['company']['id'],
 ): Promise<User> => {
   const userRepository = getCustomRepository(UserRepository);
   const roleRepository = getCustomRepository(UserRoleRepository);
@@ -87,14 +87,14 @@ export const registerUser = async (
   const hashedPassword = data.password
     ? await hashPassword(data.password)
     : null;
-  const company = await companyRepository.findOne(companyId);
 
   let newData = {
     ...data,
     password: hashedPassword,
   };
 
-  if (role !== RoleType.ADMIN) {
+  if (companyId) {
+    const company = await companyRepository.findOne(companyId);
     newData = { ...newData, ...{ company } };
   }
 

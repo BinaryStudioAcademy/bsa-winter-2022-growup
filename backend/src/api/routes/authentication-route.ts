@@ -5,7 +5,7 @@ import { refreshToken } from '~/services/user.service';
 
 import {
   loginController,
-  registrationController,
+  registerAdminController,
 } from '../controllers/auth.controller';
 
 import {
@@ -22,10 +22,7 @@ router
   )
   .post(
     '/register',
-    run(
-      async (req: Request) =>
-        await registrationController(req.body, req.companyId),
-    ),
+    run(async (req: Request) => await registerAdminController(req.body)),
   )
   .post(
     '/auth/refresh',
