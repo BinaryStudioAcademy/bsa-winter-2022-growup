@@ -40,6 +40,7 @@ const FirstStep: React.FC<IProfileSettingStep> = ({
         name="firstName"
         control={control}
         errors={errors}
+        initialValue="ABC"
       />
       <TextField
         name="lastName"

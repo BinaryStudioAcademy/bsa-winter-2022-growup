@@ -18,6 +18,7 @@ interface Props<T> {
   control: Control<T>;
   type: string;
   placeholder: string;
+  initialValue?: string;
 }
 
 function FormInput<T>({
@@ -26,6 +27,7 @@ function FormInput<T>({
   control,
   type,
   placeholder,
+  initialValue = '',
 }: Props<T>): JSX.Element {
   const {
     field: { value, ...field },
@@ -36,9 +38,10 @@ function FormInput<T>({
     <>
       <Form.Control
         {...field}
-        value={fieldValue}
+        value={fieldValue ? fieldValue : initialValue}
         type={type}
         placeholder={placeholder}
+        defaultValue={initialValue}
       />
       <span className="fs-6 text-gu-pink error mt-2">
         <ErrorMessage errors={errors} name={name} />
