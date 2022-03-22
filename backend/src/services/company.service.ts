@@ -1,5 +1,5 @@
 import { getCustomRepository } from 'typeorm';
-import CompanyRepositry from '../data/repositories/company.repository';
+import CompanyRepositry from '~/data/repositories/company.repository';
 
 import { Company } from '~/data/entities/company';
 
@@ -16,6 +16,7 @@ import CompanyRepository from '~/data/repositories/company.repository';
 import WorkQuizRepository from '~/data/repositories/work-quiz.repository';
 import QuizCategoryRepository from '~/data/repositories/quiz-category.repository';
 import QuizAnswerRepository from '~/data/repositories/quiz-answer.repository';
+import UserRepository from '~/data/repositories/user.repository';
 
 import { asyncForEach } from '~/common/helpers/array.helper';
 import styleQuizJSON from '~/data/local/style-quiz.json';
@@ -162,6 +163,7 @@ export const createCompany = async ({
   const { userId, role } = tokenPayload;
 
   const companyRepository = getCustomRepository(CompanyRepository);
+  const userRepository = getCustomRepository(UserRepository);
 
   if (name) {
     const isCompanyExist = await companyRepository.findOne({ name });
@@ -173,11 +175,12 @@ export const createCompany = async ({
       const companyInstance = await newCompany.save();
 
       await createQuiz(companyInstance);
+      await userRepository.setCompanyIdToUser(companyInstance, userId);
 
       const token = signToken({
         userId,
         role,
-        companyId: newCompany.id,
+        companyId: companyInstance.id,
       });
 
       return { token, company: newCompany };

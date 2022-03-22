@@ -20,10 +20,12 @@ const OkrList: React.FC<Props> = ({ collection }) => {
   return (
     <>
       <Button
-        className="btn-gu-pink text-gu-white mb-2 align-self-end"
+        variant="gu-pink"
+        className="text-gu-white mb-2 align-self-end"
         onClick={openModal}
-        text="Create Okr"
-      />
+      >
+        "Create Okr"
+      </Button>
       <div className="OKR-page d-flex flex-row flex-wrap">
         {collection.map((okr: IOkr) => {
           const objectives = okr.objectives;

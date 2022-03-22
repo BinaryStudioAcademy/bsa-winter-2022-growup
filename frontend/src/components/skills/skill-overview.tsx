@@ -184,9 +184,7 @@ const SkillOverview = (): React.ReactElement => {
             />
           </div>
           <div className="col-auto">
-            <Button className="btn btn-primary" type="submit">
-              + Add Skill
-            </Button>
+            <Button type="submit">+ Add Skill</Button>
           </div>
         </Form>
       </div>
@@ -195,39 +193,39 @@ const SkillOverview = (): React.ReactElement => {
           <tr>
             <th scope="col">
               Skill
-              <Button
+              <button
                 className="border-0 bg-gu-white sort-button"
                 onClick={(): void => sortSkillNames()}
               >
                 {isSortName ? <SortDown /> : <SortUp />}
-              </Button>
+              </button>
             </th>
             <th scope="col" className="text-center">
               Self Rating
-              <Button
+              <button
                 className="border-0 bg-gu-white sort-button"
                 onClick={(): void => sortSelfRating()}
               >
                 {isSortSelf ? <SortDown /> : <SortUp />}
-              </Button>
+              </button>
             </th>
             <th scope="col" className="text-center">
               Manager Rating
-              <Button
+              <button
                 className="border-0 bg-gu-white sort-button"
                 onClick={(): void => sortManagerRating()}
               >
                 {isManager ? <SortDown /> : <SortUp />}
-              </Button>
+              </button>
             </th>
             <th scope="col" className="text-center">
               Skill Review
-              <Button
+              <button
                 className="border-0 bg-gu-white sort-button"
                 onClick={(): void => sortSkillReview()}
               >
                 {isSkillReview ? <SortDown /> : <SortUp />}
-              </Button>
+              </button>
             </th>
           </tr>
         </thead>

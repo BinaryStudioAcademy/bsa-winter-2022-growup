@@ -19,7 +19,8 @@ const AddSection: React.FC<Props> = ({
       <p className="add-section-header__title m-0 fw-bold fs-4">{title}</p>
       <Button
         type="button"
-        className="add-section-header__add fw-bold d-flex align-items-center fs-5"
+        variant="outline-gu-white"
+        className="add-section-header__add btn-hover-gu-purple d-flex align-items-center"
         onClick={onAdd}
       >
         <Plus className="add-section-header__add-icon" />

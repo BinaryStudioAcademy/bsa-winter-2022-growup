@@ -30,13 +30,12 @@ const Modal: React.FC<Props> = ({
       <ModalWindow.Body className={className}>{children}</ModalWindow.Body>
       {footer && (
         <ModalWindow.Footer className="w-100 bg-gu-white justify-content-start fw-bold fs-3">
+          <Button variant="secondary" onClick={onClose}>
+            Close
+          </Button>
           <Button
-            className="btn btn-secondary"
-            text="Close"
-            onClick={onClose}
-          />
-          <Button
-            className={'btn btn-gu-pink text-gu-white'}
+            variant="gu-pink"
+            className="text-gu-white"
             onClick={onSubmit}
           >
             {buttonText || 'Save'}

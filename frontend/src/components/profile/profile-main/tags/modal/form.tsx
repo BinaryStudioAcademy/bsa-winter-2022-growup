@@ -36,7 +36,8 @@ const TagForm: React.FC<PropTypes> = ({ onSubmit }) => {
         />
       </Form.Group>
       <Button
-        className="btn btn-outline-gu-pink btn-hover-gu-white fw-bold fs-5 border-2"
+        variant="outline-gu-pink"
+        className=" btn-hover-gu-white "
         type="submit"
       >
         + Add

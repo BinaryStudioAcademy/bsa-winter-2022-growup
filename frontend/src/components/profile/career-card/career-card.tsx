@@ -66,16 +66,16 @@ const CareerCard: React.FC<Props> = ({ careerJourney, onEdit }) => {
         </div>
         <div className="career-action-buttons d-flex align-self-center text-gu-purple">
           <Button
-            className={'btn border-0 p-0 bg-transparent text-gu-purple'}
+            className="border-0 p-0 bg-transparent text-gu-purple"
             onClick={(): void => onEdit(careerJourney)}
-            type={'button'}
+            type="button"
           >
             <PencilFill className="career-action-buttons__edit" />
           </Button>
           <Button
-            className={'btn border-0 p-0 bg-transparent text-gu-purple'}
+            className="border-0 p-0 bg-transparent text-gu-purple"
             onClick={onRemove}
-            type={'button'}
+            type="button"
           >
             <TrashFill className="career-action-buttons__delete" />
           </Button>

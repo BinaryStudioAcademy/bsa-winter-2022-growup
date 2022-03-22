@@ -1,5 +1,6 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { StorageKey } from 'common/enums/app/storage-key.enum';
+import { ICompany } from 'common/interfaces/company/company';
 import {
   IToken,
   IUser,
@@ -39,9 +40,14 @@ const signUpUser = createAsyncThunk<IReturnType, IUserSignUpForm, ThunkApiType>(
 
 const getCurrentUser = createAsyncThunk<IUser, void, ThunkApiType>(
   ActionType.GET_USER,
-  async (request, { extra: { services } }) => {
+  async (_, { extra: { services } }) => {
     return services.profile.fetchProfile();
   },
+);
+
+const updateUserCompany = createAction(
+  ActionType.UPDATE_COMPANY,
+  (company: ICompany) => ({ payload: { company } }),
 );
 
 const verifyRegistrationToken = createAsyncThunk<IToken, string, ThunkApiType>(
@@ -79,4 +85,5 @@ export {
   signUpUser,
   verifyRegistrationToken,
   finishRegistration,
+  updateUserCompany,
 };

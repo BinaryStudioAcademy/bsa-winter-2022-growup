@@ -34,9 +34,8 @@ const Interests: React.FC<PropTypes> = ({ tagList }) => {
             Interests
           </h3>
           <Button
-            className={
-              'edit-section-header__edit fw-bold bg-transparent d-flex align-items-center fs-5'
-            }
+            variant="outline-gu-pink"
+            className="edit-section-header__edit d-flex align-items-center"
             onClick={showModal}
           >
             <PencilFill className="edit-section-header__edit-icon me-2" />

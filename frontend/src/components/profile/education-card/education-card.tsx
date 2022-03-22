@@ -65,16 +65,16 @@ const EducationCard: React.FC<Props> = ({ education, onEdit }) => {
         </div>
         <div className="education-action-buttons d-flex align-items-center text-gu-purple">
           <Button
-            className={'border-0 p-0 bg-transparent text-gu-purple'}
+            className="border-0 p-0 bg-transparent text-gu-purple"
             onClick={(): void => onEdit(education)}
-            type={'button'}
+            type="button"
           >
             <PencilFill className="education-action-buttons__edit" />
           </Button>
           <Button
-            className={'border-0 p-0 bg-transparent text-gu-purple'}
+            className="border-0 p-0 bg-transparent text-gu-purple"
             onClick={onRemove}
-            type={'button'}
+            type="button"
           >
             <TrashFill className="education-action-buttons__delete" />
           </Button>
