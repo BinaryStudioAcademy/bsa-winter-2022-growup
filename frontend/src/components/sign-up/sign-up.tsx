@@ -79,9 +79,9 @@ const SignUp: React.FC = () => {
             floatingLabelStyles={'d-flex flex-wrap'}
             children={
               <Button
-                className={'auth-form__icon input-group-text position-absolute'}
-                type={'button'}
-                onSubmit={(): void => setIsHiddenPassword(!isHiddenPassword)}
+                className="auth-form__icon input-group-text position-absolute"
+                type="button"
+                onClick={(): void => setIsHiddenPassword(!isHiddenPassword)}
               >
                 {isHiddenPassword ? <EyeSlash /> : <Eye />}
               </Button>
@@ -89,7 +89,7 @@ const SignUp: React.FC = () => {
           />
 
           <div className="d-grid gap-2">
-            <Button className={'btn btn-gu-pink text-gu-white'} type={'submit'}>
+            <Button className="btn btn-gu-pink text-gu-white" type="submit">
               Sign up
             </Button>
             <Form.Text className="mt-2 text-center fs-5">

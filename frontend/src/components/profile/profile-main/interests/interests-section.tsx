@@ -37,7 +37,7 @@ const Interests: React.FC<PropTypes> = ({ tagList }) => {
             className={
               'edit-section-header__edit fw-bold bg-transparent d-flex align-items-center fs-5'
             }
-            onSubmit={showModal}
+            onClick={showModal}
           >
             <PencilFill className="edit-section-header__edit-icon me-2" />
             <span>Edit</span>

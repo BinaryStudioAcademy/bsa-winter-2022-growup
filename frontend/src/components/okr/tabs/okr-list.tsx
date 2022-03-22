@@ -21,7 +21,7 @@ const OkrList: React.FC<Props> = ({ collection }) => {
     <>
       <Button
         className="btn-gu-pink text-gu-white mb-2 align-self-end"
-        onSubmit={openModal}
+        onClick={openModal}
         text="Create Okr"
       />
       <div className="OKR-page d-flex flex-row flex-wrap">

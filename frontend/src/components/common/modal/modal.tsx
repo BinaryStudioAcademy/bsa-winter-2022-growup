@@ -33,11 +33,11 @@ const Modal: React.FC<Props> = ({
           <Button
             className="btn btn-secondary"
             text="Close"
-            onSubmit={onClose}
+            onClick={onClose}
           />
           <Button
             className={'btn btn-gu-pink text-gu-white'}
-            onSubmit={onSubmit}
+            onClick={onSubmit}
           >
             {buttonText || 'Save'}
           </Button>

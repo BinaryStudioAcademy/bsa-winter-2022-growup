@@ -74,11 +74,7 @@ const UserForm: React.FC<Props> = ({ onSubmit: submit }) => {
         </Form.Group>
       </div>
       <div className="d-flex">
-        <Button
-          className={
-            'btn btn-outline-gu-purple btn-hover-gu-white fw-bold fs-5 border-2 flex-fill'
-          }
-        >
+        <Button className="btn btn-outline-gu-purple btn-hover-gu-white fw-bold fs-5 border-2 flex-fill">
           Save
         </Button>
       </div>

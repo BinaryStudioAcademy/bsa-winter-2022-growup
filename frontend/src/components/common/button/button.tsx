@@ -1,15 +1,20 @@
-import { FormEvent } from 'react';
+import { ButtonHTMLAttributes, FormEvent } from 'react';
 
 interface Props {
   className?: string;
   text?: string;
-  onSubmit?: (a: FormEvent) => void;
-  type?: string;
+  onClick?: (a: FormEvent) => void;
+  type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
   disabled?: boolean;
 }
 
-const Button: React.FC<Props> = ({ className = '', onSubmit, children }) => (
-  <button className={`${className}`} onClick={onSubmit}>
+const Button: React.FC<Props> = ({
+  className = '',
+  onClick,
+  type,
+  children,
+}) => (
+  <button type={type} className={`${className}`} onClick={onClick}>
     {children}
   </button>
 );

@@ -184,7 +184,7 @@ const SkillOverview = (): React.ReactElement => {
             />
           </div>
           <div className="col-auto">
-            <Button className={'btn btn-primary'} type={'submit'}>
+            <Button className="btn btn-primary" type="submit">
               + Add Skill
             </Button>
           </div>
@@ -196,8 +196,8 @@ const SkillOverview = (): React.ReactElement => {
             <th scope="col">
               Skill
               <Button
-                className={'border-0 bg-gu-white sort-button'}
-                onSubmit={(): void => sortSkillNames()}
+                className="border-0 bg-gu-white sort-button"
+                onClick={(): void => sortSkillNames()}
               >
                 {isSortName ? <SortDown /> : <SortUp />}
               </Button>
@@ -205,8 +205,8 @@ const SkillOverview = (): React.ReactElement => {
             <th scope="col" className="text-center">
               Self Rating
               <Button
-                className={'border-0 bg-gu-white sort-button'}
-                onSubmit={(): void => sortSelfRating()}
+                className="border-0 bg-gu-white sort-button"
+                onClick={(): void => sortSelfRating()}
               >
                 {isSortSelf ? <SortDown /> : <SortUp />}
               </Button>
@@ -214,8 +214,8 @@ const SkillOverview = (): React.ReactElement => {
             <th scope="col" className="text-center">
               Manager Rating
               <Button
-                className={'border-0 bg-gu-white sort-button'}
-                onSubmit={(): void => sortManagerRating()}
+                className="border-0 bg-gu-white sort-button"
+                onClick={(): void => sortManagerRating()}
               >
                 {isManager ? <SortDown /> : <SortUp />}
               </Button>
@@ -223,8 +223,8 @@ const SkillOverview = (): React.ReactElement => {
             <th scope="col" className="text-center">
               Skill Review
               <Button
-                className={'border-0 bg-gu-white sort-button'}
-                onSubmit={(): void => sortSkillReview()}
+                className="border-0 bg-gu-white sort-button"
+                onClick={(): void => sortSkillReview()}
               >
                 {isSkillReview ? <SortDown /> : <SortUp />}
               </Button>

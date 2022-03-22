@@ -38,10 +38,8 @@ const TagModal: React.FC<PropTypes> = ({ show, onClose }) => {
       <TagList tagList={tagList} onDelete={deleteItem} />
       <InterestsTagList tagList={tags} onDelete={deleteTag} />
       <Button
-        className={
-          'btn btn-outline-gu-purple btn-hover-gu-white fw-bold fs-5 border-2'
-        }
-        onSubmit={clickHandler}
+        className="btn btn-outline-gu-purple btn-hover-gu-white fw-bold fs-5 border-2"
+        onClick={clickHandler}
       >
         Save
       </Button>

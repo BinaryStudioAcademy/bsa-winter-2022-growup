@@ -39,7 +39,7 @@ const Company: React.FC<Props> = ({ companyList }) => {
             className={
               'btn btn-outline-gu-white btn-hover-gu-purple border-2 fs-5 fw-bold'
             }
-            onSubmit={handleShow}
+            onClick={handleShow}
             disabled={isDisabled}
           >
             + Add Company

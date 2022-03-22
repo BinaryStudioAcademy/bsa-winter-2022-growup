@@ -41,7 +41,7 @@ const CareerPath: React.FC = () => {
             className={`btn btn-outline-gu-white btn-hover-gu-purple fw-bold fs-5 border-2 ${
               !isFlowVisible || 'invisible'
             }`}
-            onSubmit={handleAddCareerPath}
+            onClick={handleAddCareerPath}
           >
             + Add Career Path
           </Button>
