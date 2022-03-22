@@ -22,14 +22,6 @@
   padding: 20px 28px 38px 34px;
 }
 
-// @include media-breakpoint-down(xl) {
-//   .interests-header {
-//     &__edit {
-//       border: 2px solid $gu-white;
-//     }
-//   }
-// }
-
 @include media-breakpoint-down(lg) {
   .interests-header {
     &__edit {
