@@ -33,6 +33,9 @@ import type {
   UserRegisterForm,
 } from '~/common/forms/user.forms';
 import { env } from '~/config/env';
+import { Tags } from '~/data/entities/tags';
+import { Education } from '~/data/entities/education';
+import { CareerJourney } from '~/data/entities/career-journey';
 
 type TokenResponse = {
   token: string;
@@ -42,6 +45,15 @@ type RefreshTokenResponse = {
   refreshToken: string;
   accessToken: string;
 };
+
+interface IProfile {
+  firstName: string;
+  lastName: string;
+  position: string;
+  educations: Education[];
+  careerJourneys: CareerJourney[];
+  interests: Tags[];
+}
 
 export const getUserJWT = async (
   user: User,
@@ -251,12 +263,20 @@ export const updateUserAvatar = async (
   return user as User;
 };
 
-export const addProfile = async (data: User, userId: string): Promise<User> => {
+export const addProfile = async (
+  data: IProfile,
+  userId: string,
+): Promise<User> => {
   const userRepository = getCustomRepository(UserRepository);
 
   const userInstance = await userRepository.findOne({
-    where: { id: userId },
+    where: {
+      id: userId,
+    },
+    relations: ['tags'],
   });
+
+  await userInstance.tags.push(...data.interests);
 
   const user = Object.assign(userInstance, data);
   await user.save();
