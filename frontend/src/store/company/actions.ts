@@ -4,6 +4,7 @@ import { ActionType } from './common';
 import { ICompany } from 'common/interfaces/company/company';
 import { StorageKey } from 'common/enums/app/storage-key.enum';
 import { company as companyApi } from 'services';
+import { authActions } from 'store/actions';
 
 interface IAddEdit {
   newCompany: ICompany;
@@ -30,7 +31,7 @@ const add_companyAsync = createAsyncThunk(
 
     if (result) {
       const { token, company } = result;
-
+      dispatch(authActions.updateUserCompany(company));
       window.localStorage.setItem(StorageKey.TOKEN, token);
       dispatch(actions.add_company(company));
       handleClose();

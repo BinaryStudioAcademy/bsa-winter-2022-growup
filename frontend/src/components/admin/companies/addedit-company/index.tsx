@@ -93,10 +93,10 @@ const AddEditCompany: FC<Props> = ({ show, handleClose, company }) => {
         </Form.Group>
       </Modal.Body>
       <Modal.Footer className="border-0 justify-content-between">
-        <Button className={'btn gu-blue mg-0'} onSubmit={send}>
+        <Button className={'btn btn-gu-blue mg-0'} onSubmit={send}>
           {company ? 'Edit' : 'Save'}
         </Button>
-        <Button className={'btn gu-pink mg-0'} onSubmit={onCloseCancel}>
+        <Button className={'btn btn-gu-pink mg-0'} onSubmit={onCloseCancel}>
           Cancel
         </Button>
       </Modal.Footer>
