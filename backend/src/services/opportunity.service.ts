@@ -10,6 +10,13 @@ import UserRepository from '~/data/repositories/user.repository';
 import { User } from '~/data/entities/user';
 import { asyncForEach } from '~/common/helpers/array.helper';
 
+interface Props {
+  name: string;
+  organization: string;
+  type: string;
+  startDate: Date;
+}
+
 export const getOpportunities = async (
   companyId: string,
 ): Promise<Opportunity[]> => {
@@ -25,12 +32,23 @@ export const getOpportunities = async (
 
   return opportunities.map((opportunity) => opportunityMapper(opportunity));
 };
-interface Props {
-  name: string;
-  organization: string;
-  type: string;
-  startDate: Date;
-}
+
+export const getOpportunitiesById = async (
+  companyId: string,
+): Promise<Opportunity[]> => {
+  const opportunityRepository = getCustomRepository(OpportunitiesRepository);
+  const companyRepository = getCustomRepository(CompanyRepository);
+  const companyInstance: Company = await companyRepository.findOne({
+    id: companyId,
+  });
+  const opportunities = await opportunityRepository.find({
+    company: companyInstance,
+    relations: ['company', 'user', 'tags'],
+  } as FindManyOptions);
+
+  return opportunities.map((opportunity) => opportunityMapper(opportunity));
+};
+
 export const createOpportunities = async (
   data: Opportunity[],
   userId: string,
