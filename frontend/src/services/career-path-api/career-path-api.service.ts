@@ -143,43 +143,35 @@ class CareerPath {
     }
   }
 
-  async createSkill(skill: ISkillSetting): Promise<ISkill | null> {
+  async createSkill(skill: ISkillSetting): Promise<ISkill> {
     const { domainId, levelId, name } = skill;
 
-    try {
-      const result = await this.http.load(
-        `${this.apiPath}/career-path/domain/${domainId}/level/${levelId}/skill`,
-        {
-          contentType: ContentType.JSON,
-          method: HttpMethod.POST,
-          payload: JSON.stringify({ name, type: this.skillType }),
-        },
-      );
-      return result as ISkill;
-    } catch {
-      return null;
-    }
+    const result = await this.http.load(
+      `${this.apiPath}/career-path/domain/${domainId}/level/${levelId}/skill`,
+      {
+        contentType: ContentType.JSON,
+        method: HttpMethod.POST,
+        payload: JSON.stringify({ name, type: this.skillType }),
+      },
+    );
+    return result as ISkill;
   }
 
   async updateSkill(
     skill: ISkillSetting & { id: string },
-  ): Promise<(ISkillSetting & { id: string }) | null> {
+  ): Promise<ISkillSetting & { id: string }> {
     const { id, domainId, levelId, name } = skill;
 
-    try {
-      const result: ISkill = await this.http.load(
-        `${this.apiPath}/career-path/skill/${id}`,
-        {
-          contentType: ContentType.JSON,
-          method: HttpMethod.PUT,
-          payload: JSON.stringify({ name }),
-        },
-      );
-      const skillResult = { ...result, domainId, levelId };
-      return skillResult as ISkillSetting & { id: string };
-    } catch {
-      return null;
-    }
+    const result: ISkill = await this.http.load(
+      `${this.apiPath}/career-path/skill/${id}`,
+      {
+        contentType: ContentType.JSON,
+        method: HttpMethod.PUT,
+        payload: JSON.stringify({ name }),
+      },
+    );
+    const skillResult = { ...result, domainId, levelId };
+    return skillResult as ISkillSetting & { id: string };
   }
 
   async deleteSkill(id: string): Promise<ISkill | null> {
