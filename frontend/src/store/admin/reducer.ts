@@ -35,6 +35,15 @@ const Reducer = (builder: ActionReducerMapBuilder<State>): void => {
     }
   });
 
+  builder.addCase(actions.changeUserRole.fulfilled, (state, action) => {
+    if (action.payload) {
+      const id = state.users.findIndex(
+        (user) => user.id === action.payload.userId,
+      );
+      state.users[id].roleType = action.payload.roleType;
+    }
+  });
+
   builder.addMatcher(
     isAnyOf(actions.createTags.pending, actions.fetchTags.pending),
     (state, _) => {

@@ -44,6 +44,10 @@ type RefreshTokenResponse = {
   accessToken: string;
 };
 
+interface IChangeRoleProps {
+  roleType: RoleType;
+}
+
 export const getUserJWT = async (
   user: User,
   role?: UserRole,
@@ -273,4 +277,29 @@ export const deleteUser = async (id: User['id']): Promise<SuccessResponse> => {
   userInstance.remove();
 
   return { success: true, message: 'User deleted successfully' };
+};
+
+export const changeUserRole = async (
+  id: User['id'],
+  { roleType }: IChangeRoleProps,
+): Promise<any> => {
+  const userRoleRepository = getCustomRepository(UserRoleRepository);
+  const userRoleInstance = await userRoleRepository.find({
+    where: {
+      user: id,
+    },
+  });
+  if (!userRoleInstance) {
+    throw new HttpError({
+      status: HttpCode.NOT_FOUND,
+      message: 'Can`t change Role for this role',
+    });
+  }
+  userRoleInstance[0].role = roleType;
+  userRoleInstance[0].save();
+
+  return {
+    userId: id,
+    roleType,
+  };
 };

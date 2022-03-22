@@ -1,3 +1,4 @@
+import { RoleType } from 'common/enums/enums';
 import { ITag } from 'common/interfaces/tag/tag';
 import { IUser } from 'common/interfaces/user/user';
 
@@ -5,6 +6,11 @@ export type State = {
   tags: ITag[];
   isLoading: boolean;
   users: IUser[];
+};
+
+export type SuccessResponse = {
+  success: boolean;
+  message: string;
 };
 
 enum ActionType {
@@ -15,6 +21,12 @@ enum ActionType {
   INVITE_USER = 'invite-user',
   FETCH_USERS = 'fetch-users',
   DELETE_USER = 'delete-user',
+  CHANGE_ROLE = 'change-role',
+}
+
+export interface IChangeRole {
+  userId: string;
+  roleType: RoleType;
 }
 
 export { ActionType };

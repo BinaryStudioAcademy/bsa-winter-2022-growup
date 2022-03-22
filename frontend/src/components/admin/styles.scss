@@ -1,9 +1,16 @@
 @import '~assets/scss/utils';
 
-.delete-user {
-  transition: all 0.5s ease-in;
-  &:hover {
-    color: $pink;
+.users__row {
+  &:hover button {
+    visibility: visible !important;
+  }
+}
+.user-control-btn {
+  margin-right: 1rem;
+
+  @media screen and (max-width: 767px) {
+    margin-right: 0 !important;
+    margin-bottom: 10px !important;
   }
 }
 @include media-breakpoint-down(lg) {

@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { tags, users } from 'services';
 
 import type { TagCreation } from 'common/types/types';
-import { ActionType } from './common';
+import { ActionType, IChangeRole } from './common';
 import { ITag } from 'common/interfaces/tag/tag';
 import { IUser } from 'common/interfaces/user';
 
@@ -75,4 +75,23 @@ const deleteUser = createAsyncThunk(
     }
   },
 );
-export { fetchTags, createTags, deleteTag, inviteUser, fetchUsers, deleteUser };
+const changeUserRole = createAsyncThunk(
+  ActionType.CHANGE_ROLE,
+  async ({ userId, roleType }: IChangeRole, { rejectWithValue }) => {
+    try {
+      const result = await users.changeUserRole({ userId, roleType });
+      return result;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+export {
+  fetchTags,
+  createTags,
+  deleteTag,
+  inviteUser,
+  fetchUsers,
+  deleteUser,
+  changeUserRole,
+};
