@@ -20,16 +20,16 @@ const LevelFlow: React.FC<Props> = ({ nodes, edges }) => {
       nodes={nodes}
       edges={edges}
       nodeTypes={nodeTypes}
-      // fitView
+      fitView
       maxZoom={1}
-      // minZoom={0.3}
+      minZoom={0.3}
       snapToGrid={true}
       draggable={false}
       panOnDrag={false}
       nodesDraggable={false}
       connectOnClick={false}
       zoomOnPinch={false}
-      zoomOnScroll={false}
+      zoomOnScroll={true}
       zoomOnDoubleClick={false}
       className="level-flow bg-white me-3"
       attributionPosition="bottom-left"
