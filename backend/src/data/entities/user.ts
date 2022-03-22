@@ -55,6 +55,6 @@ export class User extends AbstractEntity {
   })
   educations: Education[];
 
-  @ManyToMany(() => Tags, (tag) => tag.opportunities)
+  @ManyToMany(() => Tags, (tag) => tag.users)
   tags: Tags[];
 }

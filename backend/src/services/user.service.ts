@@ -259,7 +259,7 @@ export const addProfile = async (data: User, userId: string): Promise<User> => {
   });
 
   const user = Object.assign(userInstance, data);
-  user.save();
+  await user.save();
 
   return user;
 };
