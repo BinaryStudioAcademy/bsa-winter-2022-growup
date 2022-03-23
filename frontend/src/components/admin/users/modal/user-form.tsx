@@ -77,6 +77,7 @@ const UserForm: React.FC<Props> = ({ onSubmit: submit }) => {
         <Button
           variant="outline-gu-purple"
           className=" btn-hover-gu-white flex-fill"
+          type="submit"
         >
           Save
         </Button>
