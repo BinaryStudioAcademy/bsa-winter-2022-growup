@@ -11,7 +11,6 @@ import {
 } from '~/services/user.service';
 import { sendMail } from '~/services/mail.service';
 
-import { Company } from '~/data/entities/company';
 import { User } from '~/data/entities/user';
 
 import { createDefaultUser } from '~/common/utils/default-user.util';
@@ -24,7 +23,6 @@ import { IListUser, ShortUser } from '~/common/models/user/user';
 import { toShortUser } from '~/common/mappers/user.mapper';
 import { badRequestError } from '~/common/errors';
 import UserRepository from '~/data/repositories/user.repository';
-import CompanyRepository from '~/data/repositories/company.repository';
 
 type RegistrationUserProps = {
   host: string;
@@ -41,7 +39,6 @@ const registerUserController = async ({
   roleType,
   userId,
 }: RegistrationUserProps): Promise<IListUser> => {
-  const companyRepository = getCustomRepository(CompanyRepository);
   const userRepository = getCustomRepository(UserRepository);
 
   const user = await userRepository.geUserById(userId);
@@ -50,14 +47,10 @@ const registerUserController = async ({
     throw badRequestError('User doesn`t create company!!!');
   }
 
-  const company: Company = await companyRepository.findOne({
-    id: user.company.id,
-  });
-
   const newUser = await registerUser(
     createDefaultUser(email),
     roleType,
-    company.id,
+    user.company.id,
   );
 
   const token = await createRegistrationToken(newUser);
