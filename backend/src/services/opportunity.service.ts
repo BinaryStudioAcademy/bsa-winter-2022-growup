@@ -9,6 +9,8 @@ import { opportunityMapper } from '~/common/mappers/opportunities.mapper';
 import UserRepository from '~/data/repositories/user.repository';
 import { User } from '~/data/entities/user';
 import { asyncForEach } from '~/common/helpers/array.helper';
+import TagsRepository from '~/data/repositories/tags.repository';
+import { Tags } from '~/data/entities/tags';
 
 export const getOpportunities = async (
   companyId: string,
@@ -62,4 +64,38 @@ export const createOpportunities = async (
   }, data);
 
   return opportunities.map((opportunity) => opportunityMapper(opportunity));
+};
+
+export const connectTagsOpportunity = async (
+  tagsName: string[],
+  id: string,
+  companyId: string,
+): Promise<Tags[]> => {
+  const opportunitiesRepository = getCustomRepository(OpportunitiesRepository);
+  const tagsRepository = getCustomRepository(TagsRepository);
+  const companyRepository = getCustomRepository(CompanyRepository);
+
+  const opportunityInstance = await opportunitiesRepository.findOne({
+    where: {
+      id,
+    },
+    relations: ['tags'],
+  });
+
+  const companyInstance: Company = await companyRepository.findOne({
+    id: companyId,
+  });
+
+  const tags = await tagsRepository.find({
+    company: companyInstance,
+    relations: ['company'],
+  } as FindManyOptions);
+
+  const opportunityTags = tags.filter(
+    (tag) => tagsName.indexOf(tag.name) !== -1,
+  );
+  await opportunityInstance.tags.push(...opportunityTags);
+  await opportunityInstance.save();
+
+  return opportunityTags;
 };
