@@ -48,6 +48,10 @@ interface IChangeRoleProps {
   roleType: RoleType;
 }
 
+interface IChangeRole {
+  userId: string;
+  roleType: RoleType;
+}
 export const getUserJWT = async (
   user: User,
   role?: UserRole,
@@ -273,8 +277,8 @@ export const deleteUser = async (id: User['id']): Promise<SuccessResponse> => {
       message: 'User with this id does not exist',
     });
 
-  userRoleInstance[0].remove();
-  userInstance.remove();
+  await userRoleInstance[0].remove();
+  await userInstance.remove();
 
   return { success: true, message: 'User deleted successfully' };
 };
@@ -282,7 +286,7 @@ export const deleteUser = async (id: User['id']): Promise<SuccessResponse> => {
 export const changeUserRole = async (
   id: User['id'],
   { roleType }: IChangeRoleProps,
-): Promise<any> => {
+): Promise<IChangeRole> => {
   const userRoleRepository = getCustomRepository(UserRoleRepository);
   const userRoleInstance = await userRoleRepository.find({
     where: {
@@ -296,7 +300,7 @@ export const changeUserRole = async (
     });
   }
   userRoleInstance[0].role = roleType;
-  userRoleInstance[0].save();
+  await userRoleInstance[0].save();
 
   return {
     userId: id,
