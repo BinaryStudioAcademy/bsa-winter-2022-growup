@@ -1,9 +1,8 @@
-@import 'src/assets/scss/utils';
+@import '~assets/scss/utils';
 
 .level-description {
-  border-radius: 10px;
-  max-height: 825px;
-  max-width: 625px;
+  min-width: 450px;
+  max-width: 525px;
 }
 
 .level-description__title {
@@ -16,24 +15,23 @@
 }
 
 .level-description__content {
-  padding: 40px 40px 120px;
+  padding: 25px 35px;
+  height: calc(100vh - 230px);
 }
 
 ::-webkit-scrollbar {
   width: 5px;
+  height: 5px;
 }
 
-::-webkit-scrollbar-track {
-  position: absolute;
-  width: 3px;
-  height: 15px;
-}
+@media (max-width: 1500px) {
+  .level-description {
+    max-width: max-content;
+    margin: 10px 0;
+    height: 100%;
+  }
 
-::-webkit-scrollbar-thumb {
-  background: $purple-gray;
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: $purple;
+  .level-description__content {
+    height: 100%;
+  }
 }
