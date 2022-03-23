@@ -1,6 +1,9 @@
+import { getCustomRepository } from 'typeorm';
 import { CareerPath } from '~/common/models/career/career';
 import { Company } from '~/data/entities/company';
-
+import { getCompany } from '~/services/company.service';
+import UserRepository from '~/data/repositories/user.repository';
+import { badRequestError } from '~/common/errors';
 import {
   createDomain,
   getDomains,
@@ -75,8 +78,16 @@ const getLevelsAndSkills = async (domain: Domain): Promise<DomainLevel[]> => {
 
 export const createDomainTree = async (
   data: CareerPath,
-  company: Company,
+  userId: string,
 ): Promise<CareerPathResponse> => {
+  const userRepository = getCustomRepository(UserRepository);
+  const user = await userRepository.geUserById(userId);
+
+  if (!user.company) {
+    throw badRequestError('User doesn`t create company!!!');
+  }
+
+  const company = await getCompany(user.company.id);
   const domain = await createDomain(data.name, company);
 
   const domainLevels = data.levels;
@@ -135,9 +146,17 @@ export const createDomainTree = async (
 };
 
 export const getDomainTrees = async (
-  company: Company,
+  userId: string,
 ): Promise<CareerPathResponse[]> => {
   const careeerPathResponse: CareerPathResponse[] = [];
+  const userRepository = getCustomRepository(UserRepository);
+  const user = await userRepository.geUserById(userId);
+
+  if (!user.company) {
+    throw badRequestError('User doesn`t create company!!!');
+  }
+
+  const company = await getCompany(user.company.id);
   const domains = await getDomains(company);
 
   await asyncForEach(async (domain) => {
