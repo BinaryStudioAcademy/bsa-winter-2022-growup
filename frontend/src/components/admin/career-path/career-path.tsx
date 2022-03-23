@@ -38,10 +38,9 @@ const CareerPath: React.FC = () => {
       <Card className="growup-card-primary">
         <Card.Header className="d-flex justify-content-end growup-card-header">
           <Button
-            className={`btn btn-outline-gu-white btn-hover-gu-purple fw-bold fs-5 border-2 ${
-              !isFlowVisible || 'invisible'
-            }`}
-            onSubmit={handleAddCareerPath}
+            variant="outline-gu-white"
+            className={`btn-hover-gu-purple ${!isFlowVisible || 'invisible'}`}
+            onClick={handleAddCareerPath}
           >
             + Add Career Path
           </Button>

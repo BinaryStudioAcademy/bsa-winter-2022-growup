@@ -36,8 +36,9 @@ const Company: React.FC<Props> = ({ companyList }) => {
       <Card className="growup-card-primary">
         <Card.Header className="d-flex justify-content-end growup-card-header">
           <Button
-            className="btn-outline-gu-white btn-hover-gu-purple border-2 fs-5 fw-bold"
-            onSubmit={handleShow}
+            variant="outline-gu-white"
+            className="btn-hover-gu-purple"
+            onClick={handleShow}
             disabled={isDisabled}
           >
             + Add Company

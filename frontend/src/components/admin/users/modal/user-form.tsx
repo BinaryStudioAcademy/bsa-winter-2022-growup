@@ -75,9 +75,8 @@ const UserForm: React.FC<Props> = ({ onSubmit: submit }) => {
       </div>
       <div className="d-flex">
         <Button
-          className={
-            'btn btn-outline-gu-purple btn-hover-gu-white fw-bold fs-5 border-2 flex-fill'
-          }
+          variant="outline-gu-purple"
+          className=" btn-hover-gu-white flex-fill"
         >
           Save
         </Button>

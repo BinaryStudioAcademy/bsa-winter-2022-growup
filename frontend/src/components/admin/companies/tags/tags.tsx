@@ -39,10 +39,9 @@ const Tags: React.FC<Props> = ({ tagList }) => {
             </div>
             <div className="col d-flex align-items-center justify-content-end">
               <Button
-                className={
-                  'btn btn-outline-gu-pink btn-responsive btn-hover-gu-white fw-bold fs-5 border-2'
-                }
-                onSubmit={showModal}
+                variant="outline-gu-pink"
+                className="btn-responsive btn-hover-gu-white"
+                onClick={showModal}
               >
                 + Add Tag
               </Button>

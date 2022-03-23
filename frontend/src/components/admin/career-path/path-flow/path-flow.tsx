@@ -163,8 +163,9 @@ const PathFlow: React.FC = () => {
         </Form.Group>
         <Button
           type="submit"
-          className="btn btn-outline-gu-pink btn-hover-gu-white fw-bold fs-5 border-2"
-          onSubmit={(): void => addDomain(inputDomain)}
+          variant="outline-gu-pink"
+          className="btn-hover-gu-white"
+          onClick={(): void => addDomain(inputDomain)}
         >
           + Add domain
         </Button>

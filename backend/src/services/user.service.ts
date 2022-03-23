@@ -142,10 +142,10 @@ export const refreshToken = async (
 
 export const authenticateUser = async (data: UserLoginForm): Promise<User> => {
   const userRepository = getCustomRepository(UserRepository);
-
   const user = await userRepository.getUserWithPassword({
     email: data.email,
   });
+
   if (!user)
     throw new HttpError({
       status: HttpCode.NOT_FOUND,

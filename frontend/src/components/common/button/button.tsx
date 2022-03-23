@@ -1,38 +1,14 @@
-import { FormEvent } from 'react';
-import { Button as BSButton } from 'react-bootstrap';
+import { ButtonHTMLAttributes, memo } from 'react';
+import { Button as BSButton, ButtonProps } from 'react-bootstrap';
 
-enum ButtonTypes {
-  button = 'button',
-  submit = 'submit',
-  reset = 'reset',
-}
+type Props = ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>;
 
-interface Props {
-  className?: string;
-  text?: string;
-  onSubmit?: (a: FormEvent) => void;
-  type?: string;
-  disabled?: boolean;
-  variant?: string;
-}
-
-const Button: React.FC<Props> = ({
-  className = '',
-  children,
-  disabled = false,
-  variant = '',
-  type = 'button',
-  onSubmit,
-}) => (
-  <BSButton
-    className={className}
-    onClick={onSubmit}
-    disabled={disabled}
-    variant={variant}
-    type={type as ButtonTypes}
-  >
-    {children}
-  </BSButton>
+const Button: React.FC<Props> = memo(
+  ({ className = '', children, ...props }) => (
+    <BSButton className={`fs-5 fw-bold border-2 ${className}`} {...props}>
+      {children}
+    </BSButton>
+  ),
 );
 
 export default Button;
