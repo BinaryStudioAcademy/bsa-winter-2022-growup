@@ -35,20 +35,14 @@ export const getOpportunities = async (
 
 export const getOpportunitiesById = async (
   id: string,
-  companyId: string,
 ): Promise<Opportunity> => {
   const opportunityRepository = getCustomRepository(OpportunitiesRepository);
-  const companyRepository = getCustomRepository(CompanyRepository);
-  const companyInstance: Company = await companyRepository.findOne({
-    id: companyId,
-  });
-  const opportunities = await opportunityRepository.find({
-    company: companyInstance,
+
+  const opportunity = await opportunityRepository.findOne({
     relations: ['company', 'user', 'tags'],
-  } as FindManyOptions);
-  const opportunity = opportunities.find(
-    (opportunity) => opportunity.id === id,
-  );
+    where: { id },
+  });
+
   return opportunityMapper(opportunity);
 };
 

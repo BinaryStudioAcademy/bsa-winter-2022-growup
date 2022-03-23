@@ -19,14 +19,14 @@ router
   .get(
     '/:id',
     run((req) => {
-      return getOpportunitiesById(req.params.id, req.companyId);
+      return getOpportunitiesById(req.params.id);
     }),
   )
   .post(
     '/',
     run((req) => {
       const { companyId, userId } = req;
-      return createOpportunities(req.body.opportunities, userId, companyId);
+      return createOpportunities(req.body, userId, companyId);
     }),
   );
 export default router;
