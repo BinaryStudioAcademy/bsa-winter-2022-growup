@@ -24,7 +24,7 @@ router
   )
   .get(
     '/users',
-    run((req) => getCommonUserList(req.companyId)),
+    run((req) => getCommonUserList(req.userId)),
   )
   .post(
     '/users',
@@ -34,7 +34,7 @@ router
         origin: req.headers[Headers.ORIGIN] as string,
         email: req.body.email,
         roleType: req.body.roleType,
-        companyId: req.companyId,
+        userId: req.userId,
       });
     }),
   );

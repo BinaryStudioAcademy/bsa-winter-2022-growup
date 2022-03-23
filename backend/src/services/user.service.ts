@@ -1,7 +1,7 @@
 import { getCustomRepository } from 'typeorm';
-
 import { HttpCode, HttpError } from 'growup-shared';
 
+import { badRequestError } from '~/common/errors';
 import UserRepository from '~/data/repositories/user.repository';
 import UserRoleRepository from '~/data/repositories/role.repository';
 import CompanyRepository from '~/data/repositories/company.repository';
@@ -165,11 +165,16 @@ export const authenticateUser = async (data: UserLoginForm): Promise<User> => {
 };
 
 export const getCommonUserList = async (
-  companyId: User['company']['id'],
+  userId: string,
 ): Promise<IListUser[]> => {
   const userRepository = getCustomRepository(UserRepository);
+  const user = await userRepository.geUserById(userId);
 
-  const usersList = await userRepository.getUsersByCompamyId(companyId);
+  if (!user.company) {
+    throw badRequestError('User doesn`t create company!!!');
+  }
+
+  const usersList = await userRepository.getUsersByCompamyId(user.company.id);
 
   const list = usersList.map((user) => {
     const roles = user.role.reduce((roles, role) => {
