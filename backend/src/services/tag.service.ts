@@ -1,8 +1,7 @@
 import { FindManyOptions, getCustomRepository } from 'typeorm';
 import { HttpError, HttpCode } from 'growup-shared';
-
-import { companies } from '~/data/seed-data/company.data';
-
+import UserRepository from '~/data/repositories/user.repository';
+import { badRequestError } from '~/common/errors';
 import TagsRepository from '~/data/repositories/tags.repository';
 import CompanyRepository from '~/data/repositories/company.repository';
 
@@ -14,11 +13,17 @@ import { tagsMapper } from '~/common/mappers/tags.mapper';
 import type { TagsCreationResponse } from '~/common/models/tags/tags';
 import type { SuccessResponse } from '~/common/models/responses/success';
 
-export const getTags = async (): Promise<Tags[]> => {
+export const getTags = async (userId: string): Promise<Tags[]> => {
+  const userRepository = getCustomRepository(UserRepository);
+  const user = await userRepository.geUserById(userId);
+
+  if (!user.company) {
+    throw badRequestError('User doesn`t create company!!!');
+  }
   const tagsRepository = getCustomRepository(TagsRepository);
   const companyRepository = getCustomRepository(CompanyRepository);
   const companyInstance: Company = await companyRepository.findOne({
-    name: companies[0].name,
+    id: user.company.id,
   });
   const tags = await tagsRepository.find({
     company: companyInstance,

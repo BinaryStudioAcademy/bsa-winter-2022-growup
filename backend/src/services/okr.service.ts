@@ -40,7 +40,7 @@ export const createOkr = async ({
   const isOkrExist = await okrRepository.findOne({ name: body.name });
 
   if (isOkrExist) {
-    badRequestError(`Okr with name ${body.name} is exist!!!`);
+    throw badRequestError(`Okr with name ${body.name} is exist!!!`);
   }
 
   const okr = okrRepository.create();
