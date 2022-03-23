@@ -5,21 +5,18 @@ import Education from './education';
 import InterestingTags from './interesting-tags';
 import StepControl from './step-control';
 import { profileFirstStep as profileFirstStepValidationSchema } from 'validation-schemas/validation-schemas';
-import { useAppForm, useAppSelector, useDispatch } from 'hooks/hooks';
-import { someFunc } from './common/constants';
+import { useAppForm, useDispatch } from 'hooks/hooks';
 import { finishRegistration } from 'store/auth/actions';
 import { FirstStepFormType } from './common/types';
-import { IUser } from 'common/interfaces/user';
+import { DEFAULT_FIRST_STEP_PAYLOAD } from './common/constants';
 
 const FirstStep: React.FC<IProfileSettingStep> = ({
   isDisablePrevious,
   onNext,
 }) => {
-  const user = useAppSelector((store) => store.profile.user) as IUser;
-
   const { control, errors, isValid, handleSubmit } =
     useAppForm<FirstStepFormType>({
-      defaultValues: someFunc(user),
+      defaultValues: DEFAULT_FIRST_STEP_PAYLOAD,
       validationSchema: profileFirstStepValidationSchema,
     });
   const dispatch = useDispatch();
@@ -43,7 +40,6 @@ const FirstStep: React.FC<IProfileSettingStep> = ({
         name="firstName"
         control={control}
         errors={errors}
-        initialValue="ABC"
       />
       <TextField
         name="lastName"

@@ -1,10 +1,4 @@
-import {
-  Navigate,
-  Outlet,
-  useLocation,
-  useNavigate,
-  useState,
-} from 'hooks/hooks';
+import { Navigate, Outlet, useLocation, useNavigate } from 'hooks/hooks';
 import { Route, Routes } from 'components/common/common';
 import { MentorMenteeRoute, ProfileSettingsRoute } from 'common/enums/enums';
 import { steps } from './steps/steps';
@@ -18,29 +12,18 @@ const ProfileSettings: React.FC = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const activeStep = Number(pathname[pathname.length - 1]);
-  const [lastActiveStep, setLastActiveStep] = useState(activeStep);
 
   const onNext = (): void => {
     if (activeStep === steps.length) {
       navigate(ProfileSettingsRoute.PROFILE_SETTINGS_ROOT);
       return;
     }
-    lastActiveStep <= activeStep ? setLastActiveStep(lastActiveStep + 1) : null;
     navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/${activeStep + 1}`);
-  };
-
-  const changeStep = (num: number): void => {
-    navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/${num + 1}`);
   };
 
   return (
     <div className="stepper position-relative">
-      <Stepper
-        steps={steps}
-        activeStep={activeStep - 1}
-        changeStepClicker={changeStep}
-        lastActiveStep={lastActiveStep}
-      />
+      <Stepper steps={steps} activeStep={activeStep - 1} />
       <div className="stepper__actions d-flex justify-content-center w-100">
         <Routes>
           <Route
