@@ -3,6 +3,8 @@ import './styles.scss';
 import { useAppSelector } from 'hooks/hooks';
 import { IOpportunity } from 'store/opportunities/common';
 
+import { Button } from 'components/common/common';
+
 const OpportunityList: React.FC = () => {
   const opportunities = useAppSelector((state) => state.homePage.opportunities);
   return (
@@ -11,9 +13,9 @@ const OpportunityList: React.FC = () => {
         <span className="flex-shrink-1 flex-grow-1 text-start fs-5">
           Recommended opportunities
         </span>
-        <span className="btn btn-outline-gu-white fs-7 ">
+        <Button variant="outline-gu-white" className="btn-hover-gu-purple">
           + Add Opportunity
-        </span>
+        </Button>
       </div>
       <div>
         {opportunities.map((item: IOpportunity, index: number) => {
