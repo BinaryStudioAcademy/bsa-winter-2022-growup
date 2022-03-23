@@ -19,7 +19,7 @@ router
   .get(
     '/:id',
     run((req) => {
-      return getOpportunitiesById(req.companyId);
+      return getOpportunitiesById(req.params.id, req.companyId);
     }),
   )
   .post(
