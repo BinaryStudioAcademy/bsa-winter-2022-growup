@@ -12,10 +12,20 @@ import { Button } from 'components/common/common';
 
 const CareerPath: React.FC = () => {
   const domains = useAppSelector((state) => state.careerPath.domains) || [];
+  const { user } = useAppSelector((state) => state.auth);
+
+  const [isDisabled, setIsDisabled] = useState(false);
+
   const [isFlowVisible, setIsFlowVisible] = useState(!!domains.length);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
 
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (user && user.company) {
+      setIsDisabled(true);
+    }
+  }, [user]);
 
   useEffect(() => {
     dispatch(careerPathActions.fetchDomains());
@@ -42,6 +52,7 @@ const CareerPath: React.FC = () => {
               !isFlowVisible || 'invisible'
             }`}
             onSubmit={handleAddCareerPath}
+            disabled={isDisabled}
           >
             + Add Career Path
           </Button>
