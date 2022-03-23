@@ -14,7 +14,7 @@ const Stepper: React.FC<Props> = ({ steps, activeStep }) => {
         return (
           <div
             key={i}
-            className={`stepper__step position-relative d-table-cell 
+            className={`stepper__step position-relative d-table-cell
             ${i <= activeStep && 'is-active '} `}
           >
             <div className="position-relative d-block">
