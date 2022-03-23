@@ -9,7 +9,7 @@ import Profile from '../../profile/profile';
 import MainPage from '../../main-page/main-page';
 import { NotFound } from '../../not-found';
 import ProfileSettings from '../../profile-settings/profile-settings';
-import ControlledTabs from 'components/okr/tabs/two-tabs';
+import Okr from 'components/okr/okr';
 import SkillOverview from 'components/skills/skill-overview';
 import Opportunities from 'components/opportunities/opportunities';
 import { IRoute } from '../common/interfaces';
@@ -17,7 +17,7 @@ import { IRoute } from '../common/interfaces';
 export const mentorMenteeRoutes: IRoute[] = [
   {
     path: MentorMenteeRoute.OKR,
-    element: <ControlledTabs />,
+    element: <Okr />,
   },
   {
     path: MentorMenteeRoute.SETTINGS_PROFILE,

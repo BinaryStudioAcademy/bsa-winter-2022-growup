@@ -1,3 +1,4 @@
+import { getCustomRepository } from 'typeorm';
 import {
   createRegistrationToken,
   deleteRegistrationToken,
@@ -10,7 +11,6 @@ import {
 } from '~/services/user.service';
 import { sendMail } from '~/services/mail.service';
 
-import { Company } from '~/data/entities/company';
 import { User } from '~/data/entities/user';
 
 import { createDefaultUser } from '~/common/utils/default-user.util';
@@ -21,29 +21,41 @@ import { UserMissingDataForm } from '~/common/forms/user.forms';
 import { convertForUserList } from '~/common/utils/user.util';
 import { IListUser, ShortUser } from '~/common/models/user/user';
 import { toShortUser } from '~/common/mappers/user.mapper';
+import { badRequestError } from '~/common/errors';
+import UserRepository from '~/data/repositories/user.repository';
 
 type RegistrationUserProps = {
   host: string;
+  origin: string;
   email: string;
   roleType: RoleType;
-  companyId: Company['id'];
+  userId: string;
 };
 
 const registerUserController = async ({
   host,
+  origin,
   email,
   roleType,
-  companyId,
+  userId,
 }: RegistrationUserProps): Promise<IListUser> => {
-  const user = await registerUser(
+  const userRepository = getCustomRepository(UserRepository);
+
+  const user = await userRepository.geUserById(userId);
+
+  if (!user.company) {
+    throw badRequestError('User doesn`t create company!!!');
+  }
+
+  const newUser = await registerUser(
     createDefaultUser(email),
     roleType,
-    companyId,
+    user.company.id,
   );
 
-  const token = await createRegistrationToken(user);
-  await sendMail(host, user.email, token.value);
-  return convertForUserList(user, user.role[0]);
+  const token = await createRegistrationToken(newUser);
+  await sendMail(host, origin, newUser.email, token.value);
+  return convertForUserList(newUser, newUser.role[0]);
 };
 
 const verifyRegistrationTokenController = async (

@@ -9,7 +9,7 @@ enum MentorMenteeRoute {
   MENTEE_PROFILES = '/mentee',
   PAGES = '/pages',
   EXPLORE = '/explore',
-  SKILLS = '/skills',
+  SKILLS = '/profile/skills',
   ANY = '/*',
 }
 

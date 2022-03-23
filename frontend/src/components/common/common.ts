@@ -7,3 +7,4 @@ export { default as FormInput } from './form-input/form-input';
 export { default as FormInputDate } from './form-input-date/form-input-date';
 export { default as Button } from './button/button';
 export { default as AutoComplete } from './auto-complete/auto-complete';
+export { default as FormSelect } from './form-select';

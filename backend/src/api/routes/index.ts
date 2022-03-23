@@ -10,6 +10,7 @@ import careerPathRoute from './career-path';
 import adminRoute from './admin-route';
 import skillRoute from './skill-route';
 import workQuizRoute from './work-quiz';
+import languageRoute from './language-route';
 
 const routes = (app: Express): void => {
   app.use('/api/auth', authenticationRoute);
@@ -21,6 +22,7 @@ const routes = (app: Express): void => {
   app.use('/api/work-quiz', workQuizRoute);
   app.use('/api/skills', skillRoute);
   app.use('/api/career-path', careerPathRoute);
+  app.use('/api/user/languages', languageRoute);
 
   app.use(errorHandlerMiddleware);
 };

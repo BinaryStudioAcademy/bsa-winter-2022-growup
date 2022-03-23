@@ -1,7 +1,7 @@
 import { getCustomRepository } from 'typeorm';
-
 import { HttpCode, HttpError } from 'growup-shared';
 
+import { badRequestError } from '~/common/errors';
 import UserRepository from '~/data/repositories/user.repository';
 import UserRoleRepository from '~/data/repositories/role.repository';
 import CompanyRepository from '~/data/repositories/company.repository';
@@ -66,7 +66,7 @@ export const getUserJWT = async (
 export const registerUser = async (
   data: UserRegisterForm,
   role: RoleType,
-  companyId: User['company']['id'],
+  companyId?: User['company']['id'],
 ): Promise<User> => {
   const userRepository = getCustomRepository(UserRepository);
   const roleRepository = getCustomRepository(UserRoleRepository);
@@ -87,17 +87,18 @@ export const registerUser = async (
   const hashedPassword = data.password
     ? await hashPassword(data.password)
     : null;
-  const company = await companyRepository.findOne(companyId);
 
-  const user = await userRepository
-    .create({
-      ...data,
-      password: hashedPassword,
-      company,
-      careerJourneys: [],
-      educations: [],
-    })
-    .save();
+  let newData = {
+    ...data,
+    password: hashedPassword,
+  };
+
+  if (companyId) {
+    const company = await companyRepository.findOne(companyId);
+    newData = { ...newData, ...{ company } };
+  }
+
+  const user = await userRepository.create(newData).save();
 
   const roleInstance = await roleRepository.create({ user, role }).save();
   user.role = [roleInstance];
@@ -141,10 +142,10 @@ export const refreshToken = async (
 
 export const authenticateUser = async (data: UserLoginForm): Promise<User> => {
   const userRepository = getCustomRepository(UserRepository);
-
   const user = await userRepository.getUserWithPassword({
     email: data.email,
   });
+
   if (!user)
     throw new HttpError({
       status: HttpCode.NOT_FOUND,
@@ -164,11 +165,16 @@ export const authenticateUser = async (data: UserLoginForm): Promise<User> => {
 };
 
 export const getCommonUserList = async (
-  companyId: User['company']['id'],
+  userId: string,
 ): Promise<IListUser[]> => {
   const userRepository = getCustomRepository(UserRepository);
+  const user = await userRepository.geUserById(userId);
 
-  const usersList = await userRepository.getUsersByCompamyId(companyId);
+  if (!user.company) {
+    throw badRequestError('User doesn`t create company!!!');
+  }
+
+  const usersList = await userRepository.getUsersByCompamyId(user.company.id);
 
   const list = usersList.map((user) => {
     const roles = user.role.reduce((roles, role) => {
@@ -178,20 +184,9 @@ export const getCommonUserList = async (
 
     delete user.role;
 
-    return {
-      ...user,
-      roleType: roles,
-    };
+    return { ...user, roleType: roles };
   });
   return list as unknown as IListUser[];
-};
-
-export const registerUserAdmin = async (
-  data: UserRegisterForm,
-  companyId: User['company']['id'],
-): Promise<TokenResponse> => {
-  const user = await registerUser(data, RoleType.ADMIN, companyId);
-  return getUserJWT(user);
 };
 
 export const fetchUser = async (id: User['id']): Promise<User> => {

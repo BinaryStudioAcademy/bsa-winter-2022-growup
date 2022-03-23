@@ -12,33 +12,31 @@ import { Headers } from '~/common/enums/headers';
 
 const router: Router = Router();
 
-router.get(
-  '/tags',
-  run((_) => getTags()),
-);
-
-router.post('/tags', run(createTagsController));
-
-router.delete(
-  '/tags/:id',
-  run((req) => deleteTag(req.params.id)),
-);
-
-router.get(
-  '/users',
-  run((req) => getCommonUserList(req.companyId)),
-);
-
-router.post(
-  '/users',
-  run((req) => {
-    return registerUserController({
-      host: req.headers[Headers.FORWARDED_HOST] as string,
-      email: req.body.email,
-      roleType: req.body.roleType,
-      companyId: req.companyId,
-    });
-  }),
-);
+router
+  .get(
+    '/tags',
+    run((req) => getTags(req.userId)),
+  )
+  .post('/tags', run(createTagsController))
+  .delete(
+    '/tags/:id',
+    run((req) => deleteTag(req.params.id)),
+  )
+  .get(
+    '/users',
+    run((req) => getCommonUserList(req.userId)),
+  )
+  .post(
+    '/users',
+    run((req) => {
+      return registerUserController({
+        host: req.headers[Headers.FORWARDED_HOST] as string,
+        origin: req.headers[Headers.ORIGIN] as string,
+        email: req.body.email,
+        roleType: req.body.roleType,
+        userId: req.userId,
+      });
+    }),
+  );
 
 export default router;

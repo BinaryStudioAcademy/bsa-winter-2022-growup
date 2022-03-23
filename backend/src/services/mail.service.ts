@@ -14,6 +14,7 @@ const readFile = promisify(fs.readFile);
 
 const sendMail = async (
   host: string,
+  origin: string,
   email: string,
   token: string,
 ): Promise<SuccessResponse> => {
@@ -31,7 +32,9 @@ const sendMail = async (
     },
   });
 
-  const url = `http://${host}/registration-complete/${token}`;
+  const url = host
+    ? `http://${host}/registration-complete/${token}`
+    : `${origin}/registration-complete/${token}`;
 
   const mail = {
     from: env.email.name,

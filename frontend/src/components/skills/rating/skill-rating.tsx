@@ -80,9 +80,9 @@ const SkillElement = (props: Props): React.ReactElement => {
         ) : (
           `${props.name}`
         )}{' '}
-        <Button
-          className={'border-0 bg-gu-white sort-button'}
-          onSubmit={(): void =>
+        <button
+          className="border-0 bg-gu-white sort-button"
+          onClick={(): void =>
             isEdit ? setIsStar(!isStar) : console.warn('Warning')
           }
         >
@@ -91,12 +91,13 @@ const SkillElement = (props: Props): React.ReactElement => {
           ) : (
             <img alt="star" src={starDisable} />
           )}
-        </Button>
+        </button>
         {isHover ? (
           <Button
-            className={'btn btn-gu-white btn-outline-gu-black button-group'}
-            type={'button'}
-            onSubmit={(): void => saveEdits(props.id)}
+            variant="gu-white"
+            className="btn-outline-gu-black button-group"
+            type="button"
+            onClick={(): void => saveEdits(props.id)}
           >
             {isEdit ? <Save /> : <Edit />}
           </Button>
@@ -105,9 +106,10 @@ const SkillElement = (props: Props): React.ReactElement => {
         )}
         {isHover ? (
           <Button
-            className={'btn btn-gu-white btn-outline-gu-black mx-2'}
-            type={'button'}
-            onSubmit={(): void => deleteSkill(props.id)}
+            variant="gu-white"
+            className="btn-outline-gu-black mx-2"
+            type="button"
+            onClick={(): void => deleteSkill(props.id)}
           >
             <Delete />
           </Button>

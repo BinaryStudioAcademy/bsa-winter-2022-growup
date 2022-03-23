@@ -79,8 +79,9 @@ export const Demo: React.FC<Props> = ({
 
       <div className="d-flex">
         <Button
-          className={'btn btn-outline-gu-purple flex-fill border-2 fw-bold'}
-          onSubmit={getCropData}
+          variant="outline-gu-purple"
+          className="flex-fill"
+          onClick={getCropData}
         >
           {isLoading ? 'Loading...' : 'Save'}
         </Button>
