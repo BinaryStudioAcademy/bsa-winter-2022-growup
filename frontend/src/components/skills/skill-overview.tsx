@@ -18,6 +18,7 @@ import { DEFAULT_SKILL_PAYLOAD } from './common/constants';
 import { actions } from 'store/skill/slice';
 import { skill as skillValidationSchema } from 'validation-schemas/validation-schemas';
 import { skillActions } from 'store/skill';
+import { NotificationManager } from 'react-notifications';
 import './styles.scss';
 
 const SkillOverview = (): React.ReactElement => {
@@ -58,11 +59,12 @@ const SkillOverview = (): React.ReactElement => {
     const isName = allSkills.find((skill) => skill.name === payload.name);
     const isUserName = skills.find((skill) => skill.name === payload.name);
     if (!isUserName)
-      if (!isName) {
-        dispatch(skillActions.createSkill([payload]));
-      } else {
-        dispatch(skillActions.connectSkill([payload]));
-      }
+      if (!isName)
+        dispatch(skillActions.createSkill([payload]))
+          .unwrap()
+          .catch((err) => NotificationManager.error(err.message));
+      else dispatch(skillActions.connectSkill([payload]));
+    else NotificationManager.error('Skill with this name already exists');
   };
 
   const onAdd = (values: SkillFormType): void => {
