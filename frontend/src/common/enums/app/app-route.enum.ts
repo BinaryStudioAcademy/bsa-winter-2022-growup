@@ -12,7 +12,7 @@ enum AppRoute {
   OPPORTUNITIES = '/opportunities',
   MENTEE_PROFILES = '/mentee',
   EXPLORE = '/explore',
-  SKILLS = '/skills',
+  SKILLS = '/profile/skills',
   VERIFICATION = '/registration-complete/:token',
   ANY = '/*',
 }
