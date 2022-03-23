@@ -40,6 +40,7 @@ function FormInput<T>({
         type={type}
         placeholder={placeholder}
       />
+
       <span className="fs-6 text-gu-pink error mt-2">
         <ErrorMessage errors={errors} name={name} />
       </span>

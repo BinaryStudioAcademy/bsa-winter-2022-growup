@@ -16,21 +16,14 @@ const ProfileSettings: React.FC = () => {
   const onNext = (): void => {
     if (activeStep === steps.length) {
       navigate(ProfileSettingsRoute.PROFILE_SETTINGS_ROOT);
-    } else {
-      navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/${activeStep + 1}`);
+      return;
     }
-  };
-  const changeStep = (num: number): void => {
-    navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/${num + 1}`);
+    navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/${activeStep + 1}`);
   };
 
   return (
     <div className="stepper position-relative">
-      <Stepper
-        steps={steps}
-        activeStep={activeStep - 1}
-        changeStepClicker={changeStep}
-      />
+      <Stepper steps={steps} activeStep={activeStep - 1} />
       <div className="stepper__actions d-flex justify-content-center w-100">
         <Routes>
           <Route
