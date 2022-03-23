@@ -1,0 +1,24 @@
+.modal-content {
+  background-color: var(--bs-gray-200);
+
+  .modal-header {
+    background-color: var(--bs-white);
+  }
+
+  img.modal-company-image {
+    width: 50px;
+    height: 50px;
+    align-self: center;
+  }
+
+  #companyDescription {
+    max-height: 350px;
+  }
+
+  .modal-footer {
+    button {
+      color: var(--bs-white);
+      padding: 6px 26px;
+    }
+  }
+}

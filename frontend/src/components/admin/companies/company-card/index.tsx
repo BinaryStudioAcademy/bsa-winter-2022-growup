@@ -25,7 +25,7 @@ const CompanyCard: FC<Props> = ({ company }) => {
               <Card.Img src="holder.js/100px180" alt={company.name} />
               <Card.Title className="fs-1">{company.name}</Card.Title>
             </div>
-            <Button onSubmit={handleShow}>edit</Button>
+            <Button onClick={handleShow}>edit</Button>
           </div>
           <Card.Text className="mt-2">{company.description}</Card.Text>
         </Card.Body>

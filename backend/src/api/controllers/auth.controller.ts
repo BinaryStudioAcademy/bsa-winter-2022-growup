@@ -54,11 +54,10 @@ const loginController = async (
   return authenticationController(user);
 };
 
-const registrationController = async (
+const registerAdminController = async (
   data: UserRegisterForm,
-  company: User['company']['id'],
 ): Promise<AuthenticationResponse> => {
-  const user = await registerUser(data, RoleType.ADMIN, company);
+  const user = await registerUser(data, RoleType.ADMIN);
   return authenticationController(user);
 };
 
@@ -68,4 +67,4 @@ const fetchUserController = async (id: User['id']): Promise<UserWithRole> => {
   return response.user;
 };
 
-export { loginController, registrationController, fetchUserController };
+export { loginController, registerAdminController, fetchUserController };
