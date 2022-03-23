@@ -28,6 +28,22 @@ const Reducer = (builder: ActionReducerMapBuilder<State>): void => {
     if (action.payload) state.users.push(action.payload);
   });
 
+  builder.addCase(actions.deleteUser.fulfilled, (state, action) => {
+    if (action.payload) {
+      const id = state.users.findIndex((item) => item.id == action.payload);
+      state.users.splice(id, 1);
+    }
+  });
+
+  builder.addCase(actions.changeUserRole.fulfilled, (state, action) => {
+    if (action.payload) {
+      const id = state.users.findIndex(
+        (user) => user.id === action.payload.userId,
+      );
+      state.users[id].roleType = action.payload.roleType;
+    }
+  });
+
   builder.addMatcher(
     isAnyOf(actions.createTags.pending, actions.fetchTags.pending),
     (state, _) => {

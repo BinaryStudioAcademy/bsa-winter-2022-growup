@@ -1100,6 +1100,96 @@
         }
       }
     },
+    "/api/company/users/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID for delete user by this id"
+          }
+        ],
+        "tags": ["Users", "Admin"],
+        "summary": "Delete user by admin",
+        "responses": {
+          "200": {
+            "schema": {
+              "description": "Return object of success message",
+              "type": "object",
+              "$ref": "#/definitions/DeleteUserResponse"
+            }
+          },
+          "404": {
+            "schema": {
+              "description": "Return Error with message of not founded user by this ID",
+              "type": "object",
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID for change user role by this id"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/ChangeUserRole"
+            }
+          }
+        ],
+        "tags": ["Users", "Admin"],
+        "summary": "Change User Role by admin",
+        "responses": {
+          "200": {
+            "schema": {
+              "description": "Return object of user Id and his new role",
+              "type": "object",
+              "$ref": "#/definitions/ChangeRoleResponse"
+            }
+          },
+          "404": {
+            "schema": {
+              "description": "Return Error with message of not founded user by this ID",
+              "type": "object",
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+
     "/api/user/career-journey": {
       "get": {
         "parameters": [
@@ -2162,6 +2252,17 @@
         }
       }
     },
+    "ChangeRoleResponse": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string"
+        },
+        "roleType": {
+          "type": "string"
+        }
+      }
+    },
     "Question": {
       "type": "object",
       "properties": {
@@ -2202,6 +2303,15 @@
         }
       }
     },
+    "ChangeUserRole": {
+      "type": "object",
+      "properties": {
+        "roleType": {
+          "type": "string"
+        }
+      }
+    },
+
     "CareerJourney": {
       "type": "object",
       "properties": {
@@ -2248,6 +2358,17 @@
           "type": "string"
         },
         "deletedAt": {
+          "type": "string"
+        }
+      }
+    },
+    "DeleteUserResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
           "type": "string"
         }
       }

@@ -1,5 +1,13 @@
 @import '~assets/scss/utils';
 
+.users__row {
+  &:hover button {
+    visibility: visible !important;
+  }
+}
+.user-control-btn {
+  margin-right: 1rem;
+}
 @include media-breakpoint-down(lg) {
   .btn-responsive {
     & > span {
@@ -7,7 +15,12 @@
     }
   }
 }
-
+@include media-breakpoint-down(md) {
+  .user-control-btn {
+    margin-right: 0 !important;
+    margin-bottom: 10px !important;
+  }
+}
 @include media-breakpoint-down(sm) {
   .btn-responsive {
     & > span {
