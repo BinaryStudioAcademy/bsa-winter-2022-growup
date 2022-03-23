@@ -1,7 +1,4 @@
 .level-flow {
   z-index: 0;
-  height: 825px;
-  min-width: 600px;
-  max-width: 920px;
-  border-radius: 10px;
+  height: calc(100vh - 135px);
 }
