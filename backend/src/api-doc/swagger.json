@@ -486,6 +486,134 @@
         }
       }
     },
+    "/api/company/opportunities": {
+      "get": {
+        "tags": ["Opportunity"],
+        "summary": "Get all opportunities",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns array of opportunities if everything is ok.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Opportunity"
+              }
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Opportunity"],
+        "summary": "Create new opportunity",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "organization": {
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns created opportunities if everything is ok.",
+            "schema": {
+              "$ref": "#/definitions/Opportunity"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/api/company/opportunities/{id}": {
+      "get": {
+        "tags": ["Opportunity"],
+        "summary": "Get opportunity by id",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Find opportunity by id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns opportunity if everything is ok.",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Opportunity"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/api/auth/register": {
       "post": {
         "parameters": [
@@ -2200,6 +2328,36 @@
           "type": "string",
           "nullable": true,
           "default": null
+        },
+        "deletedAt": {
+          "type": "string",
+          "nullable": true,
+          "default": null
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string",
+          "nullable": true,
+          "default": null
+        }
+      }
+    },
+    "Opportunity": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "organization": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string"
         },
         "deletedAt": {
           "type": "string",
