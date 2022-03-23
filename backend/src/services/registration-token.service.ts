@@ -24,7 +24,7 @@ const verifyRegistrationToken = async (token: string): Promise<User> => {
   const tokenRepository = getCustomRepository(RegistrationTokenRepository);
 
   const tokenInstance = await tokenRepository.findOne({
-    relations: ['user'],
+    relations: ['user', 'user.company'],
     where: { value: token },
   });
 
@@ -33,7 +33,6 @@ const verifyRegistrationToken = async (token: string): Promise<User> => {
       status: HttpCode.NOT_FOUND,
       message: 'Invalid registration token',
     });
-
   return tokenInstance.user;
 };
 
