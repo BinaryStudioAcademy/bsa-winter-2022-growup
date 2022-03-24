@@ -1,5 +1,12 @@
 @import '~assets/scss/utils';
 
+.sidebar__burger {
+  svg {
+    width: 30px;
+    height: 30px;
+    color: $white;
+  }
+}
 .sidebar-section {
   z-index: 3;
 }
@@ -22,6 +29,7 @@
 }
 
 .navigation-section__list {
+  //111
   @include media-breakpoint-down(md) {
     align-items: center;
   }
@@ -34,6 +42,7 @@
     height: 27px;
   }
   @include media-breakpoint-up(md) {
+    //2222
     &__icon {
       max-width: 20px;
       max-height: 20px;
@@ -49,6 +58,7 @@
   background-color: #fff;
   border-radius: 33%;
   @include media-breakpoint-up(md) {
+    ///3333
     height: 45px;
     width: 100%;
     border-radius: 10px;
@@ -71,4 +81,35 @@
 
 .navigation-item {
   list-style-type: none;
+}
+.navigation-section__burger-active {
+  margin-top: 4rem;
+}
+.sidebar-container--small-version {
+  width: 65px !important;
+  .navigation-link__title {
+    display: none !important;
+  }
+  .logo-title {
+    display: none !important;
+  }
+  .navigation-link {
+    &__icon {
+      max-width: none !important;
+      max-height: none !important;
+    }
+  }
+  .navigation-item .active {
+    display: flex !important;
+    align-items: center !important;
+    height: 41px !important;
+    width: 41px !important;
+    background-color: #fff !important;
+    border-radius: 33% !important;
+  }
+}
+
+.sidebar__burger--active {
+  top: 73px;
+  left: 18px;
 }
