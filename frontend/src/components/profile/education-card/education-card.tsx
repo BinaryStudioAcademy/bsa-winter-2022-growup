@@ -39,9 +39,11 @@ const EducationCard: React.FC<Props> = ({ education, onEdit }) => {
       return 'null';
     }
 
-    const absoluteYears: number =
-      endDate.getFullYear() - startDate.getFullYear();
-    const absoluteMonths: number = endDate.getMonth() - startDate.getMonth();
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    const absoluteYears: number = end.getFullYear() - start.getFullYear();
+    const absoluteMonths: number = end.getMonth() - start.getMonth();
 
     const years = absoluteMonths > 0 ? absoluteYears : 0;
     const months =

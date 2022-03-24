@@ -39,9 +39,11 @@ const CareerCard: React.FC<Props> = ({ careerJourney, onEdit }) => {
       return 'null';
     }
 
-    const absoluteYears: number =
-      endDate.getFullYear() - startDate.getFullYear();
-    const absoluteMonths: number = endDate.getMonth() - startDate.getMonth();
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    const absoluteYears: number = end.getFullYear() - start.getFullYear();
+    const absoluteMonths: number = end.getMonth() - start.getMonth();
 
     const years = absoluteMonths > 0 ? absoluteYears : 0;
     const months =
@@ -52,7 +54,9 @@ const CareerCard: React.FC<Props> = ({ careerJourney, onEdit }) => {
 
   return (
     <div className="card career-card">
-      <div className="career-card-time fs-7 ">{startDate.getFullYear()}</div>
+      <div className="career-card-time fs-7 ">
+        {new Date(startDate).getFullYear()}
+      </div>
       <div className="card-body career-card-info">
         <h3 className="card-text career-card-info__title fw-bold fs-4 text-gu-black">
           {position}

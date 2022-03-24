@@ -80,10 +80,13 @@ const CareerJourneySection: React.FC = () => {
       a: ICareerJourney,
       b: ICareerJourney,
     ): number => {
-      if (a.startDate < b.startDate) {
+      const startA = new Date(a.startDate);
+      const startB = new Date(b.startDate);
+
+      if (startA < startB) {
         return sort ? -1 : 1;
       }
-      if (a.startDate > b.startDate) {
+      if (startA > startB) {
         return sort ? 1 : -1;
       }
       return 0;

@@ -74,10 +74,13 @@ const EducationSection: React.FC = () => {
     }
 
     const sortByStartDateAsc = (a: IEducation, b: IEducation): number => {
-      if (a.startDate < b.startDate) {
+      const startA = new Date(a.startDate);
+      const startB = new Date(b.startDate);
+
+      if (startA < startB) {
         return sort ? -1 : 1;
       }
-      if (a.startDate > b.startDate) {
+      if (startA > startB) {
         return sort ? 1 : -1;
       }
       return 0;
