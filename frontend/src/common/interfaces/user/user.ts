@@ -16,7 +16,7 @@ interface IUser extends IUserDefault {
   updatedAt: string;
   deletedAt: string | null;
   isCompleteTest: boolean;
-  roleType: RoleType;
+  role: RoleType;
   careerJourneys: ICareerJourney[];
   educations: IEducation[];
 }

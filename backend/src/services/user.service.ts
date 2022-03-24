@@ -238,12 +238,12 @@ export const deleteUser = async (id: User['id']): Promise<SuccessResponse> => {
 
 export const changeUserRole = async (
   id: User['id'],
-  roleType: RoleType,
+  role: User['role'],
 ): Promise<Pick<User, 'id' | 'role'>> => {
   const userRepository = getCustomRepository(UserRepository);
   const user = await userRepository.findOne(id);
 
-  user.role = roleType;
+  user.role = role;
   const userInstance = await user.save();
 
   return { id: userInstance.id, role: userInstance.role };
