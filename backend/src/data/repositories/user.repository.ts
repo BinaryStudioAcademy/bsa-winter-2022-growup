@@ -35,7 +35,7 @@ class UserRepository extends Repository<User> {
       .getOne();
   }
 
-  getUsersByCompamyId(companyId: string): Promise<User[]> {
+  getUsersByCompanyId(companyId: string): Promise<User[]> {
     return this.createQueryBuilder('user')
       .leftJoinAndSelect('user.company', 'company', 'user.company = company.id')
       .leftJoinAndSelect(

@@ -168,7 +168,7 @@ export const getCommonUserList = async (id: string): Promise<IListUser[]> => {
     throw badRequestError('Can not fetch users since you have no company');
   }
 
-  const userInstances = await userRepository.getUsersByCompamyId(
+  const userInstances = await userRepository.getUsersByCompanyId(
     user.company.id,
   );
   const users = userInstances.map((user) => ({
