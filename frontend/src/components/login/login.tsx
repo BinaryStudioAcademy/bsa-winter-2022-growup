@@ -6,6 +6,7 @@ import {
   useCallback,
   useNavigate,
   useState,
+  useEffect,
 } from 'hooks/hooks';
 import { Button, TextField } from 'components/common/common';
 import { Container, Form } from 'react-bootstrap';
@@ -17,11 +18,17 @@ import { IUserLoginForm } from '../../common/interfaces/user';
 import { login as loginValidationSchema } from 'validation-schemas/validation-schemas';
 import { DEFAULT_LOGIN_PAYLOAD } from './common/constants';
 import './styles.scss';
+import isFirstLogged from 'helpers/check-is-first-logged';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector((state) => state.auth.isLoading);
+  const user = useAppSelector((store) => store.profile.user);
+
+  useEffect(() => {
+    isFirstLogged({ user, navigate });
+  }, [user]);
 
   const [isHiddenPassword, setIsHiddenPassword] = useState(true);
 
