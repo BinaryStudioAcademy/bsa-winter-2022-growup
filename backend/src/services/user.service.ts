@@ -147,14 +147,12 @@ export const authenticateUser = async (data: UserLoginForm): Promise<User> => {
   return user;
 };
 
-export const getCommonUserList = async (
-  userId: string,
-): Promise<IListUser[]> => {
+export const getCommonUserList = async (id: string): Promise<IListUser[]> => {
   const userRepository = getCustomRepository(UserRepository);
-  const user = await userRepository.geUserById(userId);
+  const user = await userRepository.getUserById(id);
 
   if (!user.company) {
-    throw badRequestError('User doesn`t create company!!!');
+    throw badRequestError('Can not fetch users since you have no company');
   }
 
   const userInstances = await userRepository.getUsersByCompamyId(

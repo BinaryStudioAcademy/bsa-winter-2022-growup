@@ -41,7 +41,7 @@ const registerUserController = async ({
 }: RegistrationUserProps): Promise<IListUser> => {
   const userRepository = getCustomRepository(UserRepository);
 
-  const user = await userRepository.geUserById(userId);
+  const user = await userRepository.getUserById(userId);
 
   if (!user.company) {
     throw badRequestError('User doesn`t create company!!!');
