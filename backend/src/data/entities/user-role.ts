@@ -11,6 +11,6 @@ export class UserRole extends AbstractEntity {
   })
   role: RoleType;
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.id, { onDelete: 'CASCADE' })
   user: User;
 }

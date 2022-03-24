@@ -39,7 +39,7 @@ const UserItem: React.FC<Props> = memo(({ user }) => {
   };
 
   return (
-    <tr className="align-middle users__row cursor-pointer">
+    <tr className="align-middle">
       <td>{user.lastName}</td>
       <td>{user.firstName}</td>
       <td>{user.email}</td>
@@ -72,10 +72,10 @@ const UserItem: React.FC<Props> = memo(({ user }) => {
           user.roleType
         )}
       </td>
-      <td className="text-end">
+      <td className="user-control__buttons">
         {isShowDropDown ? (
           <Button
-            className="btn btn-gu-white btn-outline-gu-black  user-control-btn  invisible"
+            className="border-0 user-control-btn bg-transparent text-gu-black"
             onClick={(): void => {
               setIsShowDropDown(false);
             }}
@@ -84,7 +84,7 @@ const UserItem: React.FC<Props> = memo(({ user }) => {
           </Button>
         ) : (
           <Button
-            className="btn btn-gu-white btn-outline-gu-black  user-control-btn  invisible"
+            className="border-0 user-control-btn bg-transparent text-gu-black"
             onClick={(): void => {
               setIsShowDropDown(true);
             }}
@@ -94,7 +94,7 @@ const UserItem: React.FC<Props> = memo(({ user }) => {
         )}
 
         <Button
-          className="btn btn-gu-white btn-outline-gu-black  invisible"
+          className="border-0 user-control-btn bg-transparent text-gu-black"
           onClick={(): void => deleteUser(user.id)}
         >
           <Trash className="delete-user-btn" />

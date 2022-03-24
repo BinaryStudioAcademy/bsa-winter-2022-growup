@@ -26,7 +26,7 @@ export class OKR extends AbstractEntity {
   @Column()
   startDate: Date;
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.id, { onDelete: 'CASCADE' })
   user: User;
 
   @OneToMany(() => Objective, (objective) => objective.okr)

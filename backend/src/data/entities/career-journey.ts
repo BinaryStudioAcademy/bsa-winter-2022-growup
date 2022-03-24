@@ -16,6 +16,6 @@ export class CareerJourney extends AbstractEntity {
   @Column({ type: 'varchar', length: 250 })
   position: string;
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.id, { onDelete: 'CASCADE' })
   user: User;
 }

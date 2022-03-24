@@ -17,6 +17,7 @@ const UserList: React.FC<Props> = memo(({ list }) => {
           <th>First name</th>
           <th>Email</th>
           <th>Role</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
