@@ -1,8 +1,10 @@
 import { Entity, Column, ManyToOne, OneToMany } from 'typeorm';
+
+import { RoleType } from '~/common/enums/role-type';
 import { AbstractEntity } from '~/data/abstract/abstract.entity';
+
 import { DomainLevel } from './domain-level';
 import { Company } from './company';
-import { UserRole } from './user-role';
 import { UserSkill } from './user-skill';
 import { CareerJourney } from './career-journey';
 import { Education } from './education';
@@ -27,6 +29,9 @@ export class User extends AbstractEntity {
   @Column({ type: 'varchar', length: 150, nullable: true })
   position: string;
 
+  @Column({ type: 'enum', enum: RoleType })
+  role: RoleType;
+
   @ManyToOne(() => Company, (company) => company.id)
   company: Company;
 
@@ -38,9 +43,6 @@ export class User extends AbstractEntity {
 
   @OneToMany(() => UserSkill, (userSkill) => userSkill.user)
   userSkills: UserSkill[];
-
-  @OneToMany(() => UserRole, (userRole) => userRole.user)
-  role: UserRole[];
 
   @OneToMany(() => CareerJourney, (careerJourney) => careerJourney.user, {
     cascade: true,

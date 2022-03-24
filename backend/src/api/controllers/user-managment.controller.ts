@@ -55,7 +55,7 @@ const registerUserController = async ({
 
   const token = await createRegistrationToken(newUser);
   await sendMail(host, origin, newUser.email, token.value);
-  return convertForUserList(newUser, newUser.role[0]);
+  return convertForUserList(newUser);
 };
 
 const verifyRegistrationTokenController = async (
