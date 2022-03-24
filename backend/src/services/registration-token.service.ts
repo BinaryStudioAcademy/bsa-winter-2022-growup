@@ -12,6 +12,9 @@ const createRegistrationToken = async (
 ): Promise<RegistrationToken> => {
   const tokenRepository = getCustomRepository(RegistrationTokenRepository);
 
+  const target = await tokenRepository.findOne({ user });
+  if (target) return target;
+
   const token = generateToken();
   const registrationToken = await tokenRepository
     .create({ value: token, user })
@@ -20,11 +23,27 @@ const createRegistrationToken = async (
   return registrationToken;
 };
 
+const getRegistrationToken = async (
+  id: User['id'],
+): Promise<RegistrationToken> => {
+  const tokenRepository = getCustomRepository(RegistrationTokenRepository);
+
+  const token = await tokenRepository.findOne({
+    relations: ['user'],
+    where: { user: { id } },
+  });
+
+  if (!token)
+    throw new HttpError({ status: HttpCode.NOT_FOUND, message: 'Not found' });
+
+  return token;
+};
+
 const verifyRegistrationToken = async (token: string): Promise<User> => {
   const tokenRepository = getCustomRepository(RegistrationTokenRepository);
 
   const tokenInstance = await tokenRepository.findOne({
-    relations: ['user'],
+    relations: ['user', 'user.company'],
     where: { value: token },
   });
 
@@ -33,7 +52,6 @@ const verifyRegistrationToken = async (token: string): Promise<User> => {
       status: HttpCode.NOT_FOUND,
       message: 'Invalid registration token',
     });
-
   return tokenInstance.user;
 };
 
@@ -54,6 +72,7 @@ const deleteRegistrationToken = async (id: User['id']): Promise<void> => {
 };
 
 export {
+  getRegistrationToken,
   createRegistrationToken,
   verifyRegistrationToken,
   deleteRegistrationToken,

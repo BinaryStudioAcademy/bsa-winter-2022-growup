@@ -1,6 +1,7 @@
 import { memo } from 'react';
-import { Card } from 'react-bootstrap';
+import { Card, OverlayTrigger } from 'react-bootstrap';
 
+import { useAppSelector, useEffect } from 'hooks/hooks';
 import { useState, useCallback, useAppDispatch } from 'hooks/hooks';
 
 import type { ITag } from 'common/interfaces/tag/tag';
@@ -10,14 +11,25 @@ import { adminActions } from 'store/actions';
 import Tag from './tag-item/tag-item';
 import TagModal from './modal/tag-modal';
 import { Button } from 'components/common/common';
+import { tooltip } from 'components/admin/common';
 
 type Props = {
   tagList: ITag[];
 };
 
 const Tags: React.FC<Props> = ({ tagList }) => {
+  const { user } = useAppSelector((state) => state.auth);
+
+  const [isDisabled, setIsDisabled] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (user && !user.company) {
+      setIsDisabled(true);
+    }
+  }, [user]);
 
   const hideModal = useCallback(() => {
     setIsModalVisible(false);
@@ -38,13 +50,18 @@ const Tags: React.FC<Props> = ({ tagList }) => {
               <h3 className="m-0">Tags</h3>
             </div>
             <div className="col d-flex align-items-center justify-content-end">
-              <Button
-                variant="outline-gu-pink"
-                className="btn-responsive btn-hover-gu-white"
-                onClick={showModal}
-              >
-                + Add Tag
-              </Button>
+              <OverlayTrigger overlay={tooltip(isDisabled)}>
+                <span className="d-inline-block">
+                  <Button
+                    variant="outline-gu-pink"
+                    className="btn-responsive btn-hover-gu-white"
+                    onClick={showModal}
+                    disabled={isDisabled}
+                  >
+                    + Add Tag
+                  </Button>
+                </span>
+              </OverlayTrigger>
             </div>
           </div>
         </Card.Header>

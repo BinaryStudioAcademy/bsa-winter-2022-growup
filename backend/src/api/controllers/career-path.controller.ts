@@ -81,7 +81,7 @@ export const createDomainTree = async (
   userId: string,
 ): Promise<CareerPathResponse> => {
   const userRepository = getCustomRepository(UserRepository);
-  const user = await userRepository.geUserById(userId);
+  const user = await userRepository.getUserById(userId);
 
   if (!user.company) {
     throw badRequestError('User doesn`t create company!!!');
@@ -150,7 +150,7 @@ export const getDomainTrees = async (
 ): Promise<CareerPathResponse[]> => {
   const careeerPathResponse: CareerPathResponse[] = [];
   const userRepository = getCustomRepository(UserRepository);
-  const user = await userRepository.geUserById(userId);
+  const user = await userRepository.getUserById(userId);
 
   if (!user.company) {
     throw badRequestError('User doesn`t create company!!!');

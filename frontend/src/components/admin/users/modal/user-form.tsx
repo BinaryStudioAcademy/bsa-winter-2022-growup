@@ -27,12 +27,7 @@ const UserForm: React.FC<Props> = ({ onSubmit: submit }) => {
   const onSubmit = (e: FormEvent): void => {
     e.preventDefault();
 
-    dispatch(
-      adminActions.inviteUser({
-        email,
-        roleType: role,
-      }),
-    )
+    dispatch(adminActions.inviteUser({ email, role }))
       .unwrap()
       .then((res: IUser | null) => {
         if (!res) {
@@ -41,6 +36,7 @@ const UserForm: React.FC<Props> = ({ onSubmit: submit }) => {
           NotificationManager.success('User invited successfully');
         }
       });
+
     setEmail('');
     setRole(RoleType.MENTOR);
     submit();

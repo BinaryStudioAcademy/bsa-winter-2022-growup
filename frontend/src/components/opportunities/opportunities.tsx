@@ -16,10 +16,10 @@ import Follow from './follow';
 import isFirstLogged from 'helpers/check-is-first-logged';
 import { Dropdown } from 'react-bootstrap';
 import { SortOption } from 'store/opportunities/common';
-import { parseDate } from '../../helpers/parse-date/index';
 
 const Opportunities: React.FC = () => {
   const [sort, setSort] = useState<SortOption | null>(null);
+  const [tags, setTags] = useState(['a']);
   const dispatch = useAppDispatch();
   const user = useAppSelector((store) => store.profile.user);
   const navigate = useNavigate();
@@ -55,7 +55,7 @@ const Opportunities: React.FC = () => {
   );
 
   const handleSubmit = (values: object): void => {
-    handleSave(values)
+    handleSave({ ...values, tags: tags })
       .unwrap()
       .then(() => {
         closeModal();
@@ -108,8 +108,8 @@ const Opportunities: React.FC = () => {
             name={item.name}
             organization={item.organization}
             type={item.type}
-            startDate={parseDate(item.startDate as string)}
-            tagsData={item.tagsData}
+            startDate={item.startDate}
+            tagsData={item.tags}
             isFollow={item.isFollow}
             isOpportunitiesPage={true}
           />
@@ -117,7 +117,11 @@ const Opportunities: React.FC = () => {
         </div>
       ))}
       {isShowModal && (
-        <OpportunityForm onClose={closeModal} onSubmit={handleSubmit} />
+        <OpportunityForm
+          onClose={closeModal}
+          onSubmit={handleSubmit}
+          setTags={setTags}
+        />
       )}
     </AddSection>
   );

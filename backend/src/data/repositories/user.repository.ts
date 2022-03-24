@@ -18,7 +18,7 @@ class UserRepository extends Repository<User> {
       .execute();
   }
 
-  geUserById(userId: string): Promise<User> {
+  getUserById(userId: string): Promise<User> {
     return this.createQueryBuilder('user')
       .leftJoinAndSelect(
         'user.careerJourneys',
@@ -48,9 +48,8 @@ class UserRepository extends Repository<User> {
         'education',
         'user.id = education.user',
       )
-      .leftJoinAndSelect('user.role', 'user_role', 'user.id = user_role.user')
       .where({ company: companyId })
-      .andWhere('NOT user_role.role = :role', { role: RoleType.ADMIN })
+      .andWhere('NOT role = :role', { role: RoleType.ADMIN })
       .getMany();
   }
 

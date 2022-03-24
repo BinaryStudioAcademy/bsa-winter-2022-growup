@@ -3,7 +3,7 @@ import multer from 'multer';
 
 import { run } from '~/common/helpers/route.helper';
 
-import { updateUserAvatar } from '~/services/user.service';
+import { updateUserAvatar, addProfile } from '~/services/user.service';
 import { fetchUserController } from '../controllers/auth.controller';
 
 import careerJourneyRoute from './career-journey';
@@ -23,6 +23,12 @@ router
   .get(
     '/',
     run((req: Request) => fetchUserController(req.userId)),
+  )
+  .post(
+    '/profile',
+    run((req) => {
+      return addProfile(req.body, req.userId);
+    }),
   )
   .use('/career-journey', careerJourneyRoute)
   .use('/education', educationRoute);
