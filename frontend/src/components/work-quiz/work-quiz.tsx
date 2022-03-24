@@ -19,7 +19,6 @@ const StyleTest: React.FC<Props> = ({ onNext }) => {
   const { questions, isLoading } = useAppSelector(
     (state: RootState) => state.workStyleQuiz,
   );
-
   const [answersCount, setAnswersCount] = useState(0);
   const dispatch = useAppDispatch();
 

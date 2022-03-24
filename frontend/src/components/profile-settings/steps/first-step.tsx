@@ -6,9 +6,9 @@ import InterestingTags from './interesting-tags';
 import StepControl from './step-control';
 import { profileFirstStep as profileFirstStepValidationSchema } from 'validation-schemas/validation-schemas';
 import { useAppForm, useDispatch } from 'hooks/hooks';
-import { DEFAULT_FIRST_STEP_PAYLOAD } from './common/constants';
 import { finishRegistration } from 'store/auth/actions';
 import { FirstStepFormType } from './common/types';
+import { DEFAULT_FIRST_STEP_PAYLOAD } from './common/constants';
 
 const FirstStep: React.FC<IProfileSettingStep> = ({
   isDisablePrevious,

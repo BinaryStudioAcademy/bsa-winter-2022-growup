@@ -6,12 +6,16 @@ import { createTagsController } from '../controllers/tags.controller';
 import { registerUserController } from '../controllers/user-managment.controller';
 
 import { deleteTag, getTags } from '~/services/tag.service';
-import { getCommonUserList } from '~/services/user.service';
+import {
+  getCommonUserList,
+  deleteUser,
+  changeUserRole,
+} from '~/services/user.service';
 
 import { validatePermissions } from '~/api/middlewares/validation-middleware';
 
 import { Headers } from '~/common/enums/headers';
-import { RoleType } from 'growup-shared';
+import { RoleType } from '~/common/enums/role-type';
 
 const router: Router = Router();
 
@@ -45,4 +49,15 @@ router
     }),
   );
 
+router.delete(
+  '/users/:id',
+  validatePermissions([RoleType.ADMIN]),
+  run((req) => deleteUser(req.params.id)),
+);
+
+router.put(
+  '/users/:id',
+  validatePermissions([RoleType.ADMIN]),
+  run((req) => changeUserRole(req.params.id, req.body)),
+);
 export default router;
