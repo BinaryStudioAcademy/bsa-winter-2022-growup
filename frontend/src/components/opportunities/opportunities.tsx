@@ -63,7 +63,6 @@ const Opportunities: React.FC = () => {
       .catch((err: Error) => {
         NotificationManager.error(err.message);
       });
-    console.warn(tags);
   };
 
   const handleSort = (option: SortOption): void => {

@@ -25,7 +25,7 @@
     "dayjs": "1.10.8",
     "growup-shared": "file:../shared/build",
     "joi": "17.5.0",
-    "multiselect-react-dropdown": "^2.0.21",
+    "multiselect-react-dropdown": "2.0.21",
     "query-string": "7.0.1",
     "react": "17.0.2",
     "react-avatar": "4.0.0",

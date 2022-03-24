@@ -66,7 +66,7 @@ export const createOpportunities = async (
   });
 
   const opportunities: Opportunity[] = [];
-  let opportunityId;
+
   await asyncForEach(async ({ name, organization, type, startDate }: Props) => {
     const opportunitiesInstance = opportunitiesRepository.create({
       name: name,
@@ -78,27 +78,26 @@ export const createOpportunities = async (
     });
     await opportunitiesInstance.save();
     opportunities.push(opportunitiesInstance);
-    opportunityId = opportunitiesInstance.id;
+    const opportunityId = opportunitiesInstance.id;
+    const opportunityInstance = await opportunitiesRepository.findOne({
+      where: {
+        id: opportunityId,
+      },
+      relations: ['tags'],
+    });
+
+    const tags = await tagsRepository.find({
+      company: companyInstance,
+      relations: ['company'],
+    } as FindManyOptions);
+
+    const opportunityTags = tags.filter(
+      (tag) => tagsName.indexOf(tag.name) !== -1,
+    );
+
+    await opportunityInstance.tags.push(...opportunityTags);
+    await opportunityInstance.save();
   }, data);
-
-  const opportunityInstance = await opportunitiesRepository.findOne({
-    where: {
-      id: opportunityId,
-    },
-    relations: ['tags'],
-  });
-
-  const tags = await tagsRepository.find({
-    company: companyInstance,
-    relations: ['company'],
-  } as FindManyOptions);
-
-  const opportunityTags = tags.filter(
-    (tag) => tagsName.indexOf(tag.name) !== -1,
-  );
-
-  await opportunityInstance.tags.push(...opportunityTags);
-  await opportunityInstance.save();
 
   return opportunities.map((opportunity) => opportunityMapper(opportunity));
 };
