@@ -37,10 +37,8 @@ const Reducer = (builder: ActionReducerMapBuilder<State>): void => {
 
   builder.addCase(actions.changeUserRole.fulfilled, (state, action) => {
     if (action.payload) {
-      const id = state.users.findIndex(
-        (user) => user.id === action.payload.userId,
-      );
-      state.users[id].roleType = action.payload.roleType;
+      const id = state.users.findIndex((user) => user.id === action.payload.id);
+      state.users[id].role = action.payload.role;
     }
   });
 

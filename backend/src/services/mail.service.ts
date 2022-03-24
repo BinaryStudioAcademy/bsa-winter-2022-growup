@@ -12,6 +12,11 @@ import { env } from '~/config/env';
 
 const readFile = promisify(fs.readFile);
 
+const getUrl = (host: string, origin: string, token: string): string =>
+  host
+    ? `http://${host}/registration-complete/${token}`
+    : `${origin}/registration-complete/${token}`;
+
 const sendMail = async (
   host: string,
   origin: string,
@@ -32,9 +37,7 @@ const sendMail = async (
     },
   });
 
-  const url = host
-    ? `http://${host}/registration-complete/${token}`
-    : `${origin}/registration-complete/${token}`;
+  const url = getUrl(host, origin, token);
 
   const mail = {
     from: env.email.name,
@@ -55,4 +58,4 @@ const sendMail = async (
   return { success: true, message: 'Email is sent' };
 };
 
-export { sendMail };
+export { sendMail, getUrl };

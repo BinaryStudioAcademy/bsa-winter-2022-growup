@@ -12,12 +12,31 @@ const createRegistrationToken = async (
 ): Promise<RegistrationToken> => {
   const tokenRepository = getCustomRepository(RegistrationTokenRepository);
 
+  const target = await tokenRepository.findOne({ user });
+  if (target) return target;
+
   const token = generateToken();
   const registrationToken = await tokenRepository
     .create({ value: token, user })
     .save();
 
   return registrationToken;
+};
+
+const getRegistrationToken = async (
+  id: User['id'],
+): Promise<RegistrationToken> => {
+  const tokenRepository = getCustomRepository(RegistrationTokenRepository);
+
+  const token = await tokenRepository.findOne({
+    relations: ['user'],
+    where: { user: { id } },
+  });
+
+  if (!token)
+    throw new HttpError({ status: HttpCode.NOT_FOUND, message: 'Not found' });
+
+  return token;
 };
 
 const verifyRegistrationToken = async (token: string): Promise<User> => {
@@ -53,6 +72,7 @@ const deleteRegistrationToken = async (id: User['id']): Promise<void> => {
 };
 
 export {
+  getRegistrationToken,
   createRegistrationToken,
   verifyRegistrationToken,
   deleteRegistrationToken,

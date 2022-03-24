@@ -1,4 +1,3 @@
-import { RoleType } from 'common/enums/enums';
 import { ITag } from 'common/interfaces/tag/tag';
 import { IUser } from 'common/interfaces/user/user';
 
@@ -22,11 +21,11 @@ enum ActionType {
   FETCH_USERS = 'fetch-users',
   DELETE_USER = 'delete-user',
   CHANGE_ROLE = 'change-role',
+
+  RESEND_MAIL = 'resend-mail',
+  GET_TOKEN = 'get-registration-token',
 }
 
-export interface IChangeRole {
-  userId: string;
-  roleType: RoleType;
-}
+export interface IChangeRole extends Pick<IUser, 'id' | 'role'> {}
 
 export { ActionType };

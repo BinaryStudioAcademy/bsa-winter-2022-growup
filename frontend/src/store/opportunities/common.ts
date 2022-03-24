@@ -1,6 +1,6 @@
 export interface IOpportunity extends IOpportunityBase {
   isFollow?: boolean;
-  tagsData?: string[];
+  tagsData?: ITagsData[] | string[];
 }
 
 export enum OpportunityActions {

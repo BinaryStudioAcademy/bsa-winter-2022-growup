@@ -9,7 +9,7 @@ export const createTagsController = async (
   req: Request,
 ): Promise<ReturnType<typeof createTags>> => {
   const userRepository = getCustomRepository(UserRepository);
-  const user = await userRepository.geUserById(req.userId);
+  const user = await userRepository.getUserById(req.userId);
 
   if (!user.company) {
     throw badRequestError('User doesn`t create company!!!');

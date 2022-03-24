@@ -48,7 +48,7 @@ const fetchNewOpportunity = createAsyncThunk<
           type: result[0].type,
           startDate: result[0].startDate,
           id: result[0].id,
-          tags: [],
+          tags: result[0].tags,
           isFollow: false,
         }
       : {};

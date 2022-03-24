@@ -44,9 +44,31 @@ const deleteTag = createAsyncThunk(
 
 const inviteUser = createAsyncThunk(
   ActionType.INVITE_USER,
-  async (data: Pick<IUser, 'email' | 'roleType'>, { rejectWithValue }) => {
+  async (data: Pick<IUser, 'email' | 'role'>, { rejectWithValue }) => {
     try {
       return await users.inviteUser(data);
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
+const resendMail = createAsyncThunk(
+  ActionType.RESEND_MAIL,
+  async (id: IUser['id'], { rejectWithValue }) => {
+    try {
+      return await users.resendActivationMail({ id });
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
+const getToken = createAsyncThunk(
+  ActionType.GET_TOKEN,
+  async (id: IUser['id'], { rejectWithValue }) => {
+    try {
+      return await users.getUrl({ id });
     } catch (err) {
       return rejectWithValue(err);
     }
@@ -77,9 +99,9 @@ const deleteUser = createAsyncThunk(
 );
 const changeUserRole = createAsyncThunk(
   ActionType.CHANGE_ROLE,
-  async ({ userId, roleType }: IChangeRole, { rejectWithValue }) => {
+  async (data: IChangeRole, { rejectWithValue }) => {
     try {
-      const result = await users.changeUserRole({ userId, roleType });
+      const result = await users.changeUserRole(data);
       return result;
     } catch (err) {
       return rejectWithValue(err);
@@ -94,4 +116,6 @@ export {
   fetchUsers,
   deleteUser,
   changeUserRole,
+  resendMail,
+  getToken,
 };
