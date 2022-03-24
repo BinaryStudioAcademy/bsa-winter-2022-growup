@@ -4,7 +4,6 @@ import {
   getOpportunities,
   getOpportunitiesById,
   createOpportunities,
-  connectTagsOpportunity,
 } from '~/services/opportunity.service';
 
 const router: Router = Router();
@@ -27,13 +26,12 @@ router
     '/',
     run((req) => {
       const { companyId, userId } = req;
-      return createOpportunities(req.body.opportunities, userId, companyId);
-    }),
-  )
-  .post(
-    '/tags',
-    run((req) => {
-      return connectTagsOpportunity(req.body[0], req.body[1], req.companyId);
+      return createOpportunities(
+        req.body.opportunities,
+        req.body.opportunities[0].tags,
+        userId,
+        companyId,
+      );
     }),
   );
 

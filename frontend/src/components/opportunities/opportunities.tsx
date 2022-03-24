@@ -20,6 +20,7 @@ import { parseDate } from '../../helpers/parse-date/index';
 
 const Opportunities: React.FC = () => {
   const [sort, setSort] = useState<SortOption | null>(null);
+  const [tags, setTags] = useState(['a']);
   const dispatch = useAppDispatch();
   const user = useAppSelector((store) => store.profile.user);
   const navigate = useNavigate();
@@ -55,7 +56,7 @@ const Opportunities: React.FC = () => {
   );
 
   const handleSubmit = (values: object): void => {
-    handleSave(values)
+    handleSave({ ...values, tags: tags })
       .unwrap()
       .then(() => {
         closeModal();
@@ -63,6 +64,7 @@ const Opportunities: React.FC = () => {
       .catch((err: Error) => {
         NotificationManager.error(err.message);
       });
+    console.warn(tags);
   };
 
   const handleSort = (option: SortOption): void => {
@@ -117,7 +119,11 @@ const Opportunities: React.FC = () => {
         </div>
       ))}
       {isShowModal && (
-        <OpportunityForm onClose={closeModal} onSubmit={handleSubmit} />
+        <OpportunityForm
+          onClose={closeModal}
+          onSubmit={handleSubmit}
+          setTags={setTags}
+        />
       )}
     </AddSection>
   );

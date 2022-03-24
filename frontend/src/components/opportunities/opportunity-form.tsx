@@ -10,6 +10,7 @@ import { RootState } from 'common/types/types';
 type Props = {
   onClose: () => void;
   onSubmit: (values: object) => void;
+  setTags: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 const OpportunityForm: React.FC<Props> = (props) => {
@@ -53,8 +54,8 @@ const OpportunityForm: React.FC<Props> = (props) => {
           className={'mb-3'}
           isObject={false}
           placeholder={'Select tags'}
-          onRemove={(e): void => console.warn(e)}
-          onSelect={(e): void => console.warn(e)}
+          onRemove={(e): void => props.setTags(e)}
+          onSelect={(e): void => props.setTags(e)}
           options={[...tagsName]}
         />
         <FormInputDate

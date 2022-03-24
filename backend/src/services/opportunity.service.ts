@@ -10,7 +10,6 @@ import UserRepository from '~/data/repositories/user.repository';
 import { User } from '~/data/entities/user';
 import { asyncForEach } from '~/common/helpers/array.helper';
 import TagsRepository from '~/data/repositories/tags.repository';
-import { Tags } from '~/data/entities/tags';
 
 interface Props {
   name: string;
@@ -50,12 +49,15 @@ export const getOpportunitiesById = async (
 
 export const createOpportunities = async (
   data: Opportunity[],
+  tagsName: string[],
   userId: string,
   companyId: string,
 ): Promise<Opportunity[]> => {
   const companyRepository = getCustomRepository(CompanyRepository);
   const userRepository = getCustomRepository(UserRepository);
   const opportunitiesRepository = getCustomRepository(OpportunitiesRepository);
+  const tagsRepository = getCustomRepository(TagsRepository);
+
   const companyInstance: Company = await companyRepository.findOne({
     id: companyId,
   });
@@ -64,7 +66,7 @@ export const createOpportunities = async (
   });
 
   const opportunities: Opportunity[] = [];
-
+  let opportunityId;
   await asyncForEach(async ({ name, organization, type, startDate }: Props) => {
     const opportunitiesInstance = opportunitiesRepository.create({
       name: name,
@@ -76,29 +78,14 @@ export const createOpportunities = async (
     });
     await opportunitiesInstance.save();
     opportunities.push(opportunitiesInstance);
+    opportunityId = opportunitiesInstance.id;
   }, data);
-
-  return opportunities.map((opportunity) => opportunityMapper(opportunity));
-};
-
-export const connectTagsOpportunity = async (
-  tagsName: string[],
-  id: string,
-  companyId: string,
-): Promise<Tags[]> => {
-  const opportunitiesRepository = getCustomRepository(OpportunitiesRepository);
-  const tagsRepository = getCustomRepository(TagsRepository);
-  const companyRepository = getCustomRepository(CompanyRepository);
 
   const opportunityInstance = await opportunitiesRepository.findOne({
     where: {
-      id,
+      id: opportunityId,
     },
     relations: ['tags'],
-  });
-
-  const companyInstance: Company = await companyRepository.findOne({
-    id: companyId,
   });
 
   const tags = await tagsRepository.find({
@@ -109,8 +96,9 @@ export const connectTagsOpportunity = async (
   const opportunityTags = tags.filter(
     (tag) => tagsName.indexOf(tag.name) !== -1,
   );
+
   await opportunityInstance.tags.push(...opportunityTags);
   await opportunityInstance.save();
 
-  return opportunityTags;
+  return opportunities.map((opportunity) => opportunityMapper(opportunity));
 };
