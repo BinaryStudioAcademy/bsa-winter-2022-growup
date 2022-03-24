@@ -18,14 +18,9 @@ const router: Router = Router();
 router
   .get(
     '/tags',
-    validatePermissions([RoleType.ADMIN]),
     run((req) => getTags(req.userId)),
   )
-  .post(
-    '/tags',
-    validatePermissions([RoleType.ADMIN]),
-    run(createTagsController),
-  )
+  .post('/tags', run(createTagsController))
   .delete(
     '/tags/:id',
     validatePermissions([RoleType.ADMIN]),
