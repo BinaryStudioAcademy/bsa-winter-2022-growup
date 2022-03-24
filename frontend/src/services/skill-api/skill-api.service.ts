@@ -39,25 +39,19 @@ class SkillsApi {
     }
   }
 
-  public async createSkill(
-    skillsPayload: SkillProps[],
-  ): Promise<ISkill | null> {
-    try {
-      const result: IResult = await this.http.load(`${this.apiPath}/skills`, {
-        contentType: ContentType.JSON,
-        method: HttpMethod.POST,
-        hasAuth: true,
-        payload: JSON.stringify([
-          {
-            name: skillsPayload[0].name,
-            type: skillsPayload[0].type,
-          },
-        ]),
-      });
-      return result.skills[0] as ISkill;
-    } catch {
-      return null;
-    }
+  public async createSkill(skillsPayload: SkillProps[]): Promise<ISkill> {
+    const result: IResult = await this.http.load(`${this.apiPath}/skills`, {
+      contentType: ContentType.JSON,
+      method: HttpMethod.POST,
+      hasAuth: true,
+      payload: JSON.stringify([
+        {
+          name: skillsPayload[0].name,
+          type: skillsPayload[0].type,
+        },
+      ]),
+    });
+    return result.skills[0] as ISkill;
   }
 
   public async connectSkill(
