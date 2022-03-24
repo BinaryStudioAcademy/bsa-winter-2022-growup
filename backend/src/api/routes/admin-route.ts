@@ -16,8 +16,9 @@ import {
   changeUserRole,
 } from '~/services/user.service';
 
+import { validatePermissions } from '~/api/middlewares/validation-middleware';
+
 import { Headers } from '~/common/enums/headers';
-import { validatePermissions } from '../middlewares/validation-middleware';
 import { RoleType } from '~/common/enums/role-type';
 
 const router: Router = Router();
@@ -30,10 +31,12 @@ router
   .post('/tags', run(createTagsController))
   .delete(
     '/tags/:id',
+    validatePermissions([RoleType.ADMIN]),
     run((req) => deleteTag(req.params.id)),
   )
   .get(
     '/users',
+    validatePermissions([RoleType.ADMIN]),
     run((req) => getCommonUserList(req.userId)),
   )
   .get(
@@ -58,6 +61,7 @@ router
   )
   .post(
     '/users',
+    validatePermissions([RoleType.ADMIN]),
     run((req) =>
       registerUserController({
         host: req.headers[Headers.FORWARDED_HOST] as string,

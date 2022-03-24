@@ -13,6 +13,9 @@ import { RoleType } from '~/common/enums/role-type';
 import { UserMissingDataForm } from '~/common/forms/user.forms';
 
 import { User } from '~/data/entities/user';
+import { Tags } from '~/data/entities/tags';
+import { Education } from '~/data/entities/education';
+import { CareerJourney } from '~/data/entities/career-journey';
 
 import {
   comparePasswords,
@@ -31,6 +34,7 @@ import type {
   UserRegisterForm,
 } from '~/common/forms/user.forms';
 import { env } from '~/config/env';
+
 import { SuccessResponse } from '~/common/models/responses/success';
 
 type TokenResponse = {
@@ -41,6 +45,15 @@ type RefreshTokenResponse = {
   refreshToken: string;
   accessToken: string;
 };
+
+interface IProfile {
+  firstName: string;
+  lastName: string;
+  position: string;
+  educations: Education[];
+  careerJourneys: CareerJourney[];
+  interests: Tags[];
+}
 
 export const getUserJWT = async (user: User): Promise<TokenResponse> => {
   const token = signToken({
@@ -220,6 +233,27 @@ export const updateUserAvatar = async (
   const { password: _password, ...user } = await userInstance.save();
 
   return user as User;
+};
+
+export const addProfile = async (
+  data: IProfile,
+  userId: string,
+): Promise<User> => {
+  const userRepository = getCustomRepository(UserRepository);
+
+  const userInstance = await userRepository.findOne({
+    where: {
+      id: userId,
+    },
+    relations: ['tags'],
+  });
+
+  userInstance.tags.push(...data.interests);
+
+  const user = Object.assign(userInstance, data);
+  await user.save();
+
+  return user;
 };
 
 export const deleteUser = async (id: User['id']): Promise<SuccessResponse> => {
