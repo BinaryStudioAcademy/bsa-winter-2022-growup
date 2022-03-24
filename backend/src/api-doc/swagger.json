@@ -42,7 +42,7 @@
           "200": {
             "description": "Returns token and company if everything is ok.",
             "schema": {
-              "$ref": "#/definitions/Company"
+              "$ref": "#/definitions/CompanyResponse"
             }
           },
           "404": {
@@ -99,7 +99,7 @@
           "200": {
             "description": "Returns token and company if everything is ok.",
             "schema": {
-              "$ref": "#/definitions/Company"
+              "$ref": "#/definitions/CompanyResponse"
             }
           },
           "404": {
@@ -658,7 +658,27 @@
           "200": {
             "description": "Returns token if everything is ok. Token contains userId and role. It expires in 24h.",
             "schema": {
-              "$ref": "#/definitions/Token"
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "allOf": [
+                        { "$ref": "#/definitions/User" },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "isCompleteTest": { "type": "boolean" }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/definitions/Token"
+                }
+              ]
             }
           },
           "404": {
@@ -697,7 +717,27 @@
           "200": {
             "description": "Returns token if everything is ok. Token contains userId and role. It expires in 24h.",
             "schema": {
-              "$ref": "#/definitions/Token"
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "allOf": [
+                        { "$ref": "#/definitions/User" },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "isCompleteTest": { "type": "boolean" }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/definitions/Token"
+                }
+              ]
             }
           },
           "404": {
@@ -1103,23 +1143,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/User"
-                  },
-                  {
-                    "type": "object",
-                    "properties": {
-                      "role": {
-                        "type": "string",
-                        "enum": ["Mentor", "Mentee", "Admin"]
-                      },
-                      "company": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                ]
+                "$ref": "#/definitions/User"
               }
             }
           }
@@ -1144,7 +1168,7 @@
                 "email": {
                   "type": "string"
                 },
-                "roleType": {
+                "role": {
                   "type": "string",
                   "enum": ["Mentor", "Mentee", "Admin"]
                 }
@@ -1257,6 +1281,90 @@
               "description": "Return object of user Id and his new role",
               "type": "object",
               "$ref": "#/definitions/ChangeRoleResponse"
+            }
+          },
+          "404": {
+            "schema": {
+              "description": "Return Error with message of not founded user by this ID",
+              "type": "object",
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID for change user role by this id"
+          }
+        ],
+        "tags": ["Users", "Admin"],
+        "summary": "Get user path for account activation",
+        "responses": {
+          "200": {
+            "schema": {
+              "description": "Returns url",
+              "type": "object",
+              "properties": {
+                "url": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/company/users/token/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID for change user role by this id"
+          }
+        ],
+        "tags": ["Users", "Admin"],
+        "summary": "Resend mail for activation user accounnt",
+        "responses": {
+          "200": {
+            "schema": {
+              "description": "Return object of user Id and his new role",
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           },
           "404": {
@@ -2079,13 +2187,25 @@
         }
       }
     },
-    "Company": {
-      "required": ["token"],
-      "properties": {
-        "token": {
-          "type": "string"
+    "CompanyResponse": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Token"
         },
-        "company": {
+        {
+          "type": "object",
+          "properties": {
+            "company": {
+              "$ref": "#/definitions/Company"
+            }
+          }
+        }
+      ]
+    },
+    "Company": {
+      "allOf": [
+        { "$ref": "#/definitions/Default" },
+        {
           "type": "object",
           "properties": {
             "id": {
@@ -2096,23 +2216,10 @@
             },
             "description": {
               "type": "string"
-            },
-            "deletedAt": {
-              "type": "string",
-              "nullable": true,
-              "default": null
-            },
-            "createdAt": {
-              "type": "string"
-            },
-            "updatedAt": {
-              "type": "string",
-              "nullable": true,
-              "default": null
             }
           }
         }
-      }
+      ]
     },
     "Token": {
       "required": ["token"],
@@ -2164,32 +2271,41 @@
       }
     },
     "User": {
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "firstName": {
-          "type": "string"
-        },
-        "lastName": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        },
-        "avatar": {
-          "type": "string"
-        },
-        "createdAt": {
-          "type": "string"
-        },
-        "updatedAt": {
-          "type": "string"
-        },
-        "deletedAt": {
-          "type": "string"
+      "allOf": [
+        { "$ref": "#/definitions/Default" },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "firstName": {
+              "type": "string"
+            },
+            "lastName": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "avatar": {
+              "type": "string"
+            },
+            "careerJourneys": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CareerJourney"
+              }
+            },
+            "educations": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Education"
+              }
+            }
+          }
         }
-      }
+      ]
     },
     "Domain": {
       "allOf": [
@@ -2335,10 +2451,10 @@
     "ChangeRoleResponse": {
       "type": "object",
       "properties": {
-        "userId": {
+        "id": {
           "type": "string"
         },
-        "roleType": {
+        "role": {
           "type": "string"
         }
       }
@@ -2386,7 +2502,7 @@
     "ChangeUserRole": {
       "type": "object",
       "properties": {
-        "roleType": {
+        "role": {
           "type": "string"
         }
       }
