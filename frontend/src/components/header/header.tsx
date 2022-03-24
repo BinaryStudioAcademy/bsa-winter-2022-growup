@@ -5,7 +5,7 @@ import { profileActions } from 'store/actions';
 import notificationIcon from 'assets/img/icons/header-icons/notification-icon.svg';
 import notificationPointer from 'assets/img/icons/header-icons/notification-pointer.svg';
 import searchIcon from 'assets/img/icons/header-icons/search-icon.svg';
-
+import { authActions } from 'store/auth';
 import { UserAvatar } from 'components/common/common';
 
 import './styles.scss';
@@ -17,6 +17,7 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     dispatch(profileActions.fetchProfile());
+    dispatch(authActions.getCurrentUser());
   }, [dispatch]);
 
   return (
