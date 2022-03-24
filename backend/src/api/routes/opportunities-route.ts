@@ -26,7 +26,13 @@ router
     '/',
     run((req) => {
       const { companyId, userId } = req;
-      return createOpportunities(req.body, userId, companyId);
+      return createOpportunities(
+        req.body.opportunities,
+        req.body.opportunities[0].tags,
+        userId,
+        companyId,
+      );
     }),
   );
+
 export default router;

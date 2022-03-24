@@ -19,6 +19,7 @@ import { SortOption } from 'store/opportunities/common';
 
 const Opportunities: React.FC = () => {
   const [sort, setSort] = useState<SortOption | null>(null);
+  const [tags, setTags] = useState(['a']);
   const dispatch = useAppDispatch();
   const user = useAppSelector((store) => store.profile.user);
   const navigate = useNavigate();
@@ -54,7 +55,7 @@ const Opportunities: React.FC = () => {
   );
 
   const handleSubmit = (values: object): void => {
-    handleSave(values)
+    handleSave({ ...values, tags: tags })
       .unwrap()
       .then(() => {
         closeModal();
@@ -108,7 +109,7 @@ const Opportunities: React.FC = () => {
             organization={item.organization}
             type={item.type}
             startDate={item.startDate}
-            tagsData={item.tagsData}
+            tagsData={item.tags}
             isFollow={item.isFollow}
             isOpportunitiesPage={true}
           />
@@ -116,7 +117,11 @@ const Opportunities: React.FC = () => {
         </div>
       ))}
       {isShowModal && (
-        <OpportunityForm onClose={closeModal} onSubmit={handleSubmit} />
+        <OpportunityForm
+          onClose={closeModal}
+          onSubmit={handleSubmit}
+          setTags={setTags}
+        />
       )}
     </AddSection>
   );

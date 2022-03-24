@@ -536,21 +536,32 @@
             "name": "body",
             "in": "body",
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "organization": {
-                    "type": "string"
-                  },
-                  "createdAt": {
-                    "type": "string"
-                  },
-                  "type": {
-                    "type": "string"
+              "type": "object",
+              "properties": {
+                "opportunities": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "organization": {
+                        "type": "string"
+                      },
+                      "startDate": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "tags": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -998,6 +1009,75 @@
             "description": "Returns updated user",
             "schema": {
               "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/api/user/profile": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Update user profile",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "position": {
+                  "type": "string"
+                },
+                "educations": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Education"
+                  }
+                },
+                "careerJourneys": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/CareerJourney"
+                  }
+                },
+                "interests": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Tag"
+                  }
+                }
+              }
+            },
+            "required": true,
+            "description": "User profile"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns created okr if everything is ok.",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
             }
           }
         }
