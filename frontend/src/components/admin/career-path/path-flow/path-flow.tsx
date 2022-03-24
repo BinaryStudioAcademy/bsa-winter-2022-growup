@@ -1,5 +1,4 @@
-import './styles.scss';
-import Node from '../path-node/path-node';
+import { Form } from 'react-bootstrap';
 import {
   useAppDispatch,
   useAppSelector,
@@ -8,6 +7,11 @@ import {
 } from 'hooks/hooks';
 import { careerPathActions } from 'store/career-path';
 import { CareerPathPlaceholders as Placeholder } from '../common/enums';
+
+import { NotificationManager } from 'react-notifications';
+
+import { Button } from 'components/common/common';
+import Node from '../path-node/path-node';
 
 const PathFlow: React.FC = () => {
   const domains = useAppSelector((state) => state.careerPath.domains) || [];
@@ -83,7 +87,9 @@ const PathFlow: React.FC = () => {
         domainId: domainItemId,
         name: Placeholder.SKILL,
       }),
-    );
+    )
+      .unwrap()
+      .catch((err) => NotificationManager.error(err.message));
   };
 
   const editSkill = (name: string): void => {
@@ -94,7 +100,9 @@ const PathFlow: React.FC = () => {
         domainId: domainItemId,
         name,
       }),
-    );
+    )
+      .unwrap()
+      .catch((err) => NotificationManager.error(err.message));
   };
 
   const deleteSkill = (skillId: string): void => {
@@ -144,74 +152,84 @@ const PathFlow: React.FC = () => {
   };
 
   return (
-    <div className="path-tree">
-      <div className="d-flex tree-action">
-        <input
-          type="text"
-          placeholder="Domain"
-          onChange={(e): void => handleChangeInput(e)}
-          value={inputDomain}
-          className="form-control me-4"
-        />
-        <input
-          onClick={(): void => addDomain(inputDomain)}
-          className="btn btn-primary"
-          value="+ Add domain"
+    <div className="d-flex flex-column gap-5">
+      <div className="d-flex gap-2 align-items-center">
+        <Form.Group className="flex-fill">
+          <Form.Control
+            placeholder="Domain"
+            onChange={handleChangeInput}
+            value={inputDomain}
+          />
+        </Form.Group>
+        <Button
           type="submit"
-        />
+          variant="outline-gu-pink"
+          className="btn-hover-gu-white"
+          onClick={(): void => addDomain(inputDomain)}
+        >
+          + Add domain
+        </Button>
       </div>
-      <div className="tree-level">
-        {domains.map(({ domain }, domainIndex) => (
-          <Node
-            key={domainIndex}
-            name={domain.name}
-            onClick={(): void => setDomainItemId(domain.id)}
-            onAdd={(): void => addLevel(domain.id)}
-            onEdit={editDomain}
-            onDelete={(): void => deleteDomain(domain.id)}
-            className={domain.id === domainItemId ? 'bg-gu-purple' : ''}
-          />
-        ))}
-      </div>
-      <div className="tree-level">
-        {levels.map(({ id, name }, levelIndex) => (
-          <Node
-            key={levelIndex}
-            name={name}
-            onClick={(): void => setLevelItemId(id)}
-            onAdd={(): void => addSkill(id)}
-            onEdit={editLevel}
-            onDelete={(): void => deleteLevel(id)}
-            className={id === levelItemId ? 'bg-gu-purple' : ''}
-          />
-        ))}
-      </div>
-      <div className="tree-level">
-        {skills.map(({ id, name }, skillIndex) => (
-          <Node
-            key={skillIndex}
-            name={name}
-            onClick={(): void => setSkillItemId(id)}
-            onAdd={(): void => addObjective(id)}
-            onEdit={editSkill}
-            onDelete={(): void => deleteSkill(id)}
-            className={id === skillItemId ? 'bg-gu-purple' : ''}
-          />
-        ))}
-      </div>
-      <div className="tree-level">
-        {objectives.map(({ id, name }, objectiveIndex) => (
-          <Node
-            key={objectiveIndex}
-            name={name}
-            className="bg-gu-pink"
-            onClick={(): void => setObjectiveItemId(id)}
-            onEdit={editObjective}
-            onDelete={(): void => deleteObjective(id)}
-            leaf
-          />
-        ))}
-      </div>
+      {!!domains.length && (
+        <div className="d-flex flex-wrap gap-4">
+          {domains.map(({ domain }, domainIndex) => (
+            <Node
+              key={domainIndex}
+              name={domain.name}
+              onClick={(): void => setDomainItemId(domain.id)}
+              onAdd={(): void => addLevel(domain.id)}
+              onEdit={editDomain}
+              onDelete={(): void => deleteDomain(domain.id)}
+              className={domain.id === domainItemId ? 'bg-gu-purple' : ''}
+            />
+          ))}
+        </div>
+      )}
+      {!!levels.length && (
+        <div className="d-flex flex-wrap gap-4">
+          {levels.map(({ id, name }, levelIndex) => (
+            <Node
+              key={levelIndex}
+              name={name}
+              onClick={(): void => setLevelItemId(id)}
+              onAdd={(): void => addSkill(id)}
+              onEdit={editLevel}
+              onDelete={(): void => deleteLevel(id)}
+              className={id === levelItemId ? 'bg-gu-purple' : ''}
+            />
+          ))}
+        </div>
+      )}
+      {!!skills.length && (
+        <div className="d-flex flex-wrap gap-4">
+          {skills.map(({ id, name }, skillIndex) => (
+            <Node
+              key={skillIndex}
+              name={name}
+              onClick={(): void => setSkillItemId(id)}
+              onAdd={(): void => addObjective(id)}
+              onEdit={editSkill}
+              onDelete={(): void => deleteSkill(id)}
+              className={id === skillItemId ? 'bg-gu-purple' : ''}
+            />
+          ))}
+        </div>
+      )}
+      {!!objectives.length && (
+        <div className="d-flex flex-wrap gap-4">
+          {objectives.map(({ id, name }, objectiveIndex) => (
+            <Node
+              key={objectiveIndex}
+              name={name}
+              className="bg-gu-pink"
+              onClick={(): void => setObjectiveItemId(id)}
+              onEdit={editObjective}
+              onDelete={(): void => deleteObjective(id)}
+              leaf
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

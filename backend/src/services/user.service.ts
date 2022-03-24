@@ -1,7 +1,7 @@
 import { getCustomRepository } from 'typeorm';
-
 import { HttpCode, HttpError } from 'growup-shared';
 
+import { badRequestError } from '~/common/errors';
 import UserRepository from '~/data/repositories/user.repository';
 import UserRoleRepository from '~/data/repositories/role.repository';
 import CompanyRepository from '~/data/repositories/company.repository';
@@ -33,9 +33,11 @@ import type {
   UserRegisterForm,
 } from '~/common/forms/user.forms';
 import { env } from '~/config/env';
+
 import { Tags } from '~/data/entities/tags';
 import { Education } from '~/data/entities/education';
 import { CareerJourney } from '~/data/entities/career-journey';
+import { SuccessResponse } from '~/common/models/responses/success';
 
 type TokenResponse = {
   token: string;
@@ -53,6 +55,15 @@ interface IProfile {
   educations: Education[];
   careerJourneys: CareerJourney[];
   interests: Tags[];
+}
+
+interface IChangeRoleProps {
+  roleType: RoleType;
+}
+
+interface IChangeRole {
+  userId: string;
+  roleType: RoleType;
 }
 
 export const getUserJWT = async (
@@ -78,7 +89,7 @@ export const getUserJWT = async (
 export const registerUser = async (
   data: UserRegisterForm,
   role: RoleType,
-  companyId: User['company']['id'],
+  companyId?: User['company']['id'],
 ): Promise<User> => {
   const userRepository = getCustomRepository(UserRepository);
   const roleRepository = getCustomRepository(UserRoleRepository);
@@ -99,17 +110,18 @@ export const registerUser = async (
   const hashedPassword = data.password
     ? await hashPassword(data.password)
     : null;
-  const company = await companyRepository.findOne(companyId);
 
-  const user = await userRepository
-    .create({
-      ...data,
-      password: hashedPassword,
-      company,
-      careerJourneys: [],
-      educations: [],
-    })
-    .save();
+  let newData = {
+    ...data,
+    password: hashedPassword,
+  };
+
+  if (companyId) {
+    const company = await companyRepository.findOne(companyId);
+    newData = { ...newData, ...{ company } };
+  }
+
+  const user = await userRepository.create(newData).save();
 
   const roleInstance = await roleRepository.create({ user, role }).save();
   user.role = [roleInstance];
@@ -153,10 +165,10 @@ export const refreshToken = async (
 
 export const authenticateUser = async (data: UserLoginForm): Promise<User> => {
   const userRepository = getCustomRepository(UserRepository);
-
   const user = await userRepository.getUserWithPassword({
     email: data.email,
   });
+
   if (!user)
     throw new HttpError({
       status: HttpCode.NOT_FOUND,
@@ -176,11 +188,16 @@ export const authenticateUser = async (data: UserLoginForm): Promise<User> => {
 };
 
 export const getCommonUserList = async (
-  companyId: User['company']['id'],
+  userId: string,
 ): Promise<IListUser[]> => {
   const userRepository = getCustomRepository(UserRepository);
+  const user = await userRepository.geUserById(userId);
 
-  const usersList = await userRepository.getUsersByCompamyId(companyId);
+  if (!user.company) {
+    throw badRequestError('User doesn`t create company!!!');
+  }
+
+  const usersList = await userRepository.getUsersByCompamyId(user.company.id);
 
   const list = usersList.map((user) => {
     const roles = user.role.reduce((roles, role) => {
@@ -190,20 +207,9 @@ export const getCommonUserList = async (
 
     delete user.role;
 
-    return {
-      ...user,
-      roleType: roles,
-    };
+    return { ...user, roleType: roles };
   });
   return list as unknown as IListUser[];
-};
-
-export const registerUserAdmin = async (
-  data: UserRegisterForm,
-  companyId: User['company']['id'],
-): Promise<TokenResponse> => {
-  const user = await registerUser(data, RoleType.ADMIN, companyId);
-  return getUserJWT(user);
 };
 
 export const fetchUser = async (id: User['id']): Promise<User> => {
@@ -282,4 +288,52 @@ export const addProfile = async (
   await user.save();
 
   return user;
+};
+
+export const deleteUser = async (id: User['id']): Promise<SuccessResponse> => {
+  const userRepository = getCustomRepository(UserRepository);
+  const userInstance = await userRepository.findOne(id);
+
+  const userRoleRepository = getCustomRepository(UserRoleRepository);
+  const userRoleInstance = await userRoleRepository.find({
+    where: {
+      user: id,
+    },
+  });
+
+  if (!userInstance)
+    throw new HttpError({
+      status: HttpCode.NOT_FOUND,
+      message: 'User with this id does not exist',
+    });
+
+  await userRoleInstance[0].remove();
+  await userInstance.remove();
+
+  return { success: true, message: 'User deleted successfully' };
+};
+
+export const changeUserRole = async (
+  id: User['id'],
+  { roleType }: IChangeRoleProps,
+): Promise<IChangeRole> => {
+  const userRoleRepository = getCustomRepository(UserRoleRepository);
+  const userRoleInstance = await userRoleRepository.find({
+    where: {
+      user: id,
+    },
+  });
+  if (!userRoleInstance) {
+    throw new HttpError({
+      status: HttpCode.NOT_FOUND,
+      message: 'Can`t change Role for this role',
+    });
+  }
+  userRoleInstance[0].role = roleType;
+  await userRoleInstance[0].save();
+
+  return {
+    userId: id,
+    roleType,
+  };
 };

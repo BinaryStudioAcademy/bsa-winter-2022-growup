@@ -18,11 +18,13 @@ import { DEFAULT_SKILL_PAYLOAD } from './common/constants';
 import { actions } from 'store/skill/slice';
 import { skill as skillValidationSchema } from 'validation-schemas/validation-schemas';
 import { skillActions } from 'store/skill';
+import { NotificationManager } from 'react-notifications';
 import './styles.scss';
 
 const SkillOverview = (): React.ReactElement => {
   const skills = useAppSelector((state: RootState) => state.skill.userSkill);
   const allSkills = useAppSelector((state: RootState) => state.skill.allSkills);
+  const { user } = useAppSelector((state) => state.profile);
   const [textFind, setTextFind] = useState('');
   const [selectSkills, setSelectSkills] = useState('all');
   const [isManager, setIsManager] = useState(true);
@@ -57,11 +59,12 @@ const SkillOverview = (): React.ReactElement => {
     const isName = allSkills.find((skill) => skill.name === payload.name);
     const isUserName = skills.find((skill) => skill.name === payload.name);
     if (!isUserName)
-      if (!isName) {
-        dispatch(skillActions.createSkill([payload]));
-      } else {
-        dispatch(skillActions.connectSkill([payload]));
-      }
+      if (!isName)
+        dispatch(skillActions.createSkill([payload]))
+          .unwrap()
+          .catch((err) => NotificationManager.error(err.message));
+      else dispatch(skillActions.connectSkill([payload]));
+    else NotificationManager.error('Skill with this name already exists');
   };
 
   const onAdd = (values: SkillFormType): void => {
@@ -145,126 +148,138 @@ const SkillOverview = (): React.ReactElement => {
   }
 
   return (
-    <div className="skill-page m-5">
-      <div className="mb-5">
-        <ProfileHeader />
-      </div>
-      <div className="d-flex justify-content-between mb-4 flex-wrap gap-3">
-        <form className="row g-3">
-          <div className="col-auto">
-            <input
-              type="text"
-              className="form-control"
-              id="inputName"
-              placeholder="Search skill"
-              value={textFind}
-              onChange={(e): void => setTextFind(e.target.value)}
-            />
-          </div>
-        </form>
-        <div className="select-favorite">
-          <select
-            className="form-control rounded"
-            onChange={(e): void => setSelectSkills(e.target.value)}
-            aria-label="Default select example"
-          >
-            <option>All Skills</option>
-            <option value={`${IMPORTANT}`}>Important Skills</option>
-            <option value={`${UNIMPORTANT}`}>Unimportant Skills</option>
-          </select>
+    <>
+      {user ? (
+        <div className="mb-5">
+          <ProfileHeader
+            avatar={user.avatar}
+            firstName={user.firstName}
+            lastName={user.lastName}
+            position={user.position}
+          />
         </div>
-        <Form className="d-flex" onSubmit={handleSubmit(onAdd)}>
-          <div className="col form-input me-4">
-            <FormInput
-              name={'name'}
-              control={control}
-              errors={errors}
-              type="text"
-              placeholder="Enter name of the skill"
-            />
+      ) : (
+        true
+      )}
+      <div className="skill-page m-5">
+        <div className="d-flex justify-content-between mb-4 flex-wrap gap-3">
+          <form className="row g-3">
+            <div className="col-auto">
+              <input
+                type="text"
+                className="form-control"
+                id="inputName"
+                placeholder="Search skill"
+                value={textFind}
+                onChange={(e): void => setTextFind(e.target.value)}
+              />
+            </div>
+          </form>
+          <div className="select-favorite d-flex">
+            <div className="me-3 align-self-center fs-3"> Filter </div>
+            <select
+              className="form-control rounded"
+              onChange={(e): void => setSelectSkills(e.target.value)}
+              aria-label="Default select example"
+            >
+              <option>All Skills</option>
+              <option value={`${IMPORTANT}`}>Important Skills</option>
+              <option value={`${UNIMPORTANT}`}>Unimportant Skills</option>
+            </select>
           </div>
-          <div className="col-auto">
-            <Button className={'btn btn-primary'} type={'submit'}>
-              + Add Skill
-            </Button>
-          </div>
-        </Form>
+          <Form className="d-flex" onSubmit={handleSubmit(onAdd)}>
+            <div className="col form-input me-4">
+              <FormInput
+                name={'name'}
+                control={control}
+                errors={errors}
+                type="text"
+                placeholder="Enter name of the skill"
+              />
+            </div>
+            <div className="col-auto">
+              <Button variant="gu-blue" type="submit">
+                + Add Skill
+              </Button>
+            </div>
+          </Form>
+        </div>
+        <table className="table">
+          <thead>
+            <tr>
+              <th scope="col">
+                Skill
+                <Button
+                  className={'border-0 bg-gu-white sort-button'}
+                  onClick={(): void => sortSkillNames()}
+                >
+                  {isSortName ? <SortDown /> : <SortUp />}
+                </Button>
+              </th>
+              <th scope="col" className="text-center">
+                Self Rating
+                <Button
+                  className="border-0 bg-gu-white sort-button"
+                  onClick={(): void => sortSelfRating()}
+                >
+                  {isSortSelf ? <SortDown /> : <SortUp />}
+                </Button>
+              </th>
+              <th scope="col" className="text-center">
+                Manager Rating
+                <Button
+                  className="border-0 bg-gu-white sort-button"
+                  onClick={(): void => sortManagerRating()}
+                >
+                  {isManager ? <SortDown /> : <SortUp />}
+                </Button>
+              </th>
+              <th scope="col" className="text-center">
+                Skill Review
+                <Button
+                  className="border-0 bg-gu-white sort-button"
+                  onClick={(): void => sortSkillReview()}
+                >
+                  {isSkillReview ? <SortDown /> : <SortUp />}
+                </Button>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {skills
+              ? skillStarred.map((skill: ISkill) => {
+                  if (skill.name && selectSkills !== UNIMPORTANT)
+                    if (isFind(skill.name) && skill.rating)
+                      return (
+                        <SkillElement
+                          key={skill.id}
+                          name={skill.name}
+                          rating={skill.rating}
+                          id={skill.id}
+                          isStarred={skill.isStarred}
+                        />
+                      );
+                })
+              : true}
+            {skills
+              ? skillNotStarred.map((skill: ISkill) => {
+                  if (skill.name && selectSkills !== IMPORTANT)
+                    if (isFind(skill.name) && skill.rating)
+                      return (
+                        <SkillElement
+                          key={skill.id}
+                          name={skill.name}
+                          rating={skill.rating}
+                          id={skill.id}
+                          isStarred={skill.isStarred}
+                        />
+                      );
+                })
+              : true}
+          </tbody>
+        </table>
       </div>
-      <table className="table">
-        <thead>
-          <tr>
-            <th scope="col">
-              Skill
-              <Button
-                className={'border-0 bg-gu-white sort-button'}
-                onSubmit={(): void => sortSkillNames()}
-              >
-                {isSortName ? <SortDown /> : <SortUp />}
-              </Button>
-            </th>
-            <th scope="col" className="text-center">
-              Self Rating
-              <Button
-                className={'border-0 bg-gu-white sort-button'}
-                onSubmit={(): void => sortSelfRating()}
-              >
-                {isSortSelf ? <SortDown /> : <SortUp />}
-              </Button>
-            </th>
-            <th scope="col" className="text-center">
-              Manager Rating
-              <Button
-                className={'border-0 bg-gu-white sort-button'}
-                onSubmit={(): void => sortManagerRating()}
-              >
-                {isManager ? <SortDown /> : <SortUp />}
-              </Button>
-            </th>
-            <th scope="col" className="text-center">
-              Skill Review
-              <Button
-                className={'border-0 bg-gu-white sort-button'}
-                onSubmit={(): void => sortSkillReview()}
-              >
-                {isSkillReview ? <SortDown /> : <SortUp />}
-              </Button>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {skills
-            ? skillStarred.map((skill: ISkill) => {
-                if (skill.name && selectSkills !== UNIMPORTANT)
-                  if (isFind(skill.name) && skill.rating)
-                    return (
-                      <SkillElement
-                        key={skill.id}
-                        name={skill.name}
-                        rating={skill.rating}
-                        id={skill.id}
-                        isStarred={skill.isStarred}
-                      />
-                    );
-              })
-            : true}
-          {skills
-            ? skillNotStarred.map((skill: ISkill) => {
-                if (skill.name && selectSkills !== IMPORTANT)
-                  if (isFind(skill.name) && skill.rating)
-                    return (
-                      <SkillElement
-                        key={skill.id}
-                        name={skill.name}
-                        rating={skill.rating}
-                        id={skill.id}
-                        isStarred={skill.isStarred}
-                      />
-                    );
-              })
-            : true}
-        </tbody>
-      </table>
-    </div>
+    </>
   );
 };
 
