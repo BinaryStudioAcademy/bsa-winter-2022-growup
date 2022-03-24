@@ -31,7 +31,7 @@ export class User extends AbstractEntity {
   @ManyToOne(() => Company, (company) => company.id)
   company: Company;
 
-  @ManyToOne(() => User, (user) => user.id, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.id, { onDelete: 'SET NULL' })
   mentor: User;
 
   @ManyToOne(() => DomainLevel, (domainLevel) => domainLevel.id)
