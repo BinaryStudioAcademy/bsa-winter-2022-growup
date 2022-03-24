@@ -19,14 +19,14 @@ class TagsApi {
     this.apiPath = apiPath;
   }
 
-  public async fetchTags(): Promise<ITag[] | null> {
+  public async fetchTags(): Promise<ITag[]> {
     try {
       const result = await this.http.load(`${this.apiPath}/company/tags`, {
         contentType: ContentType.JSON,
       });
       return result as ITag[];
     } catch {
-      return null;
+      return [];
     }
   }
 
