@@ -6,7 +6,7 @@ import UserRepository from '~/data/repositories/user.repository';
 import UserRoleRepository from '~/data/repositories/role.repository';
 import CompanyRepository from '~/data/repositories/company.repository';
 import RefreshTokenRepository from '~/data/repositories/refresh-token.repository';
-
+import UserQuizCategoryRepository from '~/data/repositories/user-quiz-category.repository';
 import { refreshTokenSchema } from '~/common/models/tokens/refresh-token.model';
 import { IListUser } from '~/common/models/user/user';
 import { RoleType } from '~/common/enums/role-type';
@@ -34,6 +34,7 @@ import type {
 } from '~/common/forms/user.forms';
 import { env } from '~/config/env';
 import { SuccessResponse } from '~/common/models/responses/success';
+import { asyncForEach } from '~/common/helpers/array.helper';
 
 type TokenResponse = {
   token: string;
@@ -266,11 +267,25 @@ export const deleteUser = async (id: User['id']): Promise<SuccessResponse> => {
     },
   });
 
+  const userQuizCategoryRepository = await getCustomRepository(
+    UserQuizCategoryRepository,
+  );
+  const userQuizCategories = await userQuizCategoryRepository
+    .createQueryBuilder('root')
+    .where('root.user.id = :id', { id: id })
+    .getMany();
+
   if (!userInstance)
     throw new HttpError({
       status: HttpCode.NOT_FOUND,
       message: 'User with this id does not exist',
     });
+
+  if (userQuizCategories) {
+    await asyncForEach(async (userQuiz) => {
+      userQuiz.remove();
+    }, userQuizCategories);
+  }
 
   await userRoleInstance[0].remove();
   await userInstance.remove();
