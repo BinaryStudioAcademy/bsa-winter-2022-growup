@@ -34,6 +34,11 @@ import type {
 } from '~/common/forms/user.forms';
 import { env } from '~/config/env';
 
+import { Tags } from '~/data/entities/tags';
+import { Education } from '~/data/entities/education';
+import { CareerJourney } from '~/data/entities/career-journey';
+import { SuccessResponse } from '~/common/models/responses/success';
+
 type TokenResponse = {
   token: string;
 };
@@ -42,6 +47,24 @@ type RefreshTokenResponse = {
   refreshToken: string;
   accessToken: string;
 };
+
+interface IProfile {
+  firstName: string;
+  lastName: string;
+  position: string;
+  educations: Education[];
+  careerJourneys: CareerJourney[];
+  interests: Tags[];
+}
+
+interface IChangeRoleProps {
+  roleType: RoleType;
+}
+
+interface IChangeRole {
+  userId: string;
+  roleType: RoleType;
+}
 
 export const getUserJWT = async (
   user: User,
@@ -244,4 +267,73 @@ export const updateUserAvatar = async (
   const { password: _password, ...user } = await userInstance.save();
 
   return user as User;
+};
+
+export const addProfile = async (
+  data: IProfile,
+  userId: string,
+): Promise<User> => {
+  const userRepository = getCustomRepository(UserRepository);
+
+  const userInstance = await userRepository.findOne({
+    where: {
+      id: userId,
+    },
+    relations: ['tags'],
+  });
+
+  await userInstance.tags.push(...data.interests);
+
+  const user = Object.assign(userInstance, data);
+  await user.save();
+
+  return user;
+};
+
+export const deleteUser = async (id: User['id']): Promise<SuccessResponse> => {
+  const userRepository = getCustomRepository(UserRepository);
+  const userInstance = await userRepository.findOne(id);
+
+  const userRoleRepository = getCustomRepository(UserRoleRepository);
+  const userRoleInstance = await userRoleRepository.find({
+    where: {
+      user: id,
+    },
+  });
+
+  if (!userInstance)
+    throw new HttpError({
+      status: HttpCode.NOT_FOUND,
+      message: 'User with this id does not exist',
+    });
+
+  await userRoleInstance[0].remove();
+  await userInstance.remove();
+
+  return { success: true, message: 'User deleted successfully' };
+};
+
+export const changeUserRole = async (
+  id: User['id'],
+  { roleType }: IChangeRoleProps,
+): Promise<IChangeRole> => {
+  const userRoleRepository = getCustomRepository(UserRoleRepository);
+  const userRoleInstance = await userRoleRepository.find({
+    where: {
+      user: id,
+    },
+  });
+  if (!userRoleInstance) {
+    throw new HttpError({
+      status: HttpCode.NOT_FOUND,
+      message: 'Can`t change Role for this role',
+    });
+  }
+  userRoleInstance[0].role = roleType;
+  await userRoleInstance[0].save();
+
+  return {
+    userId: id,
+    roleType,
+  };
 };

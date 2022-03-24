@@ -14,6 +14,14 @@ class TagsRepository extends Repository<Tags> {
       .orIgnore()
       .execute();
   }
+
+  getAllByCompanyId(companyId: string): Promise<Tags[]> {
+    return this.createQueryBuilder('tags')
+      .select()
+      .leftJoin('tags.company', 'company')
+      .where('company.id = :id', { id: companyId })
+      .getMany();
+  }
 }
 
 export default TagsRepository;
