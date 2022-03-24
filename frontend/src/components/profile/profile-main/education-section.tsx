@@ -1,4 +1,5 @@
 import { NotificationManager } from 'react-notifications';
+import { Row } from 'react-bootstrap';
 import {
   useAppDispatch,
   useAppSelector,
@@ -57,12 +58,19 @@ const EducationSection: React.FC = () => {
       });
   };
 
+  const educationItems = (): JSX.Element[] | JSX.Element => {
+    if (!educationData.length) {
+      return <Row className="w-100 justify-content-center">No Data</Row>;
+    }
+    return educationData.map((item, i) => (
+      <EducationCard key={i} education={item} onEdit={showModal} />
+    ));
+  };
+
   return (
     <AddSection title="Education" onAdd={(): void => showModal(null)}>
       <>
-        {educationData.map((item, i) => (
-          <EducationCard key={i} education={item} onEdit={showModal} />
-        ))}
+        {educationItems()}
         {isModalVisible && (
           <EducationForm
             education={education}

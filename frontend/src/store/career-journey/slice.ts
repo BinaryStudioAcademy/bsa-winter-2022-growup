@@ -17,11 +17,14 @@ const { reducer, actions } = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getAllCareerJourneys.fulfilled, (state, action) => {
-      state.careerJourneys = action.payload.map((item) => ({
-        ...item,
-        startDate: new Date(item.startDate),
-        endDate: new Date(item.endDate),
-      }));
+      state.careerJourneys = action.payload.map((item) => {
+        const dates = {
+          startDate: new Date(item.startDate),
+          endDate: item.endDate ? new Date(item.endDate) : null,
+        };
+
+        return { ...item, ...dates };
+      });
     });
   },
 });

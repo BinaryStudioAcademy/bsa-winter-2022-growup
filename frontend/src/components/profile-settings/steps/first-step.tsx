@@ -1,7 +1,7 @@
 import { IProfileSettingStep } from './common/interfaces';
 import { TextField } from 'components/common/common';
-import Experience from './experience';
-import Education from './education';
+import EducationSection from 'components/profile/profile-main/education-section';
+import CareerJourneySection from 'components/profile/profile-main/career-journey-section';
 import InterestingTags from './interesting-tags';
 import StepControl from './step-control';
 import { profileFirstStep as profileFirstStepValidationSchema } from 'validation-schemas/validation-schemas';
@@ -53,8 +53,8 @@ const FirstStep: React.FC<IProfileSettingStep> = ({
         control={control}
         errors={errors}
       />
-      <Experience />
-      <Education />
+      <CareerJourneySection />
+      <EducationSection />
       <InterestingTags />
       <StepControl
         isValid={isValid}

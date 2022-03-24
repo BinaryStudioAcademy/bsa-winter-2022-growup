@@ -1,4 +1,5 @@
 import { NotificationManager } from 'react-notifications';
+import { Row } from 'react-bootstrap';
 import {
   useAppDispatch,
   useAppSelector,
@@ -61,12 +62,19 @@ const CareerJourneySection: React.FC = () => {
       });
   };
 
+  const careerJourneyItems = (): JSX.Element[] | JSX.Element => {
+    if (!careerJourneyData.length) {
+      return <Row className="w-100 justify-content-center">No Data</Row>;
+    }
+    return careerJourneyData.map((item, i) => (
+      <CareerCard key={i} careerJourney={item} onEdit={showModal} />
+    ));
+  };
+
   return (
     <AddSection title="Career journey" onAdd={(): void => showModal(null)}>
       <>
-        {careerJourneyData.map((item, i) => (
-          <CareerCard key={i} careerJourney={item} onEdit={showModal} />
-        ))}
+        {careerJourneyItems()}
         {isModalVisible && (
           <CareerJourneyForm
             careerJourney={careerJourney}
