@@ -52,11 +52,7 @@ const Sidebar: React.FC = () => {
           </div>
 
           <Link to={MentorMenteeRoute.HOME}>
-            <div
-              className={`logo-section d-flex align-items-center text-decoration-none px-2 ps-md-4   ${
-                isBurgerActive ? '' : ''
-              }`}
-            >
+            <div className="logo-section d-flex align-items-center text-decoration-none px-2 ps-md-4">
               <img
                 className="logo-section__icon logo-icon me-md-3"
                 src={logo}

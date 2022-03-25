@@ -29,7 +29,6 @@
 }
 
 .navigation-section__list {
-  //111
   @include media-breakpoint-down(md) {
     align-items: center;
   }
@@ -42,7 +41,6 @@
     height: 27px;
   }
   @include media-breakpoint-up(md) {
-    //2222
     &__icon {
       max-width: 20px;
       max-height: 20px;
@@ -58,7 +56,6 @@
   background-color: #fff;
   border-radius: 33%;
   @include media-breakpoint-up(md) {
-    ///3333
     height: 45px;
     width: 100%;
     border-radius: 10px;
@@ -82,11 +79,13 @@
 .navigation-item {
   list-style-type: none;
 }
+
 .navigation-section__burger-active {
   margin-top: 4rem;
 }
+
 .sidebar-container--small-version {
-  width: 65px !important;
+  width: 65px;
   .navigation-link__title {
     display: none !important;
   }
@@ -100,12 +99,12 @@
     }
   }
   .navigation-item .active {
-    display: flex !important;
-    align-items: center !important;
-    height: 41px !important;
-    width: 41px !important;
-    background-color: #fff !important;
-    border-radius: 33% !important;
+    display: flex;
+    align-items: center;
+    height: 41px;
+    width: 41px;
+    background-color: #fff;
+    border-radius: 33%;
   }
 }
 
