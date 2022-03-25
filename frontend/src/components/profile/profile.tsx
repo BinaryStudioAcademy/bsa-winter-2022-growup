@@ -12,6 +12,7 @@ import Header from './header/header';
 import './styles.scss';
 import { tabsElements } from './tabs/tabsElements';
 import isFirstLogged from 'helpers/check-is-first-logged';
+import { authActions } from 'store/auth';
 
 const ProfileInfo: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -25,6 +26,7 @@ const ProfileInfo: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(profileActions.fetchProfile());
+    dispatch(authActions.getCurrentUser());
   }, [dispatch]);
 
   const changeComponent = (id: number): void => {

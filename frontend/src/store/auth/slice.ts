@@ -44,7 +44,10 @@ const { reducer, actions } = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(finishRegistration.fulfilled, (state, action) => {
-        state.user = action.payload;
+        state.user = {
+          ...state.user,
+          ...action.payload,
+        };
       })
       .addCase(verifyRegistrationToken.fulfilled, (state, _) => {
         state.isAuthenticated = true;
