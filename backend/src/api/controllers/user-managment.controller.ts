@@ -43,7 +43,6 @@ const registerUserController = async ({
   company,
 }: RegistrationUserProps): Promise<IListUser> => {
   const newUser = await registerUser(createDefaultUser(email), role, company);
-
   const token = await createRegistrationToken(newUser);
   await sendMail(host, origin, newUser.email, token.value);
   return convertForUserList(newUser);

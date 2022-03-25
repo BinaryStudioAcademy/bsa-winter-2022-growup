@@ -5,7 +5,6 @@ import { badRequestError } from '~/common/errors';
 import UserRepository from '~/data/repositories/user.repository';
 import CompanyRepository from '~/data/repositories/company.repository';
 import RefreshTokenRepository from '~/data/repositories/refresh-token.repository';
-
 import { refreshTokenSchema } from '~/common/models/tokens/refresh-token.model';
 import { IListUser } from '~/common/models/user/user';
 import { RoleType } from '~/common/enums/role-type';
@@ -265,7 +264,6 @@ export const deleteUser = async (id: User['id']): Promise<SuccessResponse> => {
       status: HttpCode.NOT_FOUND,
       message: 'User with this id does not exist',
     });
-
   await userInstance.remove();
   return { success: true, message: 'User deleted successfully' };
 };
