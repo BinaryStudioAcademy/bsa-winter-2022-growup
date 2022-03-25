@@ -24,29 +24,25 @@ const UserControls: React.FC<Props> = memo(({ id, show, setShow }) => {
   return (
     <>
       <ControlButton
-        className="user-control-btn border-0 bg-transparent"
+        className="bg-transparent"
         onClick={(): void => {
           copyPathToClipboard(id);
-          console.warn(id);
         }}
       >
         <Clipboard />
       </ControlButton>
       <ControlButton
-        className="user-control-btn border-0 bg-transparent"
+        className="bg-transparent"
         onClick={(): void => resendMail(id)}
       >
         <ArrowClockwise />
       </ControlButton>
-      <ControlButton
-        className="user-control-btn border-0 bg-transparent"
-        onClick={toggle}
-      >
+      <ControlButton className=" bg-transparent" onClick={toggle}>
         {show ? <XLg /> : <Pencil />}
       </ControlButton>
 
       <ControlButton
-        className="user-control-btn border-0 bg-transparent"
+        className="bg-transparent"
         onClick={(): void => deleteUser(id)}
       >
         <Trash />
