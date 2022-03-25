@@ -18,7 +18,6 @@ import {
 
 import { validatePermissions } from '~/api/middlewares/validation-middleware';
 
-import { Headers } from '~/common/enums/headers';
 import { RoleType } from '~/common/enums/role-type';
 
 const router: Router = Router();
@@ -41,31 +40,19 @@ router
   )
   .get(
     '/users/:id',
-    run((req) =>
-      resendActivationMailController({
-        id: req.params.id,
-        host: req.headers[Headers.FORWARDED_HOST] as string,
-        origin: req.headers[Headers.ORIGIN] as string,
-      }),
-    ),
+    validatePermissions([RoleType.ADMIN]),
+    run((req) => resendActivationMailController({ id: req.params.id })),
   )
   .get(
     '/users/token/:id',
-    run((req) =>
-      getActionMailUrl({
-        id: req.params.id,
-        host: req.headers[Headers.FORWARDED_HOST] as string,
-        origin: req.headers[Headers.ORIGIN] as string,
-      }),
-    ),
+    validatePermissions([RoleType.ADMIN]),
+    run((req) => getActionMailUrl({ id: req.params.id })),
   )
   .post(
     '/users',
     validatePermissions([RoleType.ADMIN]),
     run((req) =>
       registerUserController({
-        host: req.headers[Headers.FORWARDED_HOST] as string,
-        origin: req.headers[Headers.ORIGIN] as string,
         email: req.body.email,
         role: req.body.role,
         company: req.companyId,
