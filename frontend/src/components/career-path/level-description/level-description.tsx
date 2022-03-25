@@ -1,13 +1,18 @@
 import './level-description.scss';
 import { v4 as uuidv4 } from 'uuid';
-import { technicalSkills } from './data/technical-skills';
+import { ISkills } from '../common/interfaces';
 import TechnicalSkills from './technical-skills';
 
-const LevelDescription: React.FC = () => {
+interface Props {
+  level: string;
+  technicalSkills: ISkills[];
+}
+
+const LevelDescription: React.FC<Props> = ({ level, technicalSkills }) => {
   return (
     <div className="level-description bg-white ms-3">
       <div className="level-description__title d-grid bg-gu-blue">
-        <span className="fs-5 fw-bold text-white">Level</span>
+        <span className="fs-5 fw-bold text-white">{level}</span>
         <span className="level-description__subtitle fs-6">
           33 / 35 skills archived
         </span>

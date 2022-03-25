@@ -9,13 +9,13 @@ interface Props {
   data: {
     acquiredSkills: number;
     totalSkills: number;
-    level: number;
-    progressColor: string;
+    level: string;
+    onClick: () => void;
   };
 }
 
 const LevelNode: React.FC<Props> = ({ data }) => {
-  const { acquiredSkills, totalSkills, level, progressColor } = data;
+  const { acquiredSkills, totalSkills, level, onClick } = data;
 
   return (
     <>
@@ -25,13 +25,15 @@ const LevelNode: React.FC<Props> = ({ data }) => {
           icon={
             <Progressbar
               percentage={calculatePercentage(acquiredSkills, totalSkills)}
-              textColor={progressColor}
             />
           }
-          title={`Level ${level}`}
+          title={level}
           subtitle={`${acquiredSkills} / ${totalSkills} skill archived`}
         />
-        <button className="node__arrow-button text-gu-pink m-3 border-0 align-self-center">
+        <button
+          className="node__arrow-button text-gu-pink m-3 border-0 align-self-center"
+          onClick={onClick}
+        >
           <ArrowRight />
         </button>
       </div>

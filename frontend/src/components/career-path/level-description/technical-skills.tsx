@@ -1,11 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Col, Row } from 'react-bootstrap';
 import Topic from './topic';
-
-interface ITechnicalSkill {
-  skill: string;
-  topics: (string | { required: string })[];
-}
+import { ITechnicalSkill } from '../common/interfaces';
 
 interface Props {
   skills: ITechnicalSkill[];
