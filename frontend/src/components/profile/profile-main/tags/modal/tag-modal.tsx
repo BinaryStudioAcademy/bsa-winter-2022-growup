@@ -1,11 +1,9 @@
 import { FormEvent, useCallback } from 'react';
-import { useAppDispatch, useAppSelector, useTagList } from 'hooks/hooks';
+import { useAppDispatch, useTagList } from 'hooks/hooks';
 import { tagsActions } from 'store/actions';
 import { Button, Modal } from 'components/common/common';
 import TagForm from './form';
 import TagList from './tag-list';
-import InterestsTagList from './interests-tag-list';
-import { ITag } from 'common/interfaces/tag/tag';
 
 type PropTypes = {
   show: boolean;
@@ -13,19 +11,18 @@ type PropTypes = {
 };
 
 const TagModal: React.FC<PropTypes> = ({ show, onClose }) => {
-  const { tags } = useAppSelector((state) => state.tags);
   const { list: tagList, addItem, deleteItem, clearItems } = useTagList();
   const dispatch = useAppDispatch();
-  const clickHandler = (e: FormEvent): void => {
-    e.preventDefault();
-    onClose();
-    clearItems();
-    dispatch(tagsActions.createTags(tagList));
-  };
 
-  const deleteTag = useCallback((id: ITag['id']) => {
-    dispatch(tagsActions.deleteTag(id));
-  }, []);
+  const clickHandler = useCallback(
+    (e: FormEvent): void => {
+      e.preventDefault();
+      onClose();
+      clearItems();
+      dispatch(tagsActions.createTags(tagList));
+    },
+    [onClose, clearItems, dispatch],
+  );
 
   return (
     <Modal
@@ -35,8 +32,7 @@ const TagModal: React.FC<PropTypes> = ({ show, onClose }) => {
       className="d-flex flex-column gap-4"
     >
       <TagForm onSubmit={addItem} />
-      <TagList tagList={tagList} onDelete={deleteItem} />
-      <InterestsTagList tagList={tags} onDelete={deleteTag} />
+      {tagList && <TagList tagList={tagList} onDelete={deleteItem} />}
       <Button
         variant="outline-gu-purple"
         className="btn-hover-gu-white"
