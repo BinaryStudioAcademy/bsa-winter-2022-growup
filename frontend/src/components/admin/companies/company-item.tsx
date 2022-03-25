@@ -6,27 +6,17 @@ import CompanyCard from './company-card';
 import AddEditCompany from './addedit-company';
 import { Button } from 'components/common/common';
 
-type Props = {
-  companyList: ICompany[];
-};
-
-const Company: React.FC<Props> = ({ companyList }) => {
+const Company: React.FC = () => {
   const { user } = useAppSelector((state) => state.auth);
 
-  const [isDisabled, setIsDisabled] = useState(false);
   const [show, setShow] = useState(false);
+  const [company, setCompany] = useState<ICompany>();
 
   useEffect(() => {
-    const companyId = user?.company?.id;
-
-    if (companyId) {
-      const company = companyList.filter((company) => company.id === companyId);
-
-      if (company.length) {
-        setIsDisabled(true);
-      }
+    if (user && user.company) {
+      setCompany(user.company);
     }
-  }, [companyList]);
+  }, [user]);
 
   const handleClose = (): void => setShow(false);
   const handleShow = (): void => setShow(true);
@@ -39,22 +29,19 @@ const Company: React.FC<Props> = ({ companyList }) => {
             variant="outline-gu-white"
             className="btn-hover-gu-purple"
             onClick={handleShow}
-            disabled={isDisabled}
           >
-            + Add Company
+            {company ? 'Edit Company' : '+ Add Company'}
           </Button>
         </Card.Header>
         <Card.Body>
-          {companyList.length ? (
-            companyList.map((company) => (
-              <CompanyCard company={company} key={company.id} />
-            ))
+          {company ? (
+            <CompanyCard company={company} />
           ) : (
-            <p className="m-0 text-center">No companies here...</p>
+            <p className="m-0 text-center">No company here...</p>
           )}
         </Card.Body>
       </Card>
-      <AddEditCompany show={show} handleClose={handleClose} />
+      {show && <AddEditCompany company={company} handleClose={handleClose} />}
     </>
   );
 };
