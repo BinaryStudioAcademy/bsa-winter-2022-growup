@@ -6,7 +6,7 @@ import { SkillCategory } from './skill-category';
 export class UserSkillCategory {
   @PrimaryColumn()
   userId: User;
-  @OneToOne(() => User, (user) => user.id)
+  @OneToOne(() => User, (user) => user.id, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
   user: User;
 

@@ -20,14 +20,14 @@ type Props = {
 const Tags: React.FC<Props> = ({ tagList }) => {
   const { user } = useAppSelector((state) => state.auth);
 
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (user && !user.company) {
-      setIsDisabled(true);
+    if (user && user.company) {
+      setIsDisabled(false);
     }
   }, [user]);
 

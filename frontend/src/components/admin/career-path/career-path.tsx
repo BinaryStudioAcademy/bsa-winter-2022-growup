@@ -15,15 +15,15 @@ const CareerPath: React.FC = () => {
   const domains = useAppSelector((state) => state.careerPath.domains) || [];
   const { user } = useAppSelector((state) => state.auth);
 
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const [isFlowVisible, setIsFlowVisible] = useState(!!domains.length);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (user && !user.company) {
-      setIsDisabled(true);
+    if (user && user.company) {
+      setIsDisabled(false);
     }
   }, [user]);
 

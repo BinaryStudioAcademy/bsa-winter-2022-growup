@@ -54,7 +54,7 @@ const education = Joi.object({
       'date.max': EducationValidationMessage.MAX_START_DATE,
     }),
   [EducationPayloadKey.END_DATE]: Joi.date()
-    .required()
+    .allow(null)
     .min(Joi.ref(EducationPayloadKey.START_DATE))
     .max(MAX_DATE)
     .messages({

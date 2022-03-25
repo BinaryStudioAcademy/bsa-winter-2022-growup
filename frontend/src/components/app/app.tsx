@@ -14,7 +14,7 @@ const App: React.FC = () => {
   }, []);
 
   const isAdmin = useAppSelector(
-    (state) => state.auth.user?.roleType === RoleType.ADMIN,
+    (state) => state.auth.user?.role === RoleType.ADMIN,
   );
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
 
@@ -28,10 +28,7 @@ const App: React.FC = () => {
         <AdminRouting isAuthenticated={isAuthenticated} />
       ) : (
         <div className="wrapper">
-          <UserRouting
-            isAuthenticated={isAuthenticated}
-            role={user?.roleType}
-          />
+          <UserRouting isAuthenticated={isAuthenticated} role={user?.role} />
         </div>
       )}
     </>

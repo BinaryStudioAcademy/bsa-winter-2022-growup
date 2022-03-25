@@ -4,7 +4,7 @@ interface ICareerJourney {
   position: string;
   company: string;
   startDate: Date;
-  endDate: Date;
+  endDate: Date | null;
 }
 
 interface IEducation {
@@ -13,7 +13,7 @@ interface IEducation {
   university: string;
   degree: string;
   startDate: Date;
-  endDate: Date;
+  endDate: Date | null;
 }
 
 interface IInterests {

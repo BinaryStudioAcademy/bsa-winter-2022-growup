@@ -18,7 +18,7 @@ export class Opportunity extends AbstractEntity {
   @Column({ type: 'varchar', length: 250 })
   type: string;
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.id, { onDelete: 'CASCADE' })
   user: User;
 
   @ManyToOne(() => Company, (company) => company.id)

@@ -21,6 +21,7 @@ class OpportunityApi {
           organization: data.organization,
           type: data.type,
           startDate: data.startDate,
+          tags: data.tags,
         },
       ],
     };

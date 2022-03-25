@@ -16,6 +16,6 @@ export class Language extends AbstractEntity {
   @Column({ nullable: true })
   certificateImage: string;
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.id, { onDelete: 'CASCADE' })
   user: User;
 }

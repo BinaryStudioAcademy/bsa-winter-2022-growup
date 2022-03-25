@@ -19,7 +19,7 @@ const Users: React.FC = () => {
   const { user } = useAppSelector((state) => state.auth);
   const { users } = useAppSelector((state) => state.admin);
 
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const [show, setShow] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -28,8 +28,8 @@ const Users: React.FC = () => {
   const showWindow = (): void => setShow(true);
 
   useEffect(() => {
-    if (user && !user.company) {
-      setIsDisabled(true);
+    if (user && user.company) {
+      setIsDisabled(false);
     }
   }, [user]);
 

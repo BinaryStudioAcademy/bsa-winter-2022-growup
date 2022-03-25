@@ -24,7 +24,7 @@ import './styles.scss';
 const SkillOverview = (): React.ReactElement => {
   const skills = useAppSelector((state: RootState) => state.skill.userSkill);
   const allSkills = useAppSelector((state: RootState) => state.skill.allSkills);
-  const { user } = useAppSelector((state) => state.profile);
+  const { user } = useAppSelector((state: RootState) => state.profile);
   const [textFind, setTextFind] = useState('');
   const [selectSkills, setSelectSkills] = useState('all');
   const [isManager, setIsManager] = useState(true);

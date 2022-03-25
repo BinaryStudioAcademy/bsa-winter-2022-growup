@@ -3,7 +3,7 @@ import { useAppForm } from 'hooks/hooks';
 import { FormInputDate, Modal, TextField } from 'components/common/common';
 import { DEFAULT_CAREER_JOURNEY_PAYLOAD } from './common/constants';
 import { careerJourney as careerJourneyValidationSchema } from 'validation-schemas/validation-schemas';
-import { ICareerJourney } from '../../../common/interfaces';
+import { ICareerJourney } from 'components/profile/common/interfaces';
 import { CareerJourneyFormType } from './common/types';
 
 type Props = {

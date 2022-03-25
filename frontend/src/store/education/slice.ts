@@ -17,11 +17,7 @@ const { reducer, actions } = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getAllEducations.fulfilled, (state, action) => {
-      state.educations = action.payload.map((item) => ({
-        ...item,
-        startDate: new Date(item.startDate),
-        endDate: new Date(item.endDate),
-      }));
+      state.educations = action.payload;
     });
   },
 });
