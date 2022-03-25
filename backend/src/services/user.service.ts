@@ -3,7 +3,6 @@ import { HttpCode, HttpError } from 'growup-shared';
 
 import { badRequestError } from '~/common/errors';
 import UserRepository from '~/data/repositories/user.repository';
-import UserRoleRepository from '~/data/repositories/role.repository';
 import CompanyRepository from '~/data/repositories/company.repository';
 import RefreshTokenRepository from '~/data/repositories/refresh-token.repository';
 import { refreshTokenSchema } from '~/common/models/tokens/refresh-token.model';
@@ -13,7 +12,9 @@ import { RoleType } from '~/common/enums/role-type';
 import { UserMissingDataForm } from '~/common/forms/user.forms';
 
 import { User } from '~/data/entities/user';
-import { UserRole } from '~/data/entities/user-role';
+import { Tags } from '~/data/entities/tags';
+import { Education } from '~/data/entities/education';
+import { CareerJourney } from '~/data/entities/career-journey';
 
 import {
   comparePasswords,
@@ -33,9 +34,6 @@ import type {
 } from '~/common/forms/user.forms';
 import { env } from '~/config/env';
 
-import { Tags } from '~/data/entities/tags';
-import { Education } from '~/data/entities/education';
-import { CareerJourney } from '~/data/entities/career-journey';
 import { SuccessResponse } from '~/common/models/responses/success';
 
 type TokenResponse = {
@@ -56,29 +54,10 @@ interface IProfile {
   interests: Tags[];
 }
 
-interface IChangeRoleProps {
-  roleType: RoleType;
-}
-
-interface IChangeRole {
-  userId: string;
-  roleType: RoleType;
-}
-
-export const getUserJWT = async (
-  user: User,
-  role?: UserRole,
-): Promise<TokenResponse> => {
-  let roleInstance: UserRole = role;
-
-  if (!role) {
-    const roleRepository = getCustomRepository(UserRoleRepository);
-    roleInstance = await roleRepository.findOne({ user });
-  }
-
+export const getUserJWT = async (user: User): Promise<TokenResponse> => {
   const token = signToken({
     userId: user.id,
-    role: roleInstance.role,
+    role: user.role,
     companyId: user.company ? user.company.id : null,
   });
 
@@ -91,7 +70,6 @@ export const registerUser = async (
   companyId?: User['company']['id'],
 ): Promise<User> => {
   const userRepository = getCustomRepository(UserRepository);
-  const roleRepository = getCustomRepository(UserRoleRepository);
   const companyRepository = getCustomRepository(CompanyRepository);
 
   // Check if user with this email already exists
@@ -120,10 +98,7 @@ export const registerUser = async (
     newData = { ...newData, ...{ company } };
   }
 
-  const user = await userRepository.create(newData).save();
-
-  const roleInstance = await roleRepository.create({ user, role }).save();
-  user.role = [roleInstance];
+  const user = await userRepository.create({ ...newData, role }).save();
 
   return user;
 };
@@ -135,8 +110,6 @@ export const refreshToken = async (
   const tokenData = await refreshTokenRepository.findOne({
     token: data.refreshToken,
   });
-  const roleRepository = getCustomRepository(UserRoleRepository);
-  const role = await roleRepository.findOne({ user: tokenData.user });
 
   if (!tokenData) {
     throw new HttpError({
@@ -149,7 +122,7 @@ export const refreshToken = async (
   const refreshToken = generateRefreshToken({});
   const accessToken = signToken({
     userId: tokenData.user.id,
-    role: role.role,
+    role: tokenData.user.role,
     companyId: tokenData.user.company ? tokenData.user.company.id : null,
   });
 
@@ -186,29 +159,22 @@ export const authenticateUser = async (data: UserLoginForm): Promise<User> => {
   return user;
 };
 
-export const getCommonUserList = async (
-  userId: string,
-): Promise<IListUser[]> => {
+export const getCommonUserList = async (id: string): Promise<IListUser[]> => {
   const userRepository = getCustomRepository(UserRepository);
-  const user = await userRepository.geUserById(userId);
+  const user = await userRepository.getUserById(id);
 
   if (!user.company) {
-    throw badRequestError('User doesn`t create company!!!');
+    throw badRequestError('Can not fetch users since you have no company');
   }
 
-  const usersList = await userRepository.getUsersByCompamyId(user.company.id);
-
-  const list = usersList.map((user) => {
-    const roles = user.role.reduce((roles, role) => {
-      roles.push(role.role);
-      return roles;
-    }, []);
-
-    delete user.role;
-
-    return { ...user, roleType: roles };
-  });
-  return list as unknown as IListUser[];
+  const userInstances = await userRepository.getUsersByCompanyId(
+    user.company.id,
+  );
+  const users = userInstances.map((user) => ({
+    ...user,
+    company: user.company.id,
+  }));
+  return users;
 };
 
 export const fetchUser = async (id: User['id']): Promise<User> => {
@@ -281,7 +247,7 @@ export const addProfile = async (
     relations: ['tags'],
   });
 
-  await userInstance.tags.push(...data.interests);
+  userInstance.tags.push(...data.interests);
 
   const user = Object.assign(userInstance, data);
   await user.save();
@@ -299,31 +265,18 @@ export const deleteUser = async (id: User['id']): Promise<SuccessResponse> => {
       message: 'User with this id does not exist',
     });
   await userInstance.remove();
-
   return { success: true, message: 'User deleted successfully' };
 };
 
 export const changeUserRole = async (
   id: User['id'],
-  { roleType }: IChangeRoleProps,
-): Promise<IChangeRole> => {
-  const userRoleRepository = getCustomRepository(UserRoleRepository);
-  const userRoleInstance = await userRoleRepository.find({
-    where: {
-      user: id,
-    },
-  });
-  if (!userRoleInstance) {
-    throw new HttpError({
-      status: HttpCode.NOT_FOUND,
-      message: 'Can`t change Role for this role',
-    });
-  }
-  userRoleInstance[0].role = roleType;
-  await userRoleInstance[0].save();
+  role: User['role'],
+): Promise<Pick<User, 'id' | 'role'>> => {
+  const userRepository = getCustomRepository(UserRepository);
+  const user = await userRepository.findOne(id);
 
-  return {
-    userId: id,
-    roleType,
-  };
+  user.role = role;
+  const userInstance = await user.save();
+
+  return { id: userInstance.id, role: userInstance.role };
 };

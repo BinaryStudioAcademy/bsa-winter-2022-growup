@@ -4,7 +4,6 @@ import { users } from '../seed-data/user.data';
 import { companies } from '../seed-data/company.data';
 
 import { User } from '../entities/user';
-import { UserRole } from '../entities/user-role';
 
 import { asyncForEach } from '../../common/helpers/array.helper';
 
@@ -23,19 +22,13 @@ export default class UserSeeder {
       name: companies[0].name,
     });
 
-    await asyncForEach(async ({ role, ...user }: UserType) => {
+    await asyncForEach(async (user: UserType) => {
       const userProps: Partial<User> = {
         ...user,
         password: await hashPassword(user.password),
         company: company,
       };
-      const userInstance = await Object.assign(new User(), userProps).save();
-
-      const userWithRoleProps: Partial<UserRole> = {
-        role,
-        user: userInstance,
-      };
-      await Object.assign(new UserRole(), userWithRoleProps).save();
+      await Object.assign(new User(), userProps).save();
     }, users);
   }
 }

@@ -102,7 +102,7 @@ const Sidebar: React.FC = () => {
                 </span>
               </Link>
             </li>
-            {user?.roleType === RoleType.MENTOR && (
+            {user?.role === RoleType.MENTOR && (
               <li
                 className={`navigation-list__item navigation-item mb-4 ${
                   isBlockedButton ? '' : 'navigation-list-item--blocked'

@@ -6,11 +6,9 @@ import {
   getUserJWT,
   fetchUser,
 } from '~/services/user.service';
-import { findRole } from '~/services/role.service';
 import { getUserQuiz } from '~/services/work-quiz.service';
 
 import { User } from '~/data/entities/user';
-import { UserRole } from '~/data/entities/user-role';
 import { RoleType } from 'growup-shared';
 
 type TokenResponse = {
@@ -18,7 +16,6 @@ type TokenResponse = {
 };
 
 type UserWithRole = Omit<User, 'password'> & {
-  roleType: UserRole['role'];
   isCompleteTest: boolean;
 };
 
@@ -29,15 +26,14 @@ type AuthenticationResponse = TokenResponse & {
 const authenticationController = async (
   user: User,
 ): Promise<AuthenticationResponse> => {
-  const role = await findRole(user);
   const quiz = await getUserQuiz(user);
 
-  const token = await getUserJWT(user, role);
+  const token = await getUserJWT(user);
 
   const { password: _, ...passwordLessUser } = user;
   const userResponse = {
     ...passwordLessUser,
-    roleType: role.role,
+    role: user.role,
     isCompleteTest: !!quiz,
   };
 
