@@ -184,7 +184,6 @@ const SkillOverview = (): React.ReactElement => {
             >
               <option>All Skills</option>
               <option value={`${IMPORTANT}`}>Important Skills</option>
-              <option value={`${UNIMPORTANT}`}>Unimportant Skills</option>
             </select>
           </div>
           <Form className="d-flex" onSubmit={handleSubmit(onAdd)}>

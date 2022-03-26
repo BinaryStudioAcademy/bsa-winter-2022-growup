@@ -15,10 +15,6 @@ const isFirstLogged = ({ user, navigate }: Props): void => {
     navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/2`);
     return;
   }
-  if (!user) {
-    navigate(`${MentorMenteeRoute.LOGIN}`);
-    return;
-  }
 };
 
 export default isFirstLogged;
