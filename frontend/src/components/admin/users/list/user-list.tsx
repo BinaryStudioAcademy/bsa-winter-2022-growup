@@ -18,12 +18,18 @@ const UserList: React.FC<Props> = memo(({ list }) => {
       <Form.Control
         value={filter}
         onChange={(e): void => setFilter(e.target.value.replace(' ', ''))}
-        placeholder="Email"
+        placeholder="Search"
       />
 
       <UserTable
-        list={list.filter((item) =>
-          item.email.startsWith(filter.toLowerCase()),
+        list={list.filter(
+          (item) =>
+            (item.firstName || '')
+              .toLowerCase()
+              .startsWith(filter.toLowerCase()) ||
+            (item.lastName || '')
+              .toLowerCase()
+              .startsWith(filter.toLowerCase()),
         )}
       />
     </div>
