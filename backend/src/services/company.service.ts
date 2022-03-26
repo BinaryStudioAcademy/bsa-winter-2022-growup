@@ -22,6 +22,13 @@ import { asyncForEach } from '~/common/helpers/array.helper';
 import styleQuizJSON from '~/data/local/style-quiz.json';
 import QuizQuestionRepository from '~/data/repositories/quiz-question.repository';
 import { QuizQuestion } from '~/data/entities/quiz-question';
+import { env } from '~/config/env';
+import { getCurrentTimeMS } from '~/common/utils/time.util';
+import {
+  uploadImage,
+  deleteImage,
+  changeFileName,
+} from '~/common/utils/upload-image.util';
 
 interface IAnswer {
   id: number;
@@ -232,4 +239,47 @@ export const editCompany = async ({
     status: HttpCode.BAD_REQUEST,
     message: 'Company id is udefined!!!',
   });
+};
+
+export const updateCompanyAvatar = async (
+  userId: string,
+  file: Express.Multer.File,
+): Promise<Company> => {
+  const companyRepository = getCustomRepository(CompanyRepository);
+  const userRepository = getCustomRepository(UserRepository);
+
+  const user = await userRepository.getUserById(userId);
+
+  if (!user && !user.company) {
+    throw new HttpError({
+      status: HttpCode.BAD_REQUEST,
+      message: 'Company not found!!!',
+    });
+  }
+
+  const company = await companyRepository.findOne(user.company.id);
+  const props = {
+    secret: env.aws.secret,
+    access: env.aws.access,
+    bucketName: env.aws.bucket,
+  };
+
+  if (company.avatar)
+    await deleteImage({
+      ...props,
+      fileName: company.avatar.split('/').at(-1),
+    });
+
+  const companyFile = changeFileName(
+    file,
+    `${getCurrentTimeMS()}-${company.id}`,
+  );
+
+  const avatar = await uploadImage({ ...props, file: companyFile });
+
+  company.avatar = avatar.Location;
+
+  const newCompany = await company.save();
+
+  return newCompany;
 };

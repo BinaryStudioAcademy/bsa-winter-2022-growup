@@ -12,6 +12,7 @@ interface Props {
 
 const CompanyCard: FC<Props> = ({ company }) => {
   const [show, setShow] = useState(false);
+  const { avatar } = company;
 
   const handleClose = (): void => setShow(false);
   const handleShow = (): void => setShow(true);
@@ -22,7 +23,10 @@ const CompanyCard: FC<Props> = ({ company }) => {
         <Card.Body className="d-flex flex-column">
           <div className="card_header">
             <div className="card_header_left">
-              <Card.Img src="holder.js/100px180" alt={company.name} />
+              <Card.Img
+                src={avatar ? avatar : 'holder.js/100px180'}
+                alt={company.name}
+              />
               <Card.Title className="fs-1">{company.name}</Card.Title>
             </div>
             <Button onClick={handleShow}>edit</Button>

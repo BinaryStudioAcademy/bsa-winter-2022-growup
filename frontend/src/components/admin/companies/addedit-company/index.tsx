@@ -1,9 +1,11 @@
 import React, { ChangeEvent, FC } from 'react';
-import { Form, Modal, Card } from 'react-bootstrap';
+import { Form, Modal } from 'react-bootstrap';
+
 import { Button } from 'components/common/common';
 import { useDispatch, useState } from 'hooks/hooks';
 import { ICompany } from 'common/interfaces/company/company';
 import { companyActions } from 'store/company/actions';
+import EditAvatar from './edit-avatar';
 
 import './styles.scss';
 
@@ -14,9 +16,10 @@ interface Props {
 }
 
 const AddEditCompany: FC<Props> = ({ show, handleClose, company }) => {
+  const [file, setFile] = useState<File>();
   const [name, setName] = useState<string>(company ? company.name : '');
   const [description, setDescription] = useState<string>(
-    company?.description ? company.description : '',
+    company ? company.description : '',
   );
 
   const dispatch = useDispatch();
@@ -34,8 +37,7 @@ const AddEditCompany: FC<Props> = ({ show, handleClose, company }) => {
   };
 
   const send = (): void => {
-    let newCompany = {};
-    if (company) newCompany = { ...company };
+    let newCompany = { ...company } as ICompany;
 
     if (!name || !description) {
       alert('You have empty field!!!');
@@ -44,10 +46,11 @@ const AddEditCompany: FC<Props> = ({ show, handleClose, company }) => {
 
     newCompany = { ...newCompany, ...{ description, name } };
 
-    const data = {
-      newCompany: newCompany as ICompany,
-      handleClose,
-    };
+    const data = { newCompany, handleClose };
+
+    if (file) {
+      dispatch(companyActions.update_companyAvatarAsync(file));
+    }
 
     if (company) {
       dispatch(companyActions.edit_companyAsync(data));
@@ -63,12 +66,9 @@ const AddEditCompany: FC<Props> = ({ show, handleClose, company }) => {
           {company ? 'Edit company' : 'Add company info'}
         </Modal.Title>
       </Modal.Header>
-      <Card.Img
-        className="modal-company-image"
-        variant="top"
-        src="holder.js/100px180"
-        alt={company?.name}
-      />
+
+      <EditAvatar setFile={setFile} company={company} />
+
       <Modal.Body>
         <Form.Group className="mb-3" controlId="CompanyName">
           <Form.Label>Company name</Form.Label>
