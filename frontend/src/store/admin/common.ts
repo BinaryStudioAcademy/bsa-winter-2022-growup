@@ -21,7 +21,6 @@ enum ActionType {
   FETCH_USERS = 'fetch-users',
   DELETE_USER = 'delete-user',
   CHANGE_ROLE = 'change-role',
-  FILTER_USER = 'filter-user',
 
   RESEND_MAIL = 'resend-mail',
   GET_TOKEN = 'get-registration-token',
