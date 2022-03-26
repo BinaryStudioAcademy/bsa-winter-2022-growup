@@ -24,7 +24,7 @@ const OkrList: React.FC<Props> = ({ collection }) => {
         className="text-gu-white mb-2 align-self-end"
         onClick={openModal}
       >
-        "Create Okr"
+        Add OKR
       </Button>
       <div className="OKR-page d-flex flex-row flex-wrap">
         {collection.map((okr: IOkr) => {
