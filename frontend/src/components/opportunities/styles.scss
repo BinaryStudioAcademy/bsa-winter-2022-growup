@@ -23,6 +23,7 @@
 }
 
 .multi-select li:hover,
-.highlightOption {
+.highlightOption,
+.searchWrapper span {
   background-color: $gu-blue;
 }
