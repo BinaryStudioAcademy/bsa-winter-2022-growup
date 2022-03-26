@@ -1,31 +1,32 @@
 import { memo } from 'react';
-import { Table } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 
 import { IUser } from 'common/interfaces/user/user';
-import UserItem from './user-item';
+import { useState } from 'hooks/hooks';
+
+import UserTable from './components/user-table';
 
 type Props = {
   list: IUser[];
 };
 
 const UserList: React.FC<Props> = memo(({ list }) => {
+  const [filter, setFilter] = useState('');
+
   return (
-    <Table>
-      <thead>
-        <tr>
-          <th>Last name</th>
-          <th>First name</th>
-          <th>Email</th>
-          <th>Role</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {list.map((user) => (
-          <UserItem key={user.id} user={user} />
-        ))}
-      </tbody>
-    </Table>
+    <div className="d-grid gap-2">
+      <Form.Control
+        value={filter}
+        onChange={(e): void => setFilter(e.target.value.replace(' ', ''))}
+        placeholder="Email"
+      />
+
+      <UserTable
+        list={list.filter((item) =>
+          item.email.startsWith(filter.toLowerCase()),
+        )}
+      />
+    </div>
   );
 });
 
