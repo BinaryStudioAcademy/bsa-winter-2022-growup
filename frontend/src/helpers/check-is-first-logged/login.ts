@@ -6,15 +6,12 @@ interface Props {
   user: IUser | null;
   navigate: NavigateFunction;
 }
-const isFirstLogged = ({ user, navigate }: Props): void => {
-  if (user && !user.firstName) {
-    navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/1`);
-    return;
-  }
-  if (user && !user.isCompleteTest) {
-    navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/2`);
+
+const isLoginLogged = ({ user, navigate }: Props): void => {
+  if (!user) {
+    navigate(`${MentorMenteeRoute.LOGIN}`);
     return;
   }
 };
 
-export default isFirstLogged;
+export default isLoginLogged;
