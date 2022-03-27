@@ -1214,7 +1214,7 @@
         }
       }
     },
-    "/api/career-path": {
+    "/api/career-path/domain": {
       "post": {
         "tags": ["Career Path"],
         "summary": "Create career path domain",
@@ -1304,9 +1304,7 @@
             }
           }
         }
-      }
-    },
-    "/api/career-path/domain": {
+      },
       "get": {
         "tags": ["Career Path"],
         "summary": "Fetch career path domains",
@@ -1341,6 +1339,49 @@
       }
     },
     "/api/career-path/domain/{id}": {
+      "get": {
+        "tags": ["Career Path"],
+        "summary": "Get domain by id",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID of the domain to update"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "domain": {
+                  "$ref": "#/definitions/Domain"
+                },
+                "levels": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/definitions/LevelResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "put": {
         "tags": ["Career Path"],
         "summary": "Update domain by id",
@@ -1419,10 +1460,101 @@
         }
       }
     },
-    "/api/career-path/domain/{id}/level/{id1}": {
-      "put": {
+
+    "/api/career-path/domain/:id/level": {
+      "post": {
         "tags": ["Career Path"],
-        "summary": "Update level by id",
+        "summary": "Create level",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Domain ID of the level"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "skills": {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "$ref": "#/definitions/Skill Type"
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "objectives": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "domain": {
+                  "$ref": "#/definitions/Domain"
+                },
+                "levels": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/definitions/LevelResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/career-path/level/{id}": {
+      "get": {
+        "tags": ["Career Path"],
+        "summary": "Get level by id",
         "parameters": [
           {
             "in": "header",
@@ -1436,11 +1568,34 @@
           {
             "in": "path",
             "name": "id",
-            "required": true,
             "schema": {
               "type": "string"
             },
-            "description": "String ID of the domain"
+            "required": true,
+            "description": "Level id you want to get"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/LevelResponse"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Career Path"],
+        "summary": "Update level by id",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
           },
           {
             "in": "path",
@@ -1473,9 +1628,7 @@
             }
           }
         }
-      }
-    },
-    "/api/career-path/level/{id}": {
+      },
       "delete": {
         "tags": ["Career Path"],
         "summary": "Delete level by id",
@@ -1509,7 +1662,77 @@
         }
       }
     },
-    "/api/career-path/domain/{id}/level/{id1}/skill/{id2}": {
+    "/api/career-path/level/:id/skill": {
+      "post": {
+        "tags": ["Career Path"],
+        "summary": "Create skill",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Level ID of the skill"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "type": {
+                  "$ref": "#/definitions/Skill Type"
+                },
+                "objectives": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "domain": {
+                  "$ref": "#/definitions/Domain"
+                },
+                "levels": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/definitions/LevelResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/career-path/skill/{id}": {
       "put": {
         "tags": ["Career Path"],
         "summary": "Update skill by id",
@@ -1530,25 +1753,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "String ID of the domain"
-          },
-          {
-            "in": "path",
-            "name": "id1",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "String ID of the level"
-          },
-          {
-            "in": "path",
-            "name": "id2",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "String ID of the skill to update"
+            "description": "String ID of the skill"
           },
           {
             "in": "body",
@@ -1572,9 +1777,7 @@
             }
           }
         }
-      }
-    },
-    "/api/career-path/skill/{id}": {
+      },
       "delete": {
         "tags": ["Career Path"],
         "summary": "Delete skill by id",
@@ -1608,7 +1811,7 @@
         }
       }
     },
-    "/api/career-path/domain/{id}/level/{id1}/skill/{id2}/objective/{id3}": {
+    "/api/career-path/objective/{id}": {
       "put": {
         "tags": ["Career Path"],
         "summary": "Update objective by id",
@@ -1625,33 +1828,6 @@
           {
             "in": "path",
             "name": "id",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "String ID of the domain"
-          },
-          {
-            "in": "path",
-            "name": "id1",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "String ID of the level"
-          },
-          {
-            "in": "path",
-            "name": "id2",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "String ID of the skill"
-          },
-          {
-            "in": "path",
-            "name": "id3",
             "required": true,
             "schema": {
               "type": "string"
@@ -1680,9 +1856,7 @@
             }
           }
         }
-      }
-    },
-    "/api/career-path/objective/{id}": {
+      },
       "delete": {
         "tags": ["Career Path"],
         "summary": "Delete objective by id",
@@ -2128,8 +2302,12 @@
               "description": "Domain name"
             },
             "nextLevel": {
-              "$ref": "#/definitions/LevelResponse",
-              "description": "Next level of the current one"
+              "type": "array",
+              "items": {
+                "type": "object",
+                "$ref": "#/definitions/LevelResponse"
+              },
+              "example": []
             },
             "skills": {
               "type": "array",
@@ -2169,6 +2347,7 @@
         { "$ref": "#/definitions/Default" }
       ]
     },
+
     "Skill Type": {
       "type": "string",
       "enum": ["Hard skills", "Soft skills", "Language"]
