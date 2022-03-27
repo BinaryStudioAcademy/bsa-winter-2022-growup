@@ -22,11 +22,13 @@ const PathConnection: React.FC = () => {
   const handlePrevSelect = (e: ChangeEvent<HTMLSelectElement>): void => {
     const index = e.target.options.selectedIndex;
     setPrevDomainIndex(index);
+    setPrevLevel('');
   };
 
   const handleNextSelect = (e: ChangeEvent<HTMLSelectElement>): void => {
     const index = e.target.options.selectedIndex;
     setNextDomainIndex(index);
+    setNextLevel(new Set());
   };
 
   const prevDomainId = prevDomainIndex
