@@ -64,7 +64,7 @@ const objectiveValidationSchema = (): Joi.ObjectSchema<ObjectiveValues> => {
   //   SCORE_MIN : 'The minimum value is 0',
   //   SCORE_MAX : 'The maximum value is 1',
   // };
-  return Joi.object({});
+  return Joi.object();
 };
 
 export { okrValidationSchema, objectiveValidationSchema };

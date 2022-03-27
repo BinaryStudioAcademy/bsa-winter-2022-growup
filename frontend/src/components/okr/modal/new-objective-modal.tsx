@@ -12,7 +12,7 @@ interface Props {
 
 const NewObjectiveModal: React.FC<Props> = ({ showModal, closeModal }) => {
   const { control, handleSubmit, errors } = useAppForm<ObjectiveValues>({
-    defaultValues: { keyResults: [{ keyResultname: '', score: 0 }] },
+    defaultValues: { name: '', keyResults: [{ keyResultname: '', score: 0 }] },
     validationSchema: objectiveValidationSchema(),
   });
 
