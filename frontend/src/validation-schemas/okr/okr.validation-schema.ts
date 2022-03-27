@@ -8,6 +8,7 @@ import {
   MIN_EDIT_DATE,
 } from 'components/okr/common/constants';
 import { IOkr } from 'common/interfaces/okr';
+import { ObjectiveValues } from 'components/okr/common/interfaces';
 
 const okrValidationSchema = (isEdit: boolean): Joi.ObjectSchema<IOkr> => {
   const minDate = isEdit ? MIN_EDIT_DATE : MIN_CREATE_DATE;
@@ -48,4 +49,22 @@ const okrValidationSchema = (isEdit: boolean): Joi.ObjectSchema<IOkr> => {
   });
 };
 
-export { okrValidationSchema };
+const objectiveValidationSchema = (): Joi.ObjectSchema<ObjectiveValues> => {
+  //Messages for the objective schema
+  // const message = {
+  //   OBJECTIVE_NAME_REQUIRE : 'The Name of Objective is required',
+  //   OBJECTIVE_NAME_MIN : 'The Name of Objective must be at least 3 symbols',
+  //   OBJECTIVE_NAME_MAX : 'The Name of Objective must be not biger than 30 symbols',
+
+  //   KEY_RESULT_NAME_REQUIRE : 'The Name of Key Result is required' ,
+  //   KEY_RESULT_NAME_MIN : 'The Name of Key Result must be at least 3 symbols',
+  //   KEY_RESULT_NAME_MAX : 'The Name of Key Result must be not biger than 30 symbols',
+
+  //   SCORE_REQUIRE : 'The value of scroe is required',
+  //   SCORE_MIN : 'The minimum value is 0',
+  //   SCORE_MAX : 'The maximum value is 1',
+  // };
+  return Joi.object({});
+};
+
+export { okrValidationSchema, objectiveValidationSchema };

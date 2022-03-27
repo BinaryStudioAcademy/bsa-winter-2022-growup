@@ -12,14 +12,13 @@ function ControlledTabs(): React.ReactElement {
   const navigate = useNavigate();
 
   const [key, setKey] = useState('my-OKR');
-
   const { okrs } = useSelector((state: RootState) => state.okr);
   const user = useAppSelector((store) => store.profile.user);
   const ownOkr = okrs.filter((okr) => okr.type === OkrTypes.MY_OKR);
-
   useEffect(() => {
     isFirstLogged({ user, navigate });
   }, [user]);
+
   return (
     <Tabs
       id="controlled-tab-example"

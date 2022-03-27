@@ -1,9 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { actions } from './slice';
-import { ActionType } from './common';
+import {
+  ActionType,
+  ICreateKeyResult,
+  ICreateNewObjective,
+  IUpdateObjective,
+} from './common';
 import { IOkr } from 'common/interfaces/okr';
-import { IObjective } from 'common/interfaces/objective';
-import { IKeyResult } from 'common/interfaces/key-result';
 import {
   okr as okrApi,
   objective as objectiveApi,
@@ -12,78 +14,80 @@ import {
 
 const getAllOkrsByUser_async = createAsyncThunk(
   ActionType.GET_ALL_OKRS,
-  async (_, { dispatch }) => {
-    const result = await okrApi.getAllOkr();
-
-    if (result) {
-      dispatch(actions.get_all_by_user(result));
+  async (_, { rejectWithValue }) => {
+    try {
+      const result = await okrApi.getAllOkr();
+      console.warn(result);
+      return result;
+    } catch (err) {
+      return rejectWithValue(err);
     }
   },
 );
 
 const getOkrById_async = createAsyncThunk(
   ActionType.UPDATE_OKR_BY_ID,
-  async (okrId: string, { dispatch }) => {
-    const result = await okrApi.getOkrById(okrId);
-
-    if (result) {
-      dispatch(actions.update_okr_by_id(result));
+  async (okrId: string, { rejectWithValue }) => {
+    try {
+      const result = await okrApi.getOkrById(okrId);
+      return result;
+    } catch (err) {
+      return rejectWithValue(err);
     }
   },
 );
 
 const createOkr_async = createAsyncThunk(
   ActionType.UPDATE_OKR_BY_ID,
-  async (okrBody: IOkr, { dispatch }) => {
-    const result = await okrApi.createOkr(okrBody);
-
-    if (result) {
-      dispatch(actions.update_okr_by_id(result));
+  async (okrBody: IOkr, { rejectWithValue }) => {
+    try {
+      const result = await okrApi.createOkr(okrBody);
+      return result;
+    } catch (err) {
+      return rejectWithValue(err);
     }
   },
 );
 
 const updateOkrById_async = createAsyncThunk(
   ActionType.UPDATE_OKR_BY_ID,
-  async (okr: IOkr, { dispatch }) => {
-    const result = await okrApi.updateOkr(okr);
-
-    if (result) {
-      dispatch(actions.update_okr_by_id(result));
+  async (okr: IOkr, { rejectWithValue }) => {
+    try {
+      const result = await okrApi.updateOkr(okr);
+      return result;
+    } catch (err) {
+      return rejectWithValue(err);
     }
   },
 );
 
 const createObjective_async = createAsyncThunk(
-  ActionType.UPDATE_OKR_BY_ID,
+  ActionType.CREATE_OBJECTIVES,
   async (
-    {
-      okrId,
-      objectiveBody,
-    }: { okrId: string; objectiveBody: { name: string; result: number } },
-    { dispatch },
+    { okrId, objectiveBody }: ICreateNewObjective,
+    { rejectWithValue },
   ) => {
-    const result = await objectiveApi.createObjective({ okrId, objectiveBody });
-
-    if (result) {
-      dispatch(actions.update_okr_by_id(result));
+    try {
+      const result = await objectiveApi.createObjective({
+        okrId,
+        objectiveBody,
+      });
+      console.warn(result);
+      return result;
+    } catch (err) {
+      return rejectWithValue(err);
     }
   },
 );
 
 const updateObjective_async = createAsyncThunk(
   ActionType.UPDATE_OKR_BY_ID,
-  async (
-    { okrId, objective }: { okrId: string; objective: IObjective },
-    { dispatch },
-  ) => {
-    const result = await objectiveApi.updateObjective({
-      okrId,
-      objective,
-    });
-
-    if (result) {
-      dispatch(actions.update_okr_by_id(result));
+  async ({ okrId, objective }: IUpdateObjective, { rejectWithValue }) => {
+    try {
+      const result = await objectiveApi.updateObjective({ okrId, objective });
+      return result;
+    } catch (err) {
+      return rejectWithValue(err);
     }
   },
 );
@@ -91,30 +95,23 @@ const updateObjective_async = createAsyncThunk(
 const createKeyResult_async = createAsyncThunk(
   ActionType.UPDATE_OKR_BY_ID,
   async (
-    {
-      okrId,
-      objectiveId,
-      keyResultBody,
-    }: {
-      okrId: string;
-      objectiveId: string;
-      keyResultBody: IKeyResult;
-    },
-    { dispatch },
+    { okrId, objectiveId, keyResultBody }: ICreateKeyResult,
+    { rejectWithValue },
   ) => {
-    const result = await keyResultApi.addKeyResult({
-      okrId,
-      objectiveId,
-      keyResultBody,
-    });
-
-    if (result) {
-      dispatch(actions.update_okr_by_id(result));
+    try {
+      const result = await keyResultApi.addKeyResult({
+        okrId,
+        objectiveId,
+        keyResultBody,
+      });
+      return result;
+    } catch (err) {
+      return rejectWithValue(err);
     }
   },
 );
-const okrActions = {
-  ...actions,
+
+export {
   getAllOkrsByUser_async,
   getOkrById_async,
   createOkr_async,
@@ -123,5 +120,3 @@ const okrActions = {
   updateObjective_async,
   createKeyResult_async,
 };
-
-export { okrActions };

@@ -6,6 +6,7 @@ import {
   useForm,
   UseFormHandleSubmit,
   UseFormReset,
+  UseFormRegister,
 } from 'react-hook-form';
 import { Mode } from 'react-hook-form/dist/types/form';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -17,6 +18,7 @@ interface IUseAppForm<T> {
   isValid: boolean;
   handleSubmit: UseFormHandleSubmit<T>;
   reset?: UseFormReset<T>;
+  register: UseFormRegister<T>;
 }
 
 interface IUseAppFormProps<T> {
@@ -35,6 +37,7 @@ const useAppForm = <T>({
     formState: { errors, isValid },
     handleSubmit,
     reset,
+    register,
   } = useForm<T>({
     defaultValues,
     mode,
@@ -47,6 +50,7 @@ const useAppForm = <T>({
     isValid,
     handleSubmit,
     reset,
+    register,
   };
 };
 
