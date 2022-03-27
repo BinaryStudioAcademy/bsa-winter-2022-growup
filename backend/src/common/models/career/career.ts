@@ -15,7 +15,7 @@ type Level = {
   skills: Skill[];
 };
 
-export type CareerPath = {
+export type CareerDomain = {
   name: string;
   levels: Level[];
 };

@@ -1,6 +1,7 @@
 import { Request, Router } from 'express';
 import { run } from '~/common/helpers/route.helper';
 import { getCompany } from '~/services/company.service';
+import { getDomainById } from '~/services/domain.service';
 
 import {
   createDomainTree,
@@ -16,12 +17,50 @@ import {
   deleteLevel,
   deleteSkill,
   deleteObjective,
+  connectLevels,
+  disconnectLevels,
+  getDomainTree,
+  // createPath,
+  // getCareerPath,
+  // deletePath,
 } from '../controllers/career-path.controller';
 
 const router = Router();
 
+// // CAREER-PATH
+// // get career-path
+// router.get(
+//   '/',
+//   run(async (req: Request) => {
+//     const company = await getCompany(req.companyId);
+
+//     return getCareerPath(company);
+//   }),
+// );
+
+// // delete career-path (delete chain of connections started from domainId)
+// router.delete(
+//   '/delete/:domainId',
+//   run(async (req: Request) => {
+//     const { domainId } = req.params;
+
+//     return deletePath(domainId);
+//   }),
+// );
+
+// // create career-path (create connections)
+// router.post(
+//   '/:domainId/connect/:nextDomainId',
+//   run(async (req: Request) => {
+//     const { domainId, nextDomainId } = req.params;
+
+//     return createPath(domainId, nextDomainId);
+//   }),
+// );
+
+// DOMAINS
 router.post(
-  '/',
+  '/domain',
   run(async (req: Request) => {
     const company = await getCompany(req.companyId);
 
@@ -37,12 +76,22 @@ router.get(
   }),
 );
 
-router.delete(
-  '/domain/:domainId',
+router.get(
+  '/domain/:id',
   run(async (req: Request) => {
-    const { domainId } = req.params;
+    const { id } = req.params;
+    const domain = await getDomainById(id);
 
-    return deleteDomain(domainId);
+    return getDomainTree(domain);
+  }),
+);
+
+router.delete(
+  '/domain/:id',
+  run(async (req: Request) => {
+    const { id } = req.params;
+
+    return deleteDomain(id);
   }),
 );
 
@@ -55,35 +104,37 @@ router.put(
   }),
 );
 
+// DOMAIN LEVELS
 router.post(
-  '/domain/:domainId/level',
+  '/domain/:id/level',
   run(async (req: Request) => {
-    const { domainId } = req.params;
+    const { id } = req.params;
     const level = req.body;
 
-    return createLevel(domainId, level);
+    return createLevel(id, level);
   }),
 );
 
 router.put(
-  '/level/:levelId',
+  '/level/:id',
   run(async (req: Request) => {
-    const { levelId } = req.params;
+    const { id } = req.params;
     const level = req.body;
 
-    return updateLevel(levelId, level);
+    return updateLevel(id, level);
   }),
 );
 
 router.delete(
-  '/level/:levelId',
+  '/level/:id',
   run(async (req: Request) => {
-    const { levelId } = req.params;
+    const { id } = req.params;
 
-    return deleteLevel(levelId);
+    return deleteLevel(id);
   }),
 );
 
+// LEVEL SKILLS
 router.post(
   '/domain/:domainId/level/:levelId/skill',
   run(async (req: Request) => {
@@ -96,24 +147,25 @@ router.post(
 );
 
 router.put(
-  '/skill/:skillId',
+  '/skill/:id',
   run(async (req: Request) => {
-    const { skillId } = req.params;
+    const { id } = req.params;
     const skill = req.body;
 
-    return updateSkill(skillId, skill);
+    return updateSkill(id, skill);
   }),
 );
 
 router.delete(
-  '/skill/:skillId',
+  '/skill/:id',
   run(async (req: Request) => {
-    const { skillId } = req.params;
+    const { id } = req.params;
 
-    return deleteSkill(skillId);
+    return deleteSkill(id);
   }),
 );
 
+// LEVEL OBJECTIVES
 router.post(
   '/domain/:domainId/level/:levelId/skill/:skillId/objective',
   run(async (req: Request) => {
@@ -124,20 +176,40 @@ router.post(
 );
 
 router.put(
-  '/objective/:objectiveId',
+  '/objective/:id',
   run(async (req: Request) => {
-    const { objectiveId } = req.params;
+    const { id } = req.params;
 
-    return updateObjective(objectiveId, req.body);
+    return updateObjective(id, req.body);
   }),
 );
 
 router.delete(
-  '/objective/:objectiveId',
+  '/objective/:id',
   run(async (req: Request) => {
-    const { objectiveId } = req.params;
+    const { id } = req.params;
 
-    return deleteObjective(objectiveId);
+    return deleteObjective(id);
+  }),
+);
+
+// LEVEL CONNECTIONS
+router.post(
+  '/levels-connection/:levelId',
+  run(async (req: Request) => {
+    const { levelId } = req.params;
+    const { nextLevelId } = req.body;
+
+    return connectLevels(levelId, nextLevelId);
+  }),
+);
+
+router.delete(
+  '/levels-connection/:levelId/delete/:nextLevelId',
+  run(async (req: Request) => {
+    const { levelId, nextLevelId } = req.params;
+
+    return disconnectLevels(levelId, nextLevelId);
   }),
 );
 

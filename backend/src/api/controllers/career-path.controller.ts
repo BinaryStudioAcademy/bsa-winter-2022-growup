@@ -1,5 +1,6 @@
-import { CareerPath } from '~/common/models/career/career';
+import { CareerDomain } from '~/common/models/career/career';
 import { Company } from '~/data/entities/company';
+// import { CareerParh } from '~/data/entities/career-parh';
 
 import {
   createDomain,
@@ -14,6 +15,8 @@ import {
   updateLevelById,
   getLevelById,
   deleteLevelById,
+  connectDomainLevels,
+  disconnectDomainLevels,
 } from '~/services/domain-level.service';
 import {
   createSkill as createDomainSkill,
@@ -36,6 +39,8 @@ import {
   deleteSkillCategoryById,
 } from '~/services/skill-category.service';
 
+// import { createCareerPath, deleteCareerPath, getPath, getPathByDomain } from '~/services/career-path.service';
+
 import { asyncForEach } from '~/common/helpers/array.helper';
 import { convertToSkillCategory } from '~/common/mappers/career-path.mapper';
 
@@ -43,15 +48,28 @@ import { SkillObjective } from '~/data/entities/skill-objective';
 import { DomainLevel } from '~/data/entities/domain-level';
 import { Domain } from '~/data/entities/domain';
 import { Skill } from '~/data/entities/skill';
+// import { HttpCode, HttpError } from 'growup-shared';
 
 type DomainLevelResponse = DomainLevel & {
   skills: Skill[];
 };
 
-type CareerPathResponse = {
+type CareerDomainResponse = {
   domain: Domain;
   levels: DomainLevelResponse[];
+  nextDomain: Domain | null;
 };
+
+type ConnectLevelResponse = {
+  level: DomainLevel;
+  nextLevel: DomainLevel[];
+};
+
+// type CareerParhResponse = {
+//   domain: Domain;
+//   levels: DomainLevelResponse[];
+//   nextDomain: CareerParhResponse | null
+// };
 
 const getLevelsAndSkills = async (domain: Domain): Promise<DomainLevel[]> => {
   const levels = await getLevels(domain);
@@ -74,9 +92,9 @@ const getLevelsAndSkills = async (domain: Domain): Promise<DomainLevel[]> => {
 };
 
 export const createDomainTree = async (
-  data: CareerPath,
+  data: CareerDomain,
   company: Company,
-): Promise<CareerPathResponse> => {
+): Promise<CareerDomainResponse> => {
   const domain = await createDomain(data.name, company);
 
   const domainLevels = data.levels;
@@ -131,22 +149,42 @@ export const createDomainTree = async (
   return {
     domain,
     levels: levels,
-  } as unknown as CareerPathResponse;
+    nextDomain: null,
+  } as unknown as CareerDomainResponse;
 };
 
 export const getDomainTrees = async (
   company: Company,
-): Promise<CareerPathResponse[]> => {
-  const careeerPathResponse: CareerPathResponse[] = [];
+): Promise<CareerDomainResponse[]> => {
+  const careeerPathResponse: CareerDomainResponse[] = [];
   const domains = await getDomains(company);
 
   await asyncForEach(async (domain) => {
+    // const connectedDomain = await getPathByDomain(domain);
     const levels = await getLevelsAndSkills(domain);
+
     careeerPathResponse.push({
       domain,
       levels,
-    } as unknown as CareerPathResponse);
+      nextDomain: null,
+      // nextDomain: connectedDomain?.nextDomain || null,
+    } as unknown as CareerDomainResponse);
   }, domains);
+
+  return careeerPathResponse;
+};
+
+export const getDomainTree = async (
+  domain: Domain,
+): Promise<CareerDomainResponse> => {
+  let careeerPathResponse: CareerDomainResponse = null;
+
+  const levels = await getLevelsAndSkills(domain);
+  careeerPathResponse = {
+    domain,
+    levels,
+    nextDomain: null,
+  } as CareerDomainResponse;
 
   return careeerPathResponse;
 };
@@ -196,6 +234,7 @@ export const updateLevel = async (
 
   return level;
 };
+
 export const deleteLevel = async (id: string): Promise<DomainLevel> => {
   const level = await getLevelById(id);
   const categories = await getCategoriesByLevel(level);
@@ -275,3 +314,112 @@ export const deleteObjective = async (id: string): Promise<SkillObjective> => {
 
   return objective;
 };
+
+export const connectLevels = async (
+  levelId: DomainLevel['id'],
+  nextLevelId: DomainLevel['id'][],
+): Promise<ConnectLevelResponse> => {
+  const levelInstance = await getLevelById(levelId);
+  const nextLevelInstances: DomainLevel[] = [];
+
+  await asyncForEach(async (nextId) => {
+    const nextLevelInstance = await getLevelById(nextId);
+    nextLevelInstances.push(nextLevelInstance);
+  }, nextLevelId);
+
+  const connectedLevels = await connectDomainLevels(
+    levelInstance,
+    nextLevelInstances,
+  );
+
+  return connectedLevels;
+};
+
+export const disconnectLevels = async (
+  levelId: DomainLevel['id'],
+  nextLevelId: DomainLevel['id'],
+): Promise<DomainLevel> => {
+  const level = await getLevelById(levelId);
+  const nextLevel = await getLevelById(nextLevelId);
+
+  await disconnectDomainLevels(level, nextLevel);
+
+  return level;
+};
+
+// export const createPath = async(domainId: Domain['id'], nextDomainId: Domain['id']): Promise<CareerParh> => {
+//   const domain = await getDomainById(domainId);
+//   const nextDomain = await getDomainById(nextDomainId);
+
+//   const path = createCareerPath(domain, nextDomain);
+//   return path;
+// };
+
+// const deleteConnectedPath = async (domain: Domain, nextDomain: Domain): Promise<CareerParh> => {
+//   const currentPath = await getPath(domain, nextDomain);
+
+//   if(currentPath) {
+//     await deleteCareerPath(domain, nextDomain);
+
+//     const nextPath = await getPathByDomain(nextDomain);
+//     if (nextPath) await deleteConnectedPath(nextPath.domain, nextPath.nextDomain);
+//     else await deleteCareerPath(nextDomain, null);
+//   }
+
+//   return currentPath;
+
+// };
+
+// export const deletePath = async(domainId: Domain['id']): Promise<CareerParh> => {
+//   const domain = await getDomainById(domainId);
+//   const path = await deleteConnectedPath(null, domain);
+//   return path;
+// };
+
+// const getConnectedPath = async (root: CareerParhResponse): Promise<CareerParhResponse> => {
+//   const currentPath = await getPathByDomain(root.domain);
+
+//   let careerPath: CareerParhResponse = null;
+
+//   if(currentPath && currentPath.nextDomain) {
+//     const domainTree = await getDomainTree(currentPath.nextDomain);
+//     careerPath = { domain: currentPath.nextDomain, levels: domainTree.levels, nextDomain: null };
+//     careerPath.nextDomain = await getConnectedPath(careerPath);
+//   }
+
+//   return careerPath;
+
+// };
+
+// export const getCareerPath = async (company: Company): Promise<CareerParhResponse> => {
+//   const domains = await getDomains(company);
+
+//   let careerPath: CareerParhResponse = null;
+
+//   let root: CareerParhResponse = null;
+
+//   await asyncForEach(async(domain) => {
+//     const currentPath = await getPath(null, domain);
+
+//     if (currentPath && currentPath.nextDomain && !currentPath.domain ) {
+//       const rootNode = new CareerParh();
+//       rootNode.domain = currentPath.nextDomain;
+//       rootNode.nextDomain = null;
+//       const domainTree = await getDomainTree(currentPath.nextDomain);
+
+//       root = { domain: rootNode.domain , levels: domainTree.levels, nextDomain: null  };
+//     }
+//   }, domains);
+
+//   if (!root) {
+//     throw new HttpError({
+//       status: HttpCode.NOT_FOUND,
+//       message: 'Career path not found',
+//     });
+//   }
+
+//   careerPath = { domain: root.domain, levels: root.levels, nextDomain: null };
+//   const recRes = await getConnectedPath(careerPath);
+//   careerPath.nextDomain = recRes;
+//   return careerPath;
+// };

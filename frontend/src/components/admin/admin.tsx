@@ -10,11 +10,13 @@ import logo from 'assets/img/logo.svg';
 
 import './styles.scss';
 import { useAppSelector } from 'hooks/hooks';
+import PathConnection from './levels-connection/path-connection';
 
 enum Variants {
   company = 'company',
   users = 'users',
   career = 'career',
+  connect = 'connect',
 }
 
 type Props = {
@@ -90,6 +92,16 @@ const Admin: React.FC<Props> = ({ variant }) => {
                   Career path
                 </Link>
               </Nav.Item>
+              <Nav.Item>
+                <Link
+                  className={`nav-link ${
+                    variant === Variants.connect ? 'active' : ''
+                  }`}
+                  to={AdminRoute.ADMIN_CONNECT_CAREER_PATH}
+                >
+                  Connect career path
+                </Link>
+              </Nav.Item>
             </Nav>
           </div>
         </div>
@@ -97,6 +109,7 @@ const Admin: React.FC<Props> = ({ variant }) => {
           {variant === Variants.company && <Companies />}
           {variant === Variants.users && <Users />}
           {variant === Variants.career && <CareerPath />}
+          {variant === Variants.connect && <PathConnection />}
         </div>
       </Container>
     </>

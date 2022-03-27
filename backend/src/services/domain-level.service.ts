@@ -1,5 +1,5 @@
 import { HttpCode, HttpError } from 'growup-shared';
-import { getCustomRepository, getManager } from 'typeorm';
+import { getCustomRepository, getManager, getTreeRepository } from 'typeorm';
 import DomainLevelRepository from '~/data/repositories/domain-level.repository';
 
 import { DomainLevel } from '~/data/entities/domain-level';
@@ -9,6 +9,11 @@ type DomainLevelCreation = {
   prev: DomainLevel | null;
   name: string;
   domain: DomainLevel['domain'];
+};
+
+type ConnectLevelResponse = {
+  level: DomainLevel;
+  nextLevel: DomainLevel[];
 };
 
 export const createDomainLevel = async ({
@@ -66,7 +71,9 @@ export const getLevels = async (
   const manager = getManager().getTreeRepository(DomainLevel);
 
   await asyncForEach(async (level) => {
-    const tree = await manager.findDescendantsTree(level);
+    const tree = await manager.findDescendantsTree(level, {
+      relations: ['domain'],
+    });
     levelsTree.push(tree);
   }, levels);
 
@@ -84,6 +91,10 @@ export const updateLevelById = async (
   await domainLevelRepository.update({ id }, level);
 
   const updatedLevel = await domainLevelRepository.findOne({ id });
+  const children = await getManager()
+    .getTreeRepository(DomainLevel)
+    .findDescendants(updatedLevel);
+  updatedLevel.nextLevel = children;
 
   return updatedLevel;
 };
@@ -95,6 +106,60 @@ export const deleteLevelById = async (
 
   const level = await domainLevelRepository.findOne({ id });
   await domainLevelRepository.delete({ id });
+
+  return level;
+};
+
+export const connectDomainLevels = async (
+  level: DomainLevel,
+  nextLevel: DomainLevel[],
+): Promise<ConnectLevelResponse> => {
+  const domainLevelRepository = getCustomRepository(DomainLevelRepository);
+
+  const treeRepository = await getTreeRepository(DomainLevel);
+
+  const levelsTree: DomainLevel[] = [];
+
+  await asyncForEach(async (next) => {
+    const parent = await domainLevelRepository.findOne(
+      { id: next.id },
+      { relations: ['domain'] },
+    ); // next ??
+    const tree = await treeRepository.findDescendantsTree(parent);
+    const ancestor = await treeRepository.findAncestorsTree(parent);
+    levelsTree.push(tree);
+
+    const isExistConnection = ancestor?.prevLevel?.id === level.id;
+    const isExistConnectionReverse = tree?.nextLevel?.find(
+      (nextLvl) => nextLvl?.id === level?.id,
+    );
+
+    if (isExistConnection || isExistConnectionReverse) {
+      throw new HttpError({
+        status: HttpCode.BAD_REQUEST,
+        message: 'This connection already exists',
+      });
+    }
+
+    tree.prevLevel = level;
+    await tree.save();
+  }, nextLevel);
+
+  return { level, nextLevel: levelsTree };
+};
+
+export const disconnectDomainLevels = async (
+  level: DomainLevel,
+  nextLevel: DomainLevel,
+): Promise<DomainLevel> => {
+  const domainLevelRepository = getCustomRepository(DomainLevelRepository);
+  const treeRepository = await getTreeRepository(DomainLevel);
+
+  const parent = await domainLevelRepository.findOne({ id: nextLevel.id });
+  const tree = await treeRepository.findDescendantsTree(parent);
+
+  tree.prevLevel = null;
+  await tree.save();
 
   return level;
 };
