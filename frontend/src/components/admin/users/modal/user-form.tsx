@@ -6,6 +6,8 @@ import { useState, useAppDispatch } from 'hooks/hooks';
 import { RoleType } from 'common/enums/enums';
 
 import { adminActions } from 'store/admin';
+import { IUser } from 'common/interfaces/user/user';
+import { Button } from 'components/common/common';
 
 type Props = {
   onSubmit: () => void;
@@ -25,15 +27,14 @@ const UserForm: React.FC<Props> = ({ onSubmit: submit }) => {
   const onSubmit = (e: FormEvent): void => {
     e.preventDefault();
 
-    dispatch(
-      adminActions.inviteUser({
-        email,
-        roleType: role,
-      }),
-    )
+    dispatch(adminActions.inviteUser({ email, role }))
       .unwrap()
-      .then(() => {
-        NotificationManager.success('User invited successfully');
+      .then((res: IUser | null) => {
+        if (!res) {
+          NotificationManager.error('User with this email already exists');
+        } else {
+          NotificationManager.success('User invited successfully');
+        }
       });
 
     setEmail('');
@@ -69,9 +70,13 @@ const UserForm: React.FC<Props> = ({ onSubmit: submit }) => {
         </Form.Group>
       </div>
       <div className="d-flex">
-        <button className="btn btn-outline-gu-purple btn-hover-gu-white fw-bold fs-5 border-2 flex-fill">
+        <Button
+          variant="outline-gu-purple"
+          className=" btn-hover-gu-white flex-fill"
+          type="submit"
+        >
           Save
-        </button>
+        </Button>
       </div>
     </Form>
   );

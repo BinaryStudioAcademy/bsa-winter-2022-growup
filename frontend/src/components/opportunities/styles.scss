@@ -1,0 +1,22 @@
+@import '~assets/scss/utils';
+
+.follow {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  &:hover {
+    svg {
+      color: $gu-blue;
+    }
+  }
+}
+
+.opportunity_type:focus {
+  box-shadow: 0 0 0 2px #dcccf0 !important;
+}

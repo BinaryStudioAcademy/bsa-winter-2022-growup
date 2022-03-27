@@ -1,5 +1,6 @@
 import { ActionReducerMapBuilder } from '@reduxjs/toolkit';
 import { State } from './common';
+import { finishRegistration } from 'store/auth/actions';
 import * as actions from './actions';
 
 const ProfileReducer = (builder: ActionReducerMapBuilder<State>): void => {
@@ -9,14 +10,6 @@ const ProfileReducer = (builder: ActionReducerMapBuilder<State>): void => {
 
   builder.addCase(actions.fetchProfile.rejected, (state, _) => {
     state.isLoading = false;
-  });
-
-  builder.addCase(actions.insertPIB.fulfilled, (state, action) => {
-    if (state.user) {
-      state.user.firstName = action.payload.firstName;
-      state.user.lastName = action.payload.lastName;
-      state.user.position = action.payload.position;
-    }
   });
 
   builder.addCase(actions.completeTest, (state, _) => {
@@ -32,6 +25,12 @@ const ProfileReducer = (builder: ActionReducerMapBuilder<State>): void => {
   builder.addCase(actions.fetchProfile.fulfilled, (state, action) => {
     state.isLoading = false;
     state.user = action.payload;
+  });
+  builder.addCase(finishRegistration.fulfilled, (state, action) => {
+    state.user = {
+      ...state.user,
+      ...action.payload,
+    };
   });
 };
 

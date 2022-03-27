@@ -2,6 +2,10 @@ import { CareerDomain } from '~/common/models/career/career';
 import { Company } from '~/data/entities/company';
 // import { CareerParh } from '~/data/entities/career-parh';
 
+import { getCustomRepository } from 'typeorm';
+import { getCompany } from '~/services/company.service';
+import UserRepository from '~/data/repositories/user.repository';
+import { badRequestError } from '~/common/errors';
 import {
   createDomain,
   getDomains,
@@ -100,8 +104,16 @@ const getLevelAndSkills = async (level: DomainLevel): Promise<DomainLevel> => {
 
 export const createDomainTree = async (
   data: CareerDomain,
-  company: Company,
+  userId: string,
 ): Promise<CareerDomainResponse> => {
+  const userRepository = getCustomRepository(UserRepository);
+  const user = await userRepository.getUserById(userId);
+
+  if (!user.company) {
+    throw badRequestError('User doesn`t create company!!!');
+  }
+
+  const company = await getCompany(user.company.id);
   const domain = await createDomain(data.name, company);
 
   const domainLevels = data.levels;
@@ -167,9 +179,17 @@ export const createDomainTree = async (
 };
 
 export const getDomainTrees = async (
-  company: Company,
+  userId: string,
 ): Promise<CareerDomainResponse[]> => {
-  const careeerPathResponse: CareerDomainResponse[] = [];
+  const careerPathResponse: CareerDomainResponse[] = [];
+  const userRepository = getCustomRepository(UserRepository);
+  const user = await userRepository.getUserById(userId);
+
+  if (!user.company) {
+    throw badRequestError('User doesn`t create company!!!');
+  }
+
+  const company = await getCompany(user.company.id);
   const domains = await getDomains(company);
 
   await asyncForEach(async (domain) => {
@@ -182,7 +202,7 @@ export const getDomainTrees = async (
       levelsAndSkills.push(levelAndSkills);
     }, levels);
 
-    careeerPathResponse.push({
+    careerPathResponse.push({
       domain,
       levels: levelsAndSkills,
       nextDomain: null,
@@ -190,7 +210,7 @@ export const getDomainTrees = async (
     } as unknown as CareerDomainResponse);
   }, domains);
 
-  return careeerPathResponse;
+  return careerPathResponse;
 };
 
 export const getDomainTree = async (

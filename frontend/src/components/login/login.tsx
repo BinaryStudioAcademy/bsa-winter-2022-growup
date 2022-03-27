@@ -6,8 +6,9 @@ import {
   useCallback,
   useNavigate,
   useState,
+  useEffect,
 } from 'hooks/hooks';
-import { TextField } from 'components/common/common';
+import { Button, TextField } from 'components/common/common';
 import { Container, Form } from 'react-bootstrap';
 import { NotificationManager } from 'react-notifications';
 import { Eye, EyeSlash } from 'react-bootstrap-icons';
@@ -17,11 +18,17 @@ import { IUserLoginForm } from '../../common/interfaces/user';
 import { login as loginValidationSchema } from 'validation-schemas/validation-schemas';
 import { DEFAULT_LOGIN_PAYLOAD } from './common/constants';
 import './styles.scss';
+import isFirstLogged from 'helpers/check-is-first-logged';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector((state) => state.auth.isLoading);
+  const user = useAppSelector((store) => store.profile.user);
+
+  useEffect(() => {
+    isFirstLogged({ user, navigate });
+  }, [user]);
 
   const [isHiddenPassword, setIsHiddenPassword] = useState(true);
 
@@ -67,9 +74,9 @@ const Login: React.FC = () => {
             floatingLabelStyles={'d-flex flex-wrap'}
             children={
               <button
-                type="button"
                 className="auth-form__icon input-group-text position-absolute"
                 onClick={(): void => setIsHiddenPassword(!isHiddenPassword)}
+                type="button"
               >
                 {isHiddenPassword ? <EyeSlash /> : <Eye />}
               </button>
@@ -89,9 +96,9 @@ const Login: React.FC = () => {
           </Form.Group>
 
           <div className="d-grid gap-2">
-            <button className="btn btn-gu-pink text-gu-white" type="submit">
+            <Button variant="gu-pink" className="text-gu-white" type="submit">
               Sign in
-            </button>
+            </Button>
             <Form.Text className="mt-2 text-center fs-5">
               Don't have a GrowUp account?
               <Link to={AppRoute.SIGN_UP}>

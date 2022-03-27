@@ -55,11 +55,7 @@ class OkrApi {
     }
   }
 
-  public async createOkr(okrBody: {
-    name: string;
-    endDate: Date;
-    startDate: Date;
-  }): Promise<IOkr | null> {
+  public async createOkr(okrBody: IOkr): Promise<IOkr | null> {
     const options = {
       method: HttpMethod.POST,
       contentType: ContentType.JSON,
@@ -88,7 +84,7 @@ class OkrApi {
 
     try {
       const result = await this.http.load<IOkr>(
-        `/company/okr/${okr.id}`,
+        `${this.apiPath}/company/okr/${okr.id}`,
         options,
       );
       return result;

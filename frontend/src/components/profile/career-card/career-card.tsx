@@ -5,6 +5,7 @@ import { useAppDispatch, useCallback, useNavigate } from 'hooks/hooks';
 import { removeCareerJourney } from 'store/career-journey/actions';
 import { ICareerJourney } from '../common/interfaces';
 import { MentorMenteeRoute } from 'common/enums/mentor-mentee-route/mentor-mentee-route.enum';
+import { Button } from 'components/common/common';
 
 interface Props {
   careerJourney: ICareerJourney;
@@ -33,16 +34,29 @@ const CareerCard: React.FC<Props> = ({ careerJourney, onEdit }) => {
       });
   };
 
-  const absoluteYears: number = endDate.getFullYear() - startDate.getFullYear();
-  const absoluteMonths: number = endDate.getMonth() - startDate.getMonth();
+  const date = (): string => {
+    if (!endDate) {
+      return 'null';
+    }
 
-  const years = absoluteMonths > 0 ? absoluteYears : 0;
-  const months =
-    absoluteMonths > 0 ? absoluteMonths : 12 - Math.abs(absoluteMonths);
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    const absoluteYears: number = end.getFullYear() - start.getFullYear();
+    const absoluteMonths: number = end.getMonth() - start.getMonth();
+
+    const years = absoluteMonths > 0 ? absoluteYears : 0;
+    const months =
+      absoluteMonths > 0 ? absoluteMonths : 12 - Math.abs(absoluteMonths);
+
+    return `${years} : ${months}`;
+  };
 
   return (
     <div className="card career-card">
-      <div className="career-card-time fs-7 ">{startDate.getFullYear()}</div>
+      <div className="career-card-time fs-7 ">
+        {new Date(startDate).getFullYear()}
+      </div>
       <div className="card-body career-card-info">
         <h3 className="card-text career-card-info__title fw-bold fs-4 text-gu-black">
           {position}
@@ -59,25 +73,23 @@ const CareerCard: React.FC<Props> = ({ careerJourney, onEdit }) => {
       <div className="card-footer bg-white d-flex align-items-center justify-content-between">
         <div className="career-card-footer__duration d-flex align-items-center fs-7">
           <Calendar className="career-card-footer__calendar-icon" />
-          <span>
-            {years > 0 ? `${years} y` : ''} {months > 0 ? `${months} mo` : ''}
-          </span>
+          <span>{date()}</span>
         </div>
         <div className="career-action-buttons d-flex align-self-center text-gu-purple">
-          <button
-            type="button"
+          <Button
             className="border-0 p-0 bg-transparent text-gu-purple"
             onClick={(): void => onEdit(careerJourney)}
+            type="button"
           >
             <PencilFill className="career-action-buttons__edit" />
-          </button>
-          <button
-            type="button"
+          </Button>
+          <Button
             className="border-0 p-0 bg-transparent text-gu-purple"
             onClick={onRemove}
+            type="button"
           >
             <TrashFill className="career-action-buttons__delete" />
-          </button>
+          </Button>
         </div>
       </div>
     </div>

@@ -10,6 +10,8 @@ export class Company extends AbstractEntity {
   @Column({ type: 'varchar', length: 250 })
   description: string;
 
-  @OneToMany(() => User, (user) => user.company)
+  @OneToMany(() => User, (user) => user.company, {
+    onDelete: 'CASCADE',
+  })
   users: User[];
 }

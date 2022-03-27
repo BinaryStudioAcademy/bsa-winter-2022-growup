@@ -1,18 +1,20 @@
 import { getCustomRepository } from 'typeorm';
-
 import { HttpCode, HttpError } from 'growup-shared';
 
-import UserRepository from '../data/repositories/user.repository';
-import UserRoleRepository from '~/data/repositories/role.repository';
+import { badRequestError } from '~/common/errors';
+import UserRepository from '~/data/repositories/user.repository';
 import CompanyRepository from '~/data/repositories/company.repository';
-import User_QuizCategoryRepository from '~/data/repositories/user-quiz-category.repository';
 import RefreshTokenRepository from '~/data/repositories/refresh-token.repository';
-
 import { refreshTokenSchema } from '~/common/models/tokens/refresh-token.model';
 import { IListUser } from '~/common/models/user/user';
 import { RoleType } from '~/common/enums/role-type';
+
+import { UserMissingDataForm } from '~/common/forms/user.forms';
+
 import { User } from '~/data/entities/user';
-import { UserRole } from '~/data/entities/user-role';
+import { Tags } from '~/data/entities/tags';
+import { Education } from '~/data/entities/education';
+import { CareerJourney } from '~/data/entities/career-journey';
 
 import {
   comparePasswords,
@@ -25,13 +27,14 @@ import {
 } from '~/common/utils/upload-image.util';
 import { getCurrentTimeMS } from '~/common/utils/time.util';
 import { signToken, generateRefreshToken } from '~/common/utils/token.util';
-import { convertForUserList } from '~/common/utils/user.util';
 
 import type {
   UserLoginForm,
   UserRegisterForm,
 } from '~/common/forms/user.forms';
 import { env } from '~/config/env';
+
+import { SuccessResponse } from '~/common/models/responses/success';
 
 type TokenResponse = {
   token: string;
@@ -42,36 +45,31 @@ type RefreshTokenResponse = {
   accessToken: string;
 };
 
-type UserRegistrationType = {
-  user: User;
-  role: UserRole;
-};
+interface IProfile {
+  firstName: string;
+  lastName: string;
+  position: string;
+  educations: Education[];
+  careerJourneys: CareerJourney[];
+  interests: Tags[];
+}
 
-type UserWithRole = Omit<User, 'password'> & {
-  roleType: RoleType;
-  isCompleteTest: boolean;
-};
-
-const getUserJWT = async (user: User): Promise<TokenResponse> => {
-  const roleRepository = getCustomRepository(UserRoleRepository);
-  const role = await roleRepository.findOne({ user });
-
+export const getUserJWT = async (user: User): Promise<TokenResponse> => {
   const token = signToken({
     userId: user.id,
-    role: role.role,
+    role: user.role,
     companyId: user.company ? user.company.id : null,
   });
 
   return { token };
 };
 
-const registerUser = async (
+export const registerUser = async (
   data: UserRegisterForm,
   role: RoleType,
-  companyId: User['company']['id'],
-): Promise<UserRegistrationType> => {
+  companyId?: User['company']['id'],
+): Promise<User> => {
   const userRepository = getCustomRepository(UserRepository);
-  const roleRepository = getCustomRepository(UserRoleRepository);
   const companyRepository = getCustomRepository(CompanyRepository);
 
   // Check if user with this email already exists
@@ -86,20 +84,23 @@ const registerUser = async (
       message: 'User with this email already exists',
     });
 
-  const hashedPassword = await hashPassword(data.password);
-  const company = await companyRepository.findOne(companyId);
+  const hashedPassword = data.password
+    ? await hashPassword(data.password)
+    : null;
 
-  const userInstance = userRepository.create({
+  let newData = {
     ...data,
     password: hashedPassword,
-    company,
-  });
+  };
 
-  const user = await userInstance.save();
+  if (companyId) {
+    const company = await companyRepository.findOne(companyId);
+    newData = { ...newData, ...{ company } };
+  }
 
-  const roleInstance = await roleRepository.create({ user, role }).save();
+  const user = await userRepository.create({ ...newData, role }).save();
 
-  return { user, role: roleInstance };
+  return user;
 };
 
 export const refreshToken = async (
@@ -109,8 +110,6 @@ export const refreshToken = async (
   const tokenData = await refreshTokenRepository.findOne({
     token: data.refreshToken,
   });
-  const roleRepository = getCustomRepository(UserRoleRepository);
-  const role = await roleRepository.findOne({ user: tokenData.user });
 
   if (!tokenData) {
     throw new HttpError({
@@ -123,7 +122,7 @@ export const refreshToken = async (
   const refreshToken = generateRefreshToken({});
   const accessToken = signToken({
     userId: tokenData.user.id,
-    role: role.role,
+    role: tokenData.user.role,
     companyId: tokenData.user.company ? tokenData.user.company.id : null,
   });
 
@@ -136,14 +135,12 @@ export const refreshToken = async (
   return { refreshToken, accessToken };
 };
 
-export const authenticateUser = async (
-  data: UserLoginForm,
-): Promise<TokenResponse> => {
+export const authenticateUser = async (data: UserLoginForm): Promise<User> => {
   const userRepository = getCustomRepository(UserRepository);
-
   const user = await userRepository.getUserWithPassword({
     email: data.email,
   });
+
   if (!user)
     throw new HttpError({
       status: HttpCode.NOT_FOUND,
@@ -159,93 +156,49 @@ export const authenticateUser = async (
       message: 'Wrong password',
     });
 
-  return getUserJWT(user);
+  return user;
 };
 
-export const getCommonUserList = async (
-  companyId: User['company']['id'],
-): Promise<IListUser[]> => {
+export const getCommonUserList = async (id: string): Promise<IListUser[]> => {
   const userRepository = getCustomRepository(UserRepository);
+  const user = await userRepository.getUserById(id);
 
-  const usersList = await userRepository.getUsersByCompamyId(companyId);
+  if (!user.company) {
+    throw badRequestError('Can not fetch users since you have no company');
+  }
 
-  const list = usersList.map((user) => {
-    const roles = user.role.reduce((roles, role) => {
-      roles.push(role.role);
-      return roles;
-    }, []);
-
-    delete user.role;
-
-    return {
-      ...user,
-      roleType: roles,
-    };
-  });
-  return list as unknown as IListUser[];
-};
-
-export const registerUserAdmin = async (
-  data: UserRegisterForm,
-  companyId: User['company']['id'],
-): Promise<TokenResponse> => {
-  const { user } = await registerUser(data, RoleType.ADMIN, companyId);
-  return getUserJWT(user);
-};
-
-export const registerCommonUsers = async (
-  data: UserRegisterForm,
-  role: RoleType,
-  companyId: User['company']['id'],
-): Promise<IListUser> => {
-  const { user, role: roleInstance } = await registerUser(
-    data,
-    role,
-    companyId,
+  const userInstances = await userRepository.getUsersByCompanyId(
+    user.company.id,
   );
-  return convertForUserList(user, roleInstance);
-};
-
-export const fetchUser = async (id: User['id']): Promise<UserWithRole> => {
-  const userRepository = getCustomRepository(UserRepository);
-  const roleRepository = getCustomRepository(UserRoleRepository);
-  const userQuizRepository = getCustomRepository(User_QuizCategoryRepository);
-
-  const { password: _password, ...user } = await userRepository.geUserById(id);
-  const { role } = await roleRepository.findOne({ user });
-  const userQuizCategoryInstance = await userQuizRepository.findOne({
-    where: {
-      userId: id,
-    },
-  });
-  const isCompleteTest = !!userQuizCategoryInstance;
-  return {
+  const users = userInstances.map((user) => ({
     ...user,
-    roleType: role,
-    isCompleteTest: isCompleteTest,
-  } as UserWithRole;
+    company: user.company.id,
+  }));
+  return users;
 };
 
-interface NameAndPosition {
-  firstName: string;
-  lastName: string;
-  position: string;
-}
+export const fetchUser = async (id: User['id']): Promise<User> => {
+  const userRepository = getCustomRepository(UserRepository);
+  const user = await userRepository.findOne({
+    relations: ['company', 'careerJourneys', 'educations'],
+    where: { id },
+  });
+  return user;
+};
 
-export const insertFirstNameLastName = async (
+export const updateUserMissingData = async (
   id: User['id'],
-  { firstName, lastName, position }: NameAndPosition,
+  { password, firstName, lastName, position }: UserMissingDataForm,
 ): Promise<User> => {
   const userRepository = getCustomRepository(UserRepository);
-  const userInstance = await userRepository.findOne({
-    where: {
-      id: id,
-    },
-  });
-  userInstance.firstName = firstName;
-  userInstance.lastName = lastName;
-  userInstance.position = position;
-  return userInstance.save();
+  const user = await userRepository.getUserWithPassword({ id });
+
+  user.password = await hashPassword(password);
+  user.firstName = firstName;
+  user.lastName = lastName;
+  user.position = position;
+
+  return user.save();
 };
 
 export const updateUserAvatar = async (
@@ -279,4 +232,51 @@ export const updateUserAvatar = async (
   const { password: _password, ...user } = await userInstance.save();
 
   return user as User;
+};
+
+export const addProfile = async (
+  data: IProfile,
+  userId: string,
+): Promise<User> => {
+  const userRepository = getCustomRepository(UserRepository);
+
+  const userInstance = await userRepository.findOne({
+    where: {
+      id: userId,
+    },
+    relations: ['tags'],
+  });
+
+  userInstance.tags.push(...data.interests);
+
+  const user = Object.assign(userInstance, data);
+  await user.save();
+
+  return user;
+};
+
+export const deleteUser = async (id: User['id']): Promise<SuccessResponse> => {
+  const userRepository = getCustomRepository(UserRepository);
+  const userInstance = await userRepository.findOne(id);
+
+  if (!userInstance)
+    throw new HttpError({
+      status: HttpCode.NOT_FOUND,
+      message: 'User with this id does not exist',
+    });
+  await userInstance.remove();
+  return { success: true, message: 'User deleted successfully' };
+};
+
+export const changeUserRole = async (
+  id: User['id'],
+  role: User['role'],
+): Promise<Pick<User, 'id' | 'role'>> => {
+  const userRepository = getCustomRepository(UserRepository);
+  const user = await userRepository.findOne(id);
+
+  user.role = role;
+  const userInstance = await user.save();
+
+  return { id: userInstance.id, role: userInstance.role };
 };

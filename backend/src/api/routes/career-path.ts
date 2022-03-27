@@ -62,19 +62,12 @@ const router = Router();
 // DOMAINS
 router.post(
   '/domain',
-  run(async (req: Request) => {
-    const company = await getCompany(req.companyId);
-
-    return createDomainTree(req.body, company);
-  }),
+  run(async (req: Request) => createDomainTree(req.body, req.userId)),
 );
 
 router.get(
   '/domain',
-  run(async (req: Request) => {
-    const company = await getCompany(req.companyId);
-    return getDomainTrees(company);
-  }),
+  run(async (req: Request) => getDomainTrees(req.userId)),
 );
 
 router.get(

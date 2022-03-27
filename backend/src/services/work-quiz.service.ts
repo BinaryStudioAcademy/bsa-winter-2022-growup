@@ -11,6 +11,7 @@ import UserRepository from '~/data/repositories/user.repository';
 import { asyncForEach } from '~/common/helpers/array.helper';
 import { ITokenPayload } from '~/common/models/middlewares/token-payload';
 import { Company } from '~/data/entities/company';
+import { User } from '~/data/entities/user';
 
 interface IAnswer {
   id: string;
@@ -136,4 +137,27 @@ export const sendResults = async ({
     } as FindManyOptions);
 
   return userResults;
+};
+
+export const getResults = async (
+  userId: string,
+): Promise<User_QuizCategory[]> => {
+  const userQuizCategoryRepository = await getCustomRepository(
+    UserQuizCategoryRepository,
+  );
+  const results = await userQuizCategoryRepository
+    .createQueryBuilder('root')
+    .innerJoin('root.user', 'user')
+    .innerJoinAndSelect('root.quizCategory', 'category')
+    .where('user.id = :id', { id: userId })
+    .getMany();
+
+  return results;
+};
+
+export const getUserQuiz = async (user: User): Promise<User_QuizCategory> => {
+  const quizRepository = getCustomRepository(UserQuizCategoryRepository);
+
+  const quiz = await quizRepository.findOne({ user });
+  return quiz;
 };

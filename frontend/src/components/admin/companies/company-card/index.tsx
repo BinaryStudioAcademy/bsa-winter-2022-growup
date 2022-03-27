@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
-import { Button, Card } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
+import { Button } from 'components/common/common';
 import { ICompany } from 'common/interfaces/company/company';
 import AddEditCompany from '../addedit-company';
 

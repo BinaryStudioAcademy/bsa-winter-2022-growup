@@ -1,10 +1,17 @@
 import { createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
 import { ReducerName } from 'common/enums/app/reducer-name.enum';
 import { IUser } from 'common/interfaces/user';
-import { getCurrentUser, loginUser, signUpUser } from './actions';
+import {
+  getCurrentUser,
+  loginUser,
+  signUpUser,
+  updateUserCompany,
+  finishRegistration,
+  verifyRegistrationToken,
+} from './actions';
 import { ActionType } from './common';
-import { StorageKey } from '../../common/enums/app/storage-key.enum';
-import { storage } from '../../services';
+import { StorageKey } from 'common/enums/app/storage-key.enum';
+import { storage } from 'services';
 
 type State = {
   user: IUser | null;
@@ -35,13 +42,27 @@ const { reducer, actions } = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getCurrentUser.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.isAuthenticated = true;
-      state.user = action.payload;
-    });
-
     builder
+      .addCase(finishRegistration.fulfilled, (state, action) => {
+        state.user = {
+          ...state.user,
+          ...action.payload,
+        };
+      })
+      .addCase(verifyRegistrationToken.fulfilled, (state, _) => {
+        state.isAuthenticated = true;
+      })
+      .addCase(getCurrentUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isAuthenticated = true;
+        state.user = action.payload;
+      })
+      .addCase(updateUserCompany, (state, action) => {
+        if (state.user) {
+          const { company } = action.payload;
+          state.user.company = company;
+        }
+      })
       .addMatcher(
         isAnyOf(loginUser.pending, signUpUser.pending, getCurrentUser.pending),
         (state, _) => {

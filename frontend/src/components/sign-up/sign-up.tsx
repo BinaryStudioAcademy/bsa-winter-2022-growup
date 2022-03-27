@@ -7,7 +7,7 @@ import {
   useNavigate,
   useState,
 } from 'hooks/hooks';
-import { TextField } from 'components/common/common';
+import { Button, TextField } from 'components/common/common';
 import { Container, Form } from 'react-bootstrap';
 import { NotificationManager } from 'react-notifications';
 import { Eye, EyeSlash } from 'react-bootstrap-icons';
@@ -79,8 +79,8 @@ const SignUp: React.FC = () => {
             floatingLabelStyles={'d-flex flex-wrap'}
             children={
               <button
-                type="button"
                 className="auth-form__icon input-group-text position-absolute"
+                type="button"
                 onClick={(): void => setIsHiddenPassword(!isHiddenPassword)}
               >
                 {isHiddenPassword ? <EyeSlash /> : <Eye />}
@@ -89,9 +89,9 @@ const SignUp: React.FC = () => {
           />
 
           <div className="d-grid gap-2">
-            <button className="btn btn-gu-pink text-gu-white" type="submit">
+            <Button variant="gu-pink" className="text-gu-white" type="submit">
               Sign up
-            </button>
+            </Button>
             <Form.Text className="mt-2 text-center fs-5">
               Already have an account?
               <Link to={AppRoute.LOGIN}>

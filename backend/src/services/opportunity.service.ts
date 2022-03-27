@@ -9,6 +9,14 @@ import { opportunityMapper } from '~/common/mappers/opportunities.mapper';
 import UserRepository from '~/data/repositories/user.repository';
 import { User } from '~/data/entities/user';
 import { asyncForEach } from '~/common/helpers/array.helper';
+import TagsRepository from '~/data/repositories/tags.repository';
+
+interface Props {
+  name: string;
+  organization: string;
+  type: string;
+  startDate: Date;
+}
 
 export const getOpportunities = async (
   companyId: string,
@@ -23,22 +31,33 @@ export const getOpportunities = async (
     relations: ['company', 'user', 'tags'],
   } as FindManyOptions);
 
-  return opportunities.map((opportunitie) => opportunityMapper(opportunitie));
+  return opportunities.map((opportunity) => opportunityMapper(opportunity));
 };
-interface Props {
-  name: string;
-  organization: string;
-  type: string;
-  startDate: string;
-}
+
+export const getOpportunitiesById = async (
+  id: string,
+): Promise<Opportunity> => {
+  const opportunityRepository = getCustomRepository(OpportunitiesRepository);
+
+  const opportunity = await opportunityRepository.findOne({
+    relations: ['company', 'user', 'tags'],
+    where: { id },
+  });
+
+  return opportunityMapper(opportunity);
+};
+
 export const createOpportunities = async (
   data: Opportunity[],
+  tagsName: string[],
   userId: string,
   companyId: string,
 ): Promise<Opportunity[]> => {
   const companyRepository = getCustomRepository(CompanyRepository);
   const userRepository = getCustomRepository(UserRepository);
   const opportunitiesRepository = getCustomRepository(OpportunitiesRepository);
+  const tagsRepository = getCustomRepository(TagsRepository);
+
   const companyInstance: Company = await companyRepository.findOne({
     id: companyId,
   });
@@ -57,9 +76,18 @@ export const createOpportunities = async (
       user: userInstance,
       company: companyInstance,
     });
+    const tags = await tagsRepository.find({
+      company: companyInstance,
+      relations: ['company'],
+    } as FindManyOptions);
+    const opportunityTags = tags.filter(
+      (tag) => tagsName.indexOf(tag.name) !== -1,
+    );
+    opportunitiesInstance.tags = [];
+    await opportunitiesInstance.tags.push(...opportunityTags);
     await opportunitiesInstance.save();
     opportunities.push(opportunitiesInstance);
   }, data);
 
-  return opportunities.map((opportunitie) => opportunityMapper(opportunitie));
+  return opportunities.map((opportunity) => opportunityMapper(opportunity));
 };

@@ -1,13 +1,14 @@
 import { IProfileSettingStep } from './common/interfaces';
 import { TextField } from 'components/common/common';
-import Experience from './experience';
-import Education from './education';
+import EducationSection from 'components/profile/profile-main/education-section';
+import CareerJourneySection from 'components/profile/profile-main/career-journey-section';
 import InterestingTags from './interesting-tags';
 import StepControl from './step-control';
 import { profileFirstStep as profileFirstStepValidationSchema } from 'validation-schemas/validation-schemas';
-import { useAppForm } from 'hooks/hooks';
-import { DEFAULT_FIRST_STEP_PAYLOAD } from './common/constants';
+import { useAppForm, useDispatch } from 'hooks/hooks';
+import { finishRegistration } from 'store/auth/actions';
 import { FirstStepFormType } from './common/types';
+import { DEFAULT_FIRST_STEP_PAYLOAD } from './common/constants';
 
 const FirstStep: React.FC<IProfileSettingStep> = ({
   isDisablePrevious,
@@ -18,10 +19,9 @@ const FirstStep: React.FC<IProfileSettingStep> = ({
       defaultValues: DEFAULT_FIRST_STEP_PAYLOAD,
       validationSchema: profileFirstStepValidationSchema,
     });
-
+  const dispatch = useDispatch();
   const onSaveSettings = (values: FirstStepFormType): void => {
-    // eslint-disable-next-line no-console
-    console.log('save settings:', values);
+    dispatch(finishRegistration(values));
   };
 
   const onSubmit = handleSubmit(onSaveSettings);
@@ -29,25 +29,32 @@ const FirstStep: React.FC<IProfileSettingStep> = ({
   return (
     <div className="stepper__form">
       <TextField
-        label="First name"
-        name={'firstName'}
+        label="Password"
+        type="password"
+        name="password"
         control={control}
         errors={errors}
       />
       <TextField
-        name={'lastName'}
+        label="First name"
+        name="firstName"
+        control={control}
+        errors={errors}
+      />
+      <TextField
+        name="lastName"
         label="Last name"
         control={control}
         errors={errors}
       />
       <TextField
-        name={'position'}
+        name="position"
         label="Position"
         control={control}
         errors={errors}
       />
-      <Experience />
-      <Education />
+      <CareerJourneySection />
+      <EducationSection />
       <InterestingTags />
       <StepControl
         isValid={isValid}

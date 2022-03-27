@@ -1,13 +1,14 @@
-interface Props {
-  themeType: string;
-  text: string;
-  onSubmit?: () => void;
-}
+import { ButtonHTMLAttributes, memo } from 'react';
+import { Button as BSButton, ButtonProps } from 'react-bootstrap';
 
-const Button: React.FC<Props> = ({ themeType = '', text, onSubmit }) => (
-  <button className={`btn ${themeType}`} onClick={onSubmit}>
-    {text}
-  </button>
+type Props = ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>;
+
+const Button: React.FC<Props> = memo(
+  ({ className = '', children, ...props }) => (
+    <BSButton className={`fs-5 fw-bold border-2 ${className}`} {...props}>
+      {children}
+    </BSButton>
+  ),
 );
 
 export default Button;
