@@ -6,7 +6,6 @@ import {
   useForm,
   UseFormHandleSubmit,
   UseFormReset,
-  UseFormRegister,
 } from 'react-hook-form';
 import { Mode } from 'react-hook-form/dist/types/form';
 import { joiResolver } from '@hookform/resolvers/joi';
