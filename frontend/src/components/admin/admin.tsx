@@ -10,7 +10,7 @@ import logo from 'assets/img/logo.svg';
 
 import './styles.scss';
 import { useAppSelector } from 'hooks/hooks';
-import PathConnection from './levels-connection/path-connection';
+import PathConnection from './path-connection/path-connection';
 
 enum Variants {
   company = 'company',
