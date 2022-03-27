@@ -18,11 +18,6 @@ interface IOkrValidationMessage {
   MIN_END_DATE: string;
   MAX_END_DATE: string;
 }
-// interface IObjectiveValidationMessage {
-//   NAME_REQUIRE: string;
-//   NAME_MIN_LENGTH: string;
-//   NAME_MAX_LENGTH: string;
-// }
 
 const OkrValidationMessage = (isEdit: boolean): IOkrValidationMessage => {
   const minDate = isEdit ? MIN_EDIT_DATE : MIN_CREATE_DATE;
@@ -40,7 +35,4 @@ const OkrValidationMessage = (isEdit: boolean): IOkrValidationMessage => {
     MAX_END_DATE: `End date must be at least ${formatDate(MAX_DATE)}`,
   };
 };
-// const createObjectiveMessage ():IOkrValidationMessage=>{
-
-// }
 export { OkrValidationMessage };

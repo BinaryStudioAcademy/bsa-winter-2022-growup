@@ -15,10 +15,3 @@ const okrReducer = (builder: ActionReducerMapBuilder<State>): void => {
   });
 };
 export default okrReducer;
-
-//   [ActionType.UPDATE_OKR_BY_ID]: (state, action: PayloadAction<IOkr>) => {
-//     const index = state.okrs.findIndex((okr) => okr.id === action.payload.id);
-//     const newOkrs = [...state.okrs];
-//     newOkrs[index] = action.payload;
-//     state.okrs = newOkrs;
-//   }

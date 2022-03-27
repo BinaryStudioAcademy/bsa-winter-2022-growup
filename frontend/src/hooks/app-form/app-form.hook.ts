@@ -18,7 +18,6 @@ interface IUseAppForm<T> {
   isValid: boolean;
   handleSubmit: UseFormHandleSubmit<T>;
   reset?: UseFormReset<T>;
-  register: UseFormRegister<T>;
 }
 
 interface IUseAppFormProps<T> {
@@ -37,7 +36,6 @@ const useAppForm = <T>({
     formState: { errors, isValid },
     handleSubmit,
     reset,
-    register,
   } = useForm<T>({
     defaultValues,
     mode,
@@ -50,7 +48,6 @@ const useAppForm = <T>({
     isValid,
     handleSubmit,
     reset,
-    register,
   };
 };
 
