@@ -11,7 +11,7 @@ interface IAddEdit {
   handleClose: () => void;
 }
 
-const get_allCompanisesAsync = createAsyncThunk(
+const get_allCompaniesAsync = createAsyncThunk(
   ActionType.GET_ALL_COMPANIES,
   async (_, { dispatch }) => {
     const result = await companyApi.getAllCompamies();
@@ -71,7 +71,7 @@ const update_companyAvatarAsync = createAsyncThunk(
 
 const companyActions = {
   ...actions,
-  get_allCompanisesAsync,
+  get_allCompaniesAsync,
   add_companyAsync,
   edit_companyAsync,
   update_companyAvatarAsync,

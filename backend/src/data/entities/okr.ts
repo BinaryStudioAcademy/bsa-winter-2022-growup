@@ -8,6 +8,11 @@ enum OkrTypes {
   TEAM_OKR = 'team_okr',
 }
 
+enum StatusType {
+  open = 'open',
+  close = 'close',
+}
+
 @Entity()
 export class OKR extends AbstractEntity {
   @Column({ type: 'varchar', length: 50 })
@@ -19,6 +24,13 @@ export class OKR extends AbstractEntity {
     default: OkrTypes.MY_OKR,
   })
   type: OkrTypes;
+
+  @Column({
+    type: 'enum',
+    enum: StatusType,
+    default: StatusType.open,
+  })
+  status: StatusType;
 
   @Column()
   endDate: Date;

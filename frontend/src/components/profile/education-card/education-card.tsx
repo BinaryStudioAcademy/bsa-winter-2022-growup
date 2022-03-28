@@ -6,6 +6,7 @@ import { useAppDispatch, useCallback, useNavigate } from 'hooks/hooks';
 import { removeEducation } from 'store/education/actions';
 import { MentorMenteeRoute } from 'common/enums/mentor-mentee-route/mentor-mentee-route.enum';
 import { Button } from 'components/common/common';
+import { monthDiff } from 'helpers/helpers';
 
 interface Props {
   education: IEducation;
@@ -36,19 +37,10 @@ const EducationCard: React.FC<Props> = ({ education, onEdit }) => {
 
   const date = (): string => {
     if (!endDate) {
-      return 'null';
+      return 'Present';
     }
 
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-
-    const absoluteYears: number = end.getFullYear() - start.getFullYear();
-    const absoluteMonths: number = end.getMonth() - start.getMonth();
-
-    const years = absoluteMonths > 0 ? absoluteYears : 0;
-    const months =
-      absoluteMonths > 0 ? absoluteMonths : 12 - Math.abs(absoluteMonths);
-    return `${years} : ${months}`;
+    return monthDiff(startDate, endDate);
   };
 
   return (

@@ -1,5 +1,12 @@
 @import '~assets/scss/utils';
 
+.sidebar__burger {
+  svg {
+    width: 30px;
+    height: 30px;
+    color: $white;
+  }
+}
 .sidebar-section {
   z-index: 3;
 }
@@ -71,4 +78,31 @@
 
 .navigation-item {
   list-style-type: none;
+}
+
+.navigation-section__burger-active {
+  margin-top: 4rem;
+}
+
+.sidebar-container--small-version {
+  width: 65px;
+  .navigation-link {
+    &__icon {
+      max-width: none !important;
+      max-height: none !important;
+    }
+  }
+  .navigation-item .active {
+    display: flex;
+    align-items: center;
+    height: 41px;
+    width: 41px;
+    background-color: #fff;
+    border-radius: 33%;
+  }
+}
+
+.sidebar__burger--active {
+  top: 73px;
+  left: 18px;
 }

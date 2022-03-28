@@ -9,8 +9,8 @@ import { Button } from 'components/common/common';
 const Company: React.FC = () => {
   const { user } = useAppSelector((state) => state.auth);
 
-  const [company, setCompany] = useState<ICompany>();
   const [show, setShow] = useState(false);
+  const [company, setCompany] = useState<ICompany>();
 
   useEffect(() => {
     if (user && user.company) {
@@ -30,7 +30,7 @@ const Company: React.FC = () => {
             className="btn-hover-gu-purple"
             onClick={handleShow}
           >
-            + Add Company
+            {company ? 'Edit Company' : '+ Add Company'}
           </Button>
         </Card.Header>
         <Card.Body>
@@ -41,7 +41,7 @@ const Company: React.FC = () => {
           )}
         </Card.Body>
       </Card>
-      <AddEditCompany show={show} handleClose={handleClose} />
+      {show && <AddEditCompany company={company} handleClose={handleClose} />}
     </>
   );
 };

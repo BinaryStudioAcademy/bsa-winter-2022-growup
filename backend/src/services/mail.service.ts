@@ -12,14 +12,17 @@ import { env } from '~/config/env';
 
 const readFile = promisify(fs.readFile);
 
-const getUrl = (host: string, origin: string, token: string): string =>
-  host
-    ? `http://${host}/registration-complete/${token}`
-    : `${origin}/registration-complete/${token}`;
+const getUrl = (host: string, token: string): string => {
+  if (!host)
+    throw new HttpError({
+      status: HttpCode.INTERNAL_SERVER_ERROR,
+      message: 'Host not found',
+    });
+  return `${host}/registration-complete/${token}`;
+};
 
 const sendMail = async (
   host: string,
-  origin: string,
   email: string,
   token: string,
 ): Promise<SuccessResponse> => {
@@ -37,7 +40,7 @@ const sendMail = async (
     },
   });
 
-  const url = getUrl(host, origin, token);
+  const url = getUrl(host, token);
 
   const mail = {
     from: env.email.name,

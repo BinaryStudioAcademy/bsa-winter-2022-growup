@@ -10,12 +10,11 @@ import EditAvatar from './edit-avatar';
 import './styles.scss';
 
 interface Props {
-  show: boolean;
   company?: ICompany;
   handleClose: () => void;
 }
 
-const AddEditCompany: FC<Props> = ({ show, handleClose, company }) => {
+const AddEditCompany: FC<Props> = ({ handleClose, company }) => {
   const [file, setFile] = useState<File>();
   const [name, setName] = useState<string>(company ? company.name : '');
   const [description, setDescription] = useState<string>(
@@ -28,12 +27,6 @@ const AddEditCompany: FC<Props> = ({ show, handleClose, company }) => {
     const { value, name } = e.target;
     if (name === 'name') setName(value);
     if (name === 'description') setDescription(value);
-  };
-
-  const onCloseCancel = (): void => {
-    setName('');
-    setDescription('');
-    handleClose();
   };
 
   const send = (): void => {
@@ -60,7 +53,7 @@ const AddEditCompany: FC<Props> = ({ show, handleClose, company }) => {
   };
 
   return (
-    <Modal show={show} onHide={onCloseCancel} centered={true}>
+    <Modal show={true} onHide={handleClose} centered={true}>
       <Modal.Header className="d-flex justify-content-between align-items-center">
         <Modal.Title>
           {company ? 'Edit company' : 'Add company info'}
@@ -96,7 +89,7 @@ const AddEditCompany: FC<Props> = ({ show, handleClose, company }) => {
         <Button variant="gu-blue" className="mg-0" onClick={send}>
           {company ? 'Edit' : 'Save'}
         </Button>
-        <Button variant="gu-pink" className="mg-0" onClick={onCloseCancel}>
+        <Button variant="gu-pink" className="mg-0" onClick={handleClose}>
           Cancel
         </Button>
       </Modal.Footer>

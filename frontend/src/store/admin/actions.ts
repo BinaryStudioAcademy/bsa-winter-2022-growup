@@ -97,6 +97,7 @@ const deleteUser = createAsyncThunk(
     }
   },
 );
+
 const changeUserRole = createAsyncThunk(
   ActionType.CHANGE_ROLE,
   async (data: IChangeRole, { rejectWithValue }) => {
@@ -108,6 +109,7 @@ const changeUserRole = createAsyncThunk(
     }
   },
 );
+
 export {
   fetchTags,
   createTags,

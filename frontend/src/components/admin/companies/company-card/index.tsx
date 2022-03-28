@@ -1,8 +1,6 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { Card } from 'react-bootstrap';
-import { Button } from 'components/common/common';
 import { ICompany } from 'common/interfaces/company/company';
-import AddEditCompany from '../addedit-company';
 
 import './styles.scss';
 
@@ -11,11 +9,7 @@ interface Props {
 }
 
 const CompanyCard: FC<Props> = ({ company }) => {
-  const [show, setShow] = useState(false);
   const { avatar } = company;
-
-  const handleClose = (): void => setShow(false);
-  const handleShow = (): void => setShow(true);
 
   return (
     <>
@@ -29,12 +23,10 @@ const CompanyCard: FC<Props> = ({ company }) => {
               />
               <Card.Title className="fs-1">{company.name}</Card.Title>
             </div>
-            <Button onClick={handleShow}>edit</Button>
           </div>
           <Card.Text className="mt-2">{company.description}</Card.Text>
         </Card.Body>
       </Card>
-      <AddEditCompany show={show} handleClose={handleClose} company={company} />
     </>
   );
 };

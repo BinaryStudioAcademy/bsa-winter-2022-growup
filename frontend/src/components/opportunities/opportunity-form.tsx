@@ -6,6 +6,7 @@ import { DEFAULT_OPPORTUNITY_PAYLOAD } from './common/constants';
 import { OpportunityPayloadKey } from '../../common/enums/enums';
 import Multiselect from 'multiselect-react-dropdown';
 import { RootState } from 'common/types/types';
+import './styles.scss';
 
 type Props = {
   onClose: () => void;
@@ -51,12 +52,13 @@ const OpportunityForm: React.FC<Props> = (props) => {
           errors={errors}
         />
         <Multiselect
-          className={'mb-3'}
+          className={'mb-3 multi-select'}
           isObject={false}
           placeholder={'Select tags'}
           onRemove={(e): void => props.setTags(e)}
           onSelect={(e): void => props.setTags(e)}
           options={[...tagsName]}
+          style={{ backgroundColor: 'rgba(52, 52, 52, 0.1)', color: '#d1d0cf' }}
         />
         <FormInputDate
           name={OpportunityPayloadKey.START_DATE}
