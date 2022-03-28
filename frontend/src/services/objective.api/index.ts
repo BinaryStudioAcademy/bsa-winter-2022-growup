@@ -20,7 +20,7 @@ class ObjectiveApi {
   }: {
     okrId: string;
     objectiveBody: { name: string; result: number };
-  }): Promise<IOkr | null> {
+  }): Promise<IObjective | null> {
     const options = {
       method: HttpMethod.POST,
       contentType: ContentType.JSON,
@@ -28,11 +28,11 @@ class ObjectiveApi {
     };
 
     try {
-      const result = await this.http.load<IOkr>(
+      const result = await this.http.load(
         `${this.apiPath}/company/okr/${okrId}/objective`,
         options,
       );
-      return result;
+      return result as IObjective;
     } catch (e) {
       //passing an error to the handler
       console.warn(e);

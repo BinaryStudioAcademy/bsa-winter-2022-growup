@@ -14,7 +14,7 @@ export type State = {
 
 export interface ICreateNewObjective {
   okrId: string;
-  objectiveBody: IObjective;
+  objectiveBody: { name: string; result: number };
 }
 
 export interface IUpdateObjective {

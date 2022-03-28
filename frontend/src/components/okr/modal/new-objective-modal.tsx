@@ -1,11 +1,11 @@
 import { Button, Modal, TextField } from 'components/common/common';
-import { useAppForm } from 'hooks/hooks';
+import { useAppDispatch, useAppForm } from 'hooks/hooks';
 import { Form } from 'react-bootstrap';
 import { useFieldArray } from 'react-hook-form';
 import { objectiveValidationSchema } from 'validation-schemas/validation-schemas';
 import { XLg } from 'react-bootstrap-icons';
 import { ObjectiveValues } from '../common/interfaces';
-
+import { okrActions } from 'store/okr';
 interface Props {
   showModal: boolean;
   closeModal: () => void;
@@ -17,6 +17,8 @@ const NewObjectiveModal: React.FC<Props> = ({
   closeModal,
   okrId,
 }) => {
+  const dispatch = useAppDispatch();
+
   const { control, handleSubmit, errors } = useAppForm<ObjectiveValues>({
     defaultValues: { name: '', keyResults: [{ keyResultname: '', score: 0 }] },
     validationSchema: objectiveValidationSchema(),
@@ -26,9 +28,17 @@ const NewObjectiveModal: React.FC<Props> = ({
     control,
   });
 
-  const onSubmit = (objectiveBody: ObjectiveValues): void => {
-    console.warn(objectiveBody);
-    console.warn(okrId);
+  const onSubmit = (data: ObjectiveValues): void => {
+    dispatch(
+      okrActions.createObjective_async({
+        okrId,
+        objectiveBody: {
+          name: data.name,
+          result: 0,
+        },
+      }),
+    );
+    console.warn(data);
     closeModal();
   };
   return (
@@ -50,8 +60,11 @@ const NewObjectiveModal: React.FC<Props> = ({
         />
         {fields.map((field, index) => {
           return (
-            <Form.Group className="d-flex align-items-center mt-3 ms-3">
-              <div className="me-3">
+            <Form.Group
+              className="d-flex align-items-center mt-3 ms-3"
+              key={index}
+            >
+              <div className="me-4">
                 <TextField
                   label={`Key Title ${index + 1}`}
                   control={control}
@@ -79,7 +92,7 @@ const NewObjectiveModal: React.FC<Props> = ({
           onClick={(): void => append({ keyResultname: '', score: 0 })}
           className="ms-2 border-0 bg-transparent text-gu-pink fw-bold "
         >
-          +add key result
+          + Add key result
         </Button>
       </Form>
     </Modal>

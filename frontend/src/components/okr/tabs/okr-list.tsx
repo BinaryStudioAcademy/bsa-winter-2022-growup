@@ -39,10 +39,10 @@ const OkrList: React.FC<Props> = ({ collection }) => {
             className="text-gu-white mb-2 align-self-end"
             onClick={openModal}
           >
-            "Create Okr"
+            Create Okr
           </Button>
           <div className="OKR-page d-flex flex-row flex-wrap ">
-            {collection.map((okr: IOkr) => {
+            {collection.map((okr: IOkr, index) => {
               const objectives = okr.objectives;
               let objectivesCounter = 0;
               let resultsCounter = 0;
@@ -58,7 +58,7 @@ const OkrList: React.FC<Props> = ({ collection }) => {
               }
               return (
                 <OrkItem
-                  key={okr.id}
+                  key={index}
                   okr={okr}
                   objectivesCounter={objectivesCounter}
                   resultsCounter={resultsCounter}

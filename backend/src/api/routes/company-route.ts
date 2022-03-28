@@ -39,6 +39,7 @@ import {
   deleteKeyResult,
 } from '~/services/key-result.service';
 import { Objective } from '~/data/entities/objective';
+import { KeyResult } from '~/data/entities/key-result';
 
 const router: Router = Router();
 
@@ -152,7 +153,7 @@ router
     '/okr/:okrId/objective/:objectiveId/keyresult',
     validatePermissions([RoleType.MENTEE, RoleType.MENTOR]),
     validateBody(createKeyResultSchema),
-    run((req): Promise<OKR> => {
+    run((req): Promise<KeyResult> => {
       const { okrId, objectiveId } = req.params;
       const { body } = req;
       const data = { okrId, objectiveId, body };

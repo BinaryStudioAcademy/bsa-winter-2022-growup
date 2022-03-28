@@ -1,11 +1,11 @@
 import { getCustomRepository } from 'typeorm';
-import { OKR } from '~/data/entities/okr';
 import Okrepository from '~/data/repositories/okr.repository';
 import ObjectiveRepository from '~/data/repositories/objective.repository';
 import KeyResultRepository from '~/data/repositories/key-result.repository';
 import { badRequestError } from '~/common/errors';
 import { SuccessResponse } from '~/common/models/responses/success';
 import { HttpCode, HttpError } from 'growup-shared';
+import { KeyResult } from '~/data/entities/key-result';
 
 export const addNewKeyresultToObjective = async ({
   okrId,
@@ -15,7 +15,7 @@ export const addNewKeyresultToObjective = async ({
   okrId: string;
   objectiveId: string;
   body: { name: string };
-}): Promise<OKR> => {
+}): Promise<KeyResult> => {
   if (!body.name) throw badRequestError('Keyresult name is undefined!!!');
 
   const okrRepository = getCustomRepository(Okrepository);
@@ -38,8 +38,7 @@ export const addNewKeyresultToObjective = async ({
 
   await keyResult.save();
 
-  const responceOkr = okrRepository.getOneById(okrId);
-  return responceOkr;
+  return keyResult;
 };
 
 export const deleteKeyResult = async (id: string): Promise<SuccessResponse> => {
