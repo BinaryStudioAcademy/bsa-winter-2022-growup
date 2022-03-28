@@ -7,8 +7,11 @@ import { IUser } from 'common/interfaces/user';
 import { RoleType } from 'common/enums/enums';
 import * as adminActions from 'store/admin/actions';
 
-import RoleDropdown from './components/roles-dropdown';
-import UserControls from './components/user-controllers';
+import RoleDropdown from './components/dropdowns/roles-dropdown';
+import ControllerDropdown from './components/dropdowns/controller-dropdown';
+
+import UserControls from './components/user-controller/controller-buttons';
+import DropdownControlls from './components/user-controller/dropdown-controller';
 
 type Props = {
   user: IUser;
@@ -45,12 +48,22 @@ const UserItem: React.FC<Props> = memo(({ user }) => {
           user.role
         )}
       </td>
-      <td className="w-auto d-flex justify-content-end flex-wrap">
-        <UserControls
-          id={user.id}
-          show={isShowDropDown}
-          setShow={setIsShowDropDown}
-        />
+      <td style={{ width: '1%', whiteSpace: 'nowrap' }}>
+        <div className="d-xs-block d-md-none">
+          <ControllerDropdown
+            id={user.id}
+            show={isShowDropDown}
+            setShow={setIsShowDropDown}
+            as={DropdownControlls}
+          />
+        </div>
+        <div className="d-none d-md-block">
+          <UserControls
+            id={user.id}
+            show={isShowDropDown}
+            setShow={setIsShowDropDown}
+          />
+        </div>
       </td>
     </tr>
   );

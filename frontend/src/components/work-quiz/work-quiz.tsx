@@ -84,6 +84,7 @@ const StyleTest: React.FC<Props> = ({ onNext }) => {
                   question={question}
                   answer={answer}
                   onCheckboxClick={handleCheckboxClick}
+                  name={i}
                 />
               ))}
             </div>
