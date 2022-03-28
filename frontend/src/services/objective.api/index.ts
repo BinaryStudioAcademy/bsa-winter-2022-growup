@@ -1,4 +1,3 @@
-import { IOkr } from 'common/interfaces/okr';
 import { IObjective } from 'common/interfaces/objective';
 import { Http } from 'services/http/http.service';
 import { IAuthApi } from 'common/interfaces/api';
@@ -49,23 +48,30 @@ class ObjectiveApi {
 
   public async updateObjective({
     okrId,
-    objective,
+    objectiveId,
+    objectiveBody,
+    keyResults,
   }: {
     okrId: string;
-    objective: IObjective;
-  }): Promise<IOkr | null> {
+    objectiveId: string;
+    objectiveBody: { name: string; result: number };
+    keyResults: { name: string; result: number }[];
+  }): Promise<IObjective | null> {
     const options = {
       method: HttpMethod.PUT,
       contentType: ContentType.JSON,
-      payload: JSON.stringify(objective),
+      payload: JSON.stringify({
+        objective: objectiveBody,
+        keyResults: keyResults,
+      }),
     };
 
     try {
-      const result = await this.http.load<IOkr>(
-        `${this.apiPath}/company/okr/${okrId}/objective/${objective.id}`,
+      const result = await this.http.load(
+        `${this.apiPath}/company/okr/${okrId}/objective/${objectiveId}`,
         options,
       );
-      return result;
+      return result as IObjective;
     } catch (e) {
       //passing an error to the handler
       console.warn(e);

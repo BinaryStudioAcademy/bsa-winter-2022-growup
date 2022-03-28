@@ -9,9 +9,16 @@ import { NotificationManager } from 'react-notifications';
 interface Props {
   objective: IObjective;
   okrId: string;
+  setObjective: (id: string) => void;
+  openUpdateModal: () => void;
 }
 
-const Objective: React.FC<Props> = ({ objective, okrId }) => {
+const Objective: React.FC<Props> = ({
+  objective,
+  okrId,
+  setObjective,
+  openUpdateModal,
+}) => {
   const dispatch = useAppDispatch();
   const deleteObjectiveHandler = (): void => {
     dispatch(okrActions.deleteObjective({ objectiveId: objective.id, okrId }))
@@ -23,6 +30,10 @@ const Objective: React.FC<Props> = ({ objective, okrId }) => {
         NotificationManager.error('Can`t delete objective');
       });
   };
+  const editObject = (): void => {
+    setObjective(objective.id);
+    openUpdateModal();
+  };
   return (
     <>
       <div className="objective-header d-flex justify-content-between mt-5">
@@ -31,7 +42,10 @@ const Objective: React.FC<Props> = ({ objective, okrId }) => {
           <span className="fw-bold fs-4 text-gu-black me-2">
             {(objective.result / 100).toFixed(2)}
           </span>
-          <Button className="border-0 bg-transparent text-gu-black hover-pink p-1">
+          <Button
+            className="border-0 bg-transparent text-gu-black hover-pink p-1"
+            onClick={editObject}
+          >
             <Pencil></Pencil>
           </Button>
           <Button

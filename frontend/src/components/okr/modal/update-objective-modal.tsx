@@ -24,6 +24,7 @@ const UpdateObjectiveModal: React.FC<Props> = ({
   objectiveId,
 }) => {
   const dispatch = useAppDispatch();
+
   const { okrs } = useAppSelector((state: RootState) => state.okr);
   const okr = okrs.find((okr) => okr.id === okrId);
   const objectives = okr?.objectives as IObjective[];
@@ -54,8 +55,9 @@ const UpdateObjectiveModal: React.FC<Props> = ({
     const sumResult = keyValues.reduce((total, amount) => +total + +amount);
     const objectiveValues = Math.round(sumResult / data.keyResults.length);
     dispatch(
-      okrActions.createObjective_async({
+      okrActions.updateObjective_async({
         okrId,
+        objectiveId,
         objectiveBody: {
           name: data.name,
           result: objectiveValues,
@@ -63,7 +65,6 @@ const UpdateObjectiveModal: React.FC<Props> = ({
         keyResults: data.keyResults,
       }),
     );
-    console.warn(data);
     closeModal();
   };
   return (

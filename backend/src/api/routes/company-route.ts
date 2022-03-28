@@ -17,11 +17,7 @@ import {
   updateCompanyAvatar,
 } from '~/services/company.service';
 import { RoleType } from '~/common/enums/role-type';
-import {
-  createOkrSchema,
-  updateOkrSchema,
-  updateObjectiveSchema,
-} from '~/common/validations';
+import { createOkrSchema, updateOkrSchema } from '~/common/validations';
 import {
   getAllOkr,
   createOkr,
@@ -161,12 +157,12 @@ router
   .put(
     '/okr/:okrId/objective/:objectiveId',
     validatePermissions([RoleType.MENTEE, RoleType.MENTOR]),
-    validateBody(updateObjectiveSchema),
-    run((req): Promise<OKR> => {
-      const { okrId, objectiveId } = req.params;
-      const { body } = req;
-      const data = { okrId, objectiveId, body };
-      return updateObjectiveById(data);
+    run((req) => {
+      return updateObjectiveById(
+        req.params.okrId,
+        req.params.objectiveId,
+        req.body,
+      );
     }),
   )
   .post(

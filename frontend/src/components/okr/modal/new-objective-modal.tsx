@@ -42,7 +42,7 @@ const NewObjectiveModal: React.FC<Props> = ({
         keyResults: data.keyResults,
       }),
     );
-    console.warn(data);
+
     closeModal();
   };
   return (
