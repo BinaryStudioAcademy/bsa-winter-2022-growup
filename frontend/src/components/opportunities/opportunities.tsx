@@ -109,7 +109,7 @@ const Opportunities: React.FC = () => {
             organization={item.organization}
             type={item.type}
             startDate={item.startDate}
-            tagsData={item.tags}
+            tagsData={item.tagsData}
             isFollow={item.isFollow}
             isOpportunitiesPage={true}
           />

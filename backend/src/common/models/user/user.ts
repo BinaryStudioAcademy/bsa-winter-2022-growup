@@ -1,7 +1,7 @@
 import { User } from '~/data/entities/user';
 
 interface IListUser
-  extends Pick<User, 'firstName' | 'lastName' | 'email' | 'role'> {
+  extends Pick<User, 'firstName' | 'lastName' | 'email' | 'role' | 'id'> {
   company: User['company']['id'];
 }
 

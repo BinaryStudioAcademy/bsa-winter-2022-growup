@@ -11,6 +11,7 @@ enum MentorMenteeRoute {
   EXPLORE = '/explore',
   SKILLS = '/profile/skills',
   ANY = '/*',
+  LOGIN = '/login',
 }
 
 export { MentorMenteeRoute };

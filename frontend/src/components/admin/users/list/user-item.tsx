@@ -34,7 +34,7 @@ const UserItem: React.FC<Props> = memo(({ user }) => {
   );
 
   return (
-    <tr className="align-middle users__row cursor-pointer">
+    <tr className="align-middle">
       <td>{user.lastName}</td>
       <td>{user.firstName}</td>
       <td>{user.email}</td>
@@ -45,7 +45,7 @@ const UserItem: React.FC<Props> = memo(({ user }) => {
           user.role
         )}
       </td>
-      <td className="text-end">
+      <td>
         <UserControls
           id={user.id}
           show={isShowDropDown}

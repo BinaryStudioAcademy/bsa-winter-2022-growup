@@ -8,6 +8,11 @@ enum OkrTypes {
   TEAM_OKR = 'team_okr',
 }
 
+enum StatusType {
+  open = 'open',
+  close = 'close',
+}
+
 @Entity()
 export class OKR extends AbstractEntity {
   @Column({ type: 'varchar', length: 50 })
@@ -20,13 +25,20 @@ export class OKR extends AbstractEntity {
   })
   type: OkrTypes;
 
+  @Column({
+    type: 'enum',
+    enum: StatusType,
+    default: StatusType.open,
+  })
+  status: StatusType;
+
   @Column()
   endDate: Date;
 
   @Column()
   startDate: Date;
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.id, { onDelete: 'CASCADE' })
   user: User;
 
   @OneToMany(() => Objective, (objective) => objective.okr)

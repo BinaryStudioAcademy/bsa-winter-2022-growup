@@ -148,7 +148,7 @@ export const createDomainTree = async (
 export const getDomainTrees = async (
   userId: string,
 ): Promise<CareerPathResponse[]> => {
-  const careeerPathResponse: CareerPathResponse[] = [];
+  const careerPathResponse: CareerPathResponse[] = [];
   const userRepository = getCustomRepository(UserRepository);
   const user = await userRepository.getUserById(userId);
 
@@ -161,13 +161,13 @@ export const getDomainTrees = async (
 
   await asyncForEach(async (domain) => {
     const levels = await getLevelsAndSkills(domain);
-    careeerPathResponse.push({
+    careerPathResponse.push({
       domain,
       levels,
     } as unknown as CareerPathResponse);
   }, domains);
 
-  return careeerPathResponse;
+  return careerPathResponse;
 };
 
 export const updateDomain = async (

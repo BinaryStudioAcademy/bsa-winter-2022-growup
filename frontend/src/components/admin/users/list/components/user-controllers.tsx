@@ -21,23 +21,30 @@ type Props = {
 const UserControls: React.FC<Props> = memo(({ id, show, setShow }) => {
   const toggle = useCallback(() => setShow((state) => !state), []);
   const { deleteUser, copyPathToClipboard, resendMail } = useUsers();
-
   return (
     <>
       <ControlButton
-        className="invisible"
-        onClick={(): void => copyPathToClipboard(id)}
+        className="bg-transparent"
+        onClick={(): void => {
+          copyPathToClipboard(id);
+        }}
       >
         <Clipboard />
       </ControlButton>
-      <ControlButton className="invisible" onClick={(): void => resendMail(id)}>
+      <ControlButton
+        className="bg-transparent"
+        onClick={(): void => resendMail(id)}
+      >
         <ArrowClockwise />
       </ControlButton>
-      <ControlButton className="invisible" onClick={toggle}>
+      <ControlButton className=" bg-transparent" onClick={toggle}>
         {show ? <XLg /> : <Pencil />}
       </ControlButton>
 
-      <ControlButton className="invisible" onClick={(): void => deleteUser(id)}>
+      <ControlButton
+        className="bg-transparent"
+        onClick={(): void => deleteUser(id)}
+      >
         <Trash />
       </ControlButton>
     </>

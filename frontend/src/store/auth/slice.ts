@@ -17,12 +17,14 @@ type State = {
   user: IUser | null;
   isLoading: boolean;
   isAuthenticated: boolean;
+  isReject: boolean;
 };
 
 const initialState: State = {
   user: null,
   isLoading: false,
   isAuthenticated: false,
+  isReject: false,
 };
 
 const { reducer, actions } = createSlice({
@@ -44,7 +46,10 @@ const { reducer, actions } = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(finishRegistration.fulfilled, (state, action) => {
-        state.user = action.payload;
+        state.user = {
+          ...state.user,
+          ...action.payload,
+        };
       })
       .addCase(verifyRegistrationToken.fulfilled, (state, _) => {
         state.isAuthenticated = true;
@@ -84,6 +89,7 @@ const { reducer, actions } = createSlice({
         ),
         (state, _) => {
           state.isLoading = false;
+          state.isReject = true;
         },
       );
   },

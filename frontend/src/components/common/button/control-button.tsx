@@ -9,7 +9,7 @@ const ControlButton: React.FC<Props> = memo(
   ({ className = '', children, ...props }) => (
     <Button
       variant="gu-white"
-      className={`user-control-btn btn-outline-gu-black ${className}`}
+      className={`user-control-btn border-0  ${className}`}
       {...props}
     >
       {children}

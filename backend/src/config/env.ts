@@ -9,6 +9,7 @@ export const env = {
     port: getOsEnv('PORT'),
     secretKey: getOsEnv('APP_SECRET'),
     nodeEnv: getOsEnv('NODE_ENV'),
+    url: getOsEnv('APP_URL'),
   },
   db: {
     url: getOsEnv('DATABASE_URL'),

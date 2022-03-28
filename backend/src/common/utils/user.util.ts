@@ -8,6 +8,7 @@ const convertForUserList = (userInstance: User): IListUser => ({
   email: userInstance.email,
   role: userInstance.role,
   company: userInstance.company.id,
+  id: userInstance.id,
 });
 
 export { convertForUserList };
