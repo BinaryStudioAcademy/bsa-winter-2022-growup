@@ -20,8 +20,7 @@ interface IDomainLevelsConnection {
   connections: ILevelsConnection[];
 }
 
-// This component is responsible for outputing all connections
-// (levels and domains) in form of the group of items
+// Commented code will be used for setting up domain connections
 
 const Pairs: React.FC = () => {
   const domains = useAppSelector((state) => state.careerPath.domains);

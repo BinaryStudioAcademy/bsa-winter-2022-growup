@@ -8,9 +8,6 @@ interface Props {
   onItemClick?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-// This component appears after selecting domain.
-// It can be one or multiple select of levels and according to this user
-// will see radiobuttons or checkboxes
 const LevelsList: React.FC<Props> = ({
   levels,
   type = 'checkbox',

@@ -7,7 +7,6 @@ interface Props {
   onDelete: () => void;
 }
 
-// Component which is represent one connection
 const PairItem: React.FC<Props> = ({ firstItem, secondItem, onDelete }) => {
   return (
     <div className="pair-item d-flex flex-wrap align-items-center">

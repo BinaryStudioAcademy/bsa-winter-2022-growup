@@ -12,9 +12,7 @@ import { careerPathActions } from 'store/career-path';
 import { ChangeEvent } from 'react';
 import { NotificationManager } from 'react-notifications';
 
-// This is main page of career-path connection settings.
-// Includes drop-down selects, lists of levels, visual
-// displaying of the connections.
+// Commented code will be used for setting up domain connections
 
 const PathConnection: React.FC = () => {
   const domains = useAppSelector((state) => state.careerPath.domains) || [];
