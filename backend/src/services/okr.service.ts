@@ -1,5 +1,5 @@
 import { getCustomRepository } from 'typeorm';
-import { OKR } from '~/data/entities/okr';
+import { OKR, StatusType } from '~/data/entities/okr';
 import OkrRepository from '~/data/repositories/okr.repository';
 import UserRepository from '~/data/repositories/user.repository';
 import { badRequestError } from '~/common/errors';
@@ -72,6 +72,26 @@ export const updateOkrById = async ({
   }
 
   throw badRequestError('Okr isn`t exist!!!');
+};
+interface IUpdateStatus {
+  okrId: string;
+  status: StatusType;
+}
+
+export const updateOkrStatus = async ({
+  okrId,
+  status,
+}: IUpdateStatus): Promise<OKR> => {
+  const okrsRepository = getCustomRepository(OkrRepository);
+  const okrInstance = await okrsRepository.findOne(okrId);
+  if (!okrInstance)
+    throw new HttpError({
+      status: HttpCode.NOT_FOUND,
+      message: 'Okr with this id does not exist',
+    });
+  okrInstance.status = status;
+  await okrInstance.save();
+  return okrInstance;
 };
 
 export const deleteOKR = async (id: string): Promise<SuccessResponse> => {

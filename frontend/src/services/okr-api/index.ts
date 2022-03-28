@@ -3,6 +3,7 @@ import { Http } from 'services/http/http.service';
 import { IAuthApi } from 'common/interfaces/api';
 import { HttpMethod } from 'common/enums/http/http';
 import { ContentType } from 'common/enums/file/file';
+import { StatusType } from 'store/okr/common';
 
 class OkrApi {
   private http: Http;
@@ -92,6 +93,27 @@ class OkrApi {
       //passing an error to the handler
       console.warn(e);
       return null;
+    }
+  }
+
+  public async updateOkrStatus(
+    okrId: string,
+    status: StatusType,
+  ): Promise<IOkr | null> {
+    const options = {
+      method: HttpMethod.PUT,
+      contentType: ContentType.JSON,
+      payload: JSON.stringify({ status }),
+    };
+
+    try {
+      const result = await this.http.load<IOkr>(
+        `${this.apiPath}/company/okr/status/${okrId}`,
+        options,
+      );
+      return result;
+    } catch (_) {
+      throw new Error('Can`t update okr status');
     }
   }
 }

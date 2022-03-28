@@ -1,3 +1,4 @@
+import { StatusType } from 'store/okr/common';
 import { IBaseObject } from '../base-object';
 import { IObjective } from '../objective';
 
@@ -12,4 +13,5 @@ export interface IOkr extends IBaseObject {
   endDate: Date | string;
   startDate: Date | string;
   objectives: Array<IObjective> | null;
+  status: StatusType | null;
 }

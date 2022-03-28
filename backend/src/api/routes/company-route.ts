@@ -8,7 +8,7 @@ import {
   validateBody,
   validatePermissions,
 } from '~/api/middlewares/validation-middleware';
-import { OKR } from '~/data/entities/okr';
+import { OKR, StatusType } from '~/data/entities/okr';
 import {
   createCompany,
   editCompany,
@@ -27,6 +27,7 @@ import {
   createOkr,
   getOkrById,
   updateOkrById,
+  updateOkrStatus,
   deleteOKR,
 } from '~/services/okr.service';
 import {
@@ -42,7 +43,10 @@ import { Objective } from '~/data/entities/objective';
 import { KeyResult } from '~/data/entities/key-result';
 
 const router: Router = Router();
-
+interface UpdateStatus {
+  okrId: string;
+  status: StatusType;
+}
 router
   .get(
     '/',
@@ -115,6 +119,21 @@ router
       return updateOkrById(data);
     }),
   )
+  .put(
+    '/okr/status/:okrId',
+    validatePermissions([RoleType.MENTEE, RoleType.MENTOR]),
+    run((req): Promise<OKR> => {
+      const { okrId } = req.params;
+      const { body } = req;
+
+      const data: UpdateStatus = {
+        okrId,
+        status: body.status,
+      };
+      return updateOkrStatus(data);
+    }),
+  )
+
   .delete(
     '/okr/:id',
     run((req) => {

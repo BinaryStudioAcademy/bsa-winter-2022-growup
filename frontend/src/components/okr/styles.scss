@@ -14,6 +14,13 @@
     'time time time';
 }
 
+.okr-disable {
+  background-color: #8080801f !important;
+  color: #a7a5a5e0 !important;
+  svg {
+    color: #a7a5a5e0 !important;
+  }
+}
 .OKR-name {
   grid-area: name;
 }

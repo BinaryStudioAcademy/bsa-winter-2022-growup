@@ -1,9 +1,10 @@
-import { useAppSelector } from 'hooks/store/store.hooks';
+import { useAppSelector, useAppDispatch } from 'hooks/store/store.hooks';
 import { ArrowLeft, Calendar } from 'react-bootstrap-icons';
 import dayjs from 'dayjs';
 import Objective from '../objective/objective';
 import { useState } from 'react';
 import NewObjectiveModal from '../modal/new-objective-modal';
+import * as okrActions from '../../../store/okr/actions';
 
 interface IOkrInfoProps {
   id: string;
@@ -12,12 +13,17 @@ interface IOkrInfoProps {
 
 const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHanlder }) => {
   const okrItems = useAppSelector((store) => store.okr.okrs);
+  const dispatch = useAppDispatch();
   const currentOkr = okrItems.find((item) => item.id == id);
   const [isShowCreateObjectiveModal, setIsShowCreateObjectiveModal] =
     useState(false);
 
   const openModal = (): void => setIsShowCreateObjectiveModal(true);
   const closeModal = (): void => setIsShowCreateObjectiveModal(false);
+  const closeOkrHandler = (): void => {
+    dispatch(okrActions.closeOkr({ okrId: id }));
+    goBackHanlder();
+  };
 
   return (
     <>
@@ -30,7 +36,10 @@ const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHanlder }) => {
             <ArrowLeft className="me-2" />
             back
           </span>
-          <span className="cursor-pointer text-gu-blue hover-blue">
+          <span
+            className="cursor-pointer text-gu-blue hover-blue"
+            onClick={closeOkrHandler}
+          >
             close OKR
           </span>
         </div>

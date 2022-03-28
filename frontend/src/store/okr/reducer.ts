@@ -24,6 +24,14 @@ const okrReducer = (builder: ActionReducerMapBuilder<State>): void => {
           keyResults: [],
         });
       }
+    })
+    .addCase(actions.closeOkr.fulfilled, (state, action) => {
+      if (action.payload) {
+        const index = state.okrs.findIndex(
+          (item) => item.id === action.payload?.id,
+        );
+        state.okrs[index].status = action.payload.status;
+      }
     });
 };
 export default okrReducer;

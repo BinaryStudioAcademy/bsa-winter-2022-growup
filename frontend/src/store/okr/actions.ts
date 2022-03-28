@@ -1,9 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   ActionType,
+  ICloseOkr,
   ICreateKeyResult,
   ICreateNewObjective,
   IUpdateObjective,
+  StatusType,
 } from './common';
 import { IOkr } from 'common/interfaces/okr';
 import {
@@ -111,6 +113,18 @@ const createKeyResult_async = createAsyncThunk(
   },
 );
 
+const closeOkr = createAsyncThunk(
+  ActionType.CLOSE_OKR,
+  async ({ okrId }: ICloseOkr, { rejectWithValue }) => {
+    try {
+      const result = await okrApi.updateOkrStatus(okrId, StatusType.close);
+      return result;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
 export {
   getAllOkrsByUser_async,
   getOkrById_async,
@@ -119,4 +133,5 @@ export {
   createObjective_async,
   updateObjective_async,
   createKeyResult_async,
+  closeOkr,
 };
