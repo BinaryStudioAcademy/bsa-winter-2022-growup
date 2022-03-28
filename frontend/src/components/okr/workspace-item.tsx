@@ -4,6 +4,7 @@ import { parseDate } from 'helpers/parse-date';
 import OkrModal from './modal';
 import './styles.scss';
 import { IOkr } from 'common/interfaces/okr';
+import { StatusType } from 'store/okr/common';
 
 interface Props {
   okr: IOkr;
@@ -26,7 +27,13 @@ const OrkItem: React.FC<Props> = ({
   return (
     <>
       <div
-        className="okr-container bg-white ms-3 mb-3 py-2 px-3 cursor-pointer "
+        className={`okr-container bg-white ms-3 mb-3 py-2 px-3
+        ${
+          okr.status == StatusType.close
+            ? 'border-0 okr-disable pe-none'
+            : 'cursor-pointer'
+        }
+        `}
         onClick={(): void => onClickInfo(okr.id)}
       >
         <div className="OKR-name fs-2 mt-2 fw-bold">{okr.name}</div>

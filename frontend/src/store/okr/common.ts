@@ -5,8 +5,12 @@ enum ActionType {
   GET_ALL_OKRS = 'get_all_by_user',
   UPDATE_OKR_BY_ID = 'update_okr_by_id',
   CREATE_OBJECTIVES = 'create_objectives',
+  CLOSE_OKR = 'close_okr',
+  CREATE_OKR = 'create_okr',
 }
-
+export interface ICloseOkr {
+  okrId: string;
+}
 export type State = {
   okrs: IOkr[];
 };
@@ -20,6 +24,10 @@ export interface ICreateNewObjective {
 export interface IUpdateObjective {
   okrId: string;
   objective: IObjective;
+}
+export enum StatusType {
+  open = 'open',
+  close = 'close',
 }
 
 export interface ICreateKeyResult {

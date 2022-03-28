@@ -23,7 +23,6 @@ const NewObjectiveModal: React.FC<Props> = ({
     defaultValues: { name: '', keyResults: [{ name: '', result: 0 }] },
     validationSchema: objectiveValidationSchema(),
   });
-
   const { fields, append, remove } = useFieldArray({
     name: 'keyResults',
     control,
@@ -51,13 +50,14 @@ const NewObjectiveModal: React.FC<Props> = ({
       show={showModal}
       onClose={closeModal}
       title={'Create New Objective'}
-      buttonText={'Save'}
+      buttonText={'Create Objective'}
       onSubmit={handleSubmit(onSubmit)}
       footer
+      className="objective-modal"
     >
-      <Form className="w-100">
+      <Form className="mw-75 objective-form">
         <TextField
-          label={'Objective Name'}
+          label={'Objective Title'}
           control={control}
           errors={errors}
           name="name"
@@ -70,14 +70,14 @@ const NewObjectiveModal: React.FC<Props> = ({
             >
               <div className="me-4">
                 <TextField
-                  label={'Key Name'}
+                  label={`Key Title ${index + 1}`}
                   control={control}
                   errors={errors}
                   name={`keyResults.${index}.name`}
                 />
               </div>
               <TextField
-                label={'Score'}
+                label={'Score 0/1'}
                 control={control}
                 errors={errors}
                 type="number"
@@ -85,7 +85,7 @@ const NewObjectiveModal: React.FC<Props> = ({
               />
               <Button
                 onClick={(): void => remove(index)}
-                className="border-0 bg-transparent text-gu-black"
+                className="border-0 bg-transparent text-gu-black hover-pink"
               >
                 <XLg />
               </Button>

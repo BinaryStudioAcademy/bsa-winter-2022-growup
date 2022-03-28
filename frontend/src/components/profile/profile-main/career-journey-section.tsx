@@ -110,7 +110,7 @@ const CareerJourneySection: React.FC = () => {
             onClick={onSortByAsc}
             className="notifications__view-all d-flex align-items-center justify-content-end me-2 mb-2 mt-2 fs-6 text-gu-blue"
           >
-            <span className="me-1">{sort ? 'sort desc' : 'sort asc'}</span>
+            <span className="me-1">{sort ? 'sort' : 'sort'}</span>
             {sort ? <ArrowDown /> : <ArrowUp />}
           </span>
         )}

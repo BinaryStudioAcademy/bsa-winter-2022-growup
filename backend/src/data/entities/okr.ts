@@ -8,7 +8,7 @@ enum OkrTypes {
   TEAM_OKR = 'team_okr',
 }
 
-enum StatusType {
+export enum StatusType {
   open = 'open',
   close = 'close',
 }
