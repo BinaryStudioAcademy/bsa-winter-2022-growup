@@ -4,6 +4,8 @@ import Okrepository from '~/data/repositories/okr.repository';
 import ObjectiveRepository from '~/data/repositories/objective.repository';
 import KeyResultRepository from '~/data/repositories/key-result.repository';
 import { badRequestError } from '~/common/errors';
+import { SuccessResponse } from '~/common/models/responses/success';
+import { HttpCode, HttpError } from 'growup-shared';
 
 export const addNewKeyresultToObjective = async ({
   okrId,
@@ -38,4 +40,19 @@ export const addNewKeyresultToObjective = async ({
 
   const responceOkr = okrRepository.getOneById(okrId);
   return responceOkr;
+};
+
+export const deleteKeyResult = async (id: string): Promise<SuccessResponse> => {
+  const keyResultsRepository = getCustomRepository(KeyResultRepository);
+  const KeyResultInstance = await keyResultsRepository.findOne(id);
+
+  if (!KeyResultInstance)
+    throw new HttpError({
+      status: HttpCode.NOT_FOUND,
+      message: 'KeyResult with this id does not exist',
+    });
+
+  await KeyResultInstance.remove();
+
+  return { success: true, message: 'KeyResult deleted successfully' };
 };

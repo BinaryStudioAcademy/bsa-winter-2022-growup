@@ -1,22 +1,24 @@
 import React, { ChangeEvent, FC } from 'react';
-import { Form, Modal, Card } from 'react-bootstrap';
+import { Form, Modal } from 'react-bootstrap';
+
 import { Button } from 'components/common/common';
 import { useDispatch, useState } from 'hooks/hooks';
 import { ICompany } from 'common/interfaces/company/company';
 import { companyActions } from 'store/company/actions';
+import EditAvatar from './edit-avatar';
 
 import './styles.scss';
 
 interface Props {
-  show: boolean;
   company?: ICompany;
   handleClose: () => void;
 }
 
-const AddEditCompany: FC<Props> = ({ show, handleClose, company }) => {
+const AddEditCompany: FC<Props> = ({ handleClose, company }) => {
+  const [file, setFile] = useState<File>();
   const [name, setName] = useState<string>(company ? company.name : '');
   const [description, setDescription] = useState<string>(
-    company?.description ? company.description : '',
+    company ? company.description : '',
   );
 
   const dispatch = useDispatch();
@@ -27,15 +29,8 @@ const AddEditCompany: FC<Props> = ({ show, handleClose, company }) => {
     if (name === 'description') setDescription(value);
   };
 
-  const onCloseCancel = (): void => {
-    setName('');
-    setDescription('');
-    handleClose();
-  };
-
   const send = (): void => {
-    let newCompany = {};
-    if (company) newCompany = { ...company };
+    let newCompany = { ...company } as ICompany;
 
     if (!name || !description) {
       alert('You have empty field!!!');
@@ -44,10 +39,11 @@ const AddEditCompany: FC<Props> = ({ show, handleClose, company }) => {
 
     newCompany = { ...newCompany, ...{ description, name } };
 
-    const data = {
-      newCompany: newCompany as ICompany,
-      handleClose,
-    };
+    const data = { newCompany, handleClose };
+
+    if (file) {
+      dispatch(companyActions.update_companyAvatarAsync(file));
+    }
 
     if (company) {
       dispatch(companyActions.edit_companyAsync(data));
@@ -57,18 +53,15 @@ const AddEditCompany: FC<Props> = ({ show, handleClose, company }) => {
   };
 
   return (
-    <Modal show={show} onHide={onCloseCancel} centered={true}>
+    <Modal show={true} onHide={handleClose} centered={true}>
       <Modal.Header className="d-flex justify-content-between align-items-center">
         <Modal.Title>
           {company ? 'Edit company' : 'Add company info'}
         </Modal.Title>
       </Modal.Header>
-      <Card.Img
-        className="modal-company-image"
-        variant="top"
-        src="holder.js/100px180"
-        alt={company?.name}
-      />
+
+      <EditAvatar setFile={setFile} company={company} />
+
       <Modal.Body>
         <Form.Group className="mb-3" controlId="CompanyName">
           <Form.Label>Company name</Form.Label>
@@ -96,7 +89,7 @@ const AddEditCompany: FC<Props> = ({ show, handleClose, company }) => {
         <Button variant="gu-blue" className="mg-0" onClick={send}>
           {company ? 'Edit' : 'Save'}
         </Button>
-        <Button variant="gu-pink" className="mg-0" onClick={onCloseCancel}>
+        <Button variant="gu-pink" className="mg-0" onClick={handleClose}>
           Cancel
         </Button>
       </Modal.Footer>
