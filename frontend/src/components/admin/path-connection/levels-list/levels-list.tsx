@@ -10,7 +10,7 @@ interface Props {
 
 // This component appears after selecting domain.
 // It can be one or multiple select of levels and according to this user
-// have to see radiobuttons or checkboxes
+// will see radiobuttons or checkboxes
 const LevelsList: React.FC<Props> = ({
   levels,
   type = 'checkbox',
