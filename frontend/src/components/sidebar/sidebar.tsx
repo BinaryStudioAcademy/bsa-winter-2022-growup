@@ -58,7 +58,11 @@ const Sidebar: React.FC = () => {
                 src={logo}
                 alt="logo"
               />
-              <span className="logo-section__title logo-title fs-1 text-gu-white m-0 d-none d-md-block">
+              <span
+                className={`logo-section__title logo-title fs-1 text-gu-white m-0 d-none  ${
+                  isBurgerActive ? '' : 'd-md-block'
+                }`}
+              >
                 Grow Up
               </span>
             </div>
@@ -93,7 +97,11 @@ const Sidebar: React.FC = () => {
                       isBurgerActive ? '' : 'me-md-3'
                     }`}
                   />
-                  <span className="navigation-link__title d-none d-md-block">
+                  <span
+                    className={`navigation-link__title d-none  ${
+                      isBurgerActive ? '' : 'd-md-block'
+                    }`}
+                  >
                     Home
                   </span>
                 </span>
@@ -118,7 +126,11 @@ const Sidebar: React.FC = () => {
                       isBurgerActive ? '' : 'me-md-3'
                     }`}
                   />
-                  <span className="navigation-link__title d-none d-md-block">
+                  <span
+                    className={`navigation-link__title d-none  ${
+                      isBurgerActive ? '' : 'd-md-block'
+                    }`}
+                  >
                     Opportunities
                   </span>
                 </span>
@@ -138,7 +150,11 @@ const Sidebar: React.FC = () => {
                       isBurgerActive ? '' : 'me-md-3'
                     }`}
                   />
-                  <span className="navigation-link__title d-none d-md-block">
+                  <span
+                    className={`navigation-link__title d-none ${
+                      isBurgerActive ? '' : 'd-md-block'
+                    }`}
+                  >
                     Profile
                   </span>
                 </span>
@@ -163,7 +179,11 @@ const Sidebar: React.FC = () => {
                       isBurgerActive ? '' : 'me-md-3'
                     }`}
                   />
-                  <span className="navigation-link__title d-none d-md-block">
+                  <span
+                    className={`navigation-link__title d-none  ${
+                      isBurgerActive ? '' : 'd-md-block'
+                    }`}
+                  >
                     OKR
                   </span>
                 </span>
@@ -188,7 +208,11 @@ const Sidebar: React.FC = () => {
                       isBurgerActive ? '' : 'me-md-3'
                     }`}
                   />
-                  <span className="navigation-link__title d-none d-md-block">
+                  <span
+                    className={`navigation-link__title d-none  ${
+                      isBurgerActive ? '' : 'd-md-block'
+                    }`}
+                  >
                     Career Path
                   </span>
                 </span>
@@ -214,7 +238,11 @@ const Sidebar: React.FC = () => {
                         isBurgerActive ? '' : 'me-md-3'
                       }`}
                     />
-                    <span className="navigation-link__title d-none d-md-block">
+                    <span
+                      className={`navigation-link__title d-none  ${
+                        isBurgerActive ? '' : 'd-md-block'
+                      }`}
+                    >
                       Mentee Profiles
                     </span>
                   </span>
