@@ -4,6 +4,7 @@ import { IAuthApi } from 'common/interfaces/api';
 import { HttpMethod } from 'common/enums/http/http';
 import { ContentType } from 'common/enums/file/file';
 import { StatusType } from 'store/okr/common';
+import { SuccessResponse } from 'store/admin/common';
 
 class OkrApi {
   private http: Http;
@@ -109,6 +110,23 @@ class OkrApi {
     try {
       const result = await this.http.load<IOkr>(
         `${this.apiPath}/company/okr/status/${okrId}`,
+        options,
+      );
+      return result;
+    } catch (_) {
+      throw new Error('Can`t update okr status');
+    }
+  }
+  public async deleteOkr(okrId: string): Promise<SuccessResponse> {
+    const options = {
+      method: HttpMethod.DELETE,
+      contentType: ContentType.JSON,
+      payload: null,
+    };
+
+    try {
+      const result = await this.http.load<SuccessResponse>(
+        `${this.apiPath}/company/okr/${okrId}`,
         options,
       );
       return result;

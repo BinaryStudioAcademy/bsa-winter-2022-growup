@@ -4,6 +4,7 @@ import {
   ICloseOkr,
   ICreateKeyResult,
   ICreateNewObjective,
+  IDeleteObjective,
   IUpdateObjective,
   StatusType,
 } from './common';
@@ -19,7 +20,6 @@ const getAllOkrsByUser_async = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const result = await okrApi.getAllOkr();
-      console.warn(result);
       return result;
     } catch (err) {
       return rejectWithValue(err);
@@ -75,7 +75,6 @@ const createObjective_async = createAsyncThunk(
         objectiveBody,
         keyResults,
       });
-      console.warn(result);
       return result;
     } catch (err) {
       return rejectWithValue(err);
@@ -126,6 +125,30 @@ const closeOkr = createAsyncThunk(
   },
 );
 
+const deleteOkr = createAsyncThunk(
+  ActionType.DELETE_OKR,
+  async ({ okrId }: ICloseOkr, { rejectWithValue }) => {
+    try {
+      await okrApi.deleteOkr(okrId);
+      return okrId;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
+const deleteObjective = createAsyncThunk(
+  ActionType.DELETE_OBJECTIVES,
+  async ({ objectiveId, okrId }: IDeleteObjective, { rejectWithValue }) => {
+    try {
+      await objectiveApi.deleteObjective({ objectiveId });
+      return { objectiveId, okrId };
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
 export {
   getAllOkrsByUser_async,
   getOkrById_async,
@@ -135,4 +158,6 @@ export {
   updateObjective_async,
   createKeyResult_async,
   closeOkr,
+  deleteOkr,
+  deleteObjective,
 };

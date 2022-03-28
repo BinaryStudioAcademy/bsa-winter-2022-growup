@@ -4,6 +4,8 @@ import { Http } from 'services/http/http.service';
 import { IAuthApi } from 'common/interfaces/api';
 import { HttpMethod } from 'common/enums/http/http';
 import { ContentType } from 'common/enums/file/file';
+import { IDeleteObjective } from 'store/okr/common';
+import { SuccessResponse } from 'store/admin/common';
 
 class ObjectiveApi {
   private http: Http;
@@ -68,6 +70,25 @@ class ObjectiveApi {
       //passing an error to the handler
       console.warn(e);
       return null;
+    }
+  }
+  public async deleteObjective({
+    objectiveId,
+  }: IDeleteObjective): Promise<SuccessResponse> {
+    const options = {
+      method: HttpMethod.DELETE,
+      contentType: ContentType.JSON,
+      payload: null,
+    };
+
+    try {
+      const result = await this.http.load<SuccessResponse>(
+        `${this.apiPath}/company/okr/objective/${objectiveId}`,
+        options,
+      );
+      return result;
+    } catch (_) {
+      throw new Error('Can`t delete this objective');
     }
   }
 }

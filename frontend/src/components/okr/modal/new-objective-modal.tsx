@@ -77,7 +77,7 @@ const NewObjectiveModal: React.FC<Props> = ({
                 />
               </div>
               <TextField
-                label={'Score 0/1'}
+                label={'Score 0/100'}
                 control={control}
                 errors={errors}
                 type="number"

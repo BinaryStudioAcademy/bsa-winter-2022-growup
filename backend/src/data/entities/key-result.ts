@@ -10,6 +10,8 @@ export class KeyResult extends AbstractEntity {
   @Column({ type: 'integer' })
   result: number;
 
-  @ManyToOne(() => Objective, (objective) => objective.id)
+  @ManyToOne(() => Objective, (objective) => objective.id, {
+    onDelete: 'CASCADE',
+  })
   objective: Objective;
 }

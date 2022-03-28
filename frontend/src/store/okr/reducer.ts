@@ -31,6 +31,25 @@ const okrReducer = (builder: ActionReducerMapBuilder<State>): void => {
         );
         state.okrs[index].status = action.payload.status;
       }
+    })
+    .addCase(actions.deleteOkr.fulfilled, (state, action) => {
+      if (action.payload) {
+        const index = state.okrs.findIndex(
+          (item) => item.id === action.payload,
+        );
+        state.okrs.splice(index, 1);
+      }
+    })
+    .addCase(actions.deleteObjective.fulfilled, (state, action) => {
+      if (action.payload) {
+        const okrIndex = state.okrs.findIndex(
+          (item) => item.id === action.payload.okrId,
+        );
+        const objectiveIndex = state.okrs[okrIndex].objectives?.findIndex(
+          (item) => item.id === action.payload.objectiveId,
+        ) as number;
+        state.okrs[okrIndex]?.objectives?.splice(objectiveIndex, 1);
+      }
     });
 };
 export default okrReducer;
