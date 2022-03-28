@@ -48,6 +48,7 @@ const edit_companyAsync = createAsyncThunk(
       const { token, company } = result;
 
       window.localStorage.setItem(StorageKey.TOKEN, token);
+      dispatch(authActions.updateUserCompany(company));
       dispatch(actions.edit_company(company));
       handleClose();
     }
