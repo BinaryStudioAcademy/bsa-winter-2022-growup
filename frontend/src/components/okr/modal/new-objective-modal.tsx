@@ -20,7 +20,7 @@ const NewObjectiveModal: React.FC<Props> = ({
   const dispatch = useAppDispatch();
 
   const { control, handleSubmit, errors } = useAppForm<ObjectiveValues>({
-    defaultValues: { name: '', keyResults: [{ keyResultname: '', score: 0 }] },
+    defaultValues: { name: '', keyResults: [{ name: '', result: 0 }] },
     validationSchema: objectiveValidationSchema(),
   });
   const { fields, append, remove } = useFieldArray({
@@ -29,13 +29,17 @@ const NewObjectiveModal: React.FC<Props> = ({
   });
 
   const onSubmit = (data: ObjectiveValues): void => {
+    const keyValues = data.keyResults.map((res) => res.result);
+    const sumResult = keyValues.reduce((total, amount) => +total + +amount);
+    const objectiveValues = Math.round(sumResult / data.keyResults.length);
     dispatch(
       okrActions.createObjective_async({
         okrId,
         objectiveBody: {
           name: data.name,
-          result: 0,
+          result: objectiveValues,
         },
+        keyResults: data.keyResults,
       }),
     );
     console.warn(data);
@@ -69,7 +73,7 @@ const NewObjectiveModal: React.FC<Props> = ({
                   label={`Key Title ${index + 1}`}
                   control={control}
                   errors={errors}
-                  name={`keyResults.${index}.keyResultname`}
+                  name={`keyResults.${index}.name`}
                 />
               </div>
               <TextField
@@ -77,7 +81,7 @@ const NewObjectiveModal: React.FC<Props> = ({
                 control={control}
                 errors={errors}
                 type="number"
-                name={`keyResults.${index}.score`}
+                name={`keyResults.${index}.result`}
               />
               <Button
                 onClick={(): void => remove(index)}
@@ -89,8 +93,8 @@ const NewObjectiveModal: React.FC<Props> = ({
           );
         })}
         <Button
-          onClick={(): void => append({ keyResultname: '', score: 0 })}
-          className="ms-2 border-0 bg-transparent text-gu-pink fw-bold "
+          onClick={(): void => append({ name: '', result: 0 })}
+          className="ms-2 border-0 bg-transparent text-gu-pink fw-bold"
         >
           + Add key result
         </Button>

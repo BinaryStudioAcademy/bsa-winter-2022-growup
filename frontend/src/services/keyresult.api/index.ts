@@ -3,6 +3,7 @@ import { IAuthApi } from 'common/interfaces/api';
 import { Http } from 'services/http/http.service';
 import { HttpMethod } from 'common/enums/http/http';
 import { ContentType } from 'common/enums/file/file';
+import { IKeyResultObject } from 'store/okr/common';
 
 class KeyResultApi {
   private http: Http;
@@ -20,7 +21,7 @@ class KeyResultApi {
   }: {
     okrId: string;
     objectiveId: string;
-    keyResultBody: IKeyResult;
+    keyResultBody: IKeyResultObject;
   }): Promise<IKeyResult | null> {
     const options = {
       method: HttpMethod.POST,

@@ -6,34 +6,58 @@ import ObjectiveRepository from '~/data/repositories/objective.repository';
 import { badRequestError } from '~/common/errors';
 import { SuccessResponse } from '~/common/models/responses/success';
 import { HttpCode, HttpError } from 'growup-shared';
+import { KeyResult } from '~/data/entities/key-result';
+import KeyResultRepository from '~/data/repositories/key-result.repository';
+import { asyncForEach } from '~/common/helpers/array.helper';
 
-export const createObjectiveToOkr = async ({
-  okrId,
-  body,
-}: {
-  okrId: string;
-  body: Objective;
-}): Promise<Objective> => {
+interface IObjectiveKeyResults {
+  objective: { name: string; result: number };
+  keyResults: KeyResult[];
+}
+
+interface IObjective extends Objective {
+  keyResults: KeyResult[];
+}
+
+export const createObjectiveToOkr = async (
+  okrId: string,
+  body: IObjectiveKeyResults,
+): Promise<IObjective> => {
   const okrRepository = getCustomRepository(OkrRepository);
   const objectiveRepository = getCustomRepository(ObjectiveRepository);
+  const keyResultRepository = getCustomRepository(KeyResultRepository);
 
   const okr = await okrRepository.findOne({ id: okrId });
   const isObjectiveExist = await objectiveRepository.findOne({
-    name: body.name,
+    name: body.objective.name,
   });
 
   if (isObjectiveExist) {
-    badRequestError(`Objective with name ${body.name} is exist!!!`);
+    badRequestError(`Objective with name ${body.objective.name} is exist!!!`);
   }
 
   if (okr) {
     const objective = objectiveRepository.create({
-      name: body.name,
-      result: body.result,
+      name: body.objective.name,
+      result: body.objective.result,
       okr,
     });
 
     await objective.save();
+
+    const keyResults: KeyResult[] = [];
+    await asyncForEach(async ({ name, result }: KeyResult) => {
+      const keyResult = keyResultRepository.create({
+        name,
+        result,
+        objective,
+      });
+      await keyResult.save();
+
+      keyResults.push(keyResult);
+    }, body.keyResults);
+
+    objective.keyResults = keyResults;
 
     return objective;
   }

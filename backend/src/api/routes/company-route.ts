@@ -20,9 +20,7 @@ import { RoleType } from '~/common/enums/role-type';
 import {
   createOkrSchema,
   updateOkrSchema,
-  createObjectiveSchema,
   updateObjectiveSchema,
-  createKeyResultSchema,
 } from '~/common/validations';
 import {
   getAllOkr,
@@ -41,8 +39,6 @@ import {
   addNewKeyresultToObjective,
   deleteKeyResult,
 } from '~/services/key-result.service';
-import { Objective } from '~/data/entities/objective';
-import { KeyResult } from '~/data/entities/key-result';
 
 const router: Router = Router();
 interface UpdateStatus {
@@ -152,12 +148,8 @@ router
   .post(
     '/okr/:okrId/objective',
     validatePermissions([RoleType.MENTEE, RoleType.MENTOR]),
-    validateBody(createObjectiveSchema),
-    run((req): Promise<Objective> => {
-      const { body } = req;
-      const { okrId } = req.params;
-      const data = { okrId, body };
-      return createObjectiveToOkr(data);
+    run((req) => {
+      return createObjectiveToOkr(req.params.okrId, req.body);
     }),
   )
   .delete(
@@ -180,12 +172,12 @@ router
   .post(
     '/okr/:okrId/objective/:objectiveId/keyresult',
     validatePermissions([RoleType.MENTEE, RoleType.MENTOR]),
-    validateBody(createKeyResultSchema),
-    run((req): Promise<KeyResult> => {
-      const { okrId, objectiveId } = req.params;
-      const { body } = req;
-      const data = { okrId, objectiveId, body };
-      return addNewKeyresultToObjective(data);
+    run((req) => {
+      return addNewKeyresultToObjective(
+        req.params.okrId,
+        req.params.objectiveId,
+        req.body,
+      );
     }),
   )
   .delete(

@@ -1,4 +1,3 @@
-import { IKeyResult } from 'common/interfaces/key-result';
 import { IObjective } from 'common/interfaces/objective';
 import { IOkr } from 'common/interfaces/okr';
 
@@ -17,7 +16,8 @@ export type State = {
 
 export interface ICreateNewObjective {
   okrId: string;
-  objectiveBody: { name: string; result: number };
+  objectiveBody: IKeyResultObject;
+  keyResults: IKeyResultObject[];
 }
 
 export interface IUpdateObjective {
@@ -32,7 +32,12 @@ export enum StatusType {
 export interface ICreateKeyResult {
   okrId: string;
   objectiveId: string;
-  keyResultBody: IKeyResult;
+  keyResultBody: IKeyResultObject;
+}
+
+export interface IKeyResultObject {
+  name: string;
+  result: number;
 }
 
 export { ActionType };

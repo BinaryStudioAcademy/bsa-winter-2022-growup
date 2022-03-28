@@ -14,8 +14,8 @@ interface IUser {
 export type ObjectiveValues = {
   name: string;
   keyResults: {
-    keyResultname: string;
-    score: number;
+    name: string;
+    result: number;
   }[];
 };
 
