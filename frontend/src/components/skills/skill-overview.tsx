@@ -183,7 +183,8 @@ const SkillOverview = (): React.ReactElement => {
               aria-label="Default select example"
             >
               <option>All Skills</option>
-              <option value={`${IMPORTANT}`}>Important Skills</option>
+              <option value={`${IMPORTANT}`}>Important</option>
+              <option value={`${UNIMPORTANT}`}>Unimportant</option>
             </select>
           </div>
           <Form className="d-flex" onSubmit={handleSubmit(onAdd)}>
