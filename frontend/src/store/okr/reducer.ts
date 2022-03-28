@@ -21,7 +21,6 @@ const okrReducer = (builder: ActionReducerMapBuilder<State>): void => {
         );
         state.okrs[index].objectives?.push({
           ...action.payload,
-          keyResults: [],
         });
       }
     });

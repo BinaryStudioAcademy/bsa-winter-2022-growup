@@ -64,13 +64,14 @@ const updateOkrById_async = createAsyncThunk(
 const createObjective_async = createAsyncThunk(
   ActionType.CREATE_OBJECTIVES,
   async (
-    { okrId, objectiveBody }: ICreateNewObjective,
+    { okrId, objectiveBody, keyResults }: ICreateNewObjective,
     { rejectWithValue },
   ) => {
     try {
       const result = await objectiveApi.createObjective({
         okrId,
         objectiveBody,
+        keyResults,
       });
       console.warn(result);
       return result;

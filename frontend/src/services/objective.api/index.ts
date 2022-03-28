@@ -17,14 +17,19 @@ class ObjectiveApi {
   public async createObjective({
     okrId,
     objectiveBody,
+    keyResults,
   }: {
     okrId: string;
     objectiveBody: { name: string; result: number };
+    keyResults: { name: string; result: number }[];
   }): Promise<IObjective | null> {
     const options = {
       method: HttpMethod.POST,
       contentType: ContentType.JSON,
-      payload: JSON.stringify(objectiveBody),
+      payload: JSON.stringify({
+        objective: objectiveBody,
+        keyResults: keyResults,
+      }),
     };
 
     try {
