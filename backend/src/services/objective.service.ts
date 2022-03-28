@@ -75,7 +75,6 @@ export const updateObjectiveById = async (
 
   const okr = await okrRepository.findOne({ id: okrId });
   const objective = await objectiveRepository.findOne({ id: objectiveId });
-  console.log(objective);
 
   const keyResultInstance = await keyResultRepository.find({
     where: {
@@ -83,7 +82,7 @@ export const updateObjectiveById = async (
     },
     relations: ['objective'],
   });
-  for (let key of keyResultInstance) {
+  for (const key of keyResultInstance) {
     await key.remove();
   }
   if (okr) {
