@@ -12,9 +12,7 @@
   cursor: pointer;
   transition: all 0.5s linear;
   color: #000 !important;
-  &:hover {
-    background-color: rgba(207, 204, 204, 0.781) !important;
-  }
+
   &__name {
     max-width: 80%;
   }

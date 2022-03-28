@@ -27,12 +27,17 @@ import {
   createOkr,
   getOkrById,
   updateOkrById,
+  deleteOKR,
 } from '~/services/okr.service';
 import {
   createObjectiveToOkr,
+  deleteObjective,
   updateObjectiveById,
 } from '~/services/objective.service';
-import { addNewKeyresultToObjective } from '~/services/key-result.service';
+import {
+  addNewKeyresultToObjective,
+  deleteKeyResult,
+} from '~/services/key-result.service';
 import { Objective } from '~/data/entities/objective';
 import { KeyResult } from '~/data/entities/key-result';
 
@@ -110,6 +115,12 @@ router
       return updateOkrById(data);
     }),
   )
+  .delete(
+    '/okr/:id',
+    run((req) => {
+      return deleteOKR(req.params.id);
+    }),
+  )
   .post(
     '/okr/:okrId/objective',
     validatePermissions([RoleType.MENTEE, RoleType.MENTOR]),
@@ -119,6 +130,12 @@ router
       const { okrId } = req.params;
       const data = { okrId, body };
       return createObjectiveToOkr(data);
+    }),
+  )
+  .delete(
+    '/okr/objective/:id',
+    run((req) => {
+      return deleteObjective(req.params.id);
     }),
   )
   .put(
@@ -141,6 +158,12 @@ router
       const { body } = req;
       const data = { okrId, objectiveId, body };
       return addNewKeyresultToObjective(data);
+    }),
+  )
+  .delete(
+    '/okr/objective/keyresult/:id',
+    run((req) => {
+      return deleteKeyResult(req.params.id);
     }),
   );
 
