@@ -5,25 +5,30 @@ import { useFieldArray } from 'react-hook-form';
 import { objectiveValidationSchema } from 'validation-schemas/validation-schemas';
 import { XLg } from 'react-bootstrap-icons';
 import { ObjectiveValues } from '../common/interfaces';
+
 interface Props {
   showModal: boolean;
   closeModal: () => void;
+  okrId: string;
 }
 
-const NewObjectiveModal: React.FC<Props> = ({ showModal, closeModal }) => {
+const NewObjectiveModal: React.FC<Props> = ({
+  showModal,
+  closeModal,
+  okrId,
+}) => {
   const { control, handleSubmit, errors } = useAppForm<ObjectiveValues>({
     defaultValues: { name: '', keyResults: [{ keyResultname: '', score: 0 }] },
     validationSchema: objectiveValidationSchema(),
   });
-
   const { fields, append, remove } = useFieldArray({
     name: 'keyResults',
     control,
   });
 
-  const onSubmit = (data: ObjectiveValues): void => {
-    //View recieved data
-    console.warn(data);
+  const onSubmit = (objectiveBody: ObjectiveValues): void => {
+    console.warn(objectiveBody);
+    console.warn(okrId);
     closeModal();
   };
   return (
@@ -31,13 +36,14 @@ const NewObjectiveModal: React.FC<Props> = ({ showModal, closeModal }) => {
       show={showModal}
       onClose={closeModal}
       title={'Create New Objective'}
-      buttonText={'Save'}
+      buttonText={'Create Objective'}
       onSubmit={handleSubmit(onSubmit)}
       footer
+      className="objective-modal"
     >
-      <Form className="w-100">
+      <Form className="mw-75 objective-form">
         <TextField
-          label={'Objective Name'}
+          label={'Objective Title'}
           control={control}
           errors={errors}
           name="name"
@@ -45,16 +51,16 @@ const NewObjectiveModal: React.FC<Props> = ({ showModal, closeModal }) => {
         {fields.map((field, index) => {
           return (
             <Form.Group className="d-flex align-items-center mt-3 ms-3">
-              <div className="me-4">
+              <div className="me-3">
                 <TextField
-                  label={'Key Name'}
+                  label={`Key Title ${index + 1}`}
                   control={control}
                   errors={errors}
                   name={`keyResults.${index}.keyResultname`}
                 />
               </div>
               <TextField
-                label={'Score'}
+                label={'Score 0/1'}
                 control={control}
                 errors={errors}
                 type="number"
@@ -62,7 +68,7 @@ const NewObjectiveModal: React.FC<Props> = ({ showModal, closeModal }) => {
               />
               <Button
                 onClick={(): void => remove(index)}
-                className="border-0 bg-transparent text-gu-black"
+                className="border-0 bg-transparent text-gu-black hover-pink"
               >
                 <XLg />
               </Button>
@@ -71,7 +77,7 @@ const NewObjectiveModal: React.FC<Props> = ({ showModal, closeModal }) => {
         })}
         <Button
           onClick={(): void => append({ keyResultname: '', score: 0 })}
-          className="ms-2 border-0 bg-transparent text-gu-pink fw-bold"
+          className="ms-2 border-0 bg-transparent text-gu-pink fw-bold "
         >
           +add key result
         </Button>

@@ -69,6 +69,7 @@ const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHanlder }) => {
         <NewObjectiveModal
           showModal={isShowCreateObjectiveModal}
           closeModal={closeModal}
+          okrId={id}
         />
       )}
     </>
