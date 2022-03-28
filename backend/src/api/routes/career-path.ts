@@ -27,6 +27,8 @@ import {
   // deletePath,
 } from '../controllers/career-path.controller';
 
+// Commented code will be used for setting up domain connections
+
 const router = Router();
 
 // // CAREER-PATH
