@@ -12,8 +12,12 @@ import { careerPathActions } from 'store/career-path';
 import { ChangeEvent } from 'react';
 import { NotificationManager } from 'react-notifications';
 
+// This is main page of career-path connection settings.
+// Includes drop-down selects, lists of levels, visual
+// displaying of the connections.
+
 const PathConnection: React.FC = () => {
-  const domains = useAppSelector((state) => state.careerPath.domains) || []; // CHANGE !!!
+  const domains = useAppSelector((state) => state.careerPath.domains) || [];
   const [prevDomainIndex, setPrevDomainIndex] = useState(0);
   const [nextDomainIndex, setNextDomainIndex] = useState(0);
   const [prevLevel, setPrevLevel] = useState('');
@@ -34,10 +38,13 @@ const PathConnection: React.FC = () => {
   const prevDomainId = prevDomainIndex
     ? domains[prevDomainIndex - 1]?.domain.id
     : undefined;
+
   // const nextDomainId = nextDomainIndex ? domains[nextDomainIndex-1]?.domain.id : undefined;
+
   const prevlevels = prevDomainIndex
     ? domains[prevDomainIndex - 1]?.levels
     : [];
+
   const nextlevels = nextDomainIndex
     ? domains[nextDomainIndex - 1]?.levels
     : [];

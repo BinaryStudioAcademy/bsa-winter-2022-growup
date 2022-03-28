@@ -8,6 +8,7 @@ interface Props {
   value: string;
 }
 
+// This components is a part of the list of levels  - checkbox or radiobutton element
 const ListItem: React.FC<Props> = ({
   type = 'checkbox',
   name,

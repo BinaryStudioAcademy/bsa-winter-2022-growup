@@ -20,12 +20,18 @@ interface IDomainLevelsConnection {
   connections: ILevelsConnection[];
 }
 
+// This component is responsible for outputing all connections
+// (levels and domains) in form of the group of items
+
 const Pairs: React.FC = () => {
   const domains = useAppSelector((state) => state.careerPath.domains);
+
   const dispatch = useAppDispatch();
+
   const [mappedLevelsConnections, setMappedLevelsConnections] = useState<
     IDomainLevelsConnection[]
   >([]);
+
   // const [mappedDomainsConnections, setMappedDomainsConnections] = useState<IDomain[]>([]);
 
   useEffect(() => {
