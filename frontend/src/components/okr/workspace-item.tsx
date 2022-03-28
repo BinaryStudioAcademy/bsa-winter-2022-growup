@@ -5,6 +5,7 @@ import OkrModal from './modal';
 import './styles.scss';
 import { IOkr } from 'common/interfaces/okr';
 import { StatusType } from 'store/okr/common';
+import getOkrNumber from './getOkrNumber';
 
 interface Props {
   okr: IOkr;
@@ -20,8 +21,10 @@ const OrkItem: React.FC<Props> = ({
   onClickInfo,
 }) => {
   const [showModal, setShowModal] = useState(false);
-
-  const openModal = (): void => setShowModal(true);
+  const score = getOkrNumber(okr);
+  const openModal = (): void => {
+    setShowModal(true);
+  };
   const closeModal = (): void => setShowModal(false);
 
   return (
@@ -37,7 +40,9 @@ const OrkItem: React.FC<Props> = ({
         onClick={(): void => onClickInfo(okr.id)}
       >
         <div className="OKR-name fs-2 mt-2 fw-bold">{okr.name}</div>
-        <div className="reached fs-5 fw-bold align-bottom text-end">0.85</div>
+        <div className="reached fs-5 fw-bold align-bottom text-end">
+          {score}
+        </div>
         <div className="objectives fs-6 mb-4 fw-bold">
           Objectives: {objectivesCounter},
         </div>

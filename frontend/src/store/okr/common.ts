@@ -7,10 +7,17 @@ enum ActionType {
   CREATE_OBJECTIVES = 'create_objectives',
   CLOSE_OKR = 'close_okr',
   CREATE_OKR = 'create_okr',
+  DELETE_OKR = 'delete_okr',
+  DELETE_OBJECTIVES = 'delete_objectives',
 }
 export interface ICloseOkr {
   okrId: string;
 }
+export interface IDeleteObjective {
+  objectiveId: string;
+  okrId?: string;
+}
+
 export type State = {
   okrs: IOkr[];
 };

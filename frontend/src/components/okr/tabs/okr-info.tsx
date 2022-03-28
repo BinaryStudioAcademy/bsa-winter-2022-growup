@@ -5,6 +5,9 @@ import Objective from '../objective/objective';
 import { useState } from 'react';
 import NewObjectiveModal from '../modal/new-objective-modal';
 import * as okrActions from '../../../store/okr/actions';
+import { NotificationManager } from 'react-notifications';
+import getOkrNumber from '../getOkrNumber';
+import { IOkr } from 'common/interfaces/okr';
 
 interface IOkrInfoProps {
   id: string;
@@ -14,14 +17,25 @@ interface IOkrInfoProps {
 const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHanlder }) => {
   const okrItems = useAppSelector((store) => store.okr.okrs);
   const dispatch = useAppDispatch();
-  const currentOkr = okrItems.find((item) => item.id == id);
+  const currentOkr = okrItems.find((item) => item.id == id) as IOkr;
   const [isShowCreateObjectiveModal, setIsShowCreateObjectiveModal] =
     useState(false);
-
+  const score = getOkrNumber(currentOkr);
   const openModal = (): void => setIsShowCreateObjectiveModal(true);
   const closeModal = (): void => setIsShowCreateObjectiveModal(false);
   const closeOkrHandler = (): void => {
     dispatch(okrActions.closeOkr({ okrId: id }));
+    goBackHanlder();
+  };
+  const deteOkrHandler = (): void => {
+    dispatch(okrActions.deleteOkr({ okrId: id }))
+      .unwrap()
+      .then(() => {
+        NotificationManager.success('OKR was deleted successfully');
+      })
+      .catch(() => {
+        NotificationManager.error('Can`t delete OKR');
+      });
     goBackHanlder();
   };
 
@@ -36,12 +50,20 @@ const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHanlder }) => {
             <ArrowLeft className="me-2" />
             back
           </span>
-          <span
-            className="cursor-pointer text-gu-blue hover-blue"
-            onClick={closeOkrHandler}
-          >
-            close OKR
-          </span>
+          <div className="d-flex flex-column justify-content-end text-end">
+            <span
+              className="cursor-pointer text-gu-blue hover-blue"
+              onClick={closeOkrHandler}
+            >
+              close OKR
+            </span>
+            <span
+              className="cursor-pointer text-gu-pink mt-2"
+              onClick={deteOkrHandler}
+            >
+              delete OKR
+            </span>
+          </div>
         </div>
         <div className="fs-2 text-gu-black fw-bold mb-2">
           {currentOkr?.name}
@@ -66,12 +88,12 @@ const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHanlder }) => {
             </span>
           </div>
 
-          <span className="fs-4 text-gu-black fw-bold">0.49</span>
+          <span className="fs-4 text-gu-black fw-bold">{score}</span>
         </div>
       </div>
       <div className="okr__main d-flex flex-column">
         {currentOkr?.objectives?.map((item, index) => {
-          return <Objective objective={item} key={index} />;
+          return <Objective objective={item} key={index} okrId={id} />;
         })}
       </div>
       {isShowCreateObjectiveModal && (

@@ -1,25 +1,50 @@
 import { IObjective } from 'common/interfaces/objective';
+import { Button } from 'components/common/common';
+import { Pencil, Trash } from 'react-bootstrap-icons';
 import KeyResult from './key-result';
 import './style.scss';
-
+import * as okrActions from '../../../store/okr/actions';
+import { useAppDispatch } from 'hooks/hooks';
+import { NotificationManager } from 'react-notifications';
 interface Props {
   objective: IObjective;
+  okrId: string;
 }
 
-const Objective: React.FC<Props> = ({ objective }) => {
+const Objective: React.FC<Props> = ({ objective, okrId }) => {
+  const dispatch = useAppDispatch();
+  const deleteObjectiveHandler = (): void => {
+    dispatch(okrActions.deleteObjective({ objectiveId: objective.id, okrId }))
+      .unwrap()
+      .then(() => {
+        NotificationManager.success('Objective was deleted successfully');
+      })
+      .catch(() => {
+        NotificationManager.error('Can`t delete objective');
+      });
+  };
   return (
     <>
       <div className="objective-header d-flex justify-content-between mt-5">
         <span className="fw-bold fs-4 text-gu-black">{objective.name}</span>
-        <span className="fw-bold fs-4 text-gu-black">{objective.result}</span>
+        <div className="d-flex align-items-center">
+          <span className="fw-bold fs-4 text-gu-black me-2">
+            {(objective.result / 100).toFixed(2)}
+          </span>
+          <Button className="border-0 bg-transparent text-gu-black hover-pink p-1">
+            <Pencil></Pencil>
+          </Button>
+          <Button
+            className="border-0 bg-transparent text-gu-black hover-pink p-1"
+            onClick={deleteObjectiveHandler}
+          >
+            <Trash></Trash>
+          </Button>
+        </div>
       </div>
 
       {objective.keyResults?.map((key, index) => {
-        return (
-          <div className="objective-main p-2" key={index}>
-            <KeyResult name={key.name} result={key.result} />
-          </div>
-        );
+        return <KeyResult name={key.name} result={key.result} key={index} />;
       })}
     </>
   );
