@@ -7,6 +7,9 @@ export class KeyResult extends AbstractEntity {
   @Column({ type: 'varchar', length: 250 })
   name: string;
 
+  @Column({ type: 'integer' })
+  result: number;
+
   @ManyToOne(() => Objective, (objective) => objective.id)
   objective: Objective;
 }

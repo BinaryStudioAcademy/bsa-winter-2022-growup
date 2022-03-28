@@ -6,18 +6,13 @@ import { badRequestError } from '~/common/errors';
 import { KeyResult } from '~/data/entities/key-result';
 import { SuccessResponse } from '~/common/models/responses/success';
 import { HttpCode, HttpError } from 'growup-shared';
+import { asyncForEach } from '~/common/helpers/array.helper';
 
-export const addNewKeyresultToObjective = async ({
-  okrId,
-  objectiveId,
-  body,
-}: {
-  okrId: string;
-  objectiveId: string;
-  body: { name: string };
-}): Promise<KeyResult> => {
-  if (!body.name) throw badRequestError('Keyresult name is undefined!!!');
-
+export const addNewKeyresultToObjective = async (
+  okrId: string,
+  objectiveId: string,
+  data: KeyResult[],
+): Promise<KeyResult[]> => {
   const okrRepository = getCustomRepository(OkrRepository);
   const objectiveRepository = getCustomRepository(ObjectiveRepository);
   const keyResultRepository = getCustomRepository(KeyResultRepository);
@@ -32,13 +27,19 @@ export const addNewKeyresultToObjective = async ({
     throw badRequestError('Objective isn`t exist!!!');
   }
 
-  const keyResult = keyResultRepository.create();
-  Object.assign(keyResult, body);
-  keyResult.objective = objective;
+  const keyResults: KeyResult[] = [];
+  await asyncForEach(async ({ name, result }: KeyResult) => {
+    const keyResult = keyResultRepository.create({
+      name,
+      result,
+      objective,
+    });
+    await keyResult.save();
 
-  await keyResult.save();
+    keyResults.push(keyResult);
+  }, data);
 
-  return keyResult;
+  return keyResults;
 };
 
 export const deleteKeyResult = async (id: string): Promise<SuccessResponse> => {

@@ -1,4 +1,3 @@
-import { IKeyResult } from 'common/interfaces/key-result';
 import { IObjective } from 'common/interfaces/objective';
 import { IOkr } from 'common/interfaces/okr';
 
@@ -25,7 +24,12 @@ export interface IUpdateObjective {
 export interface ICreateKeyResult {
   okrId: string;
   objectiveId: string;
-  keyResultBody: IKeyResult;
+  keyResultBody: IKeyResultObject;
+}
+
+export interface IKeyResultObject {
+  name: string;
+  result: number;
 }
 
 export { ActionType };
