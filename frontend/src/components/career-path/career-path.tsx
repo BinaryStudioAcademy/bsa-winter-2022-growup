@@ -1,28 +1,34 @@
 import LevelFlow from './flow/level-flow';
-import { useAppSelector, useEffect, useState } from 'hooks/hooks';
+import { useEffect, useState } from 'hooks/hooks';
 import LevelDescription from './level-description/level-description';
 import { getFlowData } from './mock/helpers/get-flow-data';
-import { ISkills } from './common/interfaces';
-import mock from './mock';
+import { IAllTechnicalSkills } from './common/interfaces';
+import { mockData } from './mock/mock';
 import './styles.scss';
 
 const CareerPath: React.FC = () => {
-  const [level, setLevel] = useState<string>('');
-  const [skills, setSkills] = useState<ISkills[]>([]);
-  const position =
-    useAppSelector((state) => state.profile.user?.position) || '';
+  const [levelId, setLevelId] = useState<string>(
+    '43d25479-4e75-458d-87c1-8273b8f6eec0',
+  );
+  const [levelName, setLevelName] = useState<string>('');
+  const [skills, setSkills] = useState<IAllTechnicalSkills[]>([]);
 
   const { nodes, edges, initialSkill } = getFlowData(
-    mock,
-    position,
-    (e: ISkills[], level: string): void => {
-      setLevel(level);
-      setSkills(e);
+    mockData,
+    levelId,
+    (
+      technicalSkills: IAllTechnicalSkills[],
+      id: string,
+      level: string,
+    ): void => {
+      setSkills(technicalSkills);
+      setLevelId(id);
+      setLevelName(level);
     },
   );
 
   useEffect(() => {
-    setLevel(initialSkill.name);
+    setLevelName(initialSkill.name);
     setSkills(initialSkill.skills);
   }, []);
 
@@ -31,7 +37,7 @@ const CareerPath: React.FC = () => {
       <div className="w-100 h-100">
         <LevelFlow nodes={nodes} edges={edges} />
       </div>
-      <LevelDescription level={level} technicalSkills={skills} />
+      <LevelDescription level={levelName} technicalSkills={skills} />
     </div>
   );
 };

@@ -4,17 +4,17 @@ import { ShieldFillCheck } from 'react-bootstrap-icons';
 import { INode } from '../common/interfaces';
 import avatar from 'assets/img/icons/header-icons/avatar-icon.svg';
 
-export const getUserNode = (title: string): INode => {
+export const getUserNode = (position: string, level: string): INode => {
   return {
     id: uuidv4(),
     type: 'userNode',
     data: {
       icon: <img src={avatar} alt="Avatar" />,
-      title,
+      title: position,
       subtitle: (
         <>
           <ShieldFillCheck className="text-gu-blue me-2 fs-5" />
-          <span>level 2</span>
+          <span>{level}</span>
         </>
       ),
     },
