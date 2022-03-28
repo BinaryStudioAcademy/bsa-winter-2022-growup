@@ -54,11 +54,27 @@ const edit_companyAsync = createAsyncThunk(
   },
 );
 
+const update_companyAvatarAsync = createAsyncThunk(
+  ActionType.UPDATE_AVATAR,
+  async (data: Blob, { dispatch, rejectWithValue }) => {
+    try {
+      const result = await companyApi.updateCompanyAvatar(data);
+
+      if (result) {
+        dispatch(authActions.updateUserCompany(result));
+      }
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
 const companyActions = {
   ...actions,
   get_allCompaniesAsync,
   add_companyAsync,
   edit_companyAsync,
+  update_companyAvatarAsync,
 };
 
 export { companyActions };

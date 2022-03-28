@@ -1,4 +1,5 @@
-import { Router } from 'express';
+import { Router, Request } from 'express';
+import multer from 'multer';
 import { run } from '~/common/helpers/route.helper';
 import {
   CompanyResponse,
@@ -13,6 +14,7 @@ import {
   createCompany,
   editCompany,
   getAllCompanies,
+  updateCompanyAvatar,
 } from '~/services/company.service';
 import { RoleType } from '~/common/enums/role-type';
 import {
@@ -47,6 +49,8 @@ interface UpdateStatus {
   okrId: string;
   status: StatusType;
 }
+const upload = multer();
+
 router
   .get(
     '/',
@@ -69,6 +73,11 @@ router
       const data = { body, tokenPayload };
       return createCompany(data);
     }),
+  )
+  .put(
+    '/avatar',
+    upload.single('avatar'),
+    run((req: Request) => updateCompanyAvatar(req.userId, req.file)),
   )
   .patch(
     '/:id',
