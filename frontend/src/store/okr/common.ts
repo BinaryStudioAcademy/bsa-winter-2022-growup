@@ -6,6 +6,7 @@ enum ActionType {
   UPDATE_OKR_BY_ID = 'update_okr_by_id',
   CREATE_OBJECTIVES = 'create_objectives',
   CLOSE_OKR = 'close_okr',
+  CREATE_OKR = 'create_okr',
 }
 export interface ICloseOkr {
   okrId: string;
