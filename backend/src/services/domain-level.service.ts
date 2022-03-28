@@ -120,10 +120,6 @@ export const updateLevelById = async (
   await domainLevelRepository.update({ id }, level);
 
   const updatedLevel = await domainLevelRepository.findOne({ id });
-  const children = await getManager()
-    .getTreeRepository(DomainLevel)
-    .findDescendants(updatedLevel);
-  updatedLevel.nextLevel = children;
 
   return updatedLevel;
 };
