@@ -71,8 +71,8 @@ const UpdateObjectiveModal: React.FC<Props> = ({
     <Modal
       show={showModal}
       onClose={closeModal}
-      title={'Create New Objective'}
-      buttonText={'Create Objective'}
+      title={'Update Objective'}
+      buttonText={'Update Objective'}
       onSubmit={handleSubmit(onSubmit)}
       footer
       className="objective-modal"
