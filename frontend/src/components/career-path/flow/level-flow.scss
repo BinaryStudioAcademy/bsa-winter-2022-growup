@@ -1,4 +1,7 @@
 .level-flow {
   z-index: 0;
-  height: calc(100vh - 135px);
+}
+
+.react-flow__attribution {
+  display: none;
 }

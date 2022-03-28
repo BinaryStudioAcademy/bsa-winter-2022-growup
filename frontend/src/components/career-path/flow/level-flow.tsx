@@ -21,7 +21,7 @@ const LevelFlow: React.FC<Props> = ({ nodes, edges }) => {
 
   const [instance, setInstance] = useState<ReactFlowInstance>();
   const levelFlow = document.getElementById('level-flow');
-  const levelFlowHeight = edges.length * LEVEL_WIDTH;
+  const levelFlowHeight = (edges.length || 1) * LEVEL_WIDTH;
   const levelFlowWidth = levelFlow?.clientWidth || 1;
   const prefZoom = levelFlowWidth / MAX_LEVEL_FLOW_WIDTH;
 
