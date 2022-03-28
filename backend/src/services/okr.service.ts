@@ -1,17 +1,19 @@
 import { getCustomRepository } from 'typeorm';
 import { OKR } from '~/data/entities/okr';
-import Okrepository from '~/data/repositories/okr.repository';
+import OkrRepository from '~/data/repositories/okr.repository';
 import UserRepository from '~/data/repositories/user.repository';
 import { badRequestError } from '~/common/errors';
+import { SuccessResponse } from '~/common/models/responses/success';
+import { HttpCode, HttpError } from 'growup-shared';
 
 export const getAllOkr = async (userId: string): Promise<OKR[]> => {
-  const okrRepository = getCustomRepository(Okrepository);
+  const okrRepository = getCustomRepository(OkrRepository);
   const okrs = okrRepository.getAllByUserId(userId);
   return okrs;
 };
 
 export const getOkrById = async (okrId: string): Promise<OKR> => {
-  const okrRepository = getCustomRepository(Okrepository);
+  const okrRepository = getCustomRepository(OkrRepository);
 
   const okr = await okrRepository.getOneById(okrId);
 
@@ -33,7 +35,7 @@ export const createOkr = async ({
     startDate: string;
   };
 }): Promise<OKR> => {
-  const okrRepository = getCustomRepository(Okrepository);
+  const okrRepository = getCustomRepository(OkrRepository);
   const userRepository = getCustomRepository(UserRepository);
 
   const user = await userRepository.findOne({ id: userId });
@@ -58,7 +60,7 @@ export const updateOkrById = async ({
   okrId: string;
   data: OKR;
 }): Promise<OKR> => {
-  const okrRepository = getCustomRepository(Okrepository);
+  const okrRepository = getCustomRepository(OkrRepository);
   const okr = await okrRepository.findOne({ id: okrId });
 
   if (okr) {
@@ -70,4 +72,19 @@ export const updateOkrById = async ({
   }
 
   throw badRequestError('Okr isn`t exist!!!');
+};
+
+export const deleteOKR = async (id: string): Promise<SuccessResponse> => {
+  const okrsRepository = getCustomRepository(OkrRepository);
+  const okrInstance = await okrsRepository.findOne(id);
+
+  if (!okrInstance)
+    throw new HttpError({
+      status: HttpCode.NOT_FOUND,
+      message: 'Okr with this id does not exist',
+    });
+
+  await okrInstance.remove();
+
+  return { success: true, message: 'Okr deleted successfully' };
 };
