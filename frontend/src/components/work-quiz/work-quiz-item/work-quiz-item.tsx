@@ -10,15 +10,22 @@ type Props = {
     question: IQuestion,
     answer: IAnswer,
   ) => void;
+  name: number;
 };
 
-const TestItem: React.FC<Props> = ({ answer, question, onCheckboxClick }) => {
+const TestItem: React.FC<Props> = ({
+  answer,
+  question,
+  onCheckboxClick,
+  name,
+}) => {
   return (
     <Form.Check className="test-item">
       <Form.Check.Input
         className="test-item__checkbox"
-        type="checkbox"
+        type="radio"
         onChange={(e): void => onCheckboxClick(e, question, answer)}
+        name={String(name)}
       />
       <Form.Check.Label className="test-item__label">
         {answer.answer}

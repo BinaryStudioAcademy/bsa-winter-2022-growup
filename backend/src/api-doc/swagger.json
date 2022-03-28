@@ -298,6 +298,46 @@
             }
           }
         }
+      },
+      "delete": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Tag id you want to delete"
+          }
+        ],
+        "tags": ["Okr"],
+        "summary": "Delete okr by id",
+        "responses": {
+          "200": {
+            "description": "Return status of deletion",
+            "schema": {
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "default": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "default": "Okr was deleted successfully"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/company/okr/{id}/objective": {
@@ -423,6 +463,48 @@
         }
       }
     },
+    "/api/company/okr/objective/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Tag id you want to delete"
+          }
+        ],
+        "tags": ["Okr"],
+        "summary": "Delete objective by id",
+        "responses": {
+          "200": {
+            "description": "Return status of deletion",
+            "schema": {
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "default": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "default": "Objective was deleted successfully"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/company/okr/{okrId}/objective/{objectiveId}/keyresult": {
       "post": {
         "tags": ["Okr"],
@@ -481,6 +563,48 @@
             "description": "Returns error if data is invalid.",
             "schema": {
               "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/api/company/okr/objective/keyresult/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "KeyResult id you want to delete"
+          }
+        ],
+        "tags": ["Okr"],
+        "summary": "Delete KeyResult by id",
+        "responses": {
+          "200": {
+            "description": "Return status of deletion",
+            "schema": {
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "default": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "default": "KeyResult was deleted successfully"
+                }
+              }
             }
           }
         }
@@ -664,11 +788,15 @@
                   "properties": {
                     "user": {
                       "allOf": [
-                        { "$ref": "#/definitions/User" },
+                        {
+                          "$ref": "#/definitions/User"
+                        },
                         {
                           "type": "object",
                           "properties": {
-                            "isCompleteTest": { "type": "boolean" }
+                            "isCompleteTest": {
+                              "type": "boolean"
+                            }
                           }
                         }
                       ]
@@ -723,11 +851,15 @@
                   "properties": {
                     "user": {
                       "allOf": [
-                        { "$ref": "#/definitions/User" },
+                        {
+                          "$ref": "#/definitions/User"
+                        },
                         {
                           "type": "object",
                           "properties": {
-                            "isCompleteTest": { "type": "boolean" }
+                            "isCompleteTest": {
+                              "type": "boolean"
+                            }
                           }
                         }
                       ]
@@ -1377,7 +1509,6 @@
         }
       }
     },
-
     "/api/user/career-journey": {
       "get": {
         "parameters": [
@@ -3113,7 +3244,9 @@
     },
     "Company": {
       "allOf": [
-        { "$ref": "#/definitions/Default" },
+        {
+          "$ref": "#/definitions/Default"
+        },
         {
           "type": "object",
           "properties": {
@@ -3181,7 +3314,9 @@
     },
     "User": {
       "allOf": [
-        { "$ref": "#/definitions/Default" },
+        {
+          "$ref": "#/definitions/Default"
+        },
         {
           "type": "object",
           "properties": {
@@ -3532,7 +3667,6 @@
         }
       }
     },
-
     "CareerJourney": {
       "type": "object",
       "properties": {

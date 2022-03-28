@@ -4,6 +4,8 @@ import { OKR } from '~/data/entities/okr';
 import OkrRepository from '~/data/repositories/okr.repository';
 import ObjectiveRepository from '~/data/repositories/objective.repository';
 import { badRequestError } from '~/common/errors';
+import { SuccessResponse } from '~/common/models/responses/success';
+import { HttpCode, HttpError } from 'growup-shared';
 
 export const createObjectiveToOkr = async ({
   okrId,
@@ -68,4 +70,19 @@ export const updateObjectiveById = async ({
 
   const responceOkr = okrRepository.getOneById(okrId);
   return responceOkr;
+};
+
+export const deleteObjective = async (id: string): Promise<SuccessResponse> => {
+  const objectivesRepository = getCustomRepository(ObjectiveRepository);
+  const objectiveInstance = await objectivesRepository.findOne(id);
+
+  if (!objectiveInstance)
+    throw new HttpError({
+      status: HttpCode.NOT_FOUND,
+      message: 'Objective with this id does not exist',
+    });
+
+  await objectiveInstance.remove();
+
+  return { success: true, message: 'Objective deleted successfully' };
 };

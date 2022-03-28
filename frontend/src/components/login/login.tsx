@@ -18,17 +18,17 @@ import { IUserLoginForm } from '../../common/interfaces/user';
 import { login as loginValidationSchema } from 'validation-schemas/validation-schemas';
 import { DEFAULT_LOGIN_PAYLOAD } from './common/constants';
 import './styles.scss';
-import isFirstLogged from 'helpers/check-is-first-logged';
+import isLoginLogged from 'helpers/check-is-first-logged/login';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector((state) => state.auth.isLoading);
-  const user = useAppSelector((store) => store.profile.user);
-
+  const isReject = useAppSelector((state) => state.auth.isReject);
+  const user = useAppSelector((store) => store.auth.user);
   useEffect(() => {
-    isFirstLogged({ user, navigate });
-  }, [user]);
+    if (isReject) isLoginLogged({ user, navigate });
+  }, [isReject]);
 
   const [isHiddenPassword, setIsHiddenPassword] = useState(true);
 

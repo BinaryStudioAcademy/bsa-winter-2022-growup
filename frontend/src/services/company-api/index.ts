@@ -91,6 +91,18 @@ class CompanyApi {
       return null;
     }
   }
+
+  updateCompanyAvatar(image: Blob): Promise<ICompany> {
+    const formData = new FormData();
+    formData.append('avatar', image);
+
+    return this.http.load(`${this.apiPath}/company/avatar`, {
+      method: HttpMethod.PUT,
+      contentType: ContentType.MULTIPART_FORM_DATA,
+      hasAuth: true,
+      payload: formData,
+    });
+  }
 }
 
 export { CompanyApi };
