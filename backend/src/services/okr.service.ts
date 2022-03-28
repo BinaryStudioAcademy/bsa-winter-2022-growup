@@ -48,7 +48,7 @@ export const createOkr = async ({
   const okr = okrRepository.create();
   Object.assign(okr, body);
   okr.user = user;
-
+  okr.objectives = [];
   await okr.save();
   return okr;
 };
