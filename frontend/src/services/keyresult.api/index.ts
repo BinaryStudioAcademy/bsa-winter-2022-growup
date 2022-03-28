@@ -1,5 +1,4 @@
 import { IKeyResult } from 'common/interfaces/key-result';
-import { IOkr } from 'common/interfaces/okr';
 import { IAuthApi } from 'common/interfaces/api';
 import { Http } from 'services/http/http.service';
 import { HttpMethod } from 'common/enums/http/http';
@@ -22,7 +21,7 @@ class KeyResultApi {
     okrId: string;
     objectiveId: string;
     keyResultBody: IKeyResult;
-  }): Promise<IOkr | null> {
+  }): Promise<IKeyResult | null> {
     const options = {
       method: HttpMethod.POST,
       contentType: ContentType.JSON,
@@ -30,7 +29,7 @@ class KeyResultApi {
     };
 
     try {
-      const result = await this.http.load<IOkr>(
+      const result = await this.http.load<IKeyResult>(
         `${this.apiPath}/company/okr/${okrId}/objective/${objectiveId}/keyresult`,
         options,
       );

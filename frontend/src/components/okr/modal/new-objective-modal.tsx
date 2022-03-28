@@ -1,16 +1,24 @@
 import { Button, Modal, TextField } from 'components/common/common';
-import { useAppForm } from 'hooks/hooks';
+import { useAppDispatch, useAppForm } from 'hooks/hooks';
 import { Form } from 'react-bootstrap';
 import { useFieldArray } from 'react-hook-form';
 import { objectiveValidationSchema } from 'validation-schemas/validation-schemas';
 import { XLg } from 'react-bootstrap-icons';
 import { ObjectiveValues } from '../common/interfaces';
+import { okrActions } from 'store/okr';
 interface Props {
   showModal: boolean;
   closeModal: () => void;
+  okrId: string;
 }
 
-const NewObjectiveModal: React.FC<Props> = ({ showModal, closeModal }) => {
+const NewObjectiveModal: React.FC<Props> = ({
+  showModal,
+  closeModal,
+  okrId,
+}) => {
+  const dispatch = useAppDispatch();
+
   const { control, handleSubmit, errors } = useAppForm<ObjectiveValues>({
     defaultValues: { name: '', keyResults: [{ keyResultname: '', score: 0 }] },
     validationSchema: objectiveValidationSchema(),
@@ -22,7 +30,15 @@ const NewObjectiveModal: React.FC<Props> = ({ showModal, closeModal }) => {
   });
 
   const onSubmit = (data: ObjectiveValues): void => {
-    //View recieved data
+    dispatch(
+      okrActions.createObjective_async({
+        okrId,
+        objectiveBody: {
+          name: data.name,
+          result: 0,
+        },
+      }),
+    );
     console.warn(data);
     closeModal();
   };
@@ -44,7 +60,10 @@ const NewObjectiveModal: React.FC<Props> = ({ showModal, closeModal }) => {
         />
         {fields.map((field, index) => {
           return (
-            <Form.Group className="d-flex align-items-center mt-3 ms-3">
+            <Form.Group
+              className="d-flex align-items-center mt-3 ms-3"
+              key={index}
+            >
               <div className="me-4">
                 <TextField
                   label={'Key Name'}
@@ -73,7 +92,7 @@ const NewObjectiveModal: React.FC<Props> = ({ showModal, closeModal }) => {
           onClick={(): void => append({ keyResultname: '', score: 0 })}
           className="ms-2 border-0 bg-transparent text-gu-pink fw-bold"
         >
-          +add key result
+          + Add key result
         </Button>
       </Form>
     </Modal>

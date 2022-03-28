@@ -25,10 +25,11 @@ export const createObjectiveToOkr = async ({
   }
 
   if (okr) {
-    const objective = objectiveRepository.create();
-    Object.assign(objective, body);
-    objective.okr = okr;
-    objective.result = body.result;
+    const objective = objectiveRepository.create({
+      name: body.name,
+      result: body.result,
+      okr,
+    });
 
     await objective.save();
 

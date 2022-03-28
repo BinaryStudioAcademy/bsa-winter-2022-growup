@@ -11,7 +11,13 @@ const Objective: React.FC<Props> = ({ objective }) => {
         <span className="fw-bold fs-5 text-gu-black">{objective.name}</span>
         <span className="fw-bold fs-5 text-gu-black">{objective.result}</span>
       </div>
-      <div className="objective-main">{objective.keyResults}</div>
+      {objective.keyResults?.map((key, index) => {
+        return (
+          <div className="objective-main" key={index}>
+            {key.name}
+          </div>
+        );
+      })}
     </>
   );
 };

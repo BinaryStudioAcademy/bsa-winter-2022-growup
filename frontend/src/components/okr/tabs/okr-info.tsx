@@ -61,14 +61,15 @@ const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHanlder }) => {
         </div>
       </div>
       <div className="okr__main d-flex flex-column">
-        {currentOkr?.objectives?.map((item) => {
-          return <Objective objective={item} />;
+        {currentOkr?.objectives?.map((item, index) => {
+          return <Objective objective={item} key={index} />;
         })}
       </div>
       {isShowCreateObjectiveModal && (
         <NewObjectiveModal
           showModal={isShowCreateObjectiveModal}
           closeModal={closeModal}
+          okrId={id}
         />
       )}
     </>
