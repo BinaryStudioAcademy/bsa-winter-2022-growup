@@ -17,7 +17,7 @@ type ConnectLevelResponse = {
 };
 
 type NextLevelIdResponse = {
-  nextLevel: DomainLevel['id'][];
+  nextLevels: DomainLevel['id'][];
 };
 
 export const createDomainLevel = async ({
@@ -62,11 +62,11 @@ export const getLevelById = async (
 ): Promise<DomainLevel> => {
   const domainLevelRepository = getCustomRepository(DomainLevelRepository);
   const manager = getManager().getTreeRepository(DomainLevel);
-  const level = await domainLevelRepository.findOne({ id: levelId });
-  const tree = await manager.findDescendantsTree(level, {
-    relations: ['domain'],
-    depth: 1,
-  });
+  const level = await domainLevelRepository.findOne(
+    { id: levelId },
+    { relations: ['domain'] },
+  );
+  const tree = await manager.findDescendantsTree(level, { depth: 1 });
 
   return tree;
 };
@@ -92,10 +92,10 @@ export const getLevels = async (
   return levelsTree;
 };
 
-export const getLevelsAndNextId = async (
+export const getLevelsNextId = async (
   level: DomainLevel,
 ): Promise<NextLevelIdResponse> => {
-  const nextIds: NextLevelIdResponse['nextLevel'] = [];
+  const nextIds: NextLevelIdResponse['nextLevels'] = [];
   const manager = getManager().getTreeRepository(DomainLevel);
 
   const tree = await manager.findDescendantsTree(level, { depth: 1 });
@@ -106,7 +106,7 @@ export const getLevelsAndNextId = async (
     }, tree.nextLevel);
   }
 
-  return { nextLevel: nextIds };
+  return { nextLevels: nextIds };
 };
 
 export const updateLevelById = async (

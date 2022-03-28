@@ -21,6 +21,7 @@ import {
   disconnectLevels,
   getDomainTree,
   getLevelAndNextId,
+  getLevelsAndNextId,
   // createPath,
   // getCareerPath,
   // deletePath,
@@ -106,6 +107,15 @@ router.post(
     const level = req.body;
 
     return createLevel(domainId, level);
+  }),
+);
+
+router.get(
+  '/domain/:domainId/level',
+  run(async (req: Request) => {
+    const { domainId } = req.params;
+    const domain = await getDomainById(domainId);
+    return getLevelsAndNextId(domain);
   }),
 );
 

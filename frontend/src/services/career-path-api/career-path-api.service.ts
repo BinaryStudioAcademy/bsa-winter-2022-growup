@@ -152,10 +152,10 @@ class CareerPath {
   }
 
   async createSkill(skill: ISkillSetting): Promise<ISkill> {
-    const { domainId, levelId, name } = skill;
+    const { levelId, name } = skill;
 
     const result = await this.http.load(
-      `${this.apiPath}/career-path/domain/${domainId}/level/${levelId}/skill`,
+      `${this.apiPath}/career-path/level/${levelId}/skill`,
       {
         contentType: ContentType.JSON,
         method: HttpMethod.POST,

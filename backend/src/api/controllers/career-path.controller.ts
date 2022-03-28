@@ -21,7 +21,7 @@ import {
   deleteLevelById,
   connectDomainLevels,
   disconnectDomainLevels,
-  getLevelsAndNextId,
+  getLevelsNextId,
 } from '~/services/domain-level.service';
 import {
   createSkill as createDomainSkill,
@@ -71,13 +71,23 @@ type ConnectLevelResponse = {
 };
 
 type NextLevelIdResponse = {
-  nextLevel: DomainLevel['id'][];
+  nextLevels: DomainLevel['id'][];
 };
 
-type DomainLevelNextIdResponse = DomainLevel &
-  NextLevelIdResponse & {
-    skills: Skill[];
-  };
+type LevelResponse = {
+  id: DomainLevel['id'];
+  name: DomainLevel['name'];
+  domainName: DomainLevel['domain']['name'];
+  skills: Skill[];
+};
+
+type DomainLevelNextIdResponse = LevelResponse & NextLevelIdResponse;
+
+type DomainNextLevelIdResponse = {
+  domain: Domain['name'];
+  levels: DomainLevelNextIdResponse[];
+  nextDomain: Domain | null;
+};
 
 // type CareerParhResponse = {
 //   domain: Domain;
@@ -85,7 +95,9 @@ type DomainLevelNextIdResponse = DomainLevel &
 //   nextDomain: CareerParhResponse | null
 // };
 
-const getLevelAndSkills = async (level: DomainLevel): Promise<DomainLevel> => {
+const getLevelAndSkills = async (
+  level: DomainLevel,
+): Promise<DomainLevelResponse> => {
   const currentLevel: DomainLevelResponse = level as DomainLevelResponse;
 
   const categories = await getCategoriesByLevel(currentLevel);
@@ -215,47 +227,45 @@ export const getDomainTrees = async (
 
 export const getDomainTree = async (
   domain: Domain,
-): Promise<CareerDomainResponse> => {
-  let careeerPathResponse: CareerDomainResponse = null;
+): Promise<DomainNextLevelIdResponse> => {
+  let careerPathResponse: DomainNextLevelIdResponse = null;
 
   const levels = await getLevels(domain);
-  const levelsAndSkills: DomainLevel[] = [];
+  const levelsAndSkills: LevelResponse[] = [];
 
   await asyncForEach(async (level) => {
-    const levelAndSkills = await getLevelAndSkills(level);
+    const levelAndSkills = await getLevelAndNextId(level.id);
     levelsAndSkills.push(levelAndSkills);
   }, levels);
 
-  careeerPathResponse = {
-    domain,
+  careerPathResponse = {
+    domain: domain.name,
     levels: levelsAndSkills,
     nextDomain: null,
-  } as CareerDomainResponse;
+  } as DomainNextLevelIdResponse;
 
-  return careeerPathResponse;
+  return careerPathResponse;
 };
-
 // export const getDomainTree = async (
 //   domain: Domain,
 // ): Promise<CareerDomainResponse> => {
-//   let careeerPathResponse: CareerDomainResponse = null;
+//   let careerPathResponse: CareerDomainResponse = null;
 
 //   const levels = await getLevels(domain);
-//   const levelsAndSkills: DomainLevel[]  = [];
+//   const levelsAndSkills: DomainLevel[] = [];
 
-//   await asyncForEach(async(level) => {
+//   await asyncForEach(async (level) => {
 //     const levelAndSkills = await getLevelAndSkills(level);
 //     levelsAndSkills.push(levelAndSkills);
-
 //   }, levels);
 
-//   careeerPathResponse = {
+//   careerPathResponse = {
 //     domain,
 //     levels: levelsAndSkills,
 //     nextDomain: null,
 //   } as CareerDomainResponse;
 
-//   return careeerPathResponse;
+//   return careerPathResponse;
 // };
 
 export const updateDomain = async (
@@ -306,13 +316,31 @@ export const getLevelAndNextId = async (
 ): Promise<DomainLevelNextIdResponse> => {
   const level = await getLevelById(id);
   const levelAndSkills = await getLevelAndSkills(level);
-  const levelNextIds: NextLevelIdResponse = await getLevelsAndNextId(level);
+  const levelNextIds: NextLevelIdResponse = await getLevelsNextId(level);
+
   const levelAndNextIds = {
-    ...levelAndSkills,
-    nextLevel: levelNextIds.nextLevel,
+    id: level.id,
+    name: level.name,
+    domainName: level.domain.name,
+    nextLevels: levelNextIds.nextLevels,
+    skills: levelAndSkills.skills,
   } as DomainLevelNextIdResponse;
 
   return levelAndNextIds;
+};
+
+export const getLevelsAndNextId = async (
+  domain: Domain,
+): Promise<DomainLevelNextIdResponse[]> => {
+  const levels = await getLevels(domain);
+  const levelsAndNextIds: DomainLevelNextIdResponse[] = [];
+
+  await asyncForEach(async (level) => {
+    const currentLevelAndNextIds = await getLevelAndNextId(level.id);
+    levelsAndNextIds.push(currentLevelAndNextIds);
+  }, levels);
+
+  return levelsAndNextIds;
 };
 
 export const updateLevel = async (
