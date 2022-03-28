@@ -6,7 +6,7 @@ import { useState } from 'react';
 import NewObjectiveModal from '../modal/new-objective-modal';
 import * as okrActions from '../../../store/okr/actions';
 import { NotificationManager } from 'react-notifications';
-import getOkrNumber from '../getOkrNumber';
+import getOkrNumber from '../get-okr-number';
 import { IOkr } from 'common/interfaces/okr';
 
 interface IOkrInfoProps {

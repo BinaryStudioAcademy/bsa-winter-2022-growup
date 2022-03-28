@@ -5,7 +5,7 @@ import OkrModal from './modal';
 import './styles.scss';
 import { IOkr } from 'common/interfaces/okr';
 import { StatusType } from 'store/okr/common';
-import getOkrNumber from './getOkrNumber';
+import getOkrNumber from './get-okr-number';
 
 interface Props {
   okr: IOkr;
