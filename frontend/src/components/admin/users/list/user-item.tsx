@@ -45,7 +45,7 @@ const UserItem: React.FC<Props> = memo(({ user }) => {
           user.role
         )}
       </td>
-      <td>
+      <td className="w-auto d-flex justify-content-end flex-wrap">
         <UserControls
           id={user.id}
           show={isShowDropDown}

@@ -25,6 +25,7 @@ const UserControls: React.FC<Props> = memo(({ id, show, setShow }) => {
     <>
       <ControlButton
         className="bg-transparent"
+        popup="Copy activation link"
         onClick={(): void => {
           copyPathToClipboard(id);
         }}
@@ -33,16 +34,22 @@ const UserControls: React.FC<Props> = memo(({ id, show, setShow }) => {
       </ControlButton>
       <ControlButton
         className="bg-transparent"
+        popup="Resend activation link"
         onClick={(): void => resendMail(id)}
       >
         <ArrowClockwise />
       </ControlButton>
-      <ControlButton className=" bg-transparent" onClick={toggle}>
+      <ControlButton
+        popup="Edit user's role"
+        className=" bg-transparent"
+        onClick={toggle}
+      >
         {show ? <XLg /> : <Pencil />}
       </ControlButton>
 
       <ControlButton
         className="bg-transparent"
+        popup="Delete user"
         onClick={(): void => deleteUser(id)}
       >
         <Trash />
