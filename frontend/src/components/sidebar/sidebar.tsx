@@ -86,11 +86,11 @@ const Sidebar: React.FC = () => {
             >
               <Link to={MentorMenteeRoute.HOME}>
                 <span
-                  className={`navigation-item__link navigation-link d-flex 
+                  className={`navigation-item__link navigation-link d-flex
                   ${
                     isBurgerActive ? '' : ' ps-md-4'
                   } p-2 align-items-center  fs-4 font-weight-normal
-                 text-gu-white`}
+                  text-gu-white`}
                 >
                   <HomeIcon
                     className={`navigation-link__icon  ${
@@ -115,11 +115,11 @@ const Sidebar: React.FC = () => {
             >
               <Link to={MentorMenteeRoute.OPPORTUNITIES}>
                 <span
-                  className={`navigation-item__link navigation-link d-flex 
+                  className={`navigation-item__link navigation-link d-flex
                   ${
                     isBurgerActive ? '' : ' ps-md-4'
                   } p-2 align-items-center  fs-4 font-weight-normal
-                 text-gu-white`}
+                  text-gu-white`}
                 >
                   <OpportunitiesIcon
                     className={`navigation-link__icon  ${
@@ -139,11 +139,11 @@ const Sidebar: React.FC = () => {
             <li className={`navigation-list__item navigation-item mb-4 ${''}`}>
               <Link to={MentorMenteeRoute.PROFILE}>
                 <span
-                  className={`navigation-item__link navigation-link d-flex 
+                  className={`navigation-item__link navigation-link d-flex
                   ${
                     isBurgerActive ? '' : ' ps-md-4'
                   } p-2 align-items-center  fs-4 font-weight-normal
-                 text-gu-white`}
+                  text-gu-white`}
                 >
                   <ProfileIcon
                     className={`navigation-link__icon  ${
@@ -168,11 +168,11 @@ const Sidebar: React.FC = () => {
             >
               <Link to={MentorMenteeRoute.OKR}>
                 <span
-                  className={`navigation-item__link navigation-link d-flex 
+                  className={`navigation-item__link navigation-link d-flex
                   ${
                     isBurgerActive ? '' : ' ps-md-4'
                   } p-2 align-items-center  fs-4 font-weight-normal
-                 text-gu-white`}
+                  text-gu-white`}
                 >
                   <OkrIcon
                     className={`navigation-link__icon  ${
@@ -197,11 +197,11 @@ const Sidebar: React.FC = () => {
             >
               <Link to={MentorMenteeRoute.CAREER_PATH}>
                 <span
-                  className={`navigation-item__link navigation-link d-flex 
+                  className={`navigation-item__link navigation-link d-flex
                   ${
                     isBurgerActive ? '' : ' ps-md-4'
                   } p-2 align-items-center  fs-4 font-weight-normal
-                 text-gu-white`}
+                  text-gu-white`}
                 >
                   <CareerPathIcon
                     className={`navigation-link__icon  ${
@@ -227,11 +227,11 @@ const Sidebar: React.FC = () => {
               >
                 <Link to={MentorMenteeRoute.MENTEE_PROFILES}>
                   <span
-                    className={`navigation-item__link navigation-link d-flex 
+                    className={`navigation-item__link navigation-link d-flex
                   ${
                     isBurgerActive ? '' : ' ps-md-4'
                   } p-2 align-items-center  fs-4 font-weight-normal
-                 text-gu-white`}
+                  text-gu-white`}
                   >
                     <MenteeProfileIcon
                       className={`navigation-link__icon  ${
