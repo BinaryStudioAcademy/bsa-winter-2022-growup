@@ -3,8 +3,9 @@ import { ArrowLeft, Calendar } from 'react-bootstrap-icons';
 import dayjs from 'dayjs';
 import Objective from '../objective/objective';
 import { useState } from 'react';
-import NewObjectiveModal from '../modal/new-objective-modal';
+// import NewObjectiveModal from '../modal/new-objective-modal';
 import * as okrActions from '../../../store/okr/actions';
+import UpdateObjectiveModal from '../modal/update-objective-modal';
 
 interface IOkrInfoProps {
   id: string;
@@ -75,10 +76,16 @@ const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHanlder }) => {
         })}
       </div>
       {isShowCreateObjectiveModal && (
-        <NewObjectiveModal
+        // <NewObjectiveModal
+        //   showModal={isShowCreateObjectiveModal}
+        //   closeModal={closeModal}
+        //   okrId={id}
+        // />
+        <UpdateObjectiveModal
           showModal={isShowCreateObjectiveModal}
           closeModal={closeModal}
           okrId={id}
+          objectiveId={'f3d0f8fc-f82a-48f1-b84c-2245cb294af4'}
         />
       )}
     </>
