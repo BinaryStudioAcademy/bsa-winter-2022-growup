@@ -1,11 +1,11 @@
 import './level-description.scss';
 import { v4 as uuidv4 } from 'uuid';
-import { ISkills } from '../common/interfaces';
+import { IAllTechnicalSkills } from '../common/interfaces';
 import TechnicalSkills from './technical-skills';
 
 interface Props {
   level: string;
-  technicalSkills: ISkills[];
+  technicalSkills: IAllTechnicalSkills[];
 }
 
 const LevelDescription: React.FC<Props> = ({ level, technicalSkills }) => {

@@ -4,7 +4,7 @@ import {
   Position,
   XYPosition,
 } from 'react-flow-renderer';
-import { ISkills } from '../../common/interfaces';
+import { IAllTechnicalSkills } from '../../common/interfaces';
 
 export interface IUserNodeData {
   icon: JSX.Element;
@@ -48,7 +48,7 @@ export interface IEdge {
 
 export interface IInitialSkill {
   name: string;
-  skills: ISkills[];
+  skills: IAllTechnicalSkills[];
 }
 
 export interface IFlowData {
@@ -58,9 +58,9 @@ export interface IFlowData {
 }
 
 export interface IBase {
-  createdAt?: string;
-  updatedAt?: string;
-  deletedAt?: string;
+  createdAt: string;
+  updatedAt: string | null;
+  deletedAt: string | null;
 }
 
 export interface ICategory extends IBase {
@@ -80,18 +80,14 @@ export interface ILevelSkill extends IBase {
   objectives: IObjective[];
 }
 
-export interface ICompany extends IBase {
+export interface ILevel extends IBase {
   id: string;
   name: string;
-  description: string;
+  domainName: string;
+  skills: ILevelSkill[];
+  nextLevels: string[];
 }
 
-export interface IDomain extends IBase {
-  id: string;
-  name: string;
-  company: ICompany;
-}
-
-export interface IData {
-  domain: IDomain;
+export interface ILevelMap {
+  [key: string]: ILevel;
 }
