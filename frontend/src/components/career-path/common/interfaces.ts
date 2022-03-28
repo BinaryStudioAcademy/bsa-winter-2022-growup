@@ -3,7 +3,7 @@ export interface ITechnicalSkill {
   topics: (string | { required: string })[];
 }
 
-export interface ISkills {
+export interface IAllTechnicalSkills {
   name: string;
   skills: ITechnicalSkill[];
 }
