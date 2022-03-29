@@ -10,6 +10,8 @@ import { HttpCode, HttpError } from 'growup-shared';
 import { SuccessResponse } from '~/common/models/responses/success';
 import { env } from '~/config/env';
 
+import { getEmailFromField } from '~/common/utils/email.util';
+
 const readFile = promisify(fs.readFile);
 
 const getUrl = (host: string, token: string): string => {
@@ -43,7 +45,7 @@ const sendMail = async (
   const url = getUrl(host, token);
 
   const mail = {
-    from: env.email.name,
+    from: getEmailFromField('Grow Up', env.email.name),
     to: email,
     subject: 'Complete registration',
     html: template({ url }),
