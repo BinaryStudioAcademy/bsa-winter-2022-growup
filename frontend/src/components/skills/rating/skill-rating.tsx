@@ -102,7 +102,7 @@ const SkillElement = (props: Props): React.ReactElement => {
         {isHover ? (
           <Button
             variant="gu-white"
-            className="border-0 bg-transparent text-gu-black hover-pink p-1"
+            className="border-0 bg-transparent text-gu-black hover-pink p-1 ms-4"
             type="button"
             onClick={(): void => saveEdits(props.id)}
           >
@@ -114,7 +114,7 @@ const SkillElement = (props: Props): React.ReactElement => {
         {isHover ? (
           <Button
             variant="gu-white"
-            className="border-0 bg-transparent text-gu-black hover-pink p-1"
+            className="border-0 bg-transparent text-gu-black hover-pink p-1 ms-1"
             type="button"
             onClick={(): void => deleteSkill(props.id)}
           >
