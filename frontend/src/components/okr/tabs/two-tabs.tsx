@@ -24,7 +24,7 @@ function ControlledTabs(): React.ReactElement {
   }, [user]);
 
   return (
-    <div>
+    <>
       <Button
         variant="gu-pink"
         className="position-absolute text-gu-white mb-2 align-self-end"
@@ -47,7 +47,7 @@ function ControlledTabs(): React.ReactElement {
           <OkrList collection={okrs} />
         </Tab>
       </Tabs>
-    </div>
+    </>
   );
 }
 
