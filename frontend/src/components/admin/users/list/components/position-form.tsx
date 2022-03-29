@@ -21,7 +21,6 @@ const PositionForm: React.FC<Props> = ({ user, onSubmit: submit }) => {
   const [level, setLevel] = useState('');
 
   const levels = domainIndex ? domains[domainIndex - 1]?.levels : [];
-  const domainName = domainIndex ? domains[domainIndex - 1]?.domain.name : '';
 
   const domainSelectHandler = (e: ChangeEvent<HTMLSelectElement>): void => {
     const index = e.target.options.selectedIndex;
@@ -45,7 +44,7 @@ const PositionForm: React.FC<Props> = ({ user, onSubmit: submit }) => {
     dispatch(
       adminActions.changeUserPosition({
         id: user.id,
-        position: domainName,
+        position: selectedLevel?.name || '',
         level: selectedLevel
           ? { id: selectedLevel.id, name: selectedLevel.name }
           : null,

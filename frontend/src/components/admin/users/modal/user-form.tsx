@@ -23,7 +23,6 @@ const UserForm: React.FC<Props> = ({ onSubmit: submit }) => {
   const [level, setLevel] = useState('');
 
   const levels = domainIndex ? domains[domainIndex - 1]?.levels : [];
-  const domainName = domainIndex ? domains[domainIndex - 1]?.domain.name : '';
 
   const domainSelectHandler = (e: ChangeEvent<HTMLSelectElement>): void => {
     const index = e.target.options.selectedIndex;
@@ -57,7 +56,7 @@ const UserForm: React.FC<Props> = ({ onSubmit: submit }) => {
         level: selectedLevel
           ? { id: selectedLevel.id, name: selectedLevel.name }
           : null,
-        position: domainName,
+        position: selectedLevel?.name || '',
       }),
     )
       .unwrap()

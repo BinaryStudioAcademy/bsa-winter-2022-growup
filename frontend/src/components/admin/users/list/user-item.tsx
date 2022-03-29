@@ -57,10 +57,10 @@ const UserItem: React.FC<Props> = memo(({ user }) => {
             className="btn bg-gu-blue border-0 text-white"
             onClick={openPositionModal}
           >
-            {user.position || 'Set position'} {user.level?.name || ''}
+            {user?.position || 'Set position'}
           </button>
         ) : (
-          `${user.position || ''} ${user.level?.name || ''}`
+          user?.position || ''
         )}
       </td>
       <td>
