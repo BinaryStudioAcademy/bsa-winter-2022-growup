@@ -12,6 +12,6 @@ export interface IOkr extends IBaseObject {
   type: OkrTypes;
   endDate: Date | string;
   startDate: Date | string;
-  objectives: Array<IObjective> | null;
+  objectives: Array<IObjective>;
   status: StatusType | null;
 }

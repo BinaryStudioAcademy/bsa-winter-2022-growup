@@ -5,6 +5,7 @@ import Objective from '../objective/objective';
 import { useState } from 'react';
 import NewObjectiveModal from '../modal/new-objective-modal';
 import * as okrActions from '../../../store/okr/actions';
+import UpdateObjectiveModal from '../modal/update-objective-modal';
 import { NotificationManager } from 'react-notifications';
 import getOkrNumber from '../get-okr-number';
 import { IOkr } from 'common/interfaces/okr';
@@ -20,9 +21,14 @@ const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHanlder }) => {
   const currentOkr = okrItems.find((item) => item.id == id) as IOkr;
   const [isShowCreateObjectiveModal, setIsShowCreateObjectiveModal] =
     useState(false);
+  const [isShowUpdateObjectiveModal, setIsShowUpdateObjectiveModal] =
+    useState(false);
+  const [objectiveId, setObjectiveId] = useState('');
   const score = getOkrNumber(currentOkr);
   const openModal = (): void => setIsShowCreateObjectiveModal(true);
   const closeModal = (): void => setIsShowCreateObjectiveModal(false);
+  const openUpdateModal = (): void => setIsShowUpdateObjectiveModal(true);
+  const closeUpdateModal = (): void => setIsShowUpdateObjectiveModal(false);
   const closeOkrHandler = (): void => {
     dispatch(okrActions.closeOkr({ okrId: id }));
     goBackHanlder();
@@ -38,6 +44,7 @@ const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHanlder }) => {
       });
     goBackHanlder();
   };
+  const setObjective = (id: string): void => setObjectiveId(id);
 
   return (
     <>
@@ -93,7 +100,15 @@ const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHanlder }) => {
       </div>
       <div className="okr__main d-flex flex-column">
         {currentOkr?.objectives?.map((item, index) => {
-          return <Objective objective={item} key={index} okrId={id} />;
+          return (
+            <Objective
+              objective={item}
+              key={index}
+              okrId={id}
+              openUpdateModal={openUpdateModal}
+              setObjective={setObjective}
+            />
+          );
         })}
       </div>
       {isShowCreateObjectiveModal && (
@@ -102,6 +117,16 @@ const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHanlder }) => {
           closeModal={closeModal}
           okrId={id}
         />
+      )}
+      {isShowUpdateObjectiveModal ? (
+        <UpdateObjectiveModal
+          showModal={isShowUpdateObjectiveModal}
+          closeModal={closeUpdateModal}
+          okrId={id}
+          objectiveId={objectiveId}
+        />
+      ) : (
+        true
       )}
     </>
   );

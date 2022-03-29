@@ -5,7 +5,7 @@ import {
   ICreateKeyResult,
   ICreateNewObjective,
   IDeleteObjective,
-  IUpdateObjective,
+  IUpdateNewObjective,
   StatusType,
 } from './common';
 import { IOkr } from 'common/interfaces/okr';
@@ -83,10 +83,18 @@ const createObjective_async = createAsyncThunk(
 );
 
 const updateObjective_async = createAsyncThunk(
-  ActionType.UPDATE_OKR_BY_ID,
-  async ({ okrId, objective }: IUpdateObjective, { rejectWithValue }) => {
+  ActionType.UPDATE_OBJECTIVE,
+  async (
+    { okrId, objectiveId, objectiveBody, keyResults }: IUpdateNewObjective,
+    { rejectWithValue },
+  ) => {
     try {
-      const result = await objectiveApi.updateObjective({ okrId, objective });
+      const result = await objectiveApi.updateObjective({
+        okrId,
+        objectiveId,
+        objectiveBody,
+        keyResults,
+      });
       return result;
     } catch (err) {
       return rejectWithValue(err);

@@ -41,7 +41,7 @@ const OkrList: React.FC<Props> = ({ collection }) => {
           >
             + Add OKR
           </Button>
-          <div className="OKR-page d-flex flex-row flex-wrap ">
+          <div className="OKR-page d-flex flex-row flex-wrap mt-2">
             {collection.map((okr: IOkr, index) => {
               const objectives = okr.objectives;
               let objectivesCounter = 0;

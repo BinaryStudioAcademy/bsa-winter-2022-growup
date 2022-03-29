@@ -15,13 +15,24 @@ const okrReducer = (builder: ActionReducerMapBuilder<State>): void => {
       }
     })
     .addCase(actions.createObjective_async.fulfilled, (state, action) => {
-      if (action.payload && state.okrs[0].objectives && action.payload.okr) {
+      if (action.payload) {
         const index = state.okrs.findIndex(
           (okr) => okr.id === action.payload?.okr?.id.toString(),
         );
         state.okrs[index].objectives?.push({
           ...action.payload,
         });
+      }
+    })
+    .addCase(actions.updateObjective_async.fulfilled, (state, action) => {
+      if (action.payload) {
+        const index = state.okrs.findIndex(
+          (okr) => okr.id === action.payload?.okr?.id.toString(),
+        );
+        const indexObjective = state.okrs[index].objectives?.findIndex(
+          (objective) => objective.id === action.payload?.id.toString(),
+        ) as number;
+        state.okrs[index].objectives[indexObjective] = action.payload;
       }
     })
     .addCase(actions.closeOkr.fulfilled, (state, action) => {
