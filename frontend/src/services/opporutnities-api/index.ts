@@ -2,7 +2,7 @@ import { ContentType, HttpMethod } from 'common/enums/enums';
 
 import type { IHttp } from 'common/interfaces/http/http';
 import { IAuthApi } from 'common/interfaces/api';
-import { IOpportunity, IPostOppData } from 'store/opportunities/common';
+import { IOpportunity, IPostOpportunityData } from 'store/opportunities/common';
 
 class OpportunityApi {
   private http: IHttp;
@@ -13,7 +13,7 @@ class OpportunityApi {
     this.apiPath = apiPath;
   }
 
-  public async fetchNewOpp(data: IOpportunity): Promise<IPostOppData[]> {
+  fetchNewOpportunity(data: IOpportunity): Promise<IPostOpportunityData[]> {
     const oppData = {
       opportunities: [
         {
@@ -21,32 +21,25 @@ class OpportunityApi {
           organization: data.organization,
           type: data.type,
           startDate: data.startDate,
+          tags: data.tags,
         },
       ],
     };
 
-    try {
-      return await this.http.load(`${this.apiPath}/company/opportunities`, {
-        contentType: ContentType.JSON,
-        method: HttpMethod.POST,
-        hasAuth: true,
-        payload: JSON.stringify(oppData),
-      });
-    } catch (err) {
-      throw new Error(`Error with opportunities:${err}`);
-    }
+    return this.http.load(`${this.apiPath}/company/opportunities`, {
+      contentType: ContentType.JSON,
+      method: HttpMethod.POST,
+      hasAuth: true,
+      payload: JSON.stringify(oppData),
+    });
   }
 
-  public async fetchLoadOpp(): Promise<IPostOppData[]> {
-    try {
-      return await this.http.load(`${this.apiPath}/company/opportunities`, {
-        contentType: ContentType.JSON,
-        method: HttpMethod.GET,
-        hasAuth: true,
-      });
-    } catch (err) {
-      throw new Error(`Error with opportunities:${err}`);
-    }
+  fetchLoadOpportunities(): Promise<IPostOpportunityData[]> {
+    return this.http.load(`${this.apiPath}/company/opportunities`, {
+      contentType: ContentType.JSON,
+      method: HttpMethod.GET,
+      hasAuth: true,
+    });
   }
 }
 

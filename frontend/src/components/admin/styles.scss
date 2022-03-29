@@ -1,5 +1,14 @@
 @import '~assets/scss/utils';
 
+.user-control-btn {
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+  &:hover {
+    color: $pink !important;
+  }
+}
 @include media-breakpoint-down(lg) {
   .btn-responsive {
     & > span {
@@ -7,11 +16,19 @@
     }
   }
 }
-
+@include media-breakpoint-down(md) {
+  .user-control__buttons {
+    text-align: center;
+  }
+}
 @include media-breakpoint-down(sm) {
   .btn-responsive {
     & > span {
       display: inline-block !important;
     }
   }
+}
+
+#tooltip-disabled {
+  background: none;
 }

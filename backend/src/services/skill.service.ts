@@ -226,3 +226,60 @@ export const upsertSkills = async (
     data.find((d) => d.name === s.name && d.type === s.type),
   );
 };
+
+export const createSkill = async (
+  company: Company,
+  data: SkillProps,
+): Promise<Skill> => {
+  const skillRepository = getCustomRepository(SkillRepository);
+  const skill = await skillRepository.findOne({
+    name: data.name,
+    type: data.type,
+    company,
+  });
+  if (skill)
+    throw new HttpError({
+      status: HttpCode.BAD_REQUEST,
+      message: 'Skill with this name already exists',
+    });
+  const skillInstance = await skillRepository
+    .create({ name: data.name, type: data.type, company })
+    .save();
+
+  return skillInstance;
+};
+
+export const getSkillById = async (id: string): Promise<Skill> => {
+  const skillRepository = getCustomRepository(SkillRepository);
+  const skill = await skillRepository.findOne({ id });
+
+  return skill;
+};
+export const updateSkillById = async (
+  id: Skill['id'],
+  skill: Partial<Skill>,
+): Promise<Skill> => {
+  const skillRepository = getCustomRepository(SkillRepository);
+
+  if (skill.name) {
+    const target = await skillRepository.findOne({ name: skill.name });
+    if (target)
+      throw new HttpError({
+        status: HttpCode.BAD_REQUEST,
+        message: 'Skill with this name already exists',
+      });
+  }
+  await skillRepository.update({ id }, skill);
+  const updatedSkill = skillRepository.findOne({ id });
+
+  return updatedSkill;
+};
+
+export const deleteSkillById = async (id: Skill['id']): Promise<Skill> => {
+  const skillRepository = getCustomRepository(SkillRepository);
+  const skill = await skillRepository.findOne({ id });
+
+  await skillRepository.delete({ id });
+
+  return skill;
+};

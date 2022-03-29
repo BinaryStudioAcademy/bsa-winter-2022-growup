@@ -19,7 +19,7 @@ export class User_QuizCategory extends BaseEntity {
 
   @PrimaryColumn()
   userId: number;
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.id, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
   user: User;
 

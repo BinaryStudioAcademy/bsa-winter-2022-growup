@@ -1,19 +1,42 @@
+import { getCustomRepository } from 'typeorm';
 import { CareerPath } from '~/common/models/career/career';
 import { Company } from '~/data/entities/company';
-
-import { createDomain, getDomain } from '~/services/domain.service';
+import { getCompany } from '~/services/company.service';
+import UserRepository from '~/data/repositories/user.repository';
+import { badRequestError } from '~/common/errors';
+import {
+  createDomain,
+  getDomains,
+  getDomainById,
+  deleteDomainById,
+  updateDomainById,
+} from '~/services/domain.service';
 import {
   createDomainLevel,
-  getDomainLevels,
+  getLevels,
+  updateLevelById,
+  getLevelById,
+  deleteLevelById,
 } from '~/services/domain-level.service';
-import { upsertSkills } from '~/services/skill.service';
+import {
+  createSkill as createDomainSkill,
+  upsertSkills,
+  updateSkillById,
+  getSkillById,
+  deleteSkillById,
+} from '~/services/skill.service';
 import {
   getObjectives,
   upsertObjectives,
+  updateObjectiveById,
+  deleteObjectiveById,
 } from '~/services/skill-objective.service';
 import {
   createSkillCategories,
-  getCategories,
+  getCategoriesByLevel,
+  getCategoriesBySkill,
+  getCategory,
+  deleteSkillCategoryById,
 } from '~/services/skill-category.service';
 
 import { asyncForEach } from '~/common/helpers/array.helper';
@@ -30,15 +53,15 @@ type DomainLevelResponse = DomainLevel & {
 
 type CareerPathResponse = {
   domain: Domain;
-  level: DomainLevelResponse;
+  levels: DomainLevelResponse[];
 };
 
-const getLevelsAndSkills = async (domain: Domain): Promise<DomainLevel> => {
-  const rootLevel = await getDomainLevels(domain);
+const getLevelsAndSkills = async (domain: Domain): Promise<DomainLevel[]> => {
+  const levels = await getLevels(domain);
+  const currentLevels: DomainLevelResponse[] = levels as DomainLevelResponse[];
 
-  let currentLevel: DomainLevelResponse = rootLevel as DomainLevelResponse;
-  while (currentLevel.nextLevel) {
-    const categories = await getCategories(currentLevel);
+  await asyncForEach(async (currentLevel) => {
+    const categories = await getCategoriesByLevel(currentLevel);
 
     const skillObjectives: SkillObjective[] = [];
     await asyncForEach(async (category) => {
@@ -47,20 +70,25 @@ const getLevelsAndSkills = async (domain: Domain): Promise<DomainLevel> => {
     }, categories);
 
     const categorySkills = convertToSkillCategory(categories, skillObjectives);
-
     currentLevel.skills = categorySkills.map((category) => category.skill);
-    if (!currentLevel.nextLevel.length) break;
-    currentLevel = currentLevel.nextLevel[0] as DomainLevelResponse;
-  }
+  }, currentLevels);
 
-  return rootLevel;
+  return currentLevels;
 };
 
-export const createCareerPath = async (
+export const createDomainTree = async (
   data: CareerPath,
-  company: Company,
+  userId: string,
 ): Promise<CareerPathResponse> => {
-  const domain = await createDomain(data.domain, company);
+  const userRepository = getCustomRepository(UserRepository);
+  const user = await userRepository.getUserById(userId);
+
+  if (!user.company) {
+    throw badRequestError('User doesn`t create company!!!');
+  }
+
+  const company = await getCompany(user.company.id);
+  const domain = await createDomain(data.name, company);
 
   const domainLevels = data.levels;
   const domainLevelInstances: DomainLevel[] = [];
@@ -109,19 +137,160 @@ export const createCareerPath = async (
     );
   }, categoryInstances);
 
-  const rootLevel = await getLevelsAndSkills(domain);
+  const levels = await getLevelsAndSkills(domain);
 
   return {
     domain,
-    level: rootLevel,
+    levels: levels,
   } as unknown as CareerPathResponse;
 };
 
-export const getCareerPath = async (
-  id: Domain['id'],
-): Promise<CareerPathResponse> => {
-  const domain = await getDomain(id);
-  const rootLevel = await getLevelsAndSkills(domain);
+export const getDomainTrees = async (
+  userId: string,
+): Promise<CareerPathResponse[]> => {
+  const careerPathResponse: CareerPathResponse[] = [];
+  const userRepository = getCustomRepository(UserRepository);
+  const user = await userRepository.getUserById(userId);
 
-  return { domain, level: rootLevel } as unknown as CareerPathResponse;
+  if (!user.company) {
+    throw badRequestError('User doesn`t create company!!!');
+  }
+
+  const company = await getCompany(user.company.id);
+  const domains = await getDomains(company);
+
+  await asyncForEach(async (domain) => {
+    const levels = await getLevelsAndSkills(domain);
+    careerPathResponse.push({
+      domain,
+      levels,
+    } as unknown as CareerPathResponse);
+  }, domains);
+
+  return careerPathResponse;
+};
+
+export const updateDomain = async (
+  id: string,
+  data: Domain,
+): Promise<Domain> => {
+  const domain = await updateDomainById(id, data);
+
+  return domain;
+};
+
+export const deleteDomain = async (id: string): Promise<Domain> => {
+  const domain = await getDomainById(id);
+  const levels = await getLevels(domain);
+
+  await asyncForEach(async (level) => {
+    const categories = await getCategoriesByLevel(level);
+
+    await asyncForEach(async (category) => {
+      await deleteSkillCategoryById(category.id);
+      await deleteSkillById(category.skill.id);
+    }, categories);
+  }, levels);
+
+  await deleteDomainById(id);
+
+  return domain;
+};
+
+export const createLevel = async (
+  domainId: string,
+  data: DomainLevel,
+): Promise<DomainLevel> => {
+  const domain = await getDomainById(domainId);
+  const level = await createDomainLevel({ ...data, domain, prev: null });
+
+  return level;
+};
+
+export const updateLevel = async (
+  id: string,
+  data: DomainLevel,
+): Promise<DomainLevel> => {
+  const level = await updateLevelById(id, data);
+
+  return level;
+};
+export const deleteLevel = async (id: string): Promise<DomainLevel> => {
+  const level = await getLevelById(id);
+  const categories = await getCategoriesByLevel(level);
+
+  await asyncForEach(async (category) => {
+    await deleteSkillCategoryById(category.id);
+    await deleteSkillById(category.skill.id);
+  }, categories);
+
+  await deleteLevelById(id);
+
+  return level;
+};
+
+export const createSkill = async (
+  company: Company,
+  levelId: string,
+  data: Skill,
+): Promise<Skill> => {
+  const skill = await createDomainSkill(company, data);
+  const level = await getLevelById(levelId);
+
+  await createSkillCategories([{ level, skill }]);
+
+  return skill;
+};
+
+export const updateSkill = async (id: string, data: Skill): Promise<Skill> => {
+  const skill = await updateSkillById(id, data);
+
+  return skill;
+};
+
+export const deleteSkill = async (id: string): Promise<Skill> => {
+  const skill = await getSkillById(id);
+
+  const categories = await getCategoriesBySkill(skill);
+
+  await asyncForEach(async (category) => {
+    await deleteSkillCategoryById(category.id);
+  }, categories);
+
+  await deleteSkillById(id);
+
+  return skill;
+};
+
+export const createObjective = async (
+  levelId: string,
+  skillId: string,
+  data: SkillObjective,
+): Promise<SkillObjective> => {
+  const level = await getLevelById(levelId);
+  const skill = await getSkillById(skillId);
+  const category = await getCategory(level, skill);
+
+  const objectives = await upsertObjectives(category, [
+    { name: data.name, category },
+  ]);
+
+  const objective = objectives[0];
+
+  return objective;
+};
+
+export const updateObjective = async (
+  id: string,
+  data: SkillObjective,
+): Promise<SkillObjective> => {
+  const skill = await updateObjectiveById(id, data.name);
+
+  return skill;
+};
+
+export const deleteObjective = async (id: string): Promise<SkillObjective> => {
+  const objective = await deleteObjectiveById(id);
+
+  return objective;
 };

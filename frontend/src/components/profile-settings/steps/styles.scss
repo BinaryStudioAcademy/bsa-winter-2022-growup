@@ -13,13 +13,6 @@
     line-height: 25px;
   }
 
-  &__edit {
-    padding: 6px 23px;
-    border: 2px solid $gu-white;
-    border-radius: 30px;
-    line-height: 22px;
-  }
-
   &__edit-icon {
     font-size: 22px;
   }
@@ -27,14 +20,6 @@
 
 .interests-content {
   padding: 20px 28px 38px 34px;
-}
-
-@include media-breakpoint-down(xl) {
-  .interests-header {
-    &__edit {
-      border: 2px solid $gu-white;
-    }
-  }
 }
 
 @include media-breakpoint-down(lg) {
@@ -56,4 +41,8 @@
       transform: translate(-50%, -50%);
     }
   }
+}
+
+.stepper__form--first-block {
+  max-width: 370px;
 }

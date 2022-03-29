@@ -3,6 +3,7 @@ import { getCustomRepository, getManager } from 'typeorm';
 import DomainLevelRepository from '~/data/repositories/domain-level.repository';
 
 import { DomainLevel } from '~/data/entities/domain-level';
+import { asyncForEach } from '~/common/helpers/array.helper';
 
 type DomainLevelCreation = {
   prev: DomainLevel | null;
@@ -45,4 +46,55 @@ export const getDomainLevels = async (
   const tree = await manager.findDescendantsTree(lowestLevel);
 
   return tree;
+};
+
+export const getLevelById = async (
+  levelId: DomainLevel['id'],
+): Promise<DomainLevel> => {
+  const domainLevelRepository = getCustomRepository(DomainLevelRepository);
+  const level = await domainLevelRepository.findOne({ id: levelId });
+  return level;
+};
+
+export const getLevels = async (
+  domain: DomainLevel['domain'],
+): Promise<DomainLevel[]> => {
+  const domainLevelRepository = getCustomRepository(DomainLevelRepository);
+  const levels = await domainLevelRepository.find({ where: { domain } });
+  const levelsTree: DomainLevel[] = [];
+
+  const manager = getManager().getTreeRepository(DomainLevel);
+
+  await asyncForEach(async (level) => {
+    const tree = await manager.findDescendantsTree(level);
+    levelsTree.push(tree);
+  }, levels);
+
+  return levelsTree;
+};
+
+export const updateLevelById = async (
+  id: string,
+  level: DomainLevel,
+): Promise<DomainLevel> => {
+  const domainLevelRepository = await getCustomRepository(
+    DomainLevelRepository,
+  );
+
+  await domainLevelRepository.update({ id }, level);
+
+  const updatedLevel = await domainLevelRepository.findOne({ id });
+
+  return updatedLevel;
+};
+
+export const deleteLevelById = async (
+  id: DomainLevel['id'],
+): Promise<DomainLevel> => {
+  const domainLevelRepository = getCustomRepository(DomainLevelRepository);
+
+  const level = await domainLevelRepository.findOne({ id });
+  await domainLevelRepository.delete({ id });
+
+  return level;
 };

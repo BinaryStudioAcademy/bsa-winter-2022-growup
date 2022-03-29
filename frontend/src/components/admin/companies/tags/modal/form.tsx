@@ -3,6 +3,7 @@ import { useState } from 'hooks/hooks';
 import { Form } from 'react-bootstrap';
 
 import type { UseTagList } from 'hooks/common';
+import { Button } from 'components/common/common';
 
 type Props = {
   onSubmit: UseTagList['addItem'];
@@ -32,12 +33,13 @@ const TagForm: React.FC<Props> = ({ onSubmit }) => {
           placeholder="Enter tag name..."
         />
       </Form.Group>
-      <button
+      <Button
+        variant="outline-gu-pink"
+        className="btn-hover-gu-white "
         type="submit"
-        className="btn btn-outline-gu-pink btn-hover-gu-white fw-bold fs-5 border-2"
       >
         + Add
-      </button>
+      </Button>
     </Form>
   );
 };

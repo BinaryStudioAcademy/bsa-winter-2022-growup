@@ -1,5 +1,5 @@
 import { getCustomRepository } from 'typeorm';
-import CompanyRepositry from '../data/repositories/company.repository';
+import CompanyRepositry from '~/data/repositories/company.repository';
 
 import { Company } from '~/data/entities/company';
 
@@ -16,11 +16,19 @@ import CompanyRepository from '~/data/repositories/company.repository';
 import WorkQuizRepository from '~/data/repositories/work-quiz.repository';
 import QuizCategoryRepository from '~/data/repositories/quiz-category.repository';
 import QuizAnswerRepository from '~/data/repositories/quiz-answer.repository';
+import UserRepository from '~/data/repositories/user.repository';
 
 import { asyncForEach } from '~/common/helpers/array.helper';
 import styleQuizJSON from '~/data/local/style-quiz.json';
 import QuizQuestionRepository from '~/data/repositories/quiz-question.repository';
 import { QuizQuestion } from '~/data/entities/quiz-question';
+import { env } from '~/config/env';
+import { getCurrentTimeMS } from '~/common/utils/time.util';
+import {
+  uploadImage,
+  deleteImage,
+  changeFileName,
+} from '~/common/utils/upload-image.util';
 
 interface IAnswer {
   id: number;
@@ -162,6 +170,7 @@ export const createCompany = async ({
   const { userId, role } = tokenPayload;
 
   const companyRepository = getCustomRepository(CompanyRepository);
+  const userRepository = getCustomRepository(UserRepository);
 
   if (name) {
     const isCompanyExist = await companyRepository.findOne({ name });
@@ -173,11 +182,12 @@ export const createCompany = async ({
       const companyInstance = await newCompany.save();
 
       await createQuiz(companyInstance);
+      await userRepository.setCompanyIdToUser(companyInstance, userId);
 
       const token = signToken({
         userId,
         role,
-        companyId: newCompany.id,
+        companyId: companyInstance.id,
       });
 
       return { token, company: newCompany };
@@ -229,4 +239,47 @@ export const editCompany = async ({
     status: HttpCode.BAD_REQUEST,
     message: 'Company id is udefined!!!',
   });
+};
+
+export const updateCompanyAvatar = async (
+  userId: string,
+  file: Express.Multer.File,
+): Promise<Company> => {
+  const companyRepository = getCustomRepository(CompanyRepository);
+  const userRepository = getCustomRepository(UserRepository);
+
+  const user = await userRepository.getUserById(userId);
+
+  if (!user && !user.company) {
+    throw new HttpError({
+      status: HttpCode.BAD_REQUEST,
+      message: 'Company not found!!!',
+    });
+  }
+
+  const company = await companyRepository.findOne(user.company.id);
+  const props = {
+    secret: env.aws.secret,
+    access: env.aws.access,
+    bucketName: env.aws.bucket,
+  };
+
+  if (company.avatar)
+    await deleteImage({
+      ...props,
+      fileName: company.avatar.split('/').at(-1),
+    });
+
+  const companyFile = changeFileName(
+    file,
+    `${getCurrentTimeMS()}-${company.id}`,
+  );
+
+  const avatar = await uploadImage({ ...props, file: companyFile });
+
+  company.avatar = avatar.Location;
+
+  const newCompany = await company.save();
+
+  return newCompany;
 };

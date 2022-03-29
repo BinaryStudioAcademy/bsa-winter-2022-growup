@@ -18,6 +18,8 @@ export class Skill extends AbstractEntity {
   @Column({ type: 'varchar', length: 250 })
   name: string;
 
-  @OneToMany(() => UserSkill, (userSkill) => userSkill.user)
+  @OneToMany(() => UserSkill, (userSkill) => userSkill.user, {
+    onDelete: 'CASCADE',
+  })
   userSkills: UserSkill[];
 }

@@ -1,23 +1,38 @@
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { Control, useController } from 'react-hook-form';
+import {
+  Control,
+  DeepMap,
+  FieldError,
+  FieldPath,
+  FieldValues,
+  Path,
+  useController,
+  UseControllerReturn,
+} from 'react-hook-form';
 import CustomInput from './custom-input';
 import './styles.scss';
 
-interface Props {
-  name: string;
-  errors: object;
-  control: Control;
+interface Props<T> {
+  name: FieldPath<T>;
+  errors: DeepMap<FieldValues, FieldError>;
+  control: Control<T>;
   placeholder: string;
+  minDate?: Date;
+  maxDate?: Date;
 }
 
-const FormInputDate: React.FC<Props> = ({
+function FormInputDate<T>({
   name,
+  minDate,
+  maxDate,
   errors,
   control,
   placeholder,
-}) => {
-  const { field } = useController({ name, control });
+}: Props<T>): JSX.Element {
+  const {
+    field,
+  }: UseControllerReturn<T, Path<T>> = useController<T>({ name, control });
   const { ref, value, onChange } = field;
 
   return (
@@ -26,14 +41,14 @@ const FormInputDate: React.FC<Props> = ({
       name={name}
       dateFormat="dd.MM.yyyy"
       customInputRef="dateRef"
-      minDate={null}
-      maxDate={null}
+      minDate={minDate}
+      maxDate={maxDate}
       selected={value}
       onChange={onChange}
       placeholderText={placeholder}
       customInput={<CustomInput ref={ref} dateRef={ref} errors={errors} />}
     />
   );
-};
+}
 
 export default FormInputDate;

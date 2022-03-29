@@ -1,9 +1,11 @@
 import { getCustomRepository } from 'typeorm';
 import { Objective } from '~/data/entities/objective';
 import { OKR } from '~/data/entities/okr';
-import Okrepository from '~/data/repositories/okr.repository';
+import OkrRepository from '~/data/repositories/okr.repository';
 import ObjectiveRepository from '~/data/repositories/objective.repository';
 import { badRequestError } from '~/common/errors';
+import { SuccessResponse } from '~/common/models/responses/success';
+import { HttpCode, HttpError } from 'growup-shared';
 
 export const createObjectiveToOkr = async ({
   okrId,
@@ -11,8 +13,8 @@ export const createObjectiveToOkr = async ({
 }: {
   okrId: string;
   body: Objective;
-}): Promise<OKR> => {
-  const okrRepository = getCustomRepository(Okrepository);
+}): Promise<Objective> => {
+  const okrRepository = getCustomRepository(OkrRepository);
   const objectiveRepository = getCustomRepository(ObjectiveRepository);
 
   const okr = await okrRepository.findOne({ id: okrId });
@@ -28,12 +30,11 @@ export const createObjectiveToOkr = async ({
     const objective = objectiveRepository.create();
     Object.assign(objective, body);
     objective.okr = okr;
-    objective.result = 0;
+    objective.result = body.result;
 
     await objective.save();
 
-    const responceOkr = okrRepository.findOne({ id: okrId });
-    return responceOkr;
+    return objective;
   }
 
   throw badRequestError('Okr isn`t exist!!!');
@@ -48,7 +49,7 @@ export const updateObjectiveById = async ({
   objectiveId: string;
   body: Objective;
 }): Promise<OKR> => {
-  const okrRepository = getCustomRepository(Okrepository);
+  const okrRepository = getCustomRepository(OkrRepository);
   const objectiveRepository = getCustomRepository(ObjectiveRepository);
 
   const okr = await okrRepository.findOne({ id: okrId });
@@ -69,4 +70,19 @@ export const updateObjectiveById = async ({
 
   const responceOkr = okrRepository.getOneById(okrId);
   return responceOkr;
+};
+
+export const deleteObjective = async (id: string): Promise<SuccessResponse> => {
+  const objectivesRepository = getCustomRepository(ObjectiveRepository);
+  const objectiveInstance = await objectivesRepository.findOne(id);
+
+  if (!objectiveInstance)
+    throw new HttpError({
+      status: HttpCode.NOT_FOUND,
+      message: 'Objective with this id does not exist',
+    });
+
+  await objectiveInstance.remove();
+
+  return { success: true, message: 'Objective deleted successfully' };
 };

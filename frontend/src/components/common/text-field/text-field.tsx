@@ -1,18 +1,24 @@
 import { FloatingLabel } from 'react-bootstrap';
-import { Control } from 'react-hook-form';
+import {
+  Control,
+  DeepMap,
+  FieldError,
+  FieldPath,
+  FieldValues,
+} from 'react-hook-form';
 import { FormInput } from '../common';
 
-interface Props {
+interface Props<T> {
+  name: FieldPath<T>;
+  errors: DeepMap<FieldValues, FieldError>;
+  control: Control<T>;
   label: string;
-  name: string;
-  control: Control;
-  errors: object;
   type?: string;
   floatingLabelStyles?: string;
   children?: JSX.Element;
 }
 
-const TextField = ({
+function TextField<T>({
   label,
   name,
   control,
@@ -20,7 +26,7 @@ const TextField = ({
   type = 'text',
   floatingLabelStyles = '',
   children,
-}: Props): JSX.Element => {
+}: Props<T>): JSX.Element {
   return (
     <FloatingLabel label={label} className={`mb-3 ${floatingLabelStyles}`}>
       <FormInput
@@ -33,6 +39,6 @@ const TextField = ({
       {children}
     </FloatingLabel>
   );
-};
+}
 
 export default TextField;

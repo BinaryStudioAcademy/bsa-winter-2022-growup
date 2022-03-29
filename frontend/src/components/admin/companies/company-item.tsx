@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card } from 'react-bootstrap';
 import type { ICompany } from 'common/interfaces/company/company';
+import { useAppSelector } from 'hooks/hooks';
 import CompanyCard from './company-card';
 import AddEditCompany from './addedit-company';
+import { Button } from 'components/common/common';
 
-type Props = {
-  companyList: ICompany[];
-};
+const Company: React.FC = () => {
+  const { user } = useAppSelector((state) => state.auth);
 
-const Company: React.FC<Props> = ({ companyList }) => {
   const [show, setShow] = useState(false);
+  const [company, setCompany] = useState<ICompany>();
+
+  useEffect(() => {
+    if (user && user.company) {
+      setCompany(user.company);
+    }
+  }, [user]);
 
   const handleClose = (): void => setShow(false);
   const handleShow = (): void => setShow(true);
@@ -18,24 +25,23 @@ const Company: React.FC<Props> = ({ companyList }) => {
     <>
       <Card className="growup-card-primary">
         <Card.Header className="d-flex justify-content-end growup-card-header">
-          <button
-            className="btn btn-outline-gu-white btn-hover-gu-purple border-2 fs-5 fw-bold"
+          <Button
+            variant="outline-gu-white"
+            className="btn-hover-gu-purple"
             onClick={handleShow}
           >
-            + Add Company
-          </button>
+            {company ? 'Edit Company' : '+ Add Company'}
+          </Button>
         </Card.Header>
         <Card.Body>
-          {companyList.length ? (
-            companyList.map((company) => (
-              <CompanyCard company={company} key={company.id} />
-            ))
+          {company ? (
+            <CompanyCard company={company} />
           ) : (
-            <p className="m-0 text-center">No companies here...</p>
+            <p className="m-0 text-center">No company here...</p>
           )}
         </Card.Body>
       </Card>
-      <AddEditCompany show={show} handleClose={handleClose} />
+      {show && <AddEditCompany company={company} handleClose={handleClose} />}
     </>
   );
 };

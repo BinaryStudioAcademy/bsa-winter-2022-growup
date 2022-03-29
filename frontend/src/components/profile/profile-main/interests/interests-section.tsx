@@ -5,6 +5,7 @@ import { useAppDispatch } from 'hooks/store/store.hooks';
 import Tag from '../tags/tag/tag';
 import type { ITag } from 'common/interfaces/tag/tag';
 import { PencilFill } from 'react-bootstrap-icons';
+import { Button } from 'components/common/common';
 
 type PropTypes = {
   tagList: ITag[];
@@ -32,13 +33,14 @@ const Interests: React.FC<PropTypes> = ({ tagList }) => {
           <h3 className="edit-section-header__title m-0 fw-bold fs-4">
             Interests
           </h3>
-          <button
-            className="edit-section-header__edit fw-bold bg-transparent d-flex align-items-center fs-5"
+          <Button
+            variant="outline-gu-pink"
+            className="edit-section-header__edit d-flex align-items-center"
             onClick={showModal}
           >
             <PencilFill className="edit-section-header__edit-icon me-2" />
             <span>Edit</span>
-          </button>
+          </Button>
         </div>
         <div className="edit-section-content d-flex flex-wrap align-items-start">
           {tagList.length ? (

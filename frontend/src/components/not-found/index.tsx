@@ -1,5 +1,6 @@
+import { Button } from 'components/common/common';
 import React, { FC } from 'react';
-import { Button, Card } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 import './styles.scss';
@@ -19,7 +20,7 @@ const NotFound: FC = () => {
         <Card.Text className="mb-2 mt-1 text-center fs-3">
           The page you are looking for might have been removed.
         </Card.Text>
-        <Button className="mt-3" variant="primary" onClick={onClick}>
+        <Button className="text-gu-white mt-3" onClick={onClick}>
           Return to website
         </Button>
       </Card.Body>

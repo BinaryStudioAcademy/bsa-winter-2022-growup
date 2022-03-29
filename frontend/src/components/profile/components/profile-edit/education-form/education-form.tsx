@@ -2,20 +2,20 @@ import { Form } from 'react-bootstrap';
 import { useAppForm } from 'hooks/hooks';
 import { FormInputDate, Modal, TextField } from 'components/common/common';
 import { DEFAULT_EDUCATION_PAYLOAD } from './common/constants';
-import { EducationPayloadKey } from 'common/enums/user/education-payload-key.enum';
 import { education as educationValidationSchema } from 'validation-schemas/validation-schemas';
 import { IEducation } from '../../../common/interfaces';
+import { EducationFormType } from './common/types';
 
 type Props = {
   education: IEducation | null;
   onClose: () => void;
-  onSubmit: (values: object) => void;
+  onSubmit: (values: EducationFormType) => void;
 };
 
 const EducationForm: React.FC<Props> = (props) => {
   const { education, onSubmit } = props;
 
-  const { control, errors, handleSubmit } = useAppForm({
+  const { control, errors, handleSubmit } = useAppForm<EducationFormType>({
     defaultValues: education || DEFAULT_EDUCATION_PAYLOAD,
     validationSchema: educationValidationSchema,
   });
@@ -31,32 +31,32 @@ const EducationForm: React.FC<Props> = (props) => {
       <Form className="w-100">
         <TextField
           label={'Specialization'}
-          name={EducationPayloadKey.SPECIALIZATION}
+          name={'specialization'}
           control={control}
           errors={errors}
         />
         <TextField
           label={'University'}
-          name={EducationPayloadKey.UNIVERSITY}
+          name={'university'}
           control={control}
           errors={errors}
         />
         <TextField
           label={'Degree'}
-          name={EducationPayloadKey.DEGREE}
+          name={'degree'}
           control={control}
           errors={errors}
         />
         <div className="mb-3">
           <FormInputDate
-            name={EducationPayloadKey.START_DATE}
+            name={'startDate'}
             control={control}
             errors={errors}
             placeholder="Start date"
           />
         </div>
         <FormInputDate
-          name={EducationPayloadKey.END_DATE}
+          name={'endDate'}
           control={control}
           errors={errors}
           placeholder="End date"

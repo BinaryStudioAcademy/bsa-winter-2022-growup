@@ -5,29 +5,20 @@ interface IStep {
 interface Props {
   steps: IStep[];
   activeStep: number;
-  changeStepClicker: (num: number) => void;
 }
 
-const Stepper: React.FC<Props> = ({ steps, activeStep, changeStepClicker }) => {
+const Stepper: React.FC<Props> = ({ steps, activeStep }) => {
   return (
     <div className="stepper__panel position-relative d-table w-100">
       {steps.map((step, i) => {
-        const isComplete = activeStep > i ? true : false;
         return (
           <div
             key={i}
-            className={`stepper__step position-relative d-table-cell ${
-              activeStep === i && 'is-active '
-            } ${isComplete ? 'is-complete ' : ''}`}
+            className={`stepper__step position-relative d-table-cell
+            ${i <= activeStep && 'is-active '} `}
           >
             <div className="position-relative d-block">
-              <span
-                className={`stepper__info position-relative d-inline-block fs-2
-            ${isComplete ? 'stepper__step--cursor-active' : ''}`}
-                onClick={(): void => {
-                  isComplete ? changeStepClicker(i) : null;
-                }}
-              >
+              <span className="stepper__info position-relative d-inline-block fs-2">
                 {i + 1}
               </span>
             </div>

@@ -44,11 +44,10 @@ const careerJourney = Joi.object({
       'date.max': CareerJourneyValidationMessage.MAX_START_DATE,
     }),
   [CareerJourneyPayloadKey.END_DATE]: Joi.date()
-    .required()
+    .allow(null)
     .min(Joi.ref(CareerJourneyPayloadKey.START_DATE))
     .max(MAX_DATE)
     .messages({
-      'date.base': CareerJourneyValidationMessage.END_DATE_REQUIRE,
       'date.min': CareerJourneyValidationMessage.MIN_END_DATE,
       'date.max': CareerJourneyValidationMessage.MAX_END_DATE,
     }),

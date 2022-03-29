@@ -1,8 +1,4 @@
-import {
-  AppRoute,
-  MentorMenteeRoute,
-  UserPayloadKey,
-} from 'common/enums/enums';
+import { AppRoute, MentorMenteeRoute } from 'common/enums/enums';
 import {
   useAppDispatch,
   useAppForm,
@@ -11,12 +7,13 @@ import {
   useNavigate,
   useState,
 } from 'hooks/hooks';
-import { TextField } from 'components/common/common';
+import { Button, TextField } from 'components/common/common';
 import { Container, Form } from 'react-bootstrap';
 import { NotificationManager } from 'react-notifications';
 import { Eye, EyeSlash } from 'react-bootstrap-icons';
 import { signUpUser } from 'store/auth/actions';
 import { Link } from '../common/common';
+import { IUserSignUpForm } from 'common/interfaces/user';
 import { signUp as signUpValidationSchema } from 'validation-schemas/validation-schemas';
 import { DEFAULT_SIGN_UP_PAYLOAD } from './common/constants';
 import '../login/styles.scss';
@@ -28,7 +25,7 @@ const SignUp: React.FC = () => {
 
   const [isHiddenPassword, setIsHiddenPassword] = useState(true);
 
-  const { control, errors, handleSubmit } = useAppForm({
+  const { control, errors, handleSubmit } = useAppForm<IUserSignUpForm>({
     defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
     validationSchema: signUpValidationSchema,
   });
@@ -38,7 +35,7 @@ const SignUp: React.FC = () => {
     [dispatch],
   );
 
-  const onSignUp = (values: object): void => {
+  const onSignUp = (values: IUserSignUpForm): void => {
     handleSignUp(values)
       .unwrap()
       .then(() => {
@@ -56,34 +53,34 @@ const SignUp: React.FC = () => {
         <fieldset disabled={isLoading}>
           <TextField
             label={'Email address'}
-            name={UserPayloadKey.EMAIL}
+            name={'email'}
             control={control}
             errors={errors}
             type="email"
           />
           <TextField
             label={'First name'}
-            name={UserPayloadKey.FIRST_NAME}
+            name={'firstName'}
             control={control}
             errors={errors}
           />
           <TextField
             label={'Last name'}
-            name={UserPayloadKey.LAST_NAME}
+            name={'lastName'}
             control={control}
             errors={errors}
           />
           <TextField
             label={'Password'}
-            name={UserPayloadKey.PASSWORD}
+            name={'password'}
             control={control}
             errors={errors}
             type={isHiddenPassword ? 'password' : 'text'}
             floatingLabelStyles={'d-flex flex-wrap'}
             children={
               <button
-                type="button"
                 className="auth-form__icon input-group-text position-absolute"
+                type="button"
                 onClick={(): void => setIsHiddenPassword(!isHiddenPassword)}
               >
                 {isHiddenPassword ? <EyeSlash /> : <Eye />}
@@ -92,9 +89,9 @@ const SignUp: React.FC = () => {
           />
 
           <div className="d-grid gap-2">
-            <button className="btn btn-gu-pink text-gu-white" type="submit">
+            <Button variant="gu-pink" className="text-gu-white" type="submit">
               Sign up
-            </button>
+            </Button>
             <Form.Text className="mt-2 text-center fs-5">
               Already have an account?
               <Link to={AppRoute.LOGIN}>

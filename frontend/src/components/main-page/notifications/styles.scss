@@ -1,0 +1,41 @@
+.notifications {
+  &__view-all {
+    cursor: pointer;
+    transition: all 0.5s ease-out;
+    &:hover {
+      color: rgb(54, 45, 153) !important;
+    }
+  }
+}
+
+.notification {
+  cursor: pointer;
+  transition: all 0.5s linear;
+  color: #000 !important;
+
+  &__name {
+    max-width: 80%;
+  }
+
+  &__description {
+    text-overflow: ellipsis;
+    max-width: 80%;
+  }
+
+  &__type {
+    width: 30px;
+    height: 30px;
+    &--approve-skills {
+      background-color: rgba(28, 195, 54, 1);
+    }
+    svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60%;
+      height: 60%;
+      color: #fff;
+    }
+  }
+}

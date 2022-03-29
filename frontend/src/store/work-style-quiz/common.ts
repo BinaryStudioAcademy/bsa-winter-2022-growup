@@ -10,6 +10,7 @@ enum ActionType {
   FETCH = 'FETCH',
   UPDATE_QUESTION = 'UPDATE_QUESTION',
   SEND = 'SEND',
+  GET = 'GET',
 }
 
 export type { State };

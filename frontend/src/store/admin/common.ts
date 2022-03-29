@@ -7,6 +7,11 @@ export type State = {
   users: IUser[];
 };
 
+export type SuccessResponse = {
+  success: boolean;
+  message: string;
+};
+
 enum ActionType {
   CREATE_TAGS = 'create-tags',
   FETCH_TAGS = 'fetch-tags',
@@ -14,6 +19,13 @@ enum ActionType {
 
   INVITE_USER = 'invite-user',
   FETCH_USERS = 'fetch-users',
+  DELETE_USER = 'delete-user',
+  CHANGE_ROLE = 'change-role',
+
+  RESEND_MAIL = 'resend-mail',
+  GET_TOKEN = 'get-registration-token',
 }
+
+export interface IChangeRole extends Pick<IUser, 'id' | 'role'> {}
 
 export { ActionType };

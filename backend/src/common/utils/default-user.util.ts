@@ -2,13 +2,13 @@ import { User } from '~/data/entities/user';
 import { UserRegisterForm } from '../forms/user.forms';
 
 interface IDefaultProps {
-  password: string;
+  password: null;
   firstName: null;
   lastName: null;
   position: null;
 }
 const DEFAULT_USER_DATA: IDefaultProps = {
-  'password': 'password123',
+  'password': null,
   'firstName': null,
   'lastName': null,
   'position': null,

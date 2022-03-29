@@ -60,8 +60,14 @@ button:focus {
     color: #fff;
 
     &__edit {
-      color: #fff;
-      border: 2px solid #fff;
+      color: #fff !important;
+      border: 2px solid #fff !important;
+    }
+    &__edit:hover {
+      background-color: #fff !important;
+      border-color: #fff !important;
+      transition: all 0.2s ease 0s;
+      color: #463da8 !important;
     }
   }
 }

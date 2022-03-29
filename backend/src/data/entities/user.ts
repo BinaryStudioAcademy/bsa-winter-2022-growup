@@ -1,18 +1,21 @@
-import { Entity, Column, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, Column, ManyToOne, OneToMany, ManyToMany } from 'typeorm';
+
+import { RoleType } from '~/common/enums/role-type';
 import { AbstractEntity } from '~/data/abstract/abstract.entity';
+
 import { DomainLevel } from './domain-level';
 import { Company } from './company';
-import { UserRole } from './user-role';
 import { UserSkill } from './user-skill';
 import { CareerJourney } from './career-journey';
 import { Education } from './education';
+import { Tags } from './tags';
 
 @Entity()
 export class User extends AbstractEntity {
   @Column({ type: 'varchar', length: 50 })
   email: string;
 
-  @Column({ type: 'varchar', length: 100, select: false })
+  @Column({ type: 'varchar', length: 100, select: false, nullable: true })
   password: string;
 
   @Column({ type: 'varchar', length: 250, nullable: true })
@@ -27,10 +30,13 @@ export class User extends AbstractEntity {
   @Column({ type: 'varchar', length: 150, nullable: true })
   position: string;
 
-  @ManyToOne(() => Company, (company) => company.users)
+  @Column({ type: 'enum', enum: RoleType })
+  role: RoleType;
+
+  @ManyToOne(() => Company, (company) => company.id)
   company: Company;
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.id, { onDelete: 'SET NULL' })
   mentor: User;
 
   @ManyToOne(() => DomainLevel, (domainLevel) => domainLevel.id)
@@ -38,9 +44,6 @@ export class User extends AbstractEntity {
 
   @OneToMany(() => UserSkill, (userSkill) => userSkill.user)
   userSkills: UserSkill[];
-
-  @OneToMany(() => UserRole, (userRole) => userRole.user)
-  role: UserRole[];
 
   @OneToMany(() => CareerJourney, (careerJourney) => careerJourney.user, {
     cascade: true,
@@ -53,4 +56,7 @@ export class User extends AbstractEntity {
     eager: true,
   })
   educations: Education[];
+
+  @ManyToMany(() => Tags, (tag) => tag.users)
+  tags: Tags[];
 }

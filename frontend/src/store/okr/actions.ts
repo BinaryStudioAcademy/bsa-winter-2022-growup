@@ -34,10 +34,7 @@ const getOkrById_async = createAsyncThunk(
 
 const createOkr_async = createAsyncThunk(
   ActionType.UPDATE_OKR_BY_ID,
-  async (
-    okrBody: { name: string; endDate: Date; startDate: Date },
-    { dispatch },
-  ) => {
+  async (okrBody: IOkr, { dispatch }) => {
     const result = await okrApi.createOkr(okrBody);
 
     if (result) {

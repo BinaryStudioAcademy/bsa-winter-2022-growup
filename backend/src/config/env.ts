@@ -9,6 +9,7 @@ export const env = {
     port: getOsEnv('PORT'),
     secretKey: getOsEnv('APP_SECRET'),
     nodeEnv: getOsEnv('NODE_ENV'),
+    url: getOsEnv('APP_URL'),
   },
   db: {
     url: getOsEnv('DATABASE_URL'),
@@ -28,5 +29,9 @@ export const env = {
     access: getOsEnv('AWS_ACCESS_KEY'),
     secret: getOsEnv('AWS_SECRET_KEY'),
     bucket: getOsEnv('AWS_BUCKET_NAME'),
+  },
+  email: {
+    name: getOsEnv('EMAIL_NAME'),
+    password: getOsEnv('EMAIL_PASSWORD'),
   },
 } as const;

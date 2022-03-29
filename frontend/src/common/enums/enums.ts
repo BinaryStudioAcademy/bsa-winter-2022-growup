@@ -5,6 +5,7 @@ export { ContentType } from './file/file';
 export { HttpHeader, HttpMethod } from './http/http';
 export { ProfileSettingsRoute } from './profile-settings/profile-settings';
 export { UserPayloadKey } from './user/user-payload-key.enum';
+export { OkrPayloadKey } from './user/okr-payload-key.enum';
 export {
   UserValidationMessage,
   UserValidationRule,
@@ -12,3 +13,4 @@ export {
 export { FirstStepPayloadKey } from './steps/steps';
 export { RoleType } from './user/roles.enum';
 export { SkillPayloadKey } from './skill/skill-payload-key.enum';
+export { OpportunityPayloadKey } from './opportunity/opportunity-payload-key.enum';

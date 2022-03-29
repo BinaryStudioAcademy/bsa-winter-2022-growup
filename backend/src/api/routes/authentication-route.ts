@@ -1,28 +1,42 @@
 import { Request, Router } from 'express';
 
 import { run } from '~/common/helpers/route.helper';
+import { refreshToken } from '~/services/user.service';
+
 import {
-  authenticateUser,
-  registerUserAdmin,
-  refreshToken,
-} from '~/services/user.service';
+  loginController,
+  registerAdminController,
+} from '../controllers/auth.controller';
+
+import {
+  verifyRegistrationTokenController,
+  updateUserMissingDataController,
+} from '../controllers/user-managment.controller';
 
 const router: Router = Router();
 
 router
   .post(
     '/login',
-    run(async (req: Request) => await authenticateUser(req.body)),
+    run(async (req: Request) => await loginController(req.body)),
   )
   .post(
     '/register',
-    run(
-      async (req: Request) => await registerUserAdmin(req.body, req.companyId),
-    ),
+    run(async (req: Request) => await registerAdminController(req.body)),
   )
   .post(
     '/auth/refresh',
-    run(async (req: Request) => await refreshToken(req.body)),
+    run((req: Request) => refreshToken(req.body)),
+  )
+  .get(
+    '/register/verify/:token',
+    run((req) => verifyRegistrationTokenController(req.params.token)),
+  )
+  .patch(
+    '/register/finish',
+    run((req: Request) =>
+      updateUserMissingDataController(req.userId, req.body),
+    ),
   );
 
 export default router;

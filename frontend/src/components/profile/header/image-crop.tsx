@@ -3,6 +3,7 @@ import { Form } from 'react-bootstrap';
 import ReactCropper, { Cropper } from 'react-cropper';
 
 import 'cropperjs/dist/cropper.css';
+import { Button } from 'components/common/common';
 
 type Props = {
   setError: (msg: string) => void;
@@ -77,13 +78,13 @@ export const Demo: React.FC<Props> = ({
       )}
 
       <div className="d-flex">
-        <button
+        <Button
+          variant="outline-gu-purple"
+          className="flex-fill"
           onClick={getCropData}
-          className="btn btn-outline-gu-purple flex-fill border-2 fw-bold"
-          disabled={isLoading}
         >
           {isLoading ? 'Loading...' : 'Save'}
-        </button>
+        </Button>
       </div>
     </>
   );

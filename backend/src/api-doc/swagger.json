@@ -42,7 +42,7 @@
           "200": {
             "description": "Returns token and company if everything is ok.",
             "schema": {
-              "$ref": "#/definitions/Company"
+              "$ref": "#/definitions/CompanyResponse"
             }
           },
           "404": {
@@ -99,7 +99,7 @@
           "200": {
             "description": "Returns token and company if everything is ok.",
             "schema": {
-              "$ref": "#/definitions/Company"
+              "$ref": "#/definitions/CompanyResponse"
             }
           },
           "404": {
@@ -165,6 +165,10 @@
               "properties": {
                 "name": {
                   "type": "string"
+                },
+                "type": {
+                  "type": "string",
+                  "enun": ["my_okr", "team_okr"]
                 },
                 "startDate": {
                   "type": "string"
@@ -264,6 +268,10 @@
                 "name": {
                   "type": "string"
                 },
+                "type": {
+                  "type": "string",
+                  "enun": ["my_okr", "team_okr"]
+                },
                 "startDate": {
                   "type": "string"
                 },
@@ -287,6 +295,46 @@
             "description": "Returns error if data is invalid.",
             "schema": {
               "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Tag id you want to delete"
+          }
+        ],
+        "tags": ["Okr"],
+        "summary": "Delete okr by id",
+        "responses": {
+          "200": {
+            "description": "Return status of deletion",
+            "schema": {
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "default": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "default": "Okr was deleted successfully"
+                }
+              }
             }
           }
         }
@@ -415,7 +463,49 @@
         }
       }
     },
-    "/api/company/okr/{id}/objective/{id}/keyresult": {
+    "/api/company/okr/objective/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Tag id you want to delete"
+          }
+        ],
+        "tags": ["Okr"],
+        "summary": "Delete objective by id",
+        "responses": {
+          "200": {
+            "description": "Return status of deletion",
+            "schema": {
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "default": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "default": "Objective was deleted successfully"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/company/okr/{okrId}/objective/{objectiveId}/keyresult": {
       "post": {
         "tags": ["Okr"],
         "summary": "Add new keyresult to the objective",
@@ -431,7 +521,7 @@
           },
           {
             "in": "path",
-            "name": "id",
+            "name": "okrId",
             "required": true,
             "schema": {
               "type": "string"
@@ -440,7 +530,7 @@
           },
           {
             "in": "path",
-            "name": "id1",
+            "name": "objectiveId",
             "required": true,
             "schema": {
               "type": "string"
@@ -467,6 +557,187 @@
             "description": "Returns created objective if everything is ok.",
             "schema": {
               "$ref": "#/definitions/Okr"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/api/company/okr/objective/keyresult/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "KeyResult id you want to delete"
+          }
+        ],
+        "tags": ["Okr"],
+        "summary": "Delete KeyResult by id",
+        "responses": {
+          "200": {
+            "description": "Return status of deletion",
+            "schema": {
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "default": "success"
+                },
+                "message": {
+                  "type": "string",
+                  "default": "KeyResult was deleted successfully"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/company/opportunities": {
+      "get": {
+        "tags": ["Opportunity"],
+        "summary": "Get all opportunities",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns array of opportunities if everything is ok.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Opportunity"
+              }
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Opportunity"],
+        "summary": "Create new opportunity",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "opportunities": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "organization": {
+                        "type": "string"
+                      },
+                      "startDate": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "tags": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns created opportunities if everything is ok.",
+            "schema": {
+              "$ref": "#/definitions/Opportunity"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/api/company/opportunities/{id}": {
+      "get": {
+        "tags": ["Opportunity"],
+        "summary": "Get opportunity by id",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Find opportunity by id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns opportunity if everything is ok.",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Opportunity"
             }
           },
           "404": {
@@ -505,13 +776,37 @@
             "description": "User credentials"
           }
         ],
-        "tags": ["Users"],
+        "tags": ["Users", "Authentication"],
         "summary": "Create new user",
         "responses": {
           "200": {
             "description": "Returns token if everything is ok. Token contains userId and role. It expires in 24h.",
             "schema": {
-              "$ref": "#/definitions/Token"
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "allOf": [
+                        {
+                          "$ref": "#/definitions/User"
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "isCompleteTest": {
+                              "type": "boolean"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/definitions/Token"
+                }
+              ]
             }
           },
           "404": {
@@ -544,13 +839,37 @@
             "description": "User credentials"
           }
         ],
-        "tags": ["Users"],
+        "tags": ["Users", "Authentication"],
         "summary": "Authenticate user",
         "responses": {
           "200": {
             "description": "Returns token if everything is ok. Token contains userId and role. It expires in 24h.",
             "schema": {
-              "$ref": "#/definitions/Token"
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "allOf": [
+                        {
+                          "$ref": "#/definitions/User"
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "isCompleteTest": {
+                              "type": "boolean"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/definitions/Token"
+                }
+              ]
             }
           },
           "404": {
@@ -580,7 +899,7 @@
             "description": "The refresh token"
           }
         ],
-        "tags": ["Users"],
+        "tags": ["Users", "Authentication"],
         "summary": "Use a refresh token to generate a new JWT token and a new refresh token",
         "responses": {
           "200": {
@@ -591,6 +910,100 @@
           },
           "404": {
             "description": "Returns error if token are invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/register/verify/{token}": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "token",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Token that was sent to user via email"
+          }
+        ],
+        "tags": ["Users", "Authentication"],
+        "summary": "Verifies user token for completing registration",
+        "responses": {
+          "200": {
+            "description": "Returns token if everything is ok. Token contains userId and role. It expires in 24h.",
+            "schema": {
+              "$ref": "#/definitions/Token"
+            }
+          },
+          "404": {
+            "description": "Returns error if token is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/register/finish": {
+      "patch": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Authorization token"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "type": "string"
+                },
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "position": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "tags": ["Users", "Authentication"],
+        "summary": "Completes user registration and fills in user missing data(e. g. password, firstName, lastName and position)",
+        "responses": {
+          "200": {
+            "description": "Returns updated user fields(except for password)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "position": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Returns error if token is invalid.",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -773,6 +1186,75 @@
         }
       }
     },
+    "/api/user/profile": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Update user profile",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "position": {
+                  "type": "string"
+                },
+                "educations": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Education"
+                  }
+                },
+                "careerJourneys": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/CareerJourney"
+                  }
+                },
+                "interests": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Tag"
+                  }
+                }
+              }
+            },
+            "required": true,
+            "description": "User profile"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns created okr if everything is ok.",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/api/company/users": {
       "get": {
         "parameters": [
@@ -793,23 +1275,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "allOf": [
-                  {
-                    "$ref": "#/definitions/User"
-                  },
-                  {
-                    "type": "object",
-                    "properties": {
-                      "role": {
-                        "type": "string",
-                        "enum": ["Mentor", "Mentee", "Admin"]
-                      },
-                      "company": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                ]
+                "$ref": "#/definitions/User"
               }
             }
           }
@@ -834,7 +1300,7 @@
                 "email": {
                   "type": "string"
                 },
-                "roleType": {
+                "role": {
                   "type": "string",
                   "enum": ["Mentor", "Mentee", "Admin"]
                 }
@@ -865,6 +1331,179 @@
                   }
                 }
               ]
+            }
+          }
+        }
+      }
+    },
+    "/api/company/users/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID for delete user by this id"
+          }
+        ],
+        "tags": ["Users", "Admin"],
+        "summary": "Delete user by admin",
+        "responses": {
+          "200": {
+            "schema": {
+              "description": "Return object of success message",
+              "type": "object",
+              "$ref": "#/definitions/DeleteUserResponse"
+            }
+          },
+          "404": {
+            "schema": {
+              "description": "Return Error with message of not founded user by this ID",
+              "type": "object",
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID for change user role by this id"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/ChangeUserRole"
+            }
+          }
+        ],
+        "tags": ["Users", "Admin"],
+        "summary": "Change User Role by admin",
+        "responses": {
+          "200": {
+            "schema": {
+              "description": "Return object of user Id and his new role",
+              "type": "object",
+              "$ref": "#/definitions/ChangeRoleResponse"
+            }
+          },
+          "404": {
+            "schema": {
+              "description": "Return Error with message of not founded user by this ID",
+              "type": "object",
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID for change user role by this id"
+          }
+        ],
+        "tags": ["Users", "Admin"],
+        "summary": "Get user path for account activation",
+        "responses": {
+          "200": {
+            "schema": {
+              "description": "Returns url",
+              "type": "object",
+              "properties": {
+                "url": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/company/users/token/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID for change user role by this id"
+          }
+        ],
+        "tags": ["Users", "Admin"],
+        "summary": "Resend mail for activation user accounnt",
+        "responses": {
+          "200": {
+            "schema": {
+              "description": "Return object of user Id and his new role",
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "schema": {
+              "description": "Return Error with message of not founded user by this ID",
+              "type": "object",
+              "$ref": "#/definitions/Error"
             }
           }
         }
@@ -1437,6 +2076,121 @@
           }
         }
       }
+    },
+    "/api/work-quiz/result/": {
+      "get": {
+        "tags": ["Work Quiz"],
+        "summary": "Get quiz results",
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "string"
+                  },
+                  "quizCategoryId": {
+                    "type": "string"
+                  },
+                  "score": {
+                    "type": "number"
+                  },
+                  "quizCategory": {
+                    "type": "object",
+                    "$ref": "#/definitions/Category"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/languages": {
+      "get": {
+        "tags": ["Language"],
+        "summary": "Get all languages information",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return array of languages information if everything is ok",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Language"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Language"],
+        "summary": "Create new language information",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "allOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "level": {
+                        "type": "string"
+                      },
+                      "certificate": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "required": true,
+            "description": "Company credentials"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns created language if everything is ok.",
+            "schema": {
+              "$ref": "#/definitions/Language"
+            }
+          },
+          "404": {
+            "description": "Returns error if data is invalid.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -1524,13 +2278,15 @@
     },
     "Okr": {
       "required": ["token"],
-
       "type": "object",
       "properties": {
         "id": {
           "type": "string"
         },
         "name": {
+          "type": "string"
+        },
+        "type": {
           "type": "string"
         },
         "startDate": {
@@ -1562,13 +2318,27 @@
         }
       }
     },
-    "Company": {
-      "required": ["token"],
-      "properties": {
-        "token": {
-          "type": "string"
+    "CompanyResponse": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Token"
         },
-        "company": {
+        {
+          "type": "object",
+          "properties": {
+            "company": {
+              "$ref": "#/definitions/Company"
+            }
+          }
+        }
+      ]
+    },
+    "Company": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Default"
+        },
+        {
           "type": "object",
           "properties": {
             "id": {
@@ -1579,23 +2349,10 @@
             },
             "description": {
               "type": "string"
-            },
-            "deletedAt": {
-              "type": "string",
-              "nullable": true,
-              "default": null
-            },
-            "createdAt": {
-              "type": "string"
-            },
-            "updatedAt": {
-              "type": "string",
-              "nullable": true,
-              "default": null
             }
           }
         }
-      }
+      ]
     },
     "Token": {
       "required": ["token"],
@@ -1647,32 +2404,43 @@
       }
     },
     "User": {
-      "properties": {
-        "id": {
-          "type": "string"
+      "allOf": [
+        {
+          "$ref": "#/definitions/Default"
         },
-        "firstName": {
-          "type": "string"
-        },
-        "lastName": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        },
-        "avatar": {
-          "type": "string"
-        },
-        "createdAt": {
-          "type": "string"
-        },
-        "updatedAt": {
-          "type": "string"
-        },
-        "deletedAt": {
-          "type": "string"
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "firstName": {
+              "type": "string"
+            },
+            "lastName": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "avatar": {
+              "type": "string"
+            },
+            "careerJourneys": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CareerJourney"
+              }
+            },
+            "educations": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Education"
+              }
+            }
+          }
         }
-      }
+      ]
     },
     "Domain": {
       "allOf": [
@@ -1686,7 +2454,9 @@
             }
           }
         },
-        { "$ref": "#/definitions/Default" }
+        {
+          "$ref": "#/definitions/Default"
+        }
       ]
     },
     "Skill": {
@@ -1702,7 +2472,9 @@
             }
           }
         },
-        { "$ref": "#/definitions/Default" }
+        {
+          "$ref": "#/definitions/Default"
+        }
       ]
     },
     "Skill Objective": {
@@ -1715,7 +2487,9 @@
             }
           }
         },
-        { "$ref": "#/definitions/Default" }
+        {
+          "$ref": "#/definitions/Default"
+        }
       ]
     },
     "Level": {
@@ -1756,22 +2530,30 @@
                                     }
                                   }
                                 },
-                                { "$ref": "#/definitions/Default" }
+                                {
+                                  "$ref": "#/definitions/Default"
+                                }
                               ]
                             }
                           }
                         }
                       },
-                      { "$ref": "#/definitions/Default" }
+                      {
+                        "$ref": "#/definitions/Default"
+                      }
                     ]
                   }
                 },
-                { "$ref": "#/definitions/Default" }
+                {
+                  "$ref": "#/definitions/Default"
+                }
               ]
             }
           }
         },
-        { "$ref": "#/definitions/Default" }
+        {
+          "$ref": "#/definitions/Default"
+        }
       ]
     },
     "Skill Type": {
@@ -1798,6 +2580,17 @@
         },
         "score": {
           "type": "number"
+        }
+      }
+    },
+    "ChangeRoleResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
         }
       }
     },
@@ -1837,6 +2630,14 @@
           "type": "string"
         },
         "name": {
+          "type": "string"
+        }
+      }
+    },
+    "ChangeUserRole": {
+      "type": "object",
+      "properties": {
+        "role": {
           "type": "string"
         }
       }
@@ -1887,6 +2688,17 @@
           "type": "string"
         },
         "deletedAt": {
+          "type": "string"
+        }
+      }
+    },
+    "DeleteUserResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
           "type": "string"
         }
       }
@@ -1944,6 +2756,72 @@
         },
         "deletedAt": {
           "type": "string"
+        }
+      }
+    },
+    "Language": {
+      "required": ["token"],
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "level": {
+          "type": "string"
+        },
+        "certificate": {
+          "type": "string"
+        },
+        "certificateImage": {
+          "type": "string",
+          "nullable": true,
+          "default": null
+        },
+        "deletedAt": {
+          "type": "string",
+          "nullable": true,
+          "default": null
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string",
+          "nullable": true,
+          "default": null
+        }
+      }
+    },
+    "Opportunity": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "organization": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": "string",
+          "nullable": true,
+          "default": null
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string",
+          "nullable": true,
+          "default": null
         }
       }
     }
