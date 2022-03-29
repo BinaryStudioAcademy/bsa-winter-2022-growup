@@ -28,7 +28,7 @@ function ControlledTabs(): React.ReactElement {
       <Button
         variant="gu-pink"
         className="position-absolute text-gu-white mb-2 align-self-end"
-        style={{ right: 24 }}
+        style={{ right: 36 }}
         onClick={openModal}
       >
         + Add OKR
