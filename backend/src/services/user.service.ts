@@ -37,6 +37,11 @@ import { env } from '~/config/env';
 import { SuccessResponse } from '~/common/models/responses/success';
 import { DomainLevel } from '~/data/entities/domain-level';
 import DomainLevelRepository from '~/data/repositories/domain-level.repository';
+import { getCategoriesByLevel } from './skill-category.service';
+import {
+  createUserSkillCategories,
+  deleteUserSkillCategories,
+} from './user-skill-category.service';
 
 type TokenResponse = {
   token: string;
@@ -297,14 +302,19 @@ export const changeUserPosition = async (
   const domainLevelRepository = getCustomRepository(DomainLevelRepository);
   const user = await userRepository.findOne(id);
 
-  let level = null;
+  let newLevel = null;
 
   if (levelId && position) {
-    level = await domainLevelRepository.findOne(levelId);
+    newLevel = await domainLevelRepository.findOne(levelId);
+    if (newLevel) {
+      await deleteUserSkillCategories(user);
+      const skillsCategories = await getCategoriesByLevel(newLevel);
+      await createUserSkillCategories(user, skillsCategories);
+    }
   }
 
   user.position = position || null;
-  user.level = level;
+  user.level = newLevel;
 
   const userInstance = await user.save();
 

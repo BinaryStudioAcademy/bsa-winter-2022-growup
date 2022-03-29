@@ -25,3 +25,16 @@ export const createUserSkillCategories = async (
 
   return userSkillCategories;
 };
+
+export const deleteUserSkillCategories = async (
+  user: User,
+): Promise<UserSkillCategory[]> => {
+  const userSkillCategoryRepository = getCustomRepository(
+    UserSkillCategoryRepository,
+  );
+
+  const userSkillCategories = await userSkillCategoryRepository.find({ user });
+  await userSkillCategoryRepository.remove(userSkillCategories);
+
+  return userSkillCategories;
+};
