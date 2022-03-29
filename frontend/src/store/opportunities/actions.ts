@@ -16,6 +16,7 @@ const fetchLoadOpportunities = createAsyncThunk<
   async (request, { extra: { services } }) => {
     const result: IOpportunityBase[] =
       await services.opportunities.fetchLoadOpportunities();
+    console.warn(result);
 
     return result.map((item) => {
       const tags = item.tags?.map((item) => item.name);

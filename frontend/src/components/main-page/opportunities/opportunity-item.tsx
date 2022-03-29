@@ -15,8 +15,10 @@ const OpportunityItem: React.FC<Props> = ({
   startDate,
   tagsData,
   type,
+  tags,
 }): ReactElement => {
-  const tagsComponents = tagsData?.map((tag, index: number) => {
+  const tagsList = tagsData ? tagsData : tags;
+  const tagsComponents = tagsList?.map((tag, index: number) => {
     if (typeof tag !== 'string') return <Tag title={tag.name} key={index} />;
     return <Tag title={tag} key={index} />;
   });
