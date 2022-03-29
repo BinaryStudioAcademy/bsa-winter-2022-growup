@@ -23,8 +23,10 @@ import { IListUser, ShortUser } from '~/common/models/user/user';
 import { toShortUser } from '~/common/mappers/user.mapper';
 import { SuccessResponse } from '~/common/models/responses/success';
 import { env } from '~/config/env';
+import { getLevelById } from '~/services/domain-level.service';
 
-type RegistrationUserProps = Pick<User, 'email' | 'role'> & {
+type RegistrationUserProps = Pick<User, 'email' | 'role' | 'position'> & {
+  levelId: User['level']['id'];
   company: User['company']['id'];
 };
 
@@ -34,8 +36,18 @@ const registerUserController = async ({
   email,
   role,
   company,
+  levelId,
+  position,
 }: RegistrationUserProps): Promise<IListUser> => {
-  const newUser = await registerUser(createDefaultUser(email), role, company);
+  let level = null;
+
+  if (levelId) level = await getLevelById(levelId);
+
+  const newUser = await registerUser(
+    createDefaultUser(email, level, position || null),
+    role,
+    company,
+  );
   const token = await createRegistrationToken(newUser);
   await sendMail(env.app.url, newUser.email, token.value);
   return convertForUserList(newUser);

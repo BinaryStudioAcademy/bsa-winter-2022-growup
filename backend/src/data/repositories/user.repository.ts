@@ -31,6 +31,11 @@ class UserRepository extends Repository<User> {
         'user.id = education.user',
       )
       .leftJoinAndSelect('user.company', 'company', 'user.company = company.id')
+      .leftJoinAndSelect(
+        'user.level',
+        'domainLevel',
+        'user.level = domainLevel.id',
+      )
       .where({ id: userId })
       .getOne();
   }
@@ -47,6 +52,11 @@ class UserRepository extends Repository<User> {
         'user.educations',
         'education',
         'user.id = education.user',
+      )
+      .leftJoinAndSelect(
+        'user.level',
+        'domainLevel',
+        'user.level = domainLevel.id',
       )
       .where({ company: companyId })
       .andWhere('NOT role = :role', { role: RoleType.ADMIN })

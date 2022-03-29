@@ -17,6 +17,7 @@ const UserTable: React.FC<Props> = memo(({ list }) => (
         <th>First name</th>
         <th>Email</th>
         <th>Role</th>
+        <th>Position</th>
         <th>Actions</th>
       </tr>
     </thead>

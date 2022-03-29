@@ -35,6 +35,8 @@ import type {
 import { env } from '~/config/env';
 
 import { SuccessResponse } from '~/common/models/responses/success';
+import { DomainLevel } from '~/data/entities/domain-level';
+import DomainLevelRepository from '~/data/repositories/domain-level.repository';
 
 type TokenResponse = {
   token: string;
@@ -45,10 +47,14 @@ type RefreshTokenResponse = {
   accessToken: string;
 };
 
+type Position = {
+  levelId: DomainLevel['id'];
+  name: string;
+};
 interface IProfile {
   firstName: string;
   lastName: string;
-  position: string;
+  position: Position;
   educations: Education[];
   careerJourneys: CareerJourney[];
   interests: Tags[];
@@ -170,10 +176,12 @@ export const getCommonUserList = async (id: string): Promise<IListUser[]> => {
   const userInstances = await userRepository.getUsersByCompanyId(
     user.company.id,
   );
+
   const users = userInstances.map((user) => ({
     ...user,
     company: user.company.id,
   }));
+
   return users;
 };
 
@@ -248,7 +256,6 @@ export const addProfile = async (
   });
 
   userInstance.tags.push(...data.interests);
-
   const user = Object.assign(userInstance, data);
   await user.save();
 
@@ -279,4 +286,33 @@ export const changeUserRole = async (
   const userInstance = await user.save();
 
   return { id: userInstance.id, role: userInstance.role };
+};
+
+export const changeUserPosition = async (
+  id: User['id'],
+  levelId: User['level']['id'],
+  position: User['position'],
+): Promise<Pick<User, 'id' | 'level' | 'position'>> => {
+  const userRepository = getCustomRepository(UserRepository);
+  const domainLevelRepository = getCustomRepository(DomainLevelRepository);
+  const user = await userRepository.findOne(id);
+
+  let level = null;
+
+  if (levelId && position) {
+    level = await domainLevelRepository.findOne(levelId);
+  }
+
+  user.position = position || null;
+  user.level = level;
+
+  const userInstance = await user.save();
+
+  const updatedUser = {
+    id: userInstance.id,
+    position: userInstance.position,
+    level: userInstance.level,
+  };
+
+  return updatedUser;
 };

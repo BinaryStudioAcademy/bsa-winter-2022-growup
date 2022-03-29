@@ -14,6 +14,7 @@ import {
   getCommonUserList,
   deleteUser,
   changeUserRole,
+  changeUserPosition,
 } from '~/services/user.service';
 
 import { validatePermissions } from '~/api/middlewares/validation-middleware';
@@ -55,6 +56,8 @@ router
       registerUserController({
         email: req.body.email,
         role: req.body.role,
+        position: req.body?.position,
+        levelId: req.body?.levelId,
         company: req.companyId,
       }),
     ),
@@ -68,5 +71,13 @@ router
     '/users/:id',
     validatePermissions([RoleType.ADMIN]),
     run((req) => changeUserRole(req.params.id, req.body.role)),
+  )
+  .put(
+    '/users/:id/position',
+    validatePermissions([RoleType.ADMIN]),
+    run((req) => {
+      const { level, position } = req.body;
+      return changeUserPosition(req.params.id, level?.id, position);
+    }),
   );
 export default router;

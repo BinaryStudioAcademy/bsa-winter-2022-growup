@@ -42,6 +42,14 @@ const Reducer = (builder: ActionReducerMapBuilder<State>): void => {
     }
   });
 
+  builder.addCase(actions.changeUserPosition.fulfilled, (state, action) => {
+    if (action.payload) {
+      const id = state.users.findIndex((user) => user.id === action.payload.id);
+      state.users[id].position = action.payload.position;
+      state.users[id].level = action.payload.level;
+    }
+  });
+
   builder.addMatcher(
     isAnyOf(actions.createTags.pending, actions.fetchTags.pending),
     (state, _) => {

@@ -40,7 +40,7 @@ export class User extends AbstractEntity {
   mentor: User;
 
   @ManyToOne(() => DomainLevel, (domainLevel) => domainLevel.id)
-  domain: DomainLevel;
+  level: DomainLevel;
 
   @OneToMany(() => UserSkill, (userSkill) => userSkill.user)
   userSkills: UserSkill[];

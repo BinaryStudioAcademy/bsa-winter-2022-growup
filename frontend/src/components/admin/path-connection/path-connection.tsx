@@ -1,7 +1,7 @@
 import { Button, Card, Form } from 'react-bootstrap';
 
 import Pairs from './pairs/pairs';
-import LevelsList from './levels-list/levels-list';
+import LevelsList from '../common/levels-list/levels-list';
 import {
   useAppDispatch,
   useAppSelector,

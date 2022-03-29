@@ -60,7 +60,7 @@ const Admin: React.FC<Props> = ({ variant }) => {
       </Navbar>
       <Container className="d-grid gap-2">
         <div className="row">
-          <div className="col col-sm-8 col-md-8 col-lg-8">
+          <div className="col-12">
             <Nav variant="tabs" defaultActiveKey="/">
               <Nav.Item>
                 <Link

@@ -22,6 +22,7 @@ const ListItem: React.FC<Props> = ({
         name={name}
         onChange={onClick}
         value={value}
+        required
       />
       <Form.Check.Label className="test-item__label">{value}</Form.Check.Label>
     </Form.Check>
