@@ -43,7 +43,7 @@ function FormInputDate<T>({
       customInputRef="dateRef"
       minDate={minDate}
       maxDate={maxDate}
-      selected={value}
+      selected={typeof value === 'string' ? new Date(value) : value}
       onChange={onChange}
       placeholderText={placeholder}
       customInput={<CustomInput ref={ref} dateRef={ref} errors={errors} />}
