@@ -48,8 +48,24 @@ const edit_companyAsync = createAsyncThunk(
       const { token, company } = result;
 
       window.localStorage.setItem(StorageKey.TOKEN, token);
+      dispatch(authActions.updateUserCompany(company));
       dispatch(actions.edit_company(company));
       handleClose();
+    }
+  },
+);
+
+const update_companyAvatarAsync = createAsyncThunk(
+  ActionType.UPDATE_AVATAR,
+  async (data: Blob, { dispatch, rejectWithValue }) => {
+    try {
+      const result = await companyApi.updateCompanyAvatar(data);
+
+      if (result) {
+        dispatch(authActions.updateUserCompany(result));
+      }
+    } catch (err) {
+      return rejectWithValue(err);
     }
   },
 );
@@ -59,6 +75,7 @@ const companyActions = {
   get_allCompaniesAsync,
   add_companyAsync,
   edit_companyAsync,
+  update_companyAvatarAsync,
 };
 
 export { companyActions };
