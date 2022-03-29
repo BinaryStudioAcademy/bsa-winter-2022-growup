@@ -1,8 +1,8 @@
 import { levelMapper } from './level-mapper';
 import { getEdge } from './get-edge';
+import { getSkills } from './get-skills';
 import { getUserNode } from './get-user-node';
 import { getLevelNode } from './get-level-node';
-import { getTechnicalSkills } from './get-skills';
 import { IAllTechnicalSkills } from '../../common/interfaces';
 import {
   IEdge,
@@ -33,7 +33,7 @@ export const getFlowData = (
   const nextLevels = currentLevel.nextLevels.map((id) => levelMap[id]);
   nextLevels.forEach((item) => {
     const levelNode: INode = getLevelNode(item.name, 0, 23, 35, () => {
-      onClick(getTechnicalSkills(item), item.id, item.name);
+      onClick(getSkills(item), item.id, item.name);
     });
     nodes.push(levelNode);
   });
@@ -45,7 +45,7 @@ export const getFlowData = (
 
   const initialSkill: IInitialSkill = {
     name: levelMap[levelId].name,
-    skills: getTechnicalSkills(levelMap[levelId]),
+    skills: getSkills(levelMap[levelId]),
   };
 
   return { nodes, edges, initialSkill };
