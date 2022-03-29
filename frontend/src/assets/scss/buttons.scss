@@ -1,8 +1,10 @@
 .btn {
   border-radius: 70px !important;
 
-  &:focus {
-    box-shadow: none;
+  &:focus,
+  &:active {
+    box-shadow: none !important;
+    outline: none !important;
   }
 }
 
