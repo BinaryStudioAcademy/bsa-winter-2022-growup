@@ -39,11 +39,6 @@ export const createOkr = async ({
   const userRepository = getCustomRepository(UserRepository);
 
   const user = await userRepository.findOne({ id: userId });
-  const isOkrExist = await okrRepository.findOne({ name: body.name });
-
-  if (isOkrExist) {
-    throw badRequestError(`Okr with name ${body.name} is exist!!!`);
-  }
 
   const okr = okrRepository.create();
   Object.assign(okr, body);
