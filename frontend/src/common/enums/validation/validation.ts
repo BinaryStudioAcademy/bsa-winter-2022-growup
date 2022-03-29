@@ -8,3 +8,5 @@ export * from './education-validation.enum';
 export * from './education-validation-rule.enum';
 export * from './opportunity-validation-rule.enum';
 export * from './opportunity-validation.enum';
+export * from './company-validation-rule.enum';
+export * from './company-validation.enum';
