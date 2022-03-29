@@ -1,6 +1,7 @@
 import { Router, Request } from 'express';
 import multer from 'multer';
 import { run } from '~/common/helpers/route.helper';
+import { createCompanyController } from '~/api/controllers/company.controller';
 import {
   CompanyResponse,
   CompaniesResponse,
@@ -11,7 +12,6 @@ import {
 } from '~/api/middlewares/validation-middleware';
 import { OKR } from '~/data/entities/okr';
 import {
-  createCompany,
   editCompany,
   getAllCompanies,
   updateCompanyAvatar,
@@ -57,16 +57,16 @@ router
   .post(
     '/',
     validatePermissions([RoleType.ADMIN]),
-    run((req): Promise<CompanyResponse> => {
-      const { userId, userRole, companyId, body } = req;
-      const tokenPayload = {
-        userId,
-        role: userRole,
-        companyId,
-      };
-      const data = { body, tokenPayload };
-      return createCompany(data);
-    }),
+    run((req) =>
+      createCompanyController({
+        companyBody: req.body,
+        tokenPayload: {
+          userId: req.userId,
+          role: req.userRole,
+          companyId: req.companyId,
+        },
+      }),
+    ),
   )
   .put(
     '/avatar',

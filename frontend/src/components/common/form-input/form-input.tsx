@@ -18,6 +18,7 @@ interface Props<T> {
   control: Control<T>;
   type: string;
   placeholder: string;
+  textarea?: boolean;
 }
 
 function FormInput<T>({
@@ -26,6 +27,7 @@ function FormInput<T>({
   control,
   type,
   placeholder,
+  textarea,
 }: Props<T>): JSX.Element {
   const {
     field: { value, ...field },
@@ -39,6 +41,7 @@ function FormInput<T>({
         value={fieldValue}
         type={type}
         placeholder={placeholder}
+        as={textarea ? 'textarea' : 'input'}
       />
 
       <span className="fs-6 text-gu-pink error mt-2">
