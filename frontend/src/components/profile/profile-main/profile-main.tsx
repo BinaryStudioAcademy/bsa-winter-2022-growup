@@ -1,31 +1,20 @@
-import { ISkill } from '../common/interfaces';
 import EditSection from '../edit-section/edit-section';
 import CareerJourneySection from './career-journey-section';
 import { useAppDispatch, useAppSelector, useEffect } from 'hooks/hooks';
 import Interests from './interests/interests-section';
 import Tag from '../tag/tag';
 import './styles.scss';
-import { tagsActions } from 'store/actions';
+import { skillActions, tagsActions } from 'store/actions';
 import EducationSection from './education-section';
-
-// FROM DB
-const skillData: ISkill[] = [
-  {
-    id: '1',
-    name: 'HTML',
-  },
-  {
-    id: '2',
-    name: 'CSS',
-  },
-];
 
 const ProfileMain: React.FC = () => {
   const { tags } = useAppSelector((state) => state.tags);
+  const skillData = useAppSelector((state) => state.skill.userSkill);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(tagsActions.fetchTags());
+    dispatch(skillActions.fetchUserSkills());
   }, [dispatch]);
 
   return (
