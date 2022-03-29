@@ -1,9 +1,16 @@
-import { Entity, OneToOne, PrimaryColumn, JoinColumn, Column } from 'typeorm';
+import {
+  Entity,
+  OneToOne,
+  PrimaryColumn,
+  JoinColumn,
+  Column,
+  BaseEntity,
+} from 'typeorm';
 import { User } from './user';
 import { SkillCategory } from './skill-category';
 
 @Entity()
-export class UserSkillCategory {
+export class UserSkillCategory extends BaseEntity {
   @PrimaryColumn()
   userId: User;
   @OneToOne(() => User, (user) => user.id, { onDelete: 'CASCADE' })
@@ -16,6 +23,15 @@ export class UserSkillCategory {
   @JoinColumn({ name: 'skillLevelId' })
   skillCategory: SkillCategory;
 
-  @Column({ type: 'boolean' })
-  isApproved: boolean;
+  @Column({ default: false })
+  isStarred: boolean;
+
+  @Column({ nullable: true })
+  selfRating: number;
+
+  @Column({ nullable: true })
+  mentorRating: number;
+
+  @Column({ nullable: true })
+  reviewRating: number;
 }

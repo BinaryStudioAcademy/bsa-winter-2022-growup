@@ -10,6 +10,7 @@ import {
   registerUser,
   updateUserMissingData,
 } from '~/services/user.service';
+import { getCategoriesByLevel } from '~/services/skill-category.service';
 import { getUrl, sendMail } from '~/services/mail.service';
 
 import { User } from '~/data/entities/user';
@@ -24,6 +25,9 @@ import { toShortUser } from '~/common/mappers/user.mapper';
 import { SuccessResponse } from '~/common/models/responses/success';
 import { env } from '~/config/env';
 import { getLevelById } from '~/services/domain-level.service';
+import { createUserSkillCategories } from '~/services/user-skill-category.service';
+import { getCustomRepository } from 'typeorm';
+import UserRepository from '~/data/repositories/user.repository';
 
 type RegistrationUserProps = Pick<User, 'email' | 'role' | 'position'> & {
   levelId: User['level']['id'];
@@ -41,8 +45,9 @@ const registerUserController = async ({
 }: RegistrationUserProps): Promise<IListUser> => {
   let level = null;
 
-  if (levelId) level = await getLevelById(levelId);
-
+  if (levelId) {
+    level = await getLevelById(levelId);
+  }
   const newUser = await registerUser(
     createDefaultUser(email, level, position || null),
     role,
@@ -82,6 +87,14 @@ const updateUserMissingDataController = async (
   id: User['id'],
   data: UserMissingDataForm,
 ): Promise<ShortUser> => {
+  const userRepository = getCustomRepository(UserRepository);
+  const user = await userRepository.getUserById(id);
+
+  if (user.level) {
+    const skillsCategories = await getCategoriesByLevel(user.level);
+    await createUserSkillCategories(user, skillsCategories);
+  }
+
   const updatedUser = await updateUserMissingData(id, data);
   await deleteRegistrationToken(updatedUser.id);
 
