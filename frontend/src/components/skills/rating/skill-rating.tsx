@@ -7,17 +7,9 @@ import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { RootState } from 'common/types/types';
 import { validRating } from '../validations/rating';
 import { ReactComponent as Delete } from '../../../assets/img/icons/skill-icons/delete-icon.svg';
-// import { ReactComponent as Save } from '../../../assets/img/icons/skill-icons/save-icon.svg';
-// import { ReactComponent as Edit } from '../../../assets/img/icons/skill-icons/edit-icon.svg';
 import { skillActions } from 'store/skill';
 import { Button } from 'components/common/common';
-import {
-  Pencil as EditIcon,
-  // ArrowDown as AddChildIcon,
-  // TrashFill as DeleteIcon,
-  Check as SaveIcon,
-  // PlusCircle as CancelIcon,
-} from 'react-bootstrap-icons';
+import { Pencil as EditIcon, Check as SaveIcon } from 'react-bootstrap-icons';
 
 interface Props {
   id: string;
