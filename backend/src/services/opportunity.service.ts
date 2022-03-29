@@ -34,7 +34,7 @@ export const getOpportunities = async (
     },
     relations: ['company', 'user', 'tags'],
   } as FindManyOptions);
-  console.log(opportunities);
+
   return opportunities.map((opportunity) => opportunityMapper(opportunity));
 };
 
