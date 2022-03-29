@@ -1,0 +1,60 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Nunito-reg';
+}
+body {
+  overflow-x: hidden;
+}
+a {
+  text-decoration: none;
+  color: transparent;
+}
+p {
+  margin-top: 0;
+  margin-bottom: 24px;
+}
+h4 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-family: 'Nunito-Bold', sans-serif;
+  font-size: 24px;
+  line-height: 1.33;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.anim-elem {
+  opacity: 0;
+  transition: all 2s ease;
+}
+
+.anim-elem-left {
+  transform: translate(-120%, 0);
+}
+.anim-elem-right {
+  transform: translate(120%, 0);
+}
+
+.anim-elem-bottom {
+  transform: translate(0, 120%);
+}
+
+.anim-active {
+  opacity: 1;
+  transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg)
+    rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+  transform-style: preserve-3d;
+}
+
+@media screen and (max-width: 767px) {
+  h4 {
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  p {
+    margin-bottom: 20px;
+  }
+}

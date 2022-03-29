@@ -1,0 +1,64 @@
+.companies {
+  background-color: rgba(70, 61, 168, 0.1);
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+.companies__title {
+  text-align: center;
+  background-size: 100%;
+  background-repeat: repeat;
+  font-weight: 700;
+  background-image: linear-gradient(
+    126deg,
+    rgba(70, 61, 168, 1) 0%,
+    rgba(238, 42, 100, 1) 73%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  margin-bottom: 65px;
+}
+
+.companies__acvhiements {
+  margin-top: 30px;
+  grid-column-gap: 24px;
+  grid-row-gap: 40px;
+  -ms-grid-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  -ms-grid-rows: auto;
+  grid-template-rows: auto;
+  display: grid;
+}
+.achive {
+  width: 100%;
+  max-width: 300px;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+}
+.achive__number {
+  margin-bottom: 20px;
+  font-family: 'Nunito-bold';
+  font-size: 48px;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.achive-color-first {
+  color: rgba(70, 61, 168, 0.8);
+}
+.achive-color-second {
+  color: rgba(147, 52, 137, 0.8);
+}
+.achive-color-third {
+  color: rgba(226, 66, 114, 0.8);
+}
+@media screen and (max-width: 767px) {
+  .companies__acvhiements {
+    grid-template-columns: 1fr;
+  }
+  .achive__numbe {
+    margin-bottom: 12px;
+  }
+}
