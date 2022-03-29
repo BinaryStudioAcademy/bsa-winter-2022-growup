@@ -1,18 +1,16 @@
-import { IAllTechnicalSkills, ITechnicalSkill } from '../../common/interfaces';
+import { IAllTechnicalSkills } from '../../common/interfaces';
 import { getTechnicalSkill } from './get-technical-skill';
 import { ILevel } from '../common/interfaces';
 
 export const getSkills = (level: ILevel): IAllTechnicalSkills[] => {
-  const technicalSkills: IAllTechnicalSkills[] = [];
+  const technicalSkillItem: IAllTechnicalSkills = {
+    name: level.domainName,
+    skills: [],
+  };
 
   for (const skillItem of level.skills) {
-    const technicalSkillItem: ITechnicalSkill = getTechnicalSkill(skillItem);
-    const skill: IAllTechnicalSkills = {
-      name: level.domainName,
-      skills: [technicalSkillItem],
-    };
-    technicalSkills.push(skill);
+    technicalSkillItem.skills.push(getTechnicalSkill(skillItem));
   }
 
-  return technicalSkills;
+  return [technicalSkillItem];
 };
