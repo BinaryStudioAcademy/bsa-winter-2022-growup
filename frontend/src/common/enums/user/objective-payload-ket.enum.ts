@@ -1,6 +1,6 @@
 const ObjectivePayloadKey = {
   NAME: 'name',
-  KEY_RESULT_NAME: 'keyResults.1.name',
+  KEY_RESULT_NAME: 'keyResults.0.name',
 };
 
 export { ObjectivePayloadKey };

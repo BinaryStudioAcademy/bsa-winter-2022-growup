@@ -65,16 +65,18 @@ const objectiveValidationSchema = (): Joi.ObjectSchema<ObjectiveValues> => {
         'string.min': message.NAME_MIN_LENGTH,
         'string.max': message.NAME_MAX_LENGTH,
       }),
-    [ObjectivePayloadKey.KEY_RESULT_NAME]: Joi.string()
-      .trim()
-      .min(SkillValidationRule.NAME_MIN_LENGTH)
-      .max(SkillValidationRule.NAME_MAX_LENGTH)
-      .required()
-      .messages({
-        'string.empty': message.NAME_REQUIRE,
-        'string.min': message.NAME_MIN_LENGTH,
-        'string.max': message.NAME_MAX_LENGTH,
-      }),
+    [ObjectivePayloadKey.KEY_RESULT_NAME]: Joi.array().items(
+      Joi.string()
+        .trim()
+        .min(SkillValidationRule.NAME_MIN_LENGTH)
+        .max(SkillValidationRule.NAME_MAX_LENGTH)
+        .required()
+        .messages({
+          'string.empty': message.NAME_REQUIRE,
+          'string.min': message.NAME_MIN_LENGTH,
+          'string.max': message.NAME_MAX_LENGTH,
+        }),
+    ),
   });
 };
 
