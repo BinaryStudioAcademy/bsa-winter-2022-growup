@@ -32,7 +32,6 @@ const ProfileReducer = (builder: ActionReducerMapBuilder<State>): void => {
   builder.addCase(actions.fetchProfile.fulfilled, (state, action) => {
     state.isLoading = false;
     state.user = action.payload;
-    state.user.isCompleteTest = true;
   });
 };
 
