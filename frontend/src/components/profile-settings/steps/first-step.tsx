@@ -64,12 +64,6 @@ const FirstStep: React.FC<IProfileSettingStep> = ({
         control={control}
         errors={errors}
       />
-      <TextField
-        name="position"
-        label="Position"
-        control={control}
-        errors={errors}
-      />
       <CareerJourneySection />
       <EducationSection />
       <InterestingTags />
