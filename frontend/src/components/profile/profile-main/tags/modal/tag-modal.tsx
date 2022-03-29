@@ -18,10 +18,10 @@ const TagModal: React.FC<PropTypes> = ({ show, onClose }) => {
     (e: FormEvent): void => {
       e.preventDefault();
       onClose();
-      clearItems();
       dispatch(tagsActions.createTags(tagList));
+      clearItems();
     },
-    [onClose, clearItems, dispatch],
+    [tagList, onClose, clearItems, dispatch],
   );
 
   return (
