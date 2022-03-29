@@ -11,6 +11,7 @@ import { IQuestion, IAnswer } from 'common/interfaces/user-quiz';
 import TestItem from './work-quiz-item/work-quiz-item';
 import './styles.scss';
 import * as profileActions from '../../store/profile/actions';
+import * as authActions from '../../store/auth/actions';
 import { IProfileSettingStep } from 'components/profile-settings/steps/common/interfaces';
 
 interface Props extends IProfileSettingStep {}
@@ -67,6 +68,7 @@ const StyleTest: React.FC<Props> = ({ onNext }) => {
       dispatch(workStyleQuizActions.sendWorkStyleQuizResults(questions));
     }
     dispatch(profileActions.completeTest());
+    dispatch(authActions.completeTest());
     onNext?.();
   };
   return (
