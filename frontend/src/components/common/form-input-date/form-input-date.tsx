@@ -46,6 +46,9 @@ function FormInputDate<T>({
       selected={value}
       onChange={onChange}
       placeholderText={placeholder}
+      showMonthDropdown
+      showYearDropdown
+      dropdownMode="select"
       customInput={<CustomInput ref={ref} dateRef={ref} errors={errors} />}
     />
   );
