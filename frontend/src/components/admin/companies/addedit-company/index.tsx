@@ -65,6 +65,7 @@ const AddEditCompany: React.FC<Props> = ({ handleClose, company }) => {
     <Modal
       show={true}
       onClose={handleClose}
+      closeButton={true}
       title={company ? 'Edit company' : 'Add company info'}
       className="d-flex flex-column gap-3"
     >
