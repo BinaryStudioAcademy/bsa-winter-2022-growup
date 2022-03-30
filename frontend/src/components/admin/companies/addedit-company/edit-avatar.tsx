@@ -9,21 +9,22 @@ import 'cropperjs/dist/cropper.css';
 
 type Props = {
   company?: ICompany;
-  setFile: (file: File) => void;
+  setFile: (blob: Blob) => void;
+  setDisable: (value: boolean) => void;
 };
 
-export const EditAvatar: React.FC<Props> = ({ company, setFile }) => {
-  const [image, setImage] = useState<string>('');
+export const EditAvatar: React.FC<Props> = ({
+  company,
+  setFile,
+  setDisable,
+}) => {
   const [error, setError] = useState('');
-  const [avatar, setAvatar] = useState<string>('');
+  const [image, setImage] = useState<string>('');
+  const [avatar, setAvatar] = useState<string>(company?.avatar || '');
+
+  const [cropper, setCropper] = useState<Cropper>();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (company && company.avatar) {
-      setAvatar(company.avatar);
-    }
-  }, [company]);
 
   useEffect(() => {
     if (error) {
@@ -39,11 +40,23 @@ export const EditAvatar: React.FC<Props> = ({ company, setFile }) => {
       }
 
       setError('');
-      setAvatar('');
       const reader = new FileReader();
       reader.addEventListener('load', () => setImage(reader.result as string));
       reader.readAsDataURL(e.target.files[0]);
-      setFile(e.target.files[0]);
+      setDisable(true);
+    }
+  };
+
+  const choose = (): void => {
+    if (typeof cropper !== 'undefined') {
+      cropper.getCroppedCanvas().toBlob((blob) => {
+        if (blob) {
+          setFile(blob);
+          setAvatar('');
+          setImage('');
+          setDisable(false);
+        }
+      });
     }
   };
 
@@ -54,6 +67,7 @@ export const EditAvatar: React.FC<Props> = ({ company, setFile }) => {
       current.value = '';
     }
     setImage('');
+    setDisable(false);
     if (company && company.avatar) {
       setAvatar(company.avatar);
     }
@@ -76,28 +90,44 @@ export const EditAvatar: React.FC<Props> = ({ company, setFile }) => {
         />
       )}
       {image && (
-        <ReactCropper
-          className="w-100"
-          style={{ height: 100 }}
-          zoomTo={0.5}
-          initialAspectRatio={1}
-          aspectRatio={1}
-          preview=".img-preview"
-          src={image}
-          viewMode={1}
-          minCropBoxHeight={200}
-          minCropBoxWidth={200}
-          background
-          autoCropArea={1}
-          checkOrientation={false}
-          responsive
-          guides
-        />
-      )}
-      {image && (
-        <Button variant="gu-blue" className="flex-fill" onClick={cancel}>
-          Cancel
-        </Button>
+        <>
+          <ReactCropper
+            className="w-100"
+            style={{ height: 100 }}
+            zoomTo={0.5}
+            initialAspectRatio={1}
+            aspectRatio={1}
+            preview=".img-preview"
+            src={image}
+            viewMode={1}
+            minCropBoxHeight={200}
+            minCropBoxWidth={200}
+            background
+            autoCropArea={1}
+            checkOrientation={false}
+            responsive
+            guides
+            onInitialized={(instance: Cropper): void => setCropper(instance)}
+          />
+          <div className="d-flex gap-2">
+            <Button
+              variant="gu-blue"
+              className="flex-fill"
+              size="sm"
+              onClick={cancel}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="gu-pink"
+              className="flex-fill text-white"
+              size="sm"
+              onClick={choose}
+            >
+              Choose
+            </Button>
+          </div>
+        </>
       )}
       {error && <div className="alert alert-danger">{error}</div>}
     </div>
