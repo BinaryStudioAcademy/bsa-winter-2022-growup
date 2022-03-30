@@ -34,7 +34,13 @@ export const deleteUserSkillCategories = async (
   );
 
   const userSkillCategories = await userSkillCategoryRepository.find({ user });
-  await userSkillCategoryRepository.remove(userSkillCategories);
+
+  await userSkillCategoryRepository
+    .createQueryBuilder()
+    .delete()
+    .from(UserSkillCategory)
+    .where('userId = :userId', { userId: user.id })
+    .execute();
 
   return userSkillCategories;
 };
