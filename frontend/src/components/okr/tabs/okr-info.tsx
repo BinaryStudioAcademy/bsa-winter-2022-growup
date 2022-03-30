@@ -91,7 +91,7 @@ const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHanlder }) => {
               className="text-gu-blue ms-3 fs-6 cursor-pointer fw-bold d-flex align-items-center hover-blue"
               onClick={openModal}
             >
-              <span className="me-1">+</span>Add objectives
+              <span className="me-1">+</span>Add objective
             </span>
           </div>
 

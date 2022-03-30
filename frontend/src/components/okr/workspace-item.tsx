@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Calendar, PencilFill } from 'react-bootstrap-icons';
-import { parseDate } from 'helpers/parse-date';
 import OkrModal from './modal';
 import './styles.scss';
 import { IOkr } from 'common/interfaces/okr';
 import { StatusType } from 'store/okr/common';
 import getOkrNumber from './get-okr-number';
+import dayjs from 'dayjs';
 
 interface Props {
   okr: IOkr;
@@ -54,8 +54,11 @@ const OrkItem: React.FC<Props> = ({
             <Calendar className="mb-1" />
           </div>
           <div>
-            {parseDate(okr.startDate as string)} -{' '}
-            {parseDate(okr.endDate as string)}
+            {dayjs(okr?.startDate).format('DD/MM/YYYY')}
+            <span className="ms-1">
+              <span>- </span>
+              {okr?.endDate ? dayjs(okr?.endDate).format('DD/MM/YYYY') : null}
+            </span>
           </div>
           <div>
             <PencilFill
