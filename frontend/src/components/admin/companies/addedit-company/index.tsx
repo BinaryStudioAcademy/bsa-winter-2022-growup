@@ -1,6 +1,6 @@
 import { Form } from 'react-bootstrap';
 
-import { useDispatch, useState, useAppForm } from 'hooks/hooks';
+import { useAppDispatch, useState, useAppForm } from 'hooks/hooks';
 import { companyActions } from 'store/company/actions';
 
 import { ICompany } from 'common/interfaces/company/company';
@@ -21,6 +21,7 @@ type CompanyForm = Pick<ICompany, 'name' | 'description'>;
 
 const AddEditCompany: React.FC<Props> = ({ handleClose, company }) => {
   const [file, setFile] = useState<File>();
+  const [isLoading, setIsLoading] = useState(false);
 
   const { control, errors, handleSubmit } = useAppForm<CompanyForm>({
     defaultValues: {
@@ -30,19 +31,33 @@ const AddEditCompany: React.FC<Props> = ({ handleClose, company }) => {
     validationSchema: companyValidationSchema,
   });
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const send = (values: CompanyForm): void => {
-    if (file) {
-      dispatch(companyActions.update_companyAvatarAsync(file));
-    }
+    setIsLoading(true);
 
-    if (company) {
-      dispatch(companyActions.edit_companyAsync({ ...company, ...values }));
-      return;
-    }
-    dispatch(companyActions.add_companyAsync(values));
-    handleClose();
+    dispatch(
+      company
+        ? companyActions.edit_companyAsync({ ...company, ...values })
+        : companyActions.add_companyAsync(values),
+    )
+      .unwrap()
+      .then(() => {
+        if (file) {
+          dispatch(companyActions.update_companyAvatarAsync(file)).finally(
+            () => {
+              setIsLoading(false);
+              handleClose();
+            },
+          );
+        }
+      })
+      .finally(() => {
+        if (!file) {
+          setIsLoading(false);
+          handleClose();
+        }
+      });
   };
 
   return (
@@ -71,10 +86,11 @@ const AddEditCompany: React.FC<Props> = ({ handleClose, company }) => {
 
         <Button
           variant="outline-gu-purple"
-          className=" btn-hover-gu-white flex-fill"
+          className="btn-hover-gu-white flex-fill"
           type="submit"
+          disabled={isLoading}
         >
-          Save
+          {isLoading ? 'Loading...' : 'Save'}
         </Button>
       </Form>
     </Modal>
