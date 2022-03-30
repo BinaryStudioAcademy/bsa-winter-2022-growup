@@ -35,8 +35,7 @@ function FormInput<T>({
     field: { value, ...field },
   }: UseControllerReturn<T, Path<T>> = useController<T>({ name, control });
   const fieldValue = value as string;
-  console.warn(errors);
-  console.warn(name);
+
   return (
     <>
       <Form.Control
