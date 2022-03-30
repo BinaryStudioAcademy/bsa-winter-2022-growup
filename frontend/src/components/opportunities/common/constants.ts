@@ -6,4 +6,10 @@ const DEFAULT_OPPORTUNITY_PAYLOAD = {
   [OpportunityPayloadKey.START_DATE]: null,
 };
 
-export { DEFAULT_OPPORTUNITY_PAYLOAD };
+const types = {
+  PROGRAMMING: 'Programming',
+  LEARNING: 'Learning',
+  BUSINESS: 'Business',
+};
+
+export { DEFAULT_OPPORTUNITY_PAYLOAD, types };

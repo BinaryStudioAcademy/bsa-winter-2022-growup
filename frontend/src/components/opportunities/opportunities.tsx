@@ -16,12 +16,12 @@ import Follow from './follow';
 import isFirstLogged from 'helpers/check-is-first-logged';
 import { Dropdown } from 'react-bootstrap';
 import { SortOption } from 'store/opportunities/common';
-import { Types } from './common/enums';
+import { types } from './common/constants';
 
 const Opportunities: React.FC = () => {
   const [sort, setSort] = useState<SortOption | null>(null);
   const [tags, setTags] = useState(['a']);
-  const [type, setType] = useState(Types.PROGRAMMING);
+  const [type, setType] = useState(types.PROGRAMMING);
   const dispatch = useAppDispatch();
   const user = useAppSelector((store) => store.profile.user);
   const navigate = useNavigate();
