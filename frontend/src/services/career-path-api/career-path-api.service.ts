@@ -11,6 +11,7 @@ import {
   ISkill,
   ISkillSetting,
 } from 'common/interfaces/career-path';
+import { ILevelSkill } from '../../components/career-path/mock/common/interfaces';
 
 class CareerPath {
   private apiPath: string;
@@ -86,6 +87,23 @@ class CareerPath {
       );
 
       return result as IDomainSetting & { id: string };
+    } catch {
+      return null;
+    }
+  }
+
+  async fetchLevelSkills(id: string): Promise<ILevelSkill[] | null> {
+    try {
+      const result = await this.http.load(
+        `${this.apiPath}/career-path/level/${id}`,
+        {
+          contentType: ContentType.JSON,
+          method: HttpMethod.GET,
+          payload: null,
+        },
+      );
+
+      return result as ILevelSkill[];
     } catch {
       return null;
     }
