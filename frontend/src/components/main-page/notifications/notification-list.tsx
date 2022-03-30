@@ -26,10 +26,13 @@ const Notifications: React.FC = () => {
   const onClick = (): void => setViewAll(!viewAll);
 
   return (
-    <section className="notifications d-flex flex-column w-100 rounded-1 text-start shadow-lg">
-      <span className="text-start mb-0 py-3 ps-3 rounded-top bg-gu-blue text-gu-white fs-5">
-        Your Notifications:
-      </span>
+    <section className="notifications d-flex flex-column w-100 rounded-1 text-start shadow-lg mt-4">
+      <div className="d-flex align-items-center  bg-gu-blue text-gu-white add-section-header">
+        <p className="add-section-header__title m-0 fw-bold fs-4">
+          Your Notifications
+        </p>
+      </div>
+
       <div className="d-flex flex-column overflow-hidden">
         {renderNotifications()}
       </div>

@@ -7,10 +7,9 @@ import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { RootState } from 'common/types/types';
 import { validRating } from '../validations/rating';
 import { ReactComponent as Delete } from '../../../assets/img/icons/skill-icons/delete-icon.svg';
-import { ReactComponent as Save } from '../../../assets/img/icons/skill-icons/save-icon.svg';
-import { ReactComponent as Edit } from '../../../assets/img/icons/skill-icons/edit-icon.svg';
 import { skillActions } from 'store/skill';
 import { Button } from 'components/common/common';
+import { Pencil as EditIcon, Check as SaveIcon } from 'react-bootstrap-icons';
 
 interface Props {
   id: string;
@@ -95,11 +94,11 @@ const SkillElement = (props: Props): React.ReactElement => {
         {isHover ? (
           <Button
             variant="gu-white"
-            className="btn-outline-gu-black button-group border-0"
+            className="border-0 bg-transparent text-gu-black hover-pink p-1 ms-4"
             type="button"
             onClick={(): void => saveEdits(props.id)}
           >
-            {isEdit ? <Save /> : <Edit />}
+            {isEdit ? <SaveIcon /> : <EditIcon />}
           </Button>
         ) : (
           true
@@ -107,7 +106,7 @@ const SkillElement = (props: Props): React.ReactElement => {
         {isHover ? (
           <Button
             variant="gu-white"
-            className="btn-outline-gu-black border-0 mx-2"
+            className="border-0 bg-transparent text-gu-black hover-pink p-1 ms-1"
             type="button"
             onClick={(): void => deleteSkill(props.id)}
           >

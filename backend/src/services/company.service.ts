@@ -53,8 +53,8 @@ interface IQuiz {
 }
 
 interface CompanyProps {
-  id?: string;
-  body: Company;
+  id?: Company['id'];
+  body: Partial<Company>;
   tokenPayload: ITokenPayload;
 }
 
@@ -166,42 +166,19 @@ export const createCompany = async ({
   body,
   tokenPayload,
 }: CompanyProps): Promise<CompanyResponse> => {
-  const { name } = body;
-  const { userId, role } = tokenPayload;
-
   const companyRepository = getCustomRepository(CompanyRepository);
-  const userRepository = getCustomRepository(UserRepository);
 
-  if (name) {
-    const isCompanyExist = await companyRepository.findOne({ name });
-
-    if (!isCompanyExist) {
-      const company = new Company();
-      const newCompany = Object.assign(company, body);
-
-      const companyInstance = await newCompany.save();
-
-      await createQuiz(companyInstance);
-      await userRepository.setCompanyIdToUser(companyInstance, userId);
-
-      const token = signToken({
-        userId,
-        role,
-        companyId: companyInstance.id,
-      });
-
-      return { token, company: newCompany };
-    }
+  if (!body.name)
     throw new HttpError({
       status: HttpCode.BAD_REQUEST,
-      message: 'Company name is exist!!!',
+      message: 'Company name can not be empty',
     });
-  }
 
-  throw new HttpError({
-    status: HttpCode.BAD_REQUEST,
-    message: 'Company name is udefined!!!',
-  });
+  const company = await companyRepository.create(body).save();
+  await createQuiz(company);
+
+  const token = signToken({ ...tokenPayload, companyId: company.id });
+  return { token, company };
 };
 
 export const editCompany = async ({
@@ -210,35 +187,26 @@ export const editCompany = async ({
   tokenPayload,
 }: CompanyProps): Promise<CompanyResponse> => {
   const companyRepository = getCustomRepository(CompanyRepository);
-  const { userId, role } = tokenPayload;
 
-  if (id) {
-    const company = await companyRepository.findOne({ id });
+  if (!id)
+    throw new HttpError({
+      status: HttpCode.BAD_REQUEST,
+      message: 'Company not found',
+    });
 
-    if (company) {
-      const newCompany = Object.assign(company, body);
+  const company = await companyRepository.findOne({ id });
 
-      await newCompany.save();
-
-      const token = signToken({
-        userId,
-        role,
-        companyId: newCompany.id,
-      });
-
-      return { token, company: newCompany };
-    }
-
+  if (!company)
     throw new HttpError({
       status: HttpCode.NOT_FOUND,
       message: 'Company not found!!!',
     });
-  }
 
-  throw new HttpError({
-    status: HttpCode.BAD_REQUEST,
-    message: 'Company id is udefined!!!',
-  });
+  const newCompany = Object.assign(company, body);
+  await newCompany.save();
+
+  const token = signToken({ ...tokenPayload, companyId: newCompany.id });
+  return { token, company: newCompany };
 };
 
 export const updateCompanyAvatar = async (

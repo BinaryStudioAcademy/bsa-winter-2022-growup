@@ -1,57 +1,58 @@
-import React, { useState } from 'react';
-import { IOkr } from 'common/interfaces/okr';
 import OrkItem from '../workspace-item';
-
-import { Button } from 'components/common/common';
-import OkrModal from '../modal';
-
+import OkrInfo from './okr-info';
 import './styles.scss';
+import { IOkr } from 'common/interfaces/okr';
+import { useState } from 'react';
 
 interface Props {
   collection: IOkr[];
 }
 
 const OkrList: React.FC<Props> = ({ collection }) => {
-  const [showModal, setShowModal] = useState(false);
+  const [isShowCurrentOkr, setIsShowCurrentOkr] = useState(false);
+  const [currentShowOkr, setCurrentOkr] = useState('');
 
-  const openModal = (): void => setShowModal(true);
-  const closeModal = (): void => setShowModal(false);
+  const okrItemHanlder = (id: string): void => {
+    setIsShowCurrentOkr(true);
+    setCurrentOkr(id);
+  };
+
+  const okrGoBackHandler = (): void => setIsShowCurrentOkr(false);
 
   return (
     <>
-      <Button
-        variant="gu-pink"
-        className="text-gu-white mb-2 align-self-end"
-        onClick={openModal}
-      >
-        + Add OKR
-      </Button>
-      <div className="OKR-page d-flex flex-row flex-wrap">
-        {collection.map((okr: IOkr) => {
-          const objectives = okr.objectives;
-          let objectivesCounter = 0;
-          let resultsCounter = 0;
+      {isShowCurrentOkr ? (
+        <OkrInfo id={currentShowOkr} goBackHanlder={okrGoBackHandler} />
+      ) : (
+        <>
+          <div className="OKR-page d-flex flex-row flex-wrap">
+            {collection.map((okr: IOkr, index) => {
+              const objectives = okr.objectives;
+              let objectivesCounter = 0;
+              let resultsCounter = 0;
 
-          if (objectives) {
-            objectivesCounter += objectives.length;
-            resultsCounter = objectives.reduce((acc, objective) => {
-              if (objective.keyResults) {
-                acc += objective.keyResults.length;
+              if (objectives) {
+                objectivesCounter += objectives.length;
+                resultsCounter = objectives.reduce((acc, objective) => {
+                  if (objective.keyResults) {
+                    acc += objective.keyResults.length;
+                  }
+                  return acc;
+                }, 0);
               }
-              return acc;
-            }, 0);
-          }
-          return (
-            <OrkItem
-              key={okr.id}
-              okr={okr}
-              objectivesCounter={objectivesCounter}
-              resultsCounter={resultsCounter}
-            />
-          );
-        })}
-      </div>
-      {showModal && <OkrModal showModal={showModal} closeModal={closeModal} />}
+              return (
+                <OrkItem
+                  key={index}
+                  okr={okr}
+                  objectivesCounter={objectivesCounter}
+                  resultsCounter={resultsCounter}
+                  onClickInfo={okrItemHanlder}
+                />
+              );
+            })}
+          </div>
+        </>
+      )}
     </>
   );
 };

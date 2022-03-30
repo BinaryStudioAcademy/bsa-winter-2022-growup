@@ -1,9 +1,10 @@
-import { IOkr } from 'common/interfaces/okr';
 import { IObjective } from 'common/interfaces/objective';
 import { Http } from 'services/http/http.service';
 import { IAuthApi } from 'common/interfaces/api';
 import { HttpMethod } from 'common/enums/http/http';
 import { ContentType } from 'common/enums/file/file';
+import { IDeleteObjective } from 'store/okr/common';
+import { SuccessResponse } from 'store/admin/common';
 
 class ObjectiveApi {
   private http: Http;
@@ -17,22 +18,27 @@ class ObjectiveApi {
   public async createObjective({
     okrId,
     objectiveBody,
+    keyResults,
   }: {
     okrId: string;
     objectiveBody: { name: string; result: number };
-  }): Promise<IOkr | null> {
+    keyResults: { name: string; result: number }[];
+  }): Promise<IObjective | null> {
     const options = {
       method: HttpMethod.POST,
       contentType: ContentType.JSON,
-      payload: JSON.stringify(objectiveBody),
+      payload: JSON.stringify({
+        objective: objectiveBody,
+        keyResults: keyResults,
+      }),
     };
 
     try {
-      const result = await this.http.load<IOkr>(
+      const result = await this.http.load(
         `${this.apiPath}/company/okr/${okrId}/objective`,
         options,
       );
-      return result;
+      return result as IObjective;
     } catch (e) {
       //passing an error to the handler
       console.warn(e);
@@ -42,27 +48,53 @@ class ObjectiveApi {
 
   public async updateObjective({
     okrId,
-    objective,
+    objectiveId,
+    objectiveBody,
+    keyResults,
   }: {
     okrId: string;
-    objective: IObjective;
-  }): Promise<IOkr | null> {
+    objectiveId: string;
+    objectiveBody: { name: string; result: number };
+    keyResults: { name: string; result: number }[];
+  }): Promise<IObjective | null> {
     const options = {
       method: HttpMethod.PUT,
       contentType: ContentType.JSON,
-      payload: JSON.stringify(objective),
+      payload: JSON.stringify({
+        objective: objectiveBody,
+        keyResults: keyResults,
+      }),
     };
 
     try {
-      const result = await this.http.load<IOkr>(
-        `${this.apiPath}/company/okr/${okrId}/objective/${objective.id}`,
+      const result = await this.http.load(
+        `${this.apiPath}/company/okr/${okrId}/objective/${objectiveId}`,
         options,
       );
-      return result;
+      return result as IObjective;
     } catch (e) {
       //passing an error to the handler
       console.warn(e);
       return null;
+    }
+  }
+  public async deleteObjective({
+    objectiveId,
+  }: IDeleteObjective): Promise<SuccessResponse> {
+    const options = {
+      method: HttpMethod.DELETE,
+      contentType: ContentType.JSON,
+      payload: null,
+    };
+
+    try {
+      const result = await this.http.load<SuccessResponse>(
+        `${this.apiPath}/company/okr/objective/${objectiveId}`,
+        options,
+      );
+      return result;
+    } catch (_) {
+      throw new Error('Can`t delete this objective');
     }
   }
 }

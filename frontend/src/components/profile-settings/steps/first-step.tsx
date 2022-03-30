@@ -34,39 +34,49 @@ const FirstStep: React.FC<IProfileSettingStep> = ({
   const onSubmit = handleSubmit(onSaveSettings);
 
   return (
-    <div className="stepper__form">
-      <TextField
-        label="Password"
-        type={showPassword ? 'text' : 'password'}
-        name="password"
-        control={control}
-        errors={errors}
-        floatingLabelStyles={'d-flex flex-wrap'}
-        children={
-          <button
-            className="auth-form__icon input-group-text position-absolute"
-            onClick={(): void => setShowPassword((state) => !state)}
-            type="button"
-          >
-            {showPassword ? <EyeSlash /> : <Eye />}
-          </button>
-        }
-      />
-      <TextField
-        label="First name"
-        name="firstName"
-        control={control}
-        errors={errors}
-      />
-      <TextField
-        name="lastName"
-        label="Last name"
-        control={control}
-        errors={errors}
-      />
-      <CareerJourneySection />
-      <EducationSection />
-      <InterestingTags />
+    <div className="stepper__form  w-100">
+      <p className="text-gu-pink fw-bold fs-5 text-center mb-3">
+        You have to fill the required steps for get access to functional of
+        website
+      </p>
+      <div className="d-flex   flex-column ">
+        <div className="stepper__form--first-block flex-grow-0 flex-shrink-1 mb-2">
+          <TextField
+            label="Password"
+            type={showPassword ? 'text' : 'password'}
+            name="password"
+            control={control}
+            errors={errors}
+            floatingLabelStyles={'d-flex flex-wrap'}
+            children={
+              <button
+                className="auth-form__icon input-group-text position-absolute"
+                onClick={(): void => setShowPassword((state) => !state)}
+                type="button"
+              >
+                {showPassword ? <EyeSlash /> : <Eye />}
+              </button>
+            }
+          />
+          <TextField
+            label="First name"
+            name="firstName"
+            control={control}
+            errors={errors}
+          />
+          <TextField
+            name="lastName"
+            label="Last name"
+            control={control}
+            errors={errors}
+          />
+        </div>
+        <div className="flex-grow-1 flex-shrink-1 w-100">
+          <CareerJourneySection />
+          <EducationSection />
+          <InterestingTags />
+        </div>
+      </div>
       <StepControl
         isValid={isValid}
         isDisablePrevious={isDisablePrevious}

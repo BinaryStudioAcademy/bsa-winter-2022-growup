@@ -1,4 +1,4 @@
 import { reducer as okrReducer } from './slice';
-import { okrActions } from './actions';
+import * as okrActions from './actions';
 
 export { okrReducer, okrActions };

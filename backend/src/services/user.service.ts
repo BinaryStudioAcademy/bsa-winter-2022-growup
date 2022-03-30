@@ -13,6 +13,7 @@ import { UserMissingDataForm } from '~/common/forms/user.forms';
 
 import { User } from '~/data/entities/user';
 import { Tags } from '~/data/entities/tags';
+import { Company } from '~/data/entities/company';
 import { Education } from '~/data/entities/education';
 import { CareerJourney } from '~/data/entities/career-journey';
 
@@ -325,4 +326,15 @@ export const changeUserPosition = async (
   };
 
   return updatedUser;
+};
+
+export const updateUserCompany = async (
+  id: User['id'],
+  company: Company,
+): Promise<User> => {
+  const userRepository = getCustomRepository(UserRepository);
+
+  const user = await userRepository.findOne(id);
+  user.company = company;
+  return await user.save();
 };

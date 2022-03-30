@@ -1,0 +1,77 @@
+.header {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  left: 0;
+  height: 80px;
+  box-shadow: 0px 3px 20px -12px rgba(0, 0, 0, 0.78);
+  z-index: 100;
+  background-color: white;
+}
+
+.header__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+.logo {
+  max-width: 100%;
+  display: inline-block;
+}
+.btn {
+  padding: 0.5em 1.125em;
+  border: 1px solid #0977f8;
+  border-radius: 6px;
+  background-color: #0977f8;
+  -webkit-transition: color 0.2s, background-color 0.2s, opacity 0.2s,
+    border 0.2s;
+  transition: color 0.2s, background-color 0.2s, opacity 0.2s, border 0.2s;
+  font-family: 'Nunito-bold';
+  font-size: 16px;
+  line-height: 1.5em;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+}
+.logo__img {
+  height: 40px;
+  width: auto;
+}
+
+.header__btn {
+  margin-right: 8px;
+  margin-left: 8px;
+}
+.header__btn--log-in {
+  border-color: #ee2a64;
+  font-weight: 500;
+  background-color: white;
+  color: #ee2a64;
+}
+.header__btn--log-in:hover {
+  color: white;
+  background-color: #ee2a64;
+}
+
+.btn-try-now {
+  background-color: white;
+  border-color: #463da8;
+  color: #463da8;
+}
+
+.btn-try-now:hover {
+  color: white;
+  background-color: #463da8;
+}
+@media screen and (min-width: 991px) {
+  .logo__img {
+    height: 48px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .header {
+    height: 70px;
+  }
+}

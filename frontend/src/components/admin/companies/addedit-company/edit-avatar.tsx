@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useRef, useState, useEffect } from 'react';
-import { Form, Row, Card } from 'react-bootstrap';
+import { Form, Card } from 'react-bootstrap';
 import ReactCropper from 'react-cropper';
 import { NotificationManager } from 'react-notifications';
 import { Button } from 'components/common/common';
@@ -9,21 +9,22 @@ import 'cropperjs/dist/cropper.css';
 
 type Props = {
   company?: ICompany;
-  setFile: (file: File) => void;
+  setFile: (blob: Blob) => void;
+  setDisable: (value: boolean) => void;
 };
 
-export const EditAvatar: React.FC<Props> = ({ company, setFile }) => {
-  const [image, setImage] = useState<string>('');
+export const EditAvatar: React.FC<Props> = ({
+  company,
+  setFile,
+  setDisable,
+}) => {
   const [error, setError] = useState('');
-  const [avatar, setAvatar] = useState<string>('');
+  const [image, setImage] = useState<string>('');
+  const [avatar, setAvatar] = useState<string>(company?.avatar || '');
+
+  const [cropper, setCropper] = useState<Cropper>();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (company && company.avatar) {
-      setAvatar(company.avatar);
-    }
-  }, [company]);
 
   useEffect(() => {
     if (error) {
@@ -39,11 +40,23 @@ export const EditAvatar: React.FC<Props> = ({ company, setFile }) => {
       }
 
       setError('');
-      setAvatar('');
       const reader = new FileReader();
       reader.addEventListener('load', () => setImage(reader.result as string));
       reader.readAsDataURL(e.target.files[0]);
-      setFile(e.target.files[0]);
+      setDisable(true);
+    }
+  };
+
+  const choose = (): void => {
+    if (typeof cropper !== 'undefined') {
+      cropper.getCroppedCanvas().toBlob((blob) => {
+        if (blob) {
+          setFile(blob);
+          setAvatar('');
+          setImage('');
+          setDisable(false);
+        }
+      });
     }
   };
 
@@ -54,55 +67,70 @@ export const EditAvatar: React.FC<Props> = ({ company, setFile }) => {
       current.value = '';
     }
     setImage('');
+    setDisable(false);
     if (company && company.avatar) {
       setAvatar(company.avatar);
     }
   };
 
   return (
-    <Row className="m-3 mb-0 d-flex justify-content-center">
+    <div className="d-flex flex-column justify-content-center gap-3">
       <Form.Control
         placeholder="image"
         type="file"
         onChange={onSelectFile}
         accept="image/*"
-        className="mb-3"
         ref={fileInputRef}
       />
       {avatar && (
         <Card.Img
           src={avatar ? avatar : 'holder.js/100px180'}
           alt={company ? company.name : 'image'}
-          style={{ width: '18rem' }}
+          className="w-100"
         />
       )}
       {image && (
-        <ReactCropper
-          style={{ height: 100, width: '50%' }}
-          zoomTo={0.5}
-          initialAspectRatio={1}
-          aspectRatio={1}
-          preview=".img-preview"
-          src={image}
-          viewMode={1}
-          minCropBoxHeight={200}
-          minCropBoxWidth={200}
-          background
-          autoCropArea={1}
-          checkOrientation={false}
-          responsive
-          guides
-        />
-      )}
-      {image && (
-        <Row className="d-flex mt-3">
-          <Button variant="gu-blue" className="flex-fill" onClick={cancel}>
-            Cancel
-          </Button>
-        </Row>
+        <>
+          <ReactCropper
+            className="w-100"
+            style={{ height: 100 }}
+            zoomTo={0.5}
+            initialAspectRatio={1}
+            aspectRatio={1}
+            preview=".img-preview"
+            src={image}
+            viewMode={1}
+            minCropBoxHeight={200}
+            minCropBoxWidth={200}
+            background
+            autoCropArea={1}
+            checkOrientation={false}
+            responsive
+            guides
+            onInitialized={(instance: Cropper): void => setCropper(instance)}
+          />
+          <div className="d-flex gap-2">
+            <Button
+              variant="gu-blue"
+              className="flex-fill"
+              size="sm"
+              onClick={cancel}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="gu-pink"
+              className="flex-fill text-white"
+              size="sm"
+              onClick={choose}
+            >
+              Choose
+            </Button>
+          </div>
+        </>
       )}
       {error && <div className="alert alert-danger">{error}</div>}
-    </Row>
+    </div>
   );
 };
 

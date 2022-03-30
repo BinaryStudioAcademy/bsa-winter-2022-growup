@@ -5,7 +5,7 @@ import { steps } from './steps/steps';
 import Stepper from './stepper';
 import FirstStep from './steps/first-step';
 import SecondStep from './steps/second-step';
-import ThirdStep from './steps/third-step';
+// import ThirdStep from './steps/third-step';
 import './styles.scss';
 
 const ProfileSettings: React.FC = () => {
@@ -38,10 +38,10 @@ const ProfileSettings: React.FC = () => {
               path={ProfileSettingsRoute.PROFILE_SETTINGS_STEP_TWO}
               element={<SecondStep onNext={onNext} />}
             />
-            <Route
+            {/* <Route
               path={ProfileSettingsRoute.PROFILE_SETTINGS_STEP_THREE}
               element={<ThirdStep onNext={onNext} />}
-            />
+            /> */}
             <Route
               path="*"
               element={

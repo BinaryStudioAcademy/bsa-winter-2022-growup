@@ -10,6 +10,12 @@ import { HttpCode, HttpError } from 'growup-shared';
 const createRegistrationToken = async (
   user: User,
 ): Promise<RegistrationToken> => {
+  if (user.firstName && user.lastName)
+    throw new HttpError({
+      status: HttpCode.BAD_REQUEST,
+      message: 'User already finished registration process',
+    });
+
   const tokenRepository = getCustomRepository(RegistrationTokenRepository);
 
   const target = await tokenRepository.findOne({ user });
