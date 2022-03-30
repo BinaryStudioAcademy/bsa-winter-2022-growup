@@ -1,11 +1,14 @@
-import React, { ChangeEvent, FC } from 'react';
-import { Form, Modal } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 
-import { Button } from 'components/common/common';
-import { useDispatch, useState } from 'hooks/hooks';
-import { ICompany } from 'common/interfaces/company/company';
+import { useAppDispatch, useState, useAppForm } from 'hooks/hooks';
 import { companyActions } from 'store/company/actions';
+
+import { ICompany } from 'common/interfaces/company/company';
+
+import { Modal, Button, TextField } from 'components/common/common';
 import EditAvatar from './edit-avatar';
+
+import { company as companyValidationSchema } from 'validation-schemas/validation-schemas';
 
 import './styles.scss';
 
@@ -14,85 +17,90 @@ interface Props {
   handleClose: () => void;
 }
 
-const AddEditCompany: FC<Props> = ({ handleClose, company }) => {
-  const [file, setFile] = useState<File>();
-  const [name, setName] = useState<string>(company ? company.name : '');
-  const [description, setDescription] = useState<string>(
-    company ? company.description : '',
-  );
+type CompanyForm = Pick<ICompany, 'name' | 'description'>;
 
-  const dispatch = useDispatch();
+const AddEditCompany: React.FC<Props> = ({ handleClose, company }) => {
+  const [file, setFile] = useState<Blob>();
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const { value, name } = e.target;
-    if (name === 'name') setName(value);
-    if (name === 'description') setDescription(value);
-  };
+  const { control, errors, handleSubmit } = useAppForm<CompanyForm>({
+    defaultValues: {
+      name: company?.name || '',
+      description: company?.description || '',
+    },
+    validationSchema: companyValidationSchema,
+  });
 
-  const send = (): void => {
-    let newCompany = { ...company } as ICompany;
+  const dispatch = useAppDispatch();
 
-    if (!name || !description) {
-      alert('You have empty field!!!');
-      return;
-    }
+  const send = (values: CompanyForm): void => {
+    setIsLoading(true);
 
-    newCompany = { ...newCompany, ...{ description, name } };
-
-    const data = { newCompany, handleClose };
-
-    if (file) {
-      dispatch(companyActions.update_companyAvatarAsync(file));
-    }
-
-    if (company) {
-      dispatch(companyActions.edit_companyAsync(data));
-      return;
-    }
-    dispatch(companyActions.add_companyAsync(data));
+    dispatch(
+      company
+        ? companyActions.edit_companyAsync({ ...company, ...values })
+        : companyActions.add_companyAsync(values),
+    )
+      .unwrap()
+      .then(() => {
+        if (file) {
+          dispatch(companyActions.update_companyAvatarAsync(file)).finally(
+            () => {
+              setIsLoading(false);
+              handleClose();
+            },
+          );
+        }
+      })
+      .finally(() => {
+        if (!file) {
+          setIsLoading(false);
+          handleClose();
+        }
+      });
   };
 
   return (
-    <Modal show={true} onHide={handleClose} centered={true}>
-      <Modal.Header className="d-flex justify-content-between align-items-center">
-        <Modal.Title>
-          {company ? 'Edit company' : 'Add company info'}
-        </Modal.Title>
-      </Modal.Header>
+    <Modal
+      show={true}
+      onClose={handleClose}
+      closeButton={true}
+      title={company ? 'Edit company' : 'Add company info'}
+      className="d-flex flex-column gap-3"
+    >
+      <EditAvatar
+        setFile={setFile}
+        company={company}
+        setDisable={setIsDisabled}
+      />
+      <Form onSubmit={handleSubmit(send)} className="d-flex flex-column">
+        <TextField
+          label="Company name"
+          name="name"
+          control={control}
+          errors={errors}
+          disabled={isDisabled}
+        />
 
-      <EditAvatar setFile={setFile} company={company} />
+        <TextField
+          label="Company description"
+          name="description"
+          control={control}
+          errors={errors}
+          disabled={isDisabled}
+          textarea
+        />
 
-      <Modal.Body>
-        <Form.Group className="mb-3" controlId="CompanyName">
-          <Form.Label>Company name</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Name"
-            onChange={onChange}
-            name="name"
-            value={name}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="companyDescription">
-          <Form.Label>Description</Form.Label>
-          <Form.Control
-            as="textarea"
-            placeholder="Description"
-            onChange={onChange}
-            name="description"
-            value={description}
-          />
-        </Form.Group>
-      </Modal.Body>
-      <Modal.Footer className="border-0 justify-content-between">
-        <Button variant="gu-blue" className="mg-0" onClick={send}>
-          {company ? 'Edit' : 'Save'}
+        <Button
+          variant="outline-gu-purple"
+          className="btn-hover-gu-white flex-fill"
+          type="submit"
+          disabled={isLoading || isDisabled}
+        >
+          {isLoading ? 'Loading...' : 'Save'}
         </Button>
-        <Button variant="gu-pink" className="mg-0" onClick={handleClose}>
-          Cancel
-        </Button>
-      </Modal.Footer>
+      </Form>
     </Modal>
   );
 };

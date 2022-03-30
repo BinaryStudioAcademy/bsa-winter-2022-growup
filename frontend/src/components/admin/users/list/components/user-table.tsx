@@ -59,10 +59,15 @@ const UserTable: React.FC<Props> = memo(({ list }) => {
           </th>
           <th>Email</th>
           <th onClick={(): void => sortList(['role', !sort.role])}>
-            Role
-            {sort.role ? <ArrowDown /> : <ArrowUp />}
+            <div className="role-column">
+              Role
+              {sort.role ? <ArrowDown /> : <ArrowUp />}
+            </div>
           </th>
-          <th>Actions</th>
+          <th>Position</th>
+          <th>
+            <div className="actions-column">Actions</div>
+          </th>
         </tr>
       </thead>
       <tbody>

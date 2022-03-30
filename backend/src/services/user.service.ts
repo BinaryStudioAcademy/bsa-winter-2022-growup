@@ -13,6 +13,7 @@ import { UserMissingDataForm } from '~/common/forms/user.forms';
 
 import { User } from '~/data/entities/user';
 import { Tags } from '~/data/entities/tags';
+import { Company } from '~/data/entities/company';
 import { Education } from '~/data/entities/education';
 import { CareerJourney } from '~/data/entities/career-journey';
 
@@ -35,6 +36,13 @@ import type {
 import { env } from '~/config/env';
 
 import { SuccessResponse } from '~/common/models/responses/success';
+import { DomainLevel } from '~/data/entities/domain-level';
+import DomainLevelRepository from '~/data/repositories/domain-level.repository';
+import { getCategoriesByLevel } from './skill-category.service';
+import {
+  createUserSkillCategories,
+  deleteUserSkillCategories,
+} from './user-skill-category.service';
 
 type TokenResponse = {
   token: string;
@@ -45,10 +53,14 @@ type RefreshTokenResponse = {
   accessToken: string;
 };
 
+type Position = {
+  levelId: DomainLevel['id'];
+  name: string;
+};
 interface IProfile {
   firstName: string;
   lastName: string;
-  position: string;
+  position: Position;
   educations: Education[];
   careerJourneys: CareerJourney[];
   interests: Tags[];
@@ -170,10 +182,13 @@ export const getCommonUserList = async (id: string): Promise<IListUser[]> => {
   const userInstances = await userRepository.getUsersByCompanyId(
     user.company.id,
   );
+
   const users = userInstances.map((user) => ({
     ...user,
     company: user.company.id,
+    level: user.level?.id || null,
   }));
+
   return users;
 };
 
@@ -248,7 +263,6 @@ export const addProfile = async (
   });
 
   userInstance.tags.push(...data.interests);
-
   const user = Object.assign(userInstance, data);
   await user.save();
 
@@ -279,4 +293,49 @@ export const changeUserRole = async (
   const userInstance = await user.save();
 
   return { id: userInstance.id, role: userInstance.role };
+};
+
+export const changeUserPosition = async (
+  id: User['id'],
+  levelId: User['level']['id'],
+  position: User['position'],
+): Promise<Pick<User, 'id' | 'level' | 'position'>> => {
+  const userRepository = getCustomRepository(UserRepository);
+  const domainLevelRepository = getCustomRepository(DomainLevelRepository);
+  const user = await userRepository.findOne(id);
+
+  let newLevel = null;
+
+  if (levelId && position) {
+    newLevel = await domainLevelRepository.findOne(levelId);
+    if (newLevel) {
+      await deleteUserSkillCategories(user);
+      const skillsCategories = await getCategoriesByLevel(newLevel);
+      await createUserSkillCategories(user, skillsCategories);
+    }
+  }
+
+  user.position = position || null;
+  user.level = newLevel;
+
+  const userInstance = await user.save();
+
+  const updatedUser = {
+    id: userInstance.id,
+    position: userInstance.position,
+    level: userInstance.level,
+  };
+
+  return updatedUser;
+};
+
+export const updateUserCompany = async (
+  id: User['id'],
+  company: Company,
+): Promise<User> => {
+  const userRepository = getCustomRepository(UserRepository);
+
+  const user = await userRepository.findOne(id);
+  user.company = company;
+  return await user.save();
 };

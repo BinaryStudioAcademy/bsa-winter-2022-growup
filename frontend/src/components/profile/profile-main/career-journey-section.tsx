@@ -103,36 +103,38 @@ const CareerJourneySection: React.FC = () => {
   };
 
   return (
-    <AddSection title="Career journey" onAdd={(): void => showModal(null)}>
-      <>
-        {careerJourneys.length > 1 && (
-          <span
-            onClick={onSortByAsc}
-            className="notifications__view-all d-flex align-items-center justify-content-end me-2 mb-2 mt-2 fs-6 text-gu-blue"
-          >
-            <span className="me-1">{sort ? 'sort' : 'sort'}</span>
-            {sort ? <ArrowDown /> : <ArrowUp />}
-          </span>
-        )}
-        {careerJourneyItems()}
-        {isModalVisible && (
-          <CareerJourneyForm
-            careerJourney={careerJourney}
-            onClose={closeModal}
-            onSubmit={handleSubmit}
-          />
-        )}
-        {!isLessTwo && (
-          <span
-            onClick={onViewAll}
-            className="notifications__view-all d-flex align-items-center justify-content-end me-2 mb-2 mt-2 fs-6 text-gu-blue"
-          >
-            <span className="me-1">{viewAll ? 'hide' : 'view all'}</span>
-            {viewAll ? <ArrowUp /> : <ArrowDown />}
-          </span>
-        )}
-      </>
-    </AddSection>
+    <div className="mt-4">
+      <AddSection title="Career journey" onAdd={(): void => showModal(null)}>
+        <>
+          {careerJourneys.length > 1 && (
+            <span
+              onClick={onSortByAsc}
+              className="notifications__view-all d-flex align-items-center justify-content-end me-2 mb-2 mt-2 fs-6 text-gu-blue"
+            >
+              <span className="me-1">{sort ? 'sort' : 'sort'}</span>
+              {sort ? <ArrowDown /> : <ArrowUp />}
+            </span>
+          )}
+          {careerJourneyItems()}
+          {isModalVisible && (
+            <CareerJourneyForm
+              careerJourney={careerJourney}
+              onClose={closeModal}
+              onSubmit={handleSubmit}
+            />
+          )}
+          {!isLessTwo && (
+            <span
+              onClick={onViewAll}
+              className="notifications__view-all d-flex align-items-center justify-content-end me-2 mb-2 mt-2 fs-6 text-gu-blue"
+            >
+              <span className="me-1">{viewAll ? 'hide' : 'view all'}</span>
+              {viewAll ? <ArrowUp /> : <ArrowDown />}
+            </span>
+          )}
+        </>
+      </AddSection>
+    </div>
   );
 };
 

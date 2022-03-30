@@ -1,0 +1,16 @@
+@import '~assets/scss/utils';
+
+.objective-main {
+  background-color: rgba($blue, 0.1);
+}
+
+.list-component {
+  width: 35px;
+  height: 35px;
+  svg:nth-child(1) {
+    left: 40%;
+  }
+  svg:nth-child(2) {
+    left: 60%;
+  }
+}

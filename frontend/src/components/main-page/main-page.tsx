@@ -1,5 +1,4 @@
 import './styles.scss';
-import Notifications from './notifications/notification-list';
 import { useAppSelector, useEffect, useNavigate } from 'hooks/hooks';
 import isFirstLogged from 'helpers/check-is-first-logged';
 import OpportunityList from './opportunities/opportunity-list';
@@ -15,7 +14,6 @@ const MainPage: React.FC = () => {
   return (
     <>
       <section className="w-100 main-page d-flex flex-column ">
-        <Notifications></Notifications>
         <OpportunityList></OpportunityList>
       </section>
     </>

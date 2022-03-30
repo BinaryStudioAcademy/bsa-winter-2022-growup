@@ -7,6 +7,8 @@ import { IUser } from 'common/interfaces/user';
 import { RoleType } from 'common/enums/enums';
 import * as adminActions from 'store/admin/actions';
 
+import { Modal } from 'components/common/common';
+import PositionForm from './components/position-form';
 import RoleDropdown from './components/dropdowns/roles-dropdown';
 import ControllerDropdown from './components/dropdowns/controller-dropdown';
 
@@ -20,6 +22,10 @@ type Props = {
 const UserItem: React.FC<Props> = memo(({ user }) => {
   const dispatch = useAppDispatch();
   const [isShowDropDown, setIsShowDropDown] = useState(false);
+  const [isShowPositionModal, setIsShowPositionModal] = useState(false);
+
+  const closePositionModal = (): void => setIsShowPositionModal(false);
+  const openPositionModal = (): void => setIsShowPositionModal(true);
 
   const changeUserRole = useCallback(
     (role: RoleType) => {
@@ -33,7 +39,7 @@ const UserItem: React.FC<Props> = memo(({ user }) => {
           NotificationManager.error(err.message);
         });
     },
-    [user.id, dispatch],
+    [user.id, dispatch, closePositionModal],
   );
 
   return (
@@ -46,6 +52,18 @@ const UserItem: React.FC<Props> = memo(({ user }) => {
           <RoleDropdown currentRole={user.role} onChange={changeUserRole} />
         ) : (
           user.role
+        )}
+      </td>
+      <td>
+        {isShowDropDown ? (
+          <button
+            className="btn bg-gu-blue border-0 text-white"
+            onClick={openPositionModal}
+          >
+            {user?.position || 'Set position'}
+          </button>
+        ) : (
+          user?.position || ''
         )}
       </td>
       <td style={{ width: '1%', whiteSpace: 'nowrap' }}>
@@ -65,6 +83,14 @@ const UserItem: React.FC<Props> = memo(({ user }) => {
           />
         </div>
       </td>
+      <Modal
+        show={isShowPositionModal}
+        onClose={closePositionModal}
+        title="Change position"
+        className="d-flex flex-column gap-4"
+      >
+        <PositionForm onSubmit={closePositionModal} user={user}></PositionForm>
+      </Modal>
     </tr>
   );
 });

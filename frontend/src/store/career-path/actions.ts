@@ -4,6 +4,9 @@ import {
   ILevelSetting,
   IObjectiveSetting,
   ISkillSetting,
+  IDisconnectLevelsSetting,
+  IConnectLevelsSetting,
+  // IConnectDomainsSetting,
 } from 'common/interfaces/career-path';
 import { careerPath } from 'services/index';
 
@@ -182,6 +185,60 @@ const deleteObjective = createAsyncThunk(
   },
 );
 
+const connectLevels = createAsyncThunk(
+  ActionType.CONNECT_LEVELS,
+  async (
+    { levelId, nextLevelId }: IConnectLevelsSetting,
+    { rejectWithValue },
+  ) => {
+    try {
+      const result = await careerPath.connectLevels(levelId, nextLevelId);
+      return result;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
+const disconnectLevels = createAsyncThunk(
+  ActionType.DISCONNECT_LEVELS,
+  async (
+    { levelId, nextLevelId }: IDisconnectLevelsSetting,
+    { rejectWithValue },
+  ) => {
+    try {
+      const result = await careerPath.disconnectLevels(levelId, nextLevelId);
+      return result;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
+// const connectDomains  = createAsyncThunk(
+//   ActionType.CONNECT_DOMAINS,
+//   async ({ domainId, nextDomainId }: IConnectDomainsSetting, { rejectWithValue }) => {
+//     try {
+//       const result = await careerPath.connectDomains(domainId, nextDomainId);
+//       return result;
+//     } catch (err) {
+//       return rejectWithValue(err);
+//     }
+//   },
+// );
+
+// const disconnectDomains  = createAsyncThunk(
+//   ActionType.DISCONNECT_DOMAINS,
+//   async ({ domainId } : { domainId: IConnectDomainsSetting['domainId'] }, { rejectWithValue }) => {
+//     try {
+//       const result = await careerPath.disconnectDomains(domainId);
+//       return result;
+//     } catch (err) {
+//       return rejectWithValue(err);
+//     }
+//   },
+// );
+
 export {
   fetchDomains,
   createDomain,
@@ -197,4 +254,8 @@ export {
   createObjective,
   updateObjective,
   deleteObjective,
+  connectLevels,
+  disconnectLevels,
+  // connectDomains,
+  // disconnectDomains,
 };

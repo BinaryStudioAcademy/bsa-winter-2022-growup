@@ -9,7 +9,7 @@ export class Objective extends AbstractEntity {
   @Column({ type: 'varchar', length: 50, nullable: true })
   name: string;
 
-  @ManyToOne(() => OKR, (okr) => okr.objectives)
+  @ManyToOne(() => OKR, (okr) => okr.objectives, { onDelete: 'CASCADE' })
   okr: OKR;
 
   @ManyToOne(() => SkillObjective, (skillObjective) => skillObjective.id, {

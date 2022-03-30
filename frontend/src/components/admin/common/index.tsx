@@ -1,4 +1,6 @@
 import { Tooltip } from 'react-bootstrap';
+import LevelsList from './levels-list/levels-list';
+import ListItem from './list-item/list-item';
 
 export const tooltip = (isDisabled: boolean): JSX.Element => {
   return isDisabled ? (
@@ -7,3 +9,5 @@ export const tooltip = (isDisabled: boolean): JSX.Element => {
     <></>
   );
 };
+
+export { LevelsList, ListItem };

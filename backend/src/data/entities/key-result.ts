@@ -7,6 +7,11 @@ export class KeyResult extends AbstractEntity {
   @Column({ type: 'varchar', length: 250 })
   name: string;
 
-  @ManyToOne(() => Objective, (objective) => objective.id)
+  @Column({ type: 'integer', default: 0 })
+  result: number;
+
+  @ManyToOne(() => Objective, (objective) => objective.id, {
+    onDelete: 'CASCADE',
+  })
   objective: Objective;
 }

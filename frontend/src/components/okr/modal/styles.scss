@@ -1,3 +1,5 @@
+@import '~assets/scss/utils';
+
 .modal-content {
   background-color: var(--bs-gray-200);
 
@@ -21,4 +23,8 @@
       padding: 6px 26px;
     }
   }
+}
+
+.react-error {
+  bottom: 15px;
 }

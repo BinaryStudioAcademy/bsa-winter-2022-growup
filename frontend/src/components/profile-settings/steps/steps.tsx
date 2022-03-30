@@ -1,6 +1,6 @@
 import FirstStep from './first-step';
 import SecondStep from './second-step';
-import ThirdStep from './third-step';
+// import ThirdStep from './third-step';
 
 export const steps = [
   {
@@ -9,7 +9,7 @@ export const steps = [
   {
     component: <SecondStep />,
   },
-  {
-    component: <ThirdStep />,
-  },
+  // {
+  //   component: <ThirdStep />,
+  // },
 ];

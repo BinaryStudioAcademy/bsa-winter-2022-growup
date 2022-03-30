@@ -6,11 +6,6 @@ import { StorageKey } from 'common/enums/app/storage-key.enum';
 import { company as companyApi } from 'services';
 import { authActions } from 'store/actions';
 
-interface IAddEdit {
-  newCompany: ICompany;
-  handleClose: () => void;
-}
-
 const get_allCompaniesAsync = createAsyncThunk(
   ActionType.GET_ALL_COMPANIES,
   async (_, { dispatch }) => {
@@ -26,23 +21,22 @@ const get_allCompaniesAsync = createAsyncThunk(
 
 const add_companyAsync = createAsyncThunk(
   ActionType.ADD_COMPANY,
-  async ({ newCompany, handleClose }: IAddEdit, { dispatch }) => {
-    const result = await companyApi.addCompany(newCompany);
+  async (data: ICompany, { dispatch }) => {
+    const result = await companyApi.addCompany(data);
 
     if (result) {
       const { token, company } = result;
       dispatch(authActions.updateUserCompany(company));
       window.localStorage.setItem(StorageKey.TOKEN, token);
       dispatch(actions.add_company(company));
-      handleClose();
     }
   },
 );
 
 const edit_companyAsync = createAsyncThunk(
   ActionType.EDIT_COMPANY,
-  async ({ newCompany, handleClose }: IAddEdit, { dispatch }) => {
-    const result = await companyApi.editCompany(newCompany);
+  async (data: ICompany, { dispatch }) => {
+    const result = await companyApi.editCompany(data);
 
     if (result) {
       const { token, company } = result;
@@ -50,7 +44,6 @@ const edit_companyAsync = createAsyncThunk(
       window.localStorage.setItem(StorageKey.TOKEN, token);
       dispatch(authActions.updateUserCompany(company));
       dispatch(actions.edit_company(company));
-      handleClose();
     }
   },
 );

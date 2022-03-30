@@ -2,6 +2,7 @@ import { getCustomRepository, In } from 'typeorm';
 import SkillCategoryRepository from '~/data/repositories/skill-category.repository';
 
 import { SkillCategory } from '~/data/entities/skill-category';
+import { Skill } from '~/data/entities/skill';
 
 type SkillCategoryProps = Pick<SkillCategory, 'level' | 'skill'>;
 
@@ -30,6 +31,37 @@ export const getCategoriesByLevel = async (
     where: { level },
     relations: ['skill'],
   });
+
+  return categories;
+};
+
+export const getUserCategoriesByLevel = async (
+  userId: string,
+  level: SkillCategory['level'],
+): Promise<SkillCategory[]> => {
+  const skillCategoryRepository = getCustomRepository(SkillCategoryRepository);
+
+  const categories = await skillCategoryRepository
+    .createQueryBuilder('skillCategory')
+    .innerJoinAndSelect('skillCategory.skill', 'skill')
+    .innerJoinAndSelect(
+      'skillCategory.userSkillCategories',
+      'userSkillCategories',
+    )
+    .where('skillCategory.levelId = :levelId', { levelId: level.id })
+    .andWhere('userSkillCategories.userId = :userId', { userId })
+    .getMany();
+
+  categories.forEach((category) => {
+    category.skill = {
+      ...category.skill,
+      isStarred: category?.userSkillCategories[0]?.isStarred || false,
+      selfRating: category?.userSkillCategories[0]?.selfRating || null,
+      mentorRating: category?.userSkillCategories[0]?.mentorRating || null,
+      reviewRating: category?.userSkillCategories[0]?.reviewRating || null,
+    } as unknown as Skill;
+  });
+
   return categories;
 };
 

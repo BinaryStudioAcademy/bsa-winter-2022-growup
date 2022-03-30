@@ -2,6 +2,9 @@ import { ContentType, HttpMethod } from 'common/enums/enums';
 import { Http } from 'services/http/http.service';
 import { IAuthApi } from 'common/interfaces/api';
 import {
+  // ICareerPath,
+  // IConnectDomainsSetting,
+  IConnectLevels,
   IDomain,
   IDomainSetting,
   ILevel,
@@ -42,11 +45,14 @@ class CareerPath {
 
   async createDomain(domain: IDomainSetting): Promise<IDomain | null> {
     try {
-      const result = await this.http.load(`${this.apiPath}/career-path`, {
-        contentType: ContentType.JSON,
-        method: HttpMethod.POST,
-        payload: JSON.stringify({ ...domain, levels: [] }),
-      });
+      const result = await this.http.load(
+        `${this.apiPath}/career-path/domain`,
+        {
+          contentType: ContentType.JSON,
+          method: HttpMethod.POST,
+          payload: JSON.stringify({ ...domain, levels: [] }),
+        },
+      );
 
       return result as IDomain;
     } catch {
@@ -57,13 +63,14 @@ class CareerPath {
   async updateDomain(
     domain: IDomainSetting & { id: string },
   ): Promise<(IDomainSetting & { id: string }) | null> {
+    const { id, name } = domain;
     try {
       const result = await this.http.load(
-        `${this.apiPath}/career-path/domain/${domain.id}`,
+        `${this.apiPath}/career-path/domain/${id}`,
         {
           contentType: ContentType.JSON,
           method: HttpMethod.PUT,
-          payload: JSON.stringify(domain),
+          payload: JSON.stringify({ name }),
         },
       );
 
@@ -138,6 +145,7 @@ class CareerPath {
           payload: JSON.stringify({ name: level.name }),
         },
       );
+
       return result as ILevel;
     } catch {
       return null;
@@ -162,10 +170,10 @@ class CareerPath {
   }
 
   async createSkill(skill: ISkillSetting): Promise<ISkill> {
-    const { domainId, levelId, name } = skill;
+    const { levelId, name } = skill;
 
     const result = await this.http.load(
-      `${this.apiPath}/career-path/domain/${domainId}/level/${levelId}/skill`,
+      `${this.apiPath}/career-path/level/${levelId}/skill`,
       {
         contentType: ContentType.JSON,
         method: HttpMethod.POST,
@@ -212,11 +220,11 @@ class CareerPath {
   async createObjective(
     objective: IObjectiveSetting,
   ): Promise<IObjective | null> {
-    const { domainId, levelId, skillId, name } = objective;
+    const { levelId, skillId, name } = objective;
 
     try {
       const result = await this.http.load(
-        `${this.apiPath}/career-path/domain/${domainId}/level/${levelId}/skill/${skillId}/objective`,
+        `${this.apiPath}/career-path/level/${levelId}/skill/${skillId}/objective`,
         {
           contentType: ContentType.JSON,
           method: HttpMethod.POST,
@@ -267,6 +275,65 @@ class CareerPath {
       return null;
     }
   }
+
+  async connectLevels(
+    levelId: ILevel['id'],
+    nextLevelId: ILevel['id'][],
+  ): Promise<IConnectLevels> {
+    const result = await this.http.load(
+      `${this.apiPath}/career-path/levels-connection/${levelId}`,
+      {
+        contentType: ContentType.JSON,
+        method: HttpMethod.POST,
+        payload: JSON.stringify({ nextLevelId }),
+      },
+    );
+    return result as IConnectLevels;
+  }
+
+  async disconnectLevels(
+    levelId: ILevel['id'],
+    nextLevelId: ILevel['id'],
+  ): Promise<ILevel> {
+    const result = await this.http.load(
+      `${this.apiPath}/career-path/levels-connection/${levelId}/delete/${nextLevelId}`,
+      {
+        contentType: ContentType.JSON,
+        method: HttpMethod.DELETE,
+        payload: null,
+      },
+    );
+    return result as ILevel;
+  }
+
+  // async connectDomains(
+  //   domainId: IConnectDomainsSetting['domainId'],
+  //   nextDomainId: IConnectDomainsSetting['domainId'],
+  // ): Promise<ICareerPath> {
+  //   const result = await this.http.load(
+  //     `${this.apiPath}/career-path/${domainId}/connect/${nextDomainId}`,
+  //     {
+  //       contentType: ContentType.JSON,
+  //       method: HttpMethod.POST,
+  //       payload: null,
+  //     },
+  //   );
+  //   return result as ICareerPath;
+  // }
+
+  // async disconnectDomains(
+  //   domainId: IConnectDomainsSetting['domainId'],
+  // ): Promise<IConnectLevels> {
+  //   const result = await this.http.load(
+  //     `${this.apiPath}/career-path/delete/${domainId}`,
+  //     {
+  //       contentType: ContentType.JSON,
+  //       method: HttpMethod.DELETE,
+  //       payload: null,
+  //     },
+  //   );
+  //   return result;
+  // }
 }
 
 export { CareerPath };

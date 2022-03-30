@@ -16,6 +16,10 @@ export const adminRoutes = [
     element: <Admin variant="career" />,
   },
   {
+    path: AdminRoute.ADMIN_CONNECT_CAREER_PATH,
+    element: <Admin variant="connect" />,
+  },
+  {
     path: AdminRoute.ANY,
     element: <NotFound />,
   },

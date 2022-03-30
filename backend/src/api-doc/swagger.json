@@ -1853,10 +1853,10 @@
         }
       }
     },
-    "/api/career-path": {
+    "/api/career-path/domain": {
       "post": {
         "tags": ["Career Path"],
-        "summary": "Create career path",
+        "summary": "Create domain",
         "parameters": [
           {
             "in": "header",
@@ -1872,7 +1872,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "domain": {
+                "name": {
                   "type": "string"
                 },
                 "levels": {
@@ -1888,7 +1888,15 @@
                         "items": {
                           "allOf": [
                             {
-                              "$ref": "#/definitions/Skill"
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "$ref": "#/definitions/Skill Type"
+                                }
+                              }
                             },
                             {
                               "type": "object",
@@ -1896,7 +1904,12 @@
                                 "objectives": {
                                   "type": "array",
                                   "items": {
-                                    "$ref": "#/definitions/Skill Objective"
+                                    "type": "object",
+                                    "properties": {
+                                      "name": {
+                                        "type": "string"
+                                      }
+                                    }
                                   }
                                 }
                               }
@@ -1919,8 +1932,48 @@
                 "domain": {
                   "$ref": "#/definitions/Domain"
                 },
-                "level": {
-                  "$ref": "#/definitions/Level"
+                "levels": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/definitions/LevelResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Career Path"],
+        "summary": "Fetch domains",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "domain": {
+                    "$ref": "#/definitions/Domain"
+                  },
+                  "levels": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "$ref": "#/definitions/LevelResponse"
+                    }
+                  }
                 }
               }
             }
@@ -1928,10 +1981,133 @@
         }
       }
     },
-    "/api/career-path/{id}": {
+    "/api/career-path/domain/{id}": {
       "get": {
         "tags": ["Career Path"],
-        "summary": "Fetch career path",
+        "summary": "Get domain by id",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID of the domain"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "domain": {
+                  "type": "string",
+                  "description": "Domain name"
+                },
+                "levels": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/definitions/ShortLevelResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Career Path"],
+        "summary": "Update domain by id",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID of the domain to update"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Domain"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Career Path"],
+        "summary": "Delete domain by id",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Domain id you want to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Domain"
+            }
+          }
+        }
+      }
+    },
+    "/api/career-path/domain/:id/level": {
+      "post": {
+        "tags": ["Career Path"],
+        "summary": "Create level",
         "parameters": [
           {
             "in": "header",
@@ -1942,13 +2118,602 @@
             "description": "JWT Token"
           },
           {
-            "name": "id",
             "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Domain Id of the level"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "skills": {
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "$ref": "#/definitions/Skill Type"
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "objectives": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Level name"
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/definitions/Default"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "domain": {
+                      "$ref": "#/definitions/Domain"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/api/career-path/domain/{id}/level": {
+      "get": {
+        "tags": ["Career Path"],
+        "summary": "Get all levels of the domain",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
             "schema": {
               "type": "string"
             },
             "required": true,
-            "description": "Domain id"
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Domain id of the levels you want to get"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "$ref": "#/definitions/ShortLevelResponse"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/career-path/level/{id}": {
+      "get": {
+        "tags": ["Career Path"],
+        "summary": "Get level by id",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Level id you want to get"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/LevelResponse"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Career Path"],
+        "summary": "Update level by id",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Level id you want to update"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/definitions/Default"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Career Path"],
+        "summary": "Delete level by id",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Level id you want to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Level name"
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/definitions/Default"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "domain": {
+                      "$ref": "#/definitions/Domain"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/api/career-path/level/:id/skill": {
+      "post": {
+        "tags": ["Career Path"],
+        "summary": "Create skill",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Level id of the skill"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "type": {
+                  "$ref": "#/definitions/Skill Type"
+                },
+                "objectives": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Skill name"
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/definitions/Default"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "company": {
+                      "$ref": "#/definitions/Company"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/api/career-path/skill/{id}": {
+      "put": {
+        "tags": ["Career Path"],
+        "summary": "Update skill by id",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID of the skill"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Skill"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Career Path"],
+        "summary": "Delete skill by id",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Skill id you want delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Skill"
+            }
+          }
+        }
+      }
+    },
+    "/api/career-path/level/:id/skill/:id1/objective": {
+      "post": {
+        "tags": ["Career Path"],
+        "summary": "Create objective",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Level ID of the objective"
+          },
+          {
+            "in": "path",
+            "name": "id1",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Skill ID of the objective"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Skill Objective"
+            }
+          }
+        }
+      }
+    },
+    "/api/career-path/objective/{id}": {
+      "put": {
+        "tags": ["Career Path"],
+        "summary": "Update objective by id",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "String ID of the objective to update"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Skill Objective"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Career Path"],
+        "summary": "Delete objective by id",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Objective id you want delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Skill Objective"
+            }
+          }
+        }
+      }
+    },
+    "/api/career-path/levels-connection/{id}": {
+      "post": {
+        "tags": ["Career Path"],
+        "summary": "Create connection between levels (one to many)",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Level id"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nextLevelId": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": ["id1", "id2"]
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -1956,11 +2721,155 @@
             "schema": {
               "type": "object",
               "properties": {
-                "domain": {
-                  "$ref": "#/definitions/Domain"
-                },
                 "level": {
-                  "$ref": "#/definitions/Level"
+                  "type": "object",
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "description": "Level name"
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/definitions/Default"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "domain": {
+                          "$ref": "#/definitions/Domain"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "nextLevel": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "allOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "description": "Level name"
+                          }
+                        }
+                      },
+                      {
+                        "$ref": "#/definitions/Default"
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "domain": {
+                            "$ref": "#/definitions/Domain"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/career-path/levels-connection/{id}/delete{id1}": {
+      "delete": {
+        "tags": ["Career Path"],
+        "summary": "Delete connection between two levels",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "JWT Token"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Level id"
+          },
+          {
+            "in": "path",
+            "name": "id1",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Next level id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "level": {
+                  "type": "object",
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "description": "Level name"
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/definitions/Default"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "domain": {
+                          "$ref": "#/definitions/Domain"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "nextLevel": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "allOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "description": "Level name"
+                          }
+                        }
+                      },
+                      {
+                        "$ref": "#/definitions/Default"
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "domain": {
+                            "$ref": "#/definitions/Domain"
+                          }
+                        }
+                      }
+                    ]
+                  }
                 }
               }
             }
@@ -2449,8 +3358,7 @@
           "properties": {
             "name": {
               "type": "string",
-              "description": "Domain name",
-              "example": "Fullstack Developer"
+              "description": "Domain name"
             }
           }
         },
@@ -2499,8 +3407,8 @@
           "properties": {
             "name": {
               "type": "string",
-              "description": "Domain name",
-              "example": "Fullstack Developer"
+              "description": "Level name",
+              "example": "Junior Developer"
             },
             "nextLevel": {
               "$ref": "#/definitions/Level",
@@ -2554,6 +3462,123 @@
         {
           "$ref": "#/definitions/Default"
         }
+      ]
+    },
+    "LevelResponse": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Level name"
+            },
+            "nextLevel": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "$ref": "#/definitions/LevelResponse"
+              },
+              "example": []
+            },
+            "skills": {
+              "type": "array",
+
+              "items": {
+                "allOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "objectives": {
+                        "type": "array",
+                        "items": {
+                          "allOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            { "$ref": "#/definitions/Default" }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  { "$ref": "#/definitions/Default" }
+                ]
+              }
+            }
+          }
+        },
+        { "$ref": "#/definitions/Default" }
+      ]
+    },
+    "ShortLevelResponse": {
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Level ID"
+            },
+            "name": {
+              "type": "string",
+              "description": "Level name"
+            },
+            "domainName": {
+              "type": "string",
+              "description": "Domain name"
+            },
+            "nextLevels": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "description": "Next levels id"
+              },
+              "example": ["id1", "id2"]
+            },
+            "skills": {
+              "type": "array",
+              "items": {
+                "allOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "objectives": {
+                        "type": "array",
+                        "items": {
+                          "allOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            { "$ref": "#/definitions/Default" }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  { "$ref": "#/definitions/Default" }
+                ]
+              }
+            }
+          }
+        },
+        { "$ref": "#/definitions/Default" }
       ]
     },
     "Skill Type": {

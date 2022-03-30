@@ -1,0 +1,10 @@
+@import 'assets/scss/utils';
+
+.level-item__button {
+  border-color: $gu-blue !important;
+
+  &:checked {
+    background-color: $gu-blue !important;
+    border: none;
+  }
+}

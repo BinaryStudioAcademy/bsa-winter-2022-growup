@@ -1,9 +1,8 @@
-import { FirstStepPayloadKey, UserPayloadKey } from 'common/enums/enums';
+import { UserPayloadKey } from 'common/enums/enums';
 
 const DEFAULT_FIRST_STEP_PAYLOAD = {
   [UserPayloadKey.FIRST_NAME]: '',
   [UserPayloadKey.LAST_NAME]: '',
-  [FirstStepPayloadKey.POSITION]: '',
   [UserPayloadKey.PASSWORD]: '',
 };
 

@@ -26,4 +26,9 @@ interface ISkill {
   name: string;
 }
 
-export type { ICareerJourney, IEducation, IInterests, ISkill };
+interface ILevel {
+  id: string;
+  name: string;
+}
+
+export type { ICareerJourney, IEducation, IInterests, ISkill, ILevel };

@@ -1,6 +1,8 @@
 import { Request, Router } from 'express';
+import { RoleType } from 'growup-shared';
 import { run } from '~/common/helpers/route.helper';
 import { getCompany } from '~/services/company.service';
+import { getDomainById } from '~/services/domain.service';
 
 import {
   createDomainTree,
@@ -16,12 +18,56 @@ import {
   deleteLevel,
   deleteSkill,
   deleteObjective,
+  connectLevels,
+  disconnectLevels,
+  getDomainTree,
+  getLevelAndNextId,
+  getLevelsAndNextId,
+  getUserLevelAndNextId,
+  // createPath,
+  // getCareerPath,
+  // deletePath,
 } from '../controllers/career-path.controller';
+import { validatePermissions } from '../middlewares/validation-middleware';
+
+// Commented code will be used for setting up domain connections
 
 const router = Router();
 
+// // CAREER-PATH
+// // get career-path
+// router.get(
+//   '/',
+//   run(async (req: Request) => {
+//     const company = await getCompany(req.companyId);
+
+//     return getCareerPath(company);
+//   }),
+// );
+
+// // delete career-path (delete chain of connections started from domainId)
+// router.delete(
+//   '/delete/:domainId',
+//   run(async (req: Request) => {
+//     const { domainId } = req.params;
+
+//     return deletePath(domainId);
+//   }),
+// );
+
+// // create career-path (create connections)
+// router.post(
+//   '/:domainId/connect/:nextDomainId',
+//   run(async (req: Request) => {
+//     const { domainId, nextDomainId } = req.params;
+
+//     return createPath(domainId, nextDomainId);
+//   }),
+// );
+
+// DOMAINS
 router.post(
-  '/',
+  '/domain',
   run(async (req: Request) => createDomainTree(req.body, req.userId)),
 );
 
@@ -30,24 +76,35 @@ router.get(
   run(async (req: Request) => getDomainTrees(req.userId)),
 );
 
-router.delete(
-  '/domain/:domainId',
+router.get(
+  '/domain/:id',
   run(async (req: Request) => {
-    const { domainId } = req.params;
+    const { id } = req.params;
+    const domain = await getDomainById(id);
 
-    return deleteDomain(domainId);
+    return getDomainTree(domain);
   }),
 );
 
 router.put(
-  '/domain/:domainId',
+  '/domain/:id',
   run(async (req: Request) => {
-    const { domainId } = req.params;
+    const { id } = req.params;
 
-    return updateDomain(domainId, req.body);
+    return updateDomain(id, req.body);
   }),
 );
 
+router.delete(
+  '/domain/:id',
+  run(async (req: Request) => {
+    const { id } = req.params;
+
+    return deleteDomain(id);
+  }),
+);
+
+// DOMAIN LEVELS
 router.post(
   '/domain/:domainId/level',
   run(async (req: Request) => {
@@ -58,27 +115,58 @@ router.post(
   }),
 );
 
-router.put(
-  '/level/:levelId',
+router.get(
+  '/domain/:domainId/level',
   run(async (req: Request) => {
-    const { levelId } = req.params;
+    const { domainId } = req.params;
+    const domain = await getDomainById(domainId);
+    return getLevelsAndNextId(domain);
+  }),
+);
+
+router.put(
+  '/level/:id',
+  run(async (req: Request) => {
+    const { id } = req.params;
     const level = req.body;
 
-    return updateLevel(levelId, level);
+    return updateLevel(id, level);
+  }),
+);
+
+router.get(
+  '/level/:id',
+  validatePermissions([RoleType.ADMIN]),
+  run(async (req: Request) => {
+    const { id } = req.params;
+
+    return getLevelAndNextId(id);
+  }),
+);
+
+router.get(
+  '/user/level/:id',
+  validatePermissions([RoleType.MENTEE]),
+  run(async (req: Request) => {
+    const { id } = req.params;
+    const { userId } = req;
+
+    return getUserLevelAndNextId(userId, id);
   }),
 );
 
 router.delete(
-  '/level/:levelId',
+  '/level/:id',
   run(async (req: Request) => {
-    const { levelId } = req.params;
+    const { id } = req.params;
 
-    return deleteLevel(levelId);
+    return deleteLevel(id);
   }),
 );
 
+// LEVEL SKILLS
 router.post(
-  '/domain/:domainId/level/:levelId/skill',
+  '/level/:levelId/skill',
   run(async (req: Request) => {
     const company = await getCompany(req.companyId);
     const { levelId } = req.params;
@@ -89,26 +177,27 @@ router.post(
 );
 
 router.put(
-  '/skill/:skillId',
+  '/skill/:id',
   run(async (req: Request) => {
-    const { skillId } = req.params;
+    const { id } = req.params;
     const skill = req.body;
 
-    return updateSkill(skillId, skill);
+    return updateSkill(id, skill);
   }),
 );
 
 router.delete(
-  '/skill/:skillId',
+  '/skill/:id',
   run(async (req: Request) => {
-    const { skillId } = req.params;
+    const { id } = req.params;
 
-    return deleteSkill(skillId);
+    return deleteSkill(id);
   }),
 );
 
+// LEVEL OBJECTIVES
 router.post(
-  '/domain/:domainId/level/:levelId/skill/:skillId/objective',
+  '/level/:levelId/skill/:skillId/objective',
   run(async (req: Request) => {
     const { levelId, skillId } = req.params;
 
@@ -117,20 +206,40 @@ router.post(
 );
 
 router.put(
-  '/objective/:objectiveId',
+  '/objective/:id',
   run(async (req: Request) => {
-    const { objectiveId } = req.params;
+    const { id } = req.params;
 
-    return updateObjective(objectiveId, req.body);
+    return updateObjective(id, req.body);
   }),
 );
 
 router.delete(
-  '/objective/:objectiveId',
+  '/objective/:id',
   run(async (req: Request) => {
-    const { objectiveId } = req.params;
+    const { id } = req.params;
 
-    return deleteObjective(objectiveId);
+    return deleteObjective(id);
+  }),
+);
+
+// LEVEL CONNECTIONS
+router.post(
+  '/levels-connection/:levelId',
+  run(async (req: Request) => {
+    const { levelId } = req.params;
+    const { nextLevelId } = req.body;
+
+    return connectLevels(levelId, nextLevelId);
+  }),
+);
+
+router.delete(
+  '/levels-connection/:levelId/delete/:nextLevelId',
+  run(async (req: Request) => {
+    const { levelId, nextLevelId } = req.params;
+
+    return disconnectLevels(levelId, nextLevelId);
   }),
 );
 

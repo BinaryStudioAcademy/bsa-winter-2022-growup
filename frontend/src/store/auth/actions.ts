@@ -79,6 +79,8 @@ const finishRegistration = createAsyncThunk<
   },
 );
 
+const completeTest = createAction(ActionType.COMPLETE_TEST);
+
 export {
   getCurrentUser,
   loginUser,
@@ -86,4 +88,5 @@ export {
   verifyRegistrationToken,
   finishRegistration,
   updateUserCompany,
+  completeTest,
 };

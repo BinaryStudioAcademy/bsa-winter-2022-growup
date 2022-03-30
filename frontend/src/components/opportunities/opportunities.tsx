@@ -19,7 +19,8 @@ import { SortOption } from 'store/opportunities/common';
 
 const Opportunities: React.FC = () => {
   const [sort, setSort] = useState<SortOption | null>(null);
-  const [tags, setTags] = useState(['a']);
+  const [tags, setTags] = useState([]);
+  const [isValidType, setIsValidType] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const user = useAppSelector((store) => store.profile.user);
   const navigate = useNavigate();
@@ -55,14 +56,21 @@ const Opportunities: React.FC = () => {
   );
 
   const handleSubmit = (values: object): void => {
-    handleSave({ ...values, tags: tags })
-      .unwrap()
-      .then(() => {
-        closeModal();
-      })
-      .catch((err: Error) => {
-        NotificationManager.error(err.message);
-      });
+    if (tags.length !== 0) {
+      handleSave({ ...values, tags: tags })
+        .unwrap()
+        .then(() => {
+          closeModal();
+        })
+        .catch((err: Error) => {
+          NotificationManager.error(err.message);
+        });
+    } else {
+      setIsValidType(true);
+      setTimeout(() => {
+        setIsValidType(false);
+      }, 1200);
+    }
   };
 
   const handleSort = (option: SortOption): void => {
@@ -110,6 +118,7 @@ const Opportunities: React.FC = () => {
             type={item.type}
             startDate={item.startDate}
             tagsData={item.tagsData}
+            tags={item.tags}
             isFollow={item.isFollow}
             isOpportunitiesPage={true}
           />
@@ -121,6 +130,7 @@ const Opportunities: React.FC = () => {
           onClose={closeModal}
           onSubmit={handleSubmit}
           setTags={setTags}
+          isValidType={isValidType}
         />
       )}
     </AddSection>
