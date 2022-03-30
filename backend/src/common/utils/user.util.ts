@@ -3,7 +3,7 @@ import { User } from '~/data/entities/user';
 import { IListUser } from '~/common/models/user/user';
 
 const convertForUserList = (userInstance: User): IListUser => ({
-  level: userInstance.level.id,
+  level: userInstance.level?.id || null,
   position: userInstance.position,
   firstName: userInstance.firstName,
   lastName: userInstance.lastName,
