@@ -31,11 +31,6 @@ const ProfileMain: React.FC = () => {
               <Tag key={i}>{item.name}</Tag>
             ))}
           </div>
-          <div className="group">
-            <h4 className="group__title fw-bold fs-7">Language</h4>
-            <Tag>English</Tag>
-            <Tag>French</Tag>
-          </div>
         </EditSection>
         <Interests tagList={tags} />
       </div>

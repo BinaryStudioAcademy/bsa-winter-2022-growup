@@ -35,5 +35,4 @@ const OkrValidationMessage = (isEdit: boolean): IOkrValidationMessage => {
     MAX_END_DATE: `End date must be at least ${formatDate(MAX_DATE)}`,
   };
 };
-
 export { OkrValidationMessage };

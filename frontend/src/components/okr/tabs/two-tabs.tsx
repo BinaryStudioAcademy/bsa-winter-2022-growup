@@ -10,6 +10,7 @@ function ControlledTabs(): React.ReactElement {
   const navigate = useNavigate();
 
   const [key, setKey] = useState('my-OKR');
+
   const [showModal, setShowModal] = useState(false);
 
   const { okrs } = useAppSelector((state) => state.okr);

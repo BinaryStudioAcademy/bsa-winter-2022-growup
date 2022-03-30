@@ -1,5 +1,19 @@
 @import '~assets/scss/utils';
 
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $purple-gray;
+  border-radius: 0.3rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $purple;
+}
+
 .react-datepicker {
   font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
     'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -16,6 +30,19 @@
 
 .react-datepicker__current-month {
   font-size: $font-size-5;
+}
+
+.react-datepicker__month-select,
+.react-datepicker__year-select {
+  border: 1px solid $purple-300;
+  border-radius: 0.3rem;
+  padding: 0 3px;
+  cursor: pointer;
+}
+
+.react-datepicker__month-select:focus-visible,
+.react-datepicker__year-select:focus-visible {
+  outline: $gu-purple solid 1px;
 }
 
 .react-datepicker__navigation-icon {

@@ -29,6 +29,7 @@ const TagModal: React.FC<PropTypes> = ({ show, onClose }) => {
       show={show}
       onClose={onClose}
       title="Add Tags"
+      closeButton={true}
       className="d-flex flex-column gap-4"
     >
       <TagForm onSubmit={addItem} />
