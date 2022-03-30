@@ -9,6 +9,7 @@ type Props = {
   className?: string;
   buttonText?: string;
   onSubmit?: () => void;
+  closeButton?: boolean;
   footer?: boolean;
 };
 
@@ -20,11 +21,12 @@ const Modal: React.FC<Props> = ({
   className,
   buttonText,
   onSubmit,
+  closeButton = false,
   footer = false,
 }) => {
   return (
     <ModalWindow show={show} onHide={onClose} centered>
-      <ModalWindow.Header closeButton className="fw-bold fs-3">
+      <ModalWindow.Header closeButton={closeButton} className="fw-bold fs-3">
         {title}
       </ModalWindow.Header>
       <ModalWindow.Body className={className}>{children}</ModalWindow.Body>
