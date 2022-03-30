@@ -11,7 +11,10 @@ import './styles.scss';
 type Props = {
   onClose: () => void;
   onSubmit: (values: object) => void;
-  setTags: React.Dispatch<React.SetStateAction<string[]>>;
+  setTags:
+    | React.Dispatch<React.SetStateAction<string[]>>
+    | React.Dispatch<React.SetStateAction<never[]>>;
+  isValidType: boolean;
 };
 
 const OpportunityForm: React.FC<Props> = (props) => {
@@ -60,6 +63,13 @@ const OpportunityForm: React.FC<Props> = (props) => {
           options={[...tagsName]}
           style={{ backgroundColor: 'rgba(52, 52, 52, 0.1)', color: '#d1d0cf' }}
         />
+        {props.isValidType ? (
+          <span className="fs-6 text-gu-pink error react-error position-relative">
+            Name is required
+          </span>
+        ) : (
+          true
+        )}
         <FormInputDate
           name={OpportunityPayloadKey.START_DATE}
           control={control}
