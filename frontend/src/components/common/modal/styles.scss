@@ -22,10 +22,6 @@
   }
 }
 
-.btn-close {
-  display: none;
-}
-
 @include media-breakpoint-down(lg) {
   .modal-content {
     .modal-header {
