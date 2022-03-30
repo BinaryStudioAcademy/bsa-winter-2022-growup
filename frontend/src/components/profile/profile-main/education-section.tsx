@@ -97,36 +97,38 @@ const EducationSection: React.FC = () => {
   };
 
   return (
-    <AddSection title="Education" onAdd={(): void => showModal(null)}>
-      <>
-        {educations.length > 1 && (
-          <span
-            onClick={onSortByAsc}
-            className="notifications__view-all d-flex align-items-center justify-content-end me-2 mb-2 mt-2 fs-6 text-gu-blue"
-          >
-            <span className="me-1">{sort ? 'sort' : 'sort'}</span>
-            {sort ? <ArrowDown /> : <ArrowUp />}
-          </span>
-        )}
-        {educationItems()}
-        {isModalVisible && (
-          <EducationForm
-            education={education}
-            onClose={closeModal}
-            onSubmit={handleSubmit}
-          />
-        )}
-        {!isLessTwo && (
-          <span
-            onClick={onViewAll}
-            className="notifications__view-all d-flex align-items-center justify-content-end me-2 mb-2 mt-2 fs-6 text-gu-blue"
-          >
-            <span className="me-1">{viewAll ? 'hide' : 'view all'}</span>
-            {viewAll ? <ArrowUp /> : <ArrowDown />}
-          </span>
-        )}
-      </>
-    </AddSection>
+    <div className="mt-4">
+      <AddSection title="Education" onAdd={(): void => showModal(null)}>
+        <>
+          {educations.length > 1 && (
+            <span
+              onClick={onSortByAsc}
+              className="notifications__view-all d-flex align-items-center justify-content-end me-2 mb-2 mt-2 fs-6 text-gu-blue"
+            >
+              <span className="me-1">{sort ? 'sort' : 'sort'}</span>
+              {sort ? <ArrowDown /> : <ArrowUp />}
+            </span>
+          )}
+          {educationItems()}
+          {isModalVisible && (
+            <EducationForm
+              education={education}
+              onClose={closeModal}
+              onSubmit={handleSubmit}
+            />
+          )}
+          {!isLessTwo && (
+            <span
+              onClick={onViewAll}
+              className="notifications__view-all d-flex align-items-center justify-content-end me-2 mb-2 mt-2 fs-6 text-gu-blue"
+            >
+              <span className="me-1">{viewAll ? 'hide' : 'view all'}</span>
+              {viewAll ? <ArrowUp /> : <ArrowDown />}
+            </span>
+          )}
+        </>
+      </AddSection>
+    </div>
   );
 };
 
