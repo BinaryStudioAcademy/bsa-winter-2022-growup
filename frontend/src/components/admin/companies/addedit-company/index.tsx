@@ -20,7 +20,8 @@ interface Props {
 type CompanyForm = Pick<ICompany, 'name' | 'description'>;
 
 const AddEditCompany: React.FC<Props> = ({ handleClose, company }) => {
-  const [file, setFile] = useState<File>();
+  const [file, setFile] = useState<Blob>();
+  const [isDisabled, setIsDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const { control, errors, handleSubmit } = useAppForm<CompanyForm>({
@@ -67,13 +68,18 @@ const AddEditCompany: React.FC<Props> = ({ handleClose, company }) => {
       title={company ? 'Edit company' : 'Add company info'}
       className="d-flex flex-column gap-3"
     >
-      <EditAvatar setFile={setFile} company={company} />
+      <EditAvatar
+        setFile={setFile}
+        company={company}
+        setDisable={setIsDisabled}
+      />
       <Form onSubmit={handleSubmit(send)} className="d-flex flex-column">
         <TextField
           label="Company name"
           name="name"
           control={control}
           errors={errors}
+          disabled={isDisabled}
         />
 
         <TextField
@@ -81,6 +87,7 @@ const AddEditCompany: React.FC<Props> = ({ handleClose, company }) => {
           name="description"
           control={control}
           errors={errors}
+          disabled={isDisabled}
           textarea
         />
 
@@ -88,7 +95,7 @@ const AddEditCompany: React.FC<Props> = ({ handleClose, company }) => {
           variant="outline-gu-purple"
           className="btn-hover-gu-white flex-fill"
           type="submit"
-          disabled={isLoading}
+          disabled={isLoading || isDisabled}
         >
           {isLoading ? 'Loading...' : 'Save'}
         </Button>
