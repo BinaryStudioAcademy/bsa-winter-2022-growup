@@ -186,6 +186,7 @@ export const getCommonUserList = async (id: string): Promise<IListUser[]> => {
   const users = userInstances.map((user) => ({
     ...user,
     company: user.company.id,
+    level: user.level?.id || null,
   }));
 
   return users;
