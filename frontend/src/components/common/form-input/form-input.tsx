@@ -19,7 +19,7 @@ interface Props<T> {
   type: string;
   placeholder: string;
   textarea?: boolean;
-  initialValue?: string;
+  disabled?: boolean;
 }
 
 function FormInput<T>({
@@ -29,7 +29,7 @@ function FormInput<T>({
   type,
   placeholder,
   textarea,
-  initialValue,
+  disabled,
 }: Props<T>): JSX.Element {
   const {
     field: { value, ...field },
@@ -40,10 +40,11 @@ function FormInput<T>({
     <>
       <Form.Control
         {...field}
-        value={initialValue ? initialValue : fieldValue}
+        value={fieldValue}
         type={type}
         placeholder={placeholder}
         as={textarea ? 'textarea' : 'input'}
+        disabled={disabled}
       />
 
       <span className="fs-6 text-gu-pink error mt-2">

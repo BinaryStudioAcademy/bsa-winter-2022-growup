@@ -3,17 +3,22 @@ import { FloatingLabel, Form } from 'react-bootstrap';
 import { Modal, TextField, FormInputDate } from 'components/common/common';
 import { useAppForm, useDispatch } from 'hooks/hooks';
 import { okrValidationSchema } from 'validation-schemas/okr/okr.validation-schema';
-import { okrActions } from 'store/okr/actions';
+import * as okrActions from 'store/okr/actions';
 import { FormSelect } from 'components/common/common';
 import { IOkr, OkrTypes } from 'common/interfaces/okr';
 import { selectOptions } from './select-options';
-
 import './styles.scss';
 
 interface Props {
   okr?: IOkr;
   showModal: boolean;
   closeModal: () => void;
+}
+interface IDefaultOkr {
+  name: string;
+  type: OkrTypes;
+  startDate: Date | string;
+  endDate: Date | string;
 }
 
 const OkrModal: FC<Props> = ({ okr, showModal, closeModal }) => {
@@ -24,7 +29,7 @@ const OkrModal: FC<Props> = ({ okr, showModal, closeModal }) => {
     type: OkrTypes.MY_OKR,
     startDate: '',
     endDate: '',
-  } as IOkr;
+  } as IDefaultOkr;
 
   if (okr) {
     const newDefaultOkr = { ...defaultOkr };

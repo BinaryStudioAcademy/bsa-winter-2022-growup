@@ -12,6 +12,7 @@ const UserModal: React.FC<Props> = memo(({ show, onClose }) => (
     show={show}
     onClose={onClose}
     title="Add User"
+    closeButton={true}
     className="d-flex flex-column gap-4"
   >
     <UserForm onSubmit={onClose} />

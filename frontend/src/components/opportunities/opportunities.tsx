@@ -112,6 +112,7 @@ const Opportunities: React.FC = () => {
             type={item.type}
             startDate={item.startDate}
             tagsData={item.tagsData}
+            tags={item.tags}
             isFollow={item.isFollow}
             isOpportunitiesPage={true}
           />
