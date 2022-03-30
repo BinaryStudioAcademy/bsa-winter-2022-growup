@@ -6,6 +6,7 @@ import { objectiveValidationSchema } from 'validation-schemas/validation-schemas
 import { XLg } from 'react-bootstrap-icons';
 import { ObjectiveValues } from '../common/interfaces';
 import { okrActions } from 'store/okr';
+
 interface Props {
   showModal: boolean;
   closeModal: () => void;
@@ -29,7 +30,15 @@ const NewObjectiveModal: React.FC<Props> = ({
   });
 
   const onSubmit = (data: ObjectiveValues): void => {
-    const keyValues = data.keyResults.map((res) => res.result);
+    const keyValues = data.keyResults.map((res) =>
+      res.result ? res.result : 0,
+    );
+    const valueKey = data.keyResults.map((key, index) => {
+      return {
+        name: key.name,
+        result: keyValues[index],
+      };
+    });
     const sumResult = keyValues.reduce((total, amount) => +total + +amount);
     const objectiveValues = Math.round(sumResult / data.keyResults.length);
 
@@ -40,7 +49,7 @@ const NewObjectiveModal: React.FC<Props> = ({
           name: data.name,
           result: objectiveValues,
         },
-        keyResults: data.keyResults,
+        keyResults: valueKey,
       }),
     );
 
