@@ -1,4 +1,5 @@
 import { Request, Router } from 'express';
+import { RoleType } from 'growup-shared';
 import { run } from '~/common/helpers/route.helper';
 import { getCompany } from '~/services/company.service';
 import { getDomainById } from '~/services/domain.service';
@@ -22,10 +23,12 @@ import {
   getDomainTree,
   getLevelAndNextId,
   getLevelsAndNextId,
+  getUserLevelAndNextId,
   // createPath,
   // getCareerPath,
   // deletePath,
 } from '../controllers/career-path.controller';
+import { validatePermissions } from '../middlewares/validation-middleware';
 
 // Commented code will be used for setting up domain connections
 
@@ -133,10 +136,22 @@ router.put(
 
 router.get(
   '/level/:id',
+  validatePermissions([RoleType.ADMIN]),
   run(async (req: Request) => {
     const { id } = req.params;
 
     return getLevelAndNextId(id);
+  }),
+);
+
+router.get(
+  '/user/level/:id',
+  validatePermissions([RoleType.MENTEE]),
+  run(async (req: Request) => {
+    const { id } = req.params;
+    const { userId } = req;
+
+    return getUserLevelAndNextId(userId, id);
   }),
 );
 

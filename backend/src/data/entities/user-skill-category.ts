@@ -1,11 +1,4 @@
-import {
-  Entity,
-  PrimaryColumn,
-  JoinColumn,
-  Column,
-  BaseEntity,
-  ManyToOne,
-} from 'typeorm';
+import { Entity, PrimaryColumn, Column, ManyToOne, BaseEntity } from 'typeorm';
 import { User } from './user';
 import { SkillCategory } from './skill-category';
 
@@ -14,15 +7,12 @@ export class UserSkillCategory extends BaseEntity {
   @PrimaryColumn()
   userId: User;
   @ManyToOne(() => User, (user) => user.id, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'userId' })
   user: User;
 
-  @PrimaryColumn()
-  skillLevelId: SkillCategory;
   @ManyToOne(() => SkillCategory, (skillCategory) => skillCategory.id, {
     onDelete: 'CASCADE',
+    primary: true,
   })
-  @JoinColumn({ name: 'skillLevelId' })
   skillCategory: SkillCategory;
 
   @Column({ default: false })

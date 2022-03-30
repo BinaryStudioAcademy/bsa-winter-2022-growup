@@ -42,6 +42,7 @@ import {
   getCategoriesBySkill,
   getCategory,
   deleteSkillCategoryById,
+  getUserCategoriesByLevel,
 } from '~/services/skill-category.service';
 
 // import { createCareerPath, deleteCareerPath, getPath, getPathByDomain } from '~/services/career-path.service';
@@ -109,6 +110,27 @@ const getLevelAndSkills = async (
   }, categories);
 
   const categorySkills = convertToSkillCategory(categories, skillObjectives);
+  currentLevel.skills = categorySkills.map((category) => category.skill);
+
+  return currentLevel;
+};
+
+export const getUserLevelAndSkills = async (
+  userId: string,
+  level: DomainLevel,
+): Promise<DomainLevelResponse> => {
+  const currentLevel: DomainLevelResponse = level as DomainLevelResponse;
+
+  const categories = await getUserCategoriesByLevel(userId, currentLevel);
+
+  const skillObjectives: SkillObjective[] = [];
+  await asyncForEach(async (category) => {
+    const objectives = await getObjectives(category);
+    skillObjectives.push(...objectives);
+  }, categories);
+
+  const categorySkills = convertToSkillCategory(categories, skillObjectives);
+
   currentLevel.skills = categorySkills.map((category) => category.skill);
 
   return currentLevel;
@@ -316,6 +338,25 @@ export const getLevelAndNextId = async (
 ): Promise<DomainLevelNextIdResponse> => {
   const level = await getLevelById(id);
   const levelAndSkills = await getLevelAndSkills(level);
+  const levelNextIds: NextLevelIdResponse = await getLevelsNextId(level);
+
+  const levelAndNextIds = {
+    id: level.id,
+    name: level.name,
+    domainName: level.domain.name,
+    nextLevels: levelNextIds.nextLevels,
+    skills: levelAndSkills.skills,
+  } as DomainLevelNextIdResponse;
+
+  return levelAndNextIds;
+};
+
+export const getUserLevelAndNextId = async (
+  userId: string,
+  id: DomainLevel['id'],
+): Promise<DomainLevelNextIdResponse> => {
+  const level = await getLevelById(id);
+  const levelAndSkills = await getUserLevelAndSkills(userId, level);
   const levelNextIds: NextLevelIdResponse = await getLevelsNextId(level);
 
   const levelAndNextIds = {
