@@ -83,13 +83,6 @@ const UserItem: React.FC<Props> = memo(({ user }) => {
           />
         </div>
       </td>
-      <td>
-        <UserControls
-          id={user.id}
-          show={isShowDropDown}
-          setShow={setIsShowDropDown}
-        />
-      </td>
       <Modal
         show={isShowPositionModal}
         onClose={closePositionModal}
