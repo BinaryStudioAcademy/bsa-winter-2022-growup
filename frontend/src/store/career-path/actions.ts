@@ -57,6 +57,17 @@ const deleteDomain = createAsyncThunk(
   },
 );
 
+const fetchLevelSkills = createAsyncThunk(
+  ActionType.FETCH_LEVEL_SKILLS,
+  async (id: string, { rejectWithValue }) => {
+    try {
+      return careerPath.fetchLevelSkills(id);
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
 const createLevel = createAsyncThunk(
   ActionType.ADD_LEVEL,
   async (level: ILevelSetting, { rejectWithValue }) => {
@@ -179,6 +190,7 @@ export {
   createLevel,
   updateLevel,
   deleteLevel,
+  fetchLevelSkills,
   createSkill,
   updateSkill,
   deleteSkill,
