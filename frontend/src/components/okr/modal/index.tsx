@@ -41,7 +41,7 @@ const OkrModal: FC<Props> = ({ okr, showModal, closeModal }) => {
         });
       }
     }
-    console.warn(okr);
+
     newDefaultOkr.startDate = new Date(okr.startDate);
     newDefaultOkr.endDate = new Date(okr.endDate);
 
