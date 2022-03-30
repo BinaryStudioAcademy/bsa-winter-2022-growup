@@ -1,11 +1,7 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { ReducerName } from 'common/enums/app/reducer-name.enum';
-import { IOkr } from 'common/interfaces/okr';
-import { ActionType } from './common';
-
-type State = {
-  okrs: IOkr[];
-};
+import { State } from './common';
+import okrReducer from './reducer';
 
 const initialState: State = {
   okrs: [],
@@ -14,17 +10,8 @@ const initialState: State = {
 const { reducer, actions } = createSlice({
   name: ReducerName.OKR,
   initialState,
-  reducers: {
-    [ActionType.GET_ALL_OKRS]: (state, action: PayloadAction<IOkr[]>) => {
-      state.okrs = action.payload;
-    },
-    [ActionType.UPDATE_OKR_BY_ID]: (state, action: PayloadAction<IOkr>) => {
-      const index = state.okrs.findIndex((okr) => okr.id === action.payload.id);
-      const newOkrs = [...state.okrs];
-      newOkrs[index] = action.payload;
-      state.okrs = newOkrs;
-    },
-  },
+  reducers: {},
+  extraReducers: okrReducer,
 });
 
 export { reducer, actions };

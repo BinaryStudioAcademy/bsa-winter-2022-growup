@@ -11,6 +11,14 @@ interface IUser {
   domenLevelId: number;
 }
 
+export type ObjectiveValues = {
+  name: string;
+  keyResults: {
+    name: string;
+    result: number;
+  }[];
+};
+
 interface IOkr {
   id: number;
   name: string;
