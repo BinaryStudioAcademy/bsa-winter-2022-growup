@@ -3,6 +3,7 @@ import { RoleType } from 'common/enums/user/roles.enum';
 import {
   ICareerJourney,
   IEducation,
+  ILevel,
 } from 'components/profile/common/interfaces';
 import type { ICompany } from 'common/interfaces/company/company';
 
@@ -12,6 +13,7 @@ interface IUser extends IUserDefault {
   avatar: string | null;
   company?: ICompany;
   position: string;
+  level: ILevel | null;
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;

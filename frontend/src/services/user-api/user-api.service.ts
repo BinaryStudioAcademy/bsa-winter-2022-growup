@@ -3,7 +3,11 @@ import { ContentType, HttpMethod } from 'common/enums/enums';
 import type { IHttp } from 'common/interfaces/http/http';
 import { IUser } from 'common/interfaces/user/user';
 import { IAuthApi } from 'common/interfaces/api';
-import { IChangeRole, SuccessResponse } from 'store/admin/common';
+import {
+  IChangePosition,
+  IChangeRole,
+  SuccessResponse,
+} from 'store/admin/common';
 import { IRegistrationURL } from 'common/interfaces/user/token';
 
 class UsersApi {
@@ -16,15 +20,23 @@ class UsersApi {
   }
 
   public async inviteUser(
-    payload: Pick<IUser, 'email' | 'role'>,
+    payload: Pick<IUser, 'email' | 'role' | 'level' | 'position'>,
   ): Promise<IUser | null> {
+    const { email, role, position, level } = payload;
+
     try {
       const result = await this.http.load(`${this.apiPath}/company/users`, {
         contentType: ContentType.JSON,
         method: HttpMethod.POST,
         hasAuth: true,
-        payload: JSON.stringify(payload),
+        payload: JSON.stringify({
+          email,
+          role,
+          levelId: level?.id,
+          position,
+        }),
       });
+
       return result as IUser;
     } catch {
       return null;
@@ -101,6 +113,27 @@ class UsersApi {
       return response;
     } catch (_) {
       throw new Error('Can`t change role for this user');
+    }
+  }
+
+  public async changeUserPosition({
+    id,
+    position,
+    level,
+  }: IChangePosition): Promise<IChangePosition> {
+    try {
+      const response: IChangePosition = await this.http.load(
+        `${this.apiPath}/company/users/${id}/position`,
+        {
+          contentType: ContentType.JSON,
+          method: HttpMethod.PUT,
+          hasAuth: true,
+          payload: JSON.stringify({ position, level }),
+        },
+      );
+      return response;
+    } catch (_) {
+      throw new Error('Can`t change position for this user');
     }
   }
 }

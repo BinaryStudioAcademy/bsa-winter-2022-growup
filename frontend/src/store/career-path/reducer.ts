@@ -196,6 +196,66 @@ const ProfileReducer = (builder: ActionReducerMapBuilder<State>): void => {
       }
     }
   });
+
+  builder.addCase(actions.connectLevels.fulfilled, (state, action) => {
+    if (action.payload) {
+      const domain = state.domains?.find(
+        (domain) => domain.domain.id === action.meta.arg.domainId,
+      );
+
+      const level = domain?.levels.find(
+        (level) => level.id === action.payload?.level.id,
+      );
+
+      const nextLevel = action.payload.nextLevel;
+
+      if (level && nextLevel) {
+        level.nextLevel = level.nextLevel.concat(nextLevel);
+      }
+    }
+  });
+
+  builder.addCase(actions.disconnectLevels.fulfilled, (state, action) => {
+    if (action.payload) {
+      const domain = state.domains?.find(
+        (domain) => domain.domain.id === action.meta.arg.domainId,
+      );
+
+      const level = domain?.levels.find(
+        (level) => level.id === action.meta.arg.levelId,
+      );
+
+      if (level?.nextLevel) {
+        level.nextLevel = level.nextLevel.filter(
+          (next) => next.id !== action.meta.arg.nextLevelId,
+        );
+      }
+    }
+  });
+
+  // builder.addCase(actions.connectDomains.fulfilled, (state, action) => {
+  //   if (action.payload) {
+  //     const domain = state.domains?.find(
+  //       (domain) => domain.domain.id === action.meta.arg.domainId,
+  //     );
+
+  //     if (domain){
+  //       domain.nextDomain = action.payload.nextDomain;
+  //     }
+  //   }
+  // });
+
+  // builder.addCase(actions.disconnectDomains.fulfilled, (state, action) => {
+  //   if (action.payload) {
+  //     const domain = state.domains?.find(
+  //       (domain) => domain.domain.id === action.meta.arg.domainId,
+  //     );
+
+  //     if (domain){
+  //       domain.nextDomain = null;
+  //     }
+  //   }
+  // });
 };
 
 export default ProfileReducer;

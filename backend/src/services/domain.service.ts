@@ -33,10 +33,12 @@ export const getDomainById = async (id: Domain['id']): Promise<Domain> => {
 export const getDomains = async (company: Company): Promise<Domain[]> => {
   const domainRepository = getCustomRepository(DomainRepository);
 
-  const domain = await domainRepository.find({
-    where: { company },
-    relations: ['company'],
-  });
+  const domain = await domainRepository
+    .createQueryBuilder('domain')
+    .innerJoin('domain.company', 'company')
+    .where('company.id = :id', { id: company.id })
+    .getMany();
+
   return domain;
 };
 

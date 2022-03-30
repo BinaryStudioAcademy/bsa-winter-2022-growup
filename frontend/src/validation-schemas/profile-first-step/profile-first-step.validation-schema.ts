@@ -1,10 +1,6 @@
 import * as Joi from 'joi';
+
 import {
-  StepsValidationMessage,
-  StepsValidationRule,
-} from 'common/enums/validation/validation';
-import {
-  FirstStepPayloadKey,
   UserPayloadKey,
   UserValidationMessage,
   UserValidationRule,
@@ -40,16 +36,6 @@ const profileFirstStep = Joi.object({
       'string.empty': UserValidationMessage.LAST_NAME_REQUIRE,
       'string.min': UserValidationMessage.LAST_NAME_MIN_LENGTH,
       'string.max': UserValidationMessage.LAST_NAME_MAX_LENGTH,
-    }),
-  [FirstStepPayloadKey.POSITION]: Joi.string()
-    .trim()
-    .min(StepsValidationRule.POSITION_MIN_LENGTH)
-    .max(StepsValidationRule.POSITION_MAX_LENGTH)
-    .required()
-    .messages({
-      'string.empty': StepsValidationMessage.POSITION_REQUIRE,
-      'string.min': StepsValidationMessage.POSITION_MIN_LENGTH,
-      'string.max': StepsValidationMessage.POSITION_MAX_LENGTH,
     }),
 });
 

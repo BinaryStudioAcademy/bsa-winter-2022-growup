@@ -1,21 +1,29 @@
-import { Entity, OneToOne, PrimaryColumn, JoinColumn, Column } from 'typeorm';
+import { Entity, PrimaryColumn, Column, ManyToOne, BaseEntity } from 'typeorm';
 import { User } from './user';
 import { SkillCategory } from './skill-category';
 
 @Entity()
-export class UserSkillCategory {
+export class UserSkillCategory extends BaseEntity {
   @PrimaryColumn()
   userId: User;
-  @OneToOne(() => User, (user) => user.id, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'userId' })
+  @ManyToOne(() => User, (user) => user.id, { onDelete: 'CASCADE' })
   user: User;
 
-  @PrimaryColumn()
-  skillLevelId: SkillCategory;
-  @OneToOne(() => SkillCategory, (skillCategory) => skillCategory.id)
-  @JoinColumn({ name: 'skillLevelId' })
+  @ManyToOne(() => SkillCategory, (skillCategory) => skillCategory.id, {
+    onDelete: 'CASCADE',
+    primary: true,
+  })
   skillCategory: SkillCategory;
 
-  @Column({ type: 'boolean' })
-  isApproved: boolean;
+  @Column({ default: false })
+  isStarred: boolean;
+
+  @Column({ nullable: true })
+  selfRating: number;
+
+  @Column({ nullable: true })
+  mentorRating: number;
+
+  @Column({ nullable: true })
+  reviewRating: number;
 }

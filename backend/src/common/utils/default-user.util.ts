@@ -5,18 +5,22 @@ interface IDefaultProps {
   password: null;
   firstName: null;
   lastName: null;
-  position: null;
 }
 const DEFAULT_USER_DATA: IDefaultProps = {
   'password': null,
   'firstName': null,
   'lastName': null,
-  'position': null,
 };
 
-const createDefaultUser = (email: User['email']): UserRegisterForm => {
+const createDefaultUser = (
+  email: User['email'],
+  level: User['level'],
+  position: User['position'],
+): UserRegisterForm => {
   return {
     email,
+    level,
+    position,
     ...DEFAULT_USER_DATA,
   };
 };

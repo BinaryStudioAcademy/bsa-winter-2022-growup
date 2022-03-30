@@ -22,10 +22,15 @@ enum ActionType {
   DELETE_USER = 'delete-user',
   CHANGE_ROLE = 'change-role',
 
+  CHANGE_POSITION = 'change-position',
+
   RESEND_MAIL = 'resend-mail',
   GET_TOKEN = 'get-registration-token',
 }
 
 export interface IChangeRole extends Pick<IUser, 'id' | 'role'> {}
+
+export interface IChangePosition
+  extends Pick<IUser, 'id' | 'level' | 'position'> {}
 
 export { ActionType };

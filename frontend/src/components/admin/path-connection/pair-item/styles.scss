@@ -1,0 +1,44 @@
+@import 'assets/scss/utils';
+
+.pair-delete {
+  background-color: $white;
+  color: $gu-purple;
+  border: 0.1em solid $purple-light;
+  border-radius: 50%;
+  width: 1.5em;
+  height: 1.5em;
+  padding: 0.2em;
+  margin-left: 2em;
+}
+
+.pair-action-wrapper {
+  right: 0;
+  right: -2em;
+  top: 50%;
+  transform: translateY(-50%);
+  display: none;
+  z-index: 100;
+}
+
+.pair-item {
+  &:hover {
+    .pair-action-wrapper {
+      display: block;
+    }
+  }
+}
+
+.pair-delete:hover {
+  background-color: $purple-light;
+}
+
+.pair-item-element {
+  &:hover {
+    .pair-delete {
+      display: block;
+    }
+  }
+  border-radius: 20em;
+  color: $gu-white;
+  text-align: center;
+}

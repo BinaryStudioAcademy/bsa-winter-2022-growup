@@ -70,12 +70,6 @@ const FirstStep: React.FC<IProfileSettingStep> = ({
             control={control}
             errors={errors}
           />
-          <TextField
-            name="position"
-            label="Position"
-            control={control}
-            errors={errors}
-          />
         </div>
         <div className="flex-grow-1 flex-shrink-1 w-100">
           <CareerJourneySection />
