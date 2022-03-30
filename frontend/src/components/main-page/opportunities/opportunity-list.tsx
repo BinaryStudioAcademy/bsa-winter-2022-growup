@@ -3,25 +3,14 @@ import './styles.scss';
 import { useAppSelector } from 'hooks/hooks';
 import { IOpportunity } from 'store/opportunities/common';
 
-import { Button } from 'components/common/common';
-import { Plus } from 'react-bootstrap-icons';
-
 const OpportunityList: React.FC = () => {
   const opportunities = useAppSelector((state) => state.homePage.opportunities);
   return (
-    <section className="opportunities mt-5 text-start d-flex flex-column ">
+    <section className="opportunities mt-5 text-start d-flex flex-column">
       <div className="d-flex align-items-center  bg-gu-blue text-gu-white add-section-header justify-content-between">
         <p className="add-section-header__title m-0 fw-bold fs-4">
           Recommended opportunities
         </p>
-        <Button
-          type="button"
-          variant="outline-gu-white"
-          className="add-section-header__add btn-hover-gu-purple d-flex align-items-center"
-        >
-          <Plus className="add-section-header__add-icon" />
-          <span> Add Opportunity </span>
-        </Button>
       </div>
       <div>
         {opportunities.map((item: IOpportunity, index: number) => {
