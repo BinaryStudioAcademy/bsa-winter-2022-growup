@@ -17,7 +17,7 @@ const ListItem: React.FC<Props> = ({
   return (
     <Form.Check className="level-item align-self-center">
       <Form.Check.Input
-        className="level-item__button"
+        className="level-item__button cursor-pointer"
         type={type}
         name={name}
         onChange={onClick}
