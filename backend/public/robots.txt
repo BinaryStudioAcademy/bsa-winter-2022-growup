@@ -1,2 +1,2 @@
 User-agent: *
-Allow: /.well-known/
+Allow: /.well-known/assetlinks.json
