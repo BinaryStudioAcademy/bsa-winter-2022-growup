@@ -16,10 +16,12 @@ import Follow from './follow';
 import isFirstLogged from 'helpers/check-is-first-logged';
 import { Dropdown } from 'react-bootstrap';
 import { SortOption } from 'store/opportunities/common';
+import { Types } from './common/enums';
 
 const Opportunities: React.FC = () => {
   const [sort, setSort] = useState<SortOption | null>(null);
   const [tags, setTags] = useState(['a']);
+  const [type, setType] = useState(Types.PROGRAMMING);
   const dispatch = useAppDispatch();
   const user = useAppSelector((store) => store.profile.user);
   const navigate = useNavigate();
@@ -55,7 +57,7 @@ const Opportunities: React.FC = () => {
   );
 
   const handleSubmit = (values: object): void => {
-    handleSave({ ...values, tags: tags })
+    handleSave({ ...values, tags: tags, type: type })
       .unwrap()
       .then(() => {
         closeModal();
@@ -121,6 +123,7 @@ const Opportunities: React.FC = () => {
           onClose={closeModal}
           onSubmit={handleSubmit}
           setTags={setTags}
+          setType={setType}
         />
       )}
     </AddSection>

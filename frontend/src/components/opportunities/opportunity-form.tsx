@@ -7,23 +7,23 @@ import { OpportunityPayloadKey } from '../../common/enums/enums';
 import Multiselect from 'multiselect-react-dropdown';
 import { RootState } from 'common/types/types';
 import './styles.scss';
+import { Types } from './common/enums';
 
 type Props = {
   onClose: () => void;
   onSubmit: (values: object) => void;
   setTags: React.Dispatch<React.SetStateAction<string[]>>;
+  setType: React.Dispatch<React.SetStateAction<Types>>;
 };
 
 const OpportunityForm: React.FC<Props> = (props) => {
   const { tags } = useAppSelector((state: RootState) => state.tags);
   const tagsName = tags.map((tag) => tag.name);
   const { onSubmit } = props;
-
   const { control, errors, handleSubmit } = useAppForm({
     defaultValues: DEFAULT_OPPORTUNITY_PAYLOAD,
     validationSchema: opportunityValidationSchema,
   });
-
   return (
     <Modal
       {...props}
@@ -45,12 +45,39 @@ const OpportunityForm: React.FC<Props> = (props) => {
           control={control}
           errors={errors}
         />
-        <TextField
-          label={'Type'}
-          name={OpportunityPayloadKey.TYPE}
-          control={control}
-          errors={errors}
-        />
+        <Form.Select
+          aria-label="Select Type"
+          className="mb-3 select-type cursor-pointer py-2"
+        >
+          <option
+            className="select-type__item cursor-pointer"
+            value={Types.PROGRAMMING}
+            onClick={(): void => {
+              props.setType(Types.PROGRAMMING);
+            }}
+          >
+            {Types.PROGRAMMING}
+          </option>
+          <option
+            className="select-type__item cursor-pointer"
+            value={Types.LEARNING}
+            onClick={(): void => {
+              props.setType(Types.PROGRAMMING);
+            }}
+          >
+            {Types.LEARNING}
+          </option>
+          <option
+            className="select-type__item cursor-pointer"
+            value={Types.BUSINESS}
+            onClick={(): void => {
+              props.setType(Types.PROGRAMMING);
+            }}
+          >
+            {Types.BUSINESS}
+          </option>
+        </Form.Select>
+
         <Multiselect
           className={'mb-3 multi-select'}
           isObject={false}

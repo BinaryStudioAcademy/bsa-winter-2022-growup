@@ -31,16 +31,6 @@ const opportunity = Joi.object({
       'string.min': OpportunityValidationMessage.ORGANIZATION_MIN_LENGTH,
       'string.max': OpportunityValidationMessage.ORGANIZATION_MAX_LENGTH,
     }),
-  [OpportunityPayloadKey.TYPE]: Joi.string()
-    .trim()
-    .min(OpportunityValidationRule.TYPE_MIN_LENGTH)
-    .max(OpportunityValidationRule.TYPE_MAX_LENGTH)
-    .required()
-    .messages({
-      'string.empty': OpportunityValidationMessage.TYPE_REQUIRE,
-      'string.min': OpportunityValidationMessage.TYPE_MIN_LENGTH,
-      'string.max': OpportunityValidationMessage.TYPE_MAX_LENGTH,
-    }),
   [OpportunityPayloadKey.START_DATE]: Joi.date()
     .required()
     .min(MIN_DATE)

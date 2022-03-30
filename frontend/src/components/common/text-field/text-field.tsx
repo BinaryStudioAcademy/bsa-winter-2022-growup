@@ -17,6 +17,7 @@ interface Props<T> {
   floatingLabelStyles?: string;
   children?: JSX.Element;
   textarea?: boolean;
+  initialValue?: string;
 }
 
 function TextField<T>({
@@ -28,6 +29,7 @@ function TextField<T>({
   floatingLabelStyles = '',
   children,
   textarea,
+  initialValue,
 }: Props<T>): JSX.Element {
   return (
     <FloatingLabel label={label} className={`mb-3 ${floatingLabelStyles}`}>
@@ -38,6 +40,7 @@ function TextField<T>({
         type={type}
         placeholder={label}
         textarea={textarea}
+        initialValue={initialValue}
       />
       {children}
     </FloatingLabel>

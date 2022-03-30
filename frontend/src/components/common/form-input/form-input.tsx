@@ -19,6 +19,7 @@ interface Props<T> {
   type: string;
   placeholder: string;
   textarea?: boolean;
+  initialValue?: string;
 }
 
 function FormInput<T>({
@@ -28,6 +29,7 @@ function FormInput<T>({
   type,
   placeholder,
   textarea,
+  initialValue,
 }: Props<T>): JSX.Element {
   const {
     field: { value, ...field },
@@ -38,7 +40,7 @@ function FormInput<T>({
     <>
       <Form.Control
         {...field}
-        value={fieldValue}
+        value={initialValue ? initialValue : fieldValue}
         type={type}
         placeholder={placeholder}
         as={textarea ? 'textarea' : 'input'}
