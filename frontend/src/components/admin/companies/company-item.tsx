@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Card } from 'react-bootstrap';
-import type { ICompany } from 'common/interfaces/company/company';
+
 import { useAppSelector } from 'hooks/hooks';
 import CompanyCard from './company-card';
 import AddEditCompany from './addedit-company';
@@ -10,13 +10,6 @@ const Company: React.FC = () => {
   const { user } = useAppSelector((state) => state.auth);
 
   const [show, setShow] = useState(false);
-  const [company, setCompany] = useState<ICompany>();
-
-  useEffect(() => {
-    if (user && user.company) {
-      setCompany(user.company);
-    }
-  }, [user]);
 
   const handleClose = (): void => setShow(false);
   const handleShow = (): void => setShow(true);
@@ -30,18 +23,20 @@ const Company: React.FC = () => {
             className="btn-hover-gu-purple"
             onClick={handleShow}
           >
-            {company ? 'Edit Company' : '+ Add Company'}
+            {user && user.company ? 'Edit Company' : '+ Add Company'}
           </Button>
         </Card.Header>
         <Card.Body>
-          {company ? (
-            <CompanyCard company={company} />
+          {user && user.company ? (
+            <CompanyCard company={user.company} />
           ) : (
             <p className="m-0 text-center">No company here...</p>
           )}
         </Card.Body>
       </Card>
-      {show && <AddEditCompany company={company} handleClose={handleClose} />}
+      {show && (
+        <AddEditCompany company={user?.company} handleClose={handleClose} />
+      )}
     </>
   );
 };

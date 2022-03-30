@@ -47,7 +47,7 @@ function FormInputDate<T>({
       customInputRef="dateRef"
       minDate={minDate || MIN_DATE}
       maxDate={maxDate || MAX_DATE}
-      selected={value}
+      selected={typeof value === 'string' ? new Date(value) : value}
       onChange={onChange}
       placeholderText={placeholder}
       showMonthDropdown
