@@ -8,8 +8,8 @@ import {
   MIN_EDIT_DATE,
 } from 'components/okr/common/constants';
 import { IOkr } from 'common/interfaces/okr';
-import { ObjectivePayloadKey } from 'common/enums/user/objective-payload-ket.enum';
-import { ObjectiveValidationMessage } from 'common/enums/validation/objective-validation.enum';
+// import { ObjectivePayloadKey } from 'common/enums/user/objective-payload-ket.enum';
+// import { ObjectiveValidationMessage } from 'common/enums/validation/objective-validation.enum';
 import { ObjectiveValues } from 'components/okr/common/interfaces';
 
 const okrValidationSchema = (isEdit: boolean): Joi.ObjectSchema<IOkr> => {
@@ -52,32 +52,21 @@ const okrValidationSchema = (isEdit: boolean): Joi.ObjectSchema<IOkr> => {
 };
 
 const objectiveValidationSchema = (): Joi.ObjectSchema<ObjectiveValues> => {
-  const message = ObjectiveValidationMessage();
+  // const message = ObjectiveValidationMessage();
 
-  return Joi.object({
-    [ObjectivePayloadKey.NAME]: Joi.string()
-      .trim()
-      .min(SkillValidationRule.NAME_MIN_LENGTH)
-      .max(SkillValidationRule.NAME_MAX_LENGTH)
-      .required()
-      .messages({
-        'string.empty': message.NAME_REQUIRE,
-        'string.min': message.NAME_MIN_LENGTH,
-        'string.max': message.NAME_MAX_LENGTH,
-      }),
-    [ObjectivePayloadKey.KEY_RESULT_NAME]: Joi.array().items(
-      Joi.string()
-        .trim()
-        .min(SkillValidationRule.NAME_MIN_LENGTH)
-        .max(SkillValidationRule.NAME_MAX_LENGTH)
-        .required()
-        .messages({
-          'string.empty': message.NAME_REQUIRE,
-          'string.min': message.NAME_MIN_LENGTH,
-          'string.max': message.NAME_MAX_LENGTH,
-        }),
-    ),
-  });
+  // return Joi.object({
+  //   [ObjectivePayloadKey.NAME]: Joi.string()
+  //     .trim()
+  //     .min(SkillValidationRule.NAME_MIN_LENGTH)
+  //     .max(SkillValidationRule.NAME_MAX_LENGTH)
+  //     .required()
+  //     .messages({
+  //       'string.empty': message.NAME_REQUIRE,
+  //       'string.min': message.NAME_MIN_LENGTH,
+  //       'string.max': message.NAME_MAX_LENGTH,
+  //     }),
+  // });
+  return Joi.object();
 };
 
 export { okrValidationSchema, objectiveValidationSchema };

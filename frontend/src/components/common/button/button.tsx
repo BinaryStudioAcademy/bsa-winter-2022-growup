@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, memo } from 'react';
+import { memo, ButtonHTMLAttributes } from 'react';
 import { Button as BSButton, ButtonProps } from 'react-bootstrap';
 
 type Props = ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>;

@@ -19,3 +19,7 @@ $font-sizes: map-merge($font-sizes, $custom-font-sizes);
 .text-blue {
   color: $gu-blue !important;
 }
+
+.text-hover-gu-pink:hover {
+  color: $gu-pink !important;
+}

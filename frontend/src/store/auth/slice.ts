@@ -8,6 +8,7 @@ import {
   updateUserCompany,
   finishRegistration,
   verifyRegistrationToken,
+  completeTest,
 } from './actions';
 import { ActionType } from './common';
 import { StorageKey } from 'common/enums/app/storage-key.enum';
@@ -63,6 +64,11 @@ const { reducer, actions } = createSlice({
         if (state.user) {
           const { company } = action.payload;
           state.user.company = company;
+        }
+      })
+      .addCase(completeTest, (state, _) => {
+        if (state.user) {
+          state.user.isCompleteTest = true;
         }
       })
       .addMatcher(

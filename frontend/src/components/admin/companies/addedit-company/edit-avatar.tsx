@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useRef, useState, useEffect } from 'react';
-import { Form, Row, Card } from 'react-bootstrap';
+import { Form, Card } from 'react-bootstrap';
 import ReactCropper from 'react-cropper';
 import { NotificationManager } from 'react-notifications';
 import { Button } from 'components/common/common';
@@ -60,25 +60,25 @@ export const EditAvatar: React.FC<Props> = ({ company, setFile }) => {
   };
 
   return (
-    <Row className="m-3 mb-0 d-flex justify-content-center">
+    <div className="d-flex flex-column justify-content-center gap-3">
       <Form.Control
         placeholder="image"
         type="file"
         onChange={onSelectFile}
         accept="image/*"
-        className="mb-3"
         ref={fileInputRef}
       />
       {avatar && (
         <Card.Img
           src={avatar ? avatar : 'holder.js/100px180'}
           alt={company ? company.name : 'image'}
-          style={{ width: '18rem' }}
+          className="w-100"
         />
       )}
       {image && (
         <ReactCropper
-          style={{ height: 100, width: '50%' }}
+          className="w-100"
+          style={{ height: 100 }}
           zoomTo={0.5}
           initialAspectRatio={1}
           aspectRatio={1}
@@ -95,14 +95,12 @@ export const EditAvatar: React.FC<Props> = ({ company, setFile }) => {
         />
       )}
       {image && (
-        <Row className="d-flex mt-3">
-          <Button variant="gu-blue" className="flex-fill" onClick={cancel}>
-            Cancel
-          </Button>
-        </Row>
+        <Button variant="gu-blue" className="flex-fill" onClick={cancel}>
+          Cancel
+        </Button>
       )}
       {error && <div className="alert alert-danger">{error}</div>}
-    </Row>
+    </div>
   );
 };
 

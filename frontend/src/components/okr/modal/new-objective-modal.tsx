@@ -32,6 +32,7 @@ const NewObjectiveModal: React.FC<Props> = ({
     const keyValues = data.keyResults.map((res) => res.result);
     const sumResult = keyValues.reduce((total, amount) => +total + +amount);
     const objectiveValues = Math.round(sumResult / data.keyResults.length);
+    console.warn('a');
     dispatch(
       okrActions.createObjective_async({
         okrId,

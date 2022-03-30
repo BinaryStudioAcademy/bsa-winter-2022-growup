@@ -34,7 +34,6 @@ function FormInputDate<T>({
     field,
   }: UseControllerReturn<T, Path<T>> = useController<T>({ name, control });
   const { ref, value, onChange } = field;
-
   return (
     <DatePicker
       isClearable
@@ -43,7 +42,13 @@ function FormInputDate<T>({
       customInputRef="dateRef"
       minDate={minDate}
       maxDate={maxDate}
-      selected={value}
+      selected={
+        typeof value === 'string' && value !== ''
+          ? new Date(value)
+          : value === ''
+          ? null
+          : value
+      }
       onChange={onChange}
       placeholderText={placeholder}
       customInput={<CustomInput ref={ref} dateRef={ref} errors={errors} />}

@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
 import OrkItem from '../workspace-item';
 import OkrInfo from './okr-info';
-import { Button } from 'components/common/common';
-import OkrModal from '../modal';
 import './styles.scss';
 import { IOkr } from 'common/interfaces/okr';
+import { useState } from 'react';
 
 interface Props {
   collection: IOkr[];
@@ -13,17 +11,10 @@ interface Props {
 const OkrList: React.FC<Props> = ({ collection }) => {
   const [isShowCurrentOkr, setIsShowCurrentOkr] = useState(false);
   const [currentShowOkr, setCurrentOkr] = useState('');
-  const [showModal, setShowModal] = useState(false);
 
   const okrItemHanlder = (id: string): void => {
     setIsShowCurrentOkr(true);
     setCurrentOkr(id);
-  };
-
-  const openModal = (): void => setShowModal(true);
-
-  const closeModal = (): void => {
-    setShowModal(false);
   };
 
   const okrGoBackHandler = (): void => setIsShowCurrentOkr(false);
@@ -34,14 +25,7 @@ const OkrList: React.FC<Props> = ({ collection }) => {
         <OkrInfo id={currentShowOkr} goBackHanlder={okrGoBackHandler} />
       ) : (
         <>
-          <Button
-            variant="gu-pink"
-            className="text-gu-white mb-2 align-self-end"
-            onClick={openModal}
-          >
-            + Add OKR
-          </Button>
-          <div className="OKR-page d-flex flex-row flex-wrap mt-2">
+          <div className="OKR-page d-flex flex-row flex-wrap">
             {collection.map((okr: IOkr, index) => {
               const objectives = okr.objectives;
               let objectivesCounter = 0;
@@ -67,9 +51,6 @@ const OkrList: React.FC<Props> = ({ collection }) => {
               );
             })}
           </div>
-          {showModal && (
-            <OkrModal showModal={showModal} closeModal={closeModal} />
-          )}
         </>
       )}
     </>

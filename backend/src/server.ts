@@ -30,6 +30,10 @@ app.use('*', (_: Request, res: Response) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
+app.use('/.well-known/assetlinks.json', (_: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '../public/.well-known/assetlinks.json'));
+});
+
 app.listen(port, async () => {
   try {
     await createConnection(ormconfig);
