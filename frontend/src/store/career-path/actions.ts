@@ -1,16 +1,16 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
+  IConnectLevelsSetting,
+  IDisconnectLevelsSetting,
   IDomainSetting,
   ILevelSetting,
   IObjectiveSetting,
   ISkillSetting,
-  IDisconnectLevelsSetting,
-  IConnectLevelsSetting,
-  // IConnectDomainsSetting,
 } from 'common/interfaces/career-path';
 import { careerPath } from 'services/index';
-
 import { ActionType } from './common';
+import { ThunkApiType } from '../store';
+import { ICareerPathLevel } from 'components/career-path/common/interfaces';
 
 const fetchDomains = createAsyncThunk(
   ActionType.FETCH_DOMAINS,
@@ -60,14 +60,30 @@ const deleteDomain = createAsyncThunk(
   },
 );
 
-const fetchLevelSkills = createAsyncThunk(
-  ActionType.FETCH_LEVEL_SKILLS,
-  async (id: string, { rejectWithValue }) => {
-    try {
-      return careerPath.fetchLevelSkills(id);
-    } catch (err) {
-      return rejectWithValue(err);
-    }
+const fetchAllLevels = createAsyncThunk<
+  ICareerPathLevel[],
+  string,
+  ThunkApiType
+>(ActionType.FETCH_ALL_LEVELS, async (initialId, { extra: { services } }) => {
+  const levels = [];
+  const levelIds = [initialId];
+
+  while (levelIds.length) {
+    const currentId = levelIds.shift();
+    if (!currentId) continue;
+
+    const level = await services.careerPath.fetchLevel(currentId);
+    levelIds.push(...level.nextLevels);
+    levels.push(level);
+  }
+
+  return levels;
+});
+
+const fetchLevel = createAsyncThunk<ICareerPathLevel, string, ThunkApiType>(
+  ActionType.FETCH_LEVEL,
+  (id, { extra: { services } }) => {
+    return services.careerPath.fetchLevel(id);
   },
 );
 
@@ -247,7 +263,8 @@ export {
   createLevel,
   updateLevel,
   deleteLevel,
-  fetchLevelSkills,
+  fetchAllLevels,
+  fetchLevel,
   createSkill,
   updateSkill,
   deleteSkill,
