@@ -7,6 +7,8 @@ import {
   deleteSkill,
   updateSkill,
   connectSkills,
+  getUserCareerPathSkills,
+  updateCareerPathSkill,
 } from '~/services/skill.service';
 
 const router: Router = Router();
@@ -22,6 +24,12 @@ router
     '/user',
     run((req) => {
       return getUserSkills(req.userId);
+    }),
+  )
+  .get(
+    '/career-path/user',
+    run((req) => {
+      return getUserCareerPathSkills(req.userId);
     }),
   )
   .post(
@@ -46,6 +54,12 @@ router
     '/:id',
     run((req) => {
       return updateSkill(req.params.id, req.body);
+    }),
+  )
+  .patch(
+    '/career-path/:id',
+    run((req) => {
+      return updateCareerPathSkill(req.params.id, req.body, req.userId);
     }),
   );
 

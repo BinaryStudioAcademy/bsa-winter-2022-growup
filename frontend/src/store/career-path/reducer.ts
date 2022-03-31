@@ -161,13 +161,13 @@ const ProfileReducer = (builder: ActionReducerMapBuilder<State>): void => {
       const domain = state.domains?.find(
         (domain) => domain.domain.id === action.payload?.domainId,
       );
-      const level = domain?.levels.find(
+      const level = domain?.levels?.find(
         (level) => level.id === action.payload?.levelId,
       );
-      const skill = level?.skills.find(
+      const skill = level?.skills?.find(
         (skill) => skill.id === action.payload?.skillId,
       );
-      const objective = skill?.objectives.find(
+      const objective = skill?.objectives?.find(
         (objective) => objective.id === action.payload?.id,
       );
 

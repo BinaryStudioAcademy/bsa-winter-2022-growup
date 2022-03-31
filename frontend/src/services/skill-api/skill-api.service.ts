@@ -39,6 +39,20 @@ class SkillsApi {
     }
   }
 
+  public async fetchUserCareerPathSkills(): Promise<ISkill[] | null> {
+    try {
+      const result = await this.http.load(
+        `${this.apiPath}/skills/career-path/user`,
+        {
+          contentType: ContentType.JSON,
+        },
+      );
+      return result as ISkill[];
+    } catch {
+      return null;
+    }
+  }
+
   public async createSkill(skillsPayload: SkillProps[]): Promise<ISkill> {
     const result: IResult = await this.http.load(`${this.apiPath}/skills`, {
       contentType: ContentType.JSON,
@@ -95,6 +109,34 @@ class SkillsApi {
     try {
       const result = await this.http.load(
         `${this.apiPath}/skills/${skillsPayload[0].id}`,
+        {
+          contentType: ContentType.JSON,
+          method: HttpMethod.PATCH,
+          hasAuth: true,
+          payload: JSON.stringify([
+            {
+              name: skillsPayload[0].name,
+              type: skillsPayload[0].type,
+            },
+            {
+              rating: skillsPayload[1].rating,
+              isStarred: skillsPayload[1].isStarred,
+            },
+          ]),
+        },
+      );
+      return result as ISkill;
+    } catch {
+      return null;
+    }
+  }
+
+  public async updateCareerPathSkill(
+    skillsPayload: ISkill[],
+  ): Promise<ISkill | null> {
+    try {
+      const result = await this.http.load(
+        `${this.apiPath}/skills/career-path/${skillsPayload[0].id}`,
         {
           contentType: ContentType.JSON,
           method: HttpMethod.PATCH,

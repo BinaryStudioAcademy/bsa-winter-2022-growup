@@ -14,6 +14,8 @@ import UserRepository from '~/data/repositories/user.repository';
 import UserSkillRepository from '~/data/repositories/userskill.repository';
 import { SkillType } from '~/common/enums/skill-type';
 import { UserSkill } from '~/data/entities/user-skill';
+import { getUserSkillCategories } from './user-skill-category.service';
+import { getCategoryById } from './skill-category.service';
 
 interface ISkill {
   rating: (string | number)[];
@@ -60,6 +62,54 @@ export const getUserSkills = async (id: string): Promise<ISkill[]> => {
   const skillsWithRating = newSkills.map((el: Skill, index: number) => {
     const { selfRating, mentorRating, reviewRating, isStarred } =
       userSkillInstance[index];
+    return {
+      ...el,
+      rating: [
+        selfRating ? selfRating : '',
+        mentorRating ? mentorRating : '',
+        reviewRating ? reviewRating : '',
+      ],
+      isStarred: isStarred,
+    };
+  });
+  return skillsWithRating;
+};
+
+export const getUserCareerPathSkills = async (
+  id: string,
+): Promise<ISkill[]> => {
+  const userRepository = getCustomRepository(UserRepository);
+
+  const user = await userRepository.findOne({ id });
+
+  const userSkillCategories = await getUserSkillCategories(user);
+  const userSkills: UserSkill[] = [];
+  await asyncForEach(async (userSkillCategory) => {
+    const skillCategory = await getCategoryById(
+      userSkillCategory.skillCategory.id,
+    );
+    const { isStarred, selfRating, reviewRating, mentorRating } =
+      userSkillCategory;
+    const { skill } = skillCategory;
+
+    const userSkill: UserSkill = {
+      skill,
+      isStarred,
+      selfRating,
+      reviewRating,
+      mentorRating,
+      user,
+    } as unknown as UserSkill;
+
+    userSkills.push(userSkill);
+  }, userSkillCategories);
+
+  const newSkills: Skill[] = userSkills.map((userSkill) =>
+    skillsMapper(userSkill.skill),
+  );
+  const skillsWithRating = newSkills.map((el: Skill, index: number) => {
+    const { selfRating, mentorRating, reviewRating, isStarred } =
+      userSkills[index];
     return {
       ...el,
       rating: [
@@ -195,6 +245,58 @@ export const updateSkill = async (
       const newRating = Object.assign(userSkillInstance, allRating);
       await newSkill.save();
       await newRating.save();
+
+      return { ...newSkill, rating: ratings, isStarred: data[1].isStarred };
+    }
+
+    throw new HttpError({
+      status: HttpCode.NOT_FOUND,
+      message: 'Skill not found',
+    });
+  }
+
+  throw new HttpError({
+    status: HttpCode.BAD_REQUEST,
+    message: 'Skill id is undefined',
+  });
+};
+
+export const updateCareerPathSkill = async (
+  id: Skill['id'],
+  data: ISkill[],
+  userId: string,
+): Promise<ISkill> => {
+  if (id) {
+    const skillRepository = getCustomRepository(SkillRepository);
+    const skillInstance = await skillRepository.findOne(id);
+    const userRepository = getCustomRepository(UserRepository);
+    const ratings = [...data[1].rating];
+
+    const user = await userRepository.findOne({ id: userId });
+    const userSkillCategories = await getUserSkillCategories(user);
+    await asyncForEach(async (userSkillCategory) => {
+      if (userSkillCategory.skillCategory.id) {
+        const skillCategory = await getCategoryById(
+          userSkillCategory.skillCategory.id,
+        );
+
+        if (skillCategory.skill.id === id) {
+          const allRating = {
+            selfRating: ratings[0] ? ratings[0] : null,
+            mentorRating: ratings[1] ? ratings[1] : null,
+            reviewRating: ratings[2] ? ratings[2] : null,
+            isStarred: data[1].isStarred,
+          };
+
+          userSkillCategory = Object.assign(userSkillCategory, allRating);
+          await userSkillCategory.save();
+        }
+      }
+    }, userSkillCategories);
+
+    if (skillInstance) {
+      const newSkill = Object.assign(skillInstance, data[0]);
+      await newSkill.save();
 
       return { ...newSkill, rating: ratings, isStarred: data[1].isStarred };
     }
