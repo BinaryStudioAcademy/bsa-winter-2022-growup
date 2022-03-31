@@ -41,7 +41,10 @@ const PathBlock: React.FC<Props> = ({
           data-toggle="tooltip"
           data-placement="top"
           title={name}
-          onDoubleClick={(): void => setIsEditMode(true)}
+          onDoubleClick={(): void => {
+            setIsEditMode(true);
+            setEditedValue(name);
+          }}
         >
           {isEditMode ? (
             <input
