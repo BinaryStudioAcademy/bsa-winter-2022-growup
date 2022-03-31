@@ -14,7 +14,12 @@
     'time time time';
 }
 
+.okr-container:hover {
+  border: 2px solid $gu-blue;
+}
+
 .okr-disable {
+  border: 2px solid $gray-200;
   background-color: #8080801f;
   color: #a7a5a5e0;
   svg {
