@@ -47,6 +47,9 @@ const { reducer, actions } = createSlice({
     [ActionType.SORT_NAME]: (state, action: PayloadAction<ISkill[]>) => {
       state.userSkill = action.payload;
     },
+    [ActionType.MERGE_SKILLS]: (state, action: PayloadAction<ISkill[]>) => {
+      state.userSkill = state.userSkill.concat(action.payload);
+    },
   },
   extraReducers: SkillReducer,
 });

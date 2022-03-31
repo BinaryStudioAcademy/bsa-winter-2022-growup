@@ -22,22 +22,9 @@ import { NotificationManager } from 'react-notifications';
 import './styles.scss';
 
 const SkillOverview = (): React.ReactElement => {
-  const skills = useAppSelector((state: RootState) => {
-    const careerPathMarkedSkills = state.skill.careerPathSkills?.map(
-      (skill) => {
-        return { ...skill, isFromCareerPath: true };
-      },
-    );
-
-    return careerPathMarkedSkills
-      ? state.skill.userSkill.concat(careerPathMarkedSkills)
-      : state.skill.userSkill;
-  });
-  const allSkills = useAppSelector((state: RootState) => state.skill.allSkills);
-  const careerPathSkills = useAppSelector(
-    (state: RootState) => state.skill.careerPathSkills,
+  const { userSkill, allSkills, careerPathSkills } = useAppSelector(
+    (state: RootState) => state.skill,
   );
-
   const { user } = useAppSelector((state: RootState) => state.profile);
   const [textFind, setTextFind] = useState('');
   const [selectSkills, setSelectSkills] = useState('all');
@@ -48,14 +35,20 @@ const SkillOverview = (): React.ReactElement => {
   const dispatch = useAppDispatch();
   const UNIMPORTANT = 'unimportant';
   const IMPORTANT = 'important';
-  const skillStarred = skills.filter((skill: ISkill) => skill.isStarred);
-  const skillNotStarred = skills.filter((skill: ISkill) => !skill.isStarred);
+  const skillStarred = userSkill.filter((skill: ISkill) => skill.isStarred);
+  const skillNotStarred = userSkill.filter((skill: ISkill) => !skill.isStarred);
 
   useEffect(() => {
     dispatch(skillActions.fetchUserSkills());
     dispatch(skillActions.fetchSkills());
     dispatch(skillActions.fetchUserCareerPathSkills());
-  }, []);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (careerPathSkills.length) {
+      dispatch(actions.MERGE_SKILLS(careerPathSkills));
+    }
+  }, [careerPathSkills]);
 
   const { control, errors, handleSubmit, reset } = useAppForm<SkillFormType>({
     defaultValues: DEFAULT_SKILL_PAYLOAD,
@@ -72,7 +65,7 @@ const SkillOverview = (): React.ReactElement => {
 
   const handleAdd = (payload: ISkill): void => {
     const isName = allSkills.find((skill) => skill.name === payload.name);
-    const isUserName = skills.find((skill) => skill.name === payload.name);
+    const isUserName = userSkill.find((skill) => skill.name === payload.name);
     const isCareerPathName = careerPathSkills.find(
       (skill) => skill.name === payload.name,
     );
@@ -138,28 +131,28 @@ const SkillOverview = (): React.ReactElement => {
   }
 
   function sortSkillNames(): void {
-    const copySkills = [...skills];
+    const copySkills = [...userSkill];
     const sortNames = copySkills.sort(sortByName);
     setIsSortName(!isSortName);
     dispatch(actions.SORT_NAME(sortNames));
   }
 
   function sortSelfRating(): void {
-    const copySkills = [...skills];
+    const copySkills = [...userSkill];
     const sortSelfRating = copySkills.sort(sortBySelfRating);
     setIsSortSelf(!isSortSelf);
     dispatch(actions.SORT_NAME(sortSelfRating));
   }
 
   function sortManagerRating(): void {
-    const copySkills = [...skills];
+    const copySkills = [...userSkill];
     const sortManager = copySkills.sort(sortByManager);
     setIsManager(!isManager);
     dispatch(actions.SORT_NAME(sortManager));
   }
 
   function sortSkillReview(): void {
-    const copySkills = [...skills];
+    const copySkills = [...userSkill];
     const sortSkillReview = copySkills.sort(sortBySkillReview);
     setIsSkillReview(!isSkillReview);
     dispatch(actions.SORT_NAME(sortSkillReview));
@@ -264,7 +257,7 @@ const SkillOverview = (): React.ReactElement => {
             </tr>
           </thead>
           <tbody>
-            {skills
+            {userSkill
               ? skillStarred.map((skill: ISkill) => {
                   if (skill.name && selectSkills !== UNIMPORTANT)
                     if (isFind(skill.name) && skill.rating)
@@ -280,7 +273,7 @@ const SkillOverview = (): React.ReactElement => {
                       );
                 })
               : true}
-            {skills
+            {userSkill
               ? skillNotStarred.map((skill: ISkill) => {
                   if (skill.name && selectSkills !== IMPORTANT)
                     if (isFind(skill.name) && skill.rating)
