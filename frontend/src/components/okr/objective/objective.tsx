@@ -40,7 +40,7 @@ const Objective: React.FC<Props> = ({
         <span className="fw-bold fs-4 text-gu-black">{objective.name}</span>
         <div className="d-flex align-items-center">
           <span className="fw-bold fs-4 text-gu-black me-2">
-            {(objective.result / 100).toFixed(2)}
+            {objective.result}
           </span>
           <Button
             className="border-0 bg-transparent text-gu-black hover-pink p-1"

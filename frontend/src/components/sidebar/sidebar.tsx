@@ -4,12 +4,12 @@ import { ReactComponent as OpportunitiesIcon } from 'assets/img/icons/sidebar-ic
 import { ReactComponent as ProfileIcon } from 'assets/img/icons/sidebar-icons/profile-icon.svg';
 import { ReactComponent as OkrIcon } from 'assets/img/icons/sidebar-icons/okr-icon.svg';
 import { ReactComponent as CareerPathIcon } from 'assets/img/icons/sidebar-icons/career-path-icon.svg';
-import { ReactComponent as MenteeProfileIcon } from 'assets/img/icons/sidebar-icons/mentee-icon.svg';
+// import { ReactComponent as MenteeProfileIcon } from 'assets/img/icons/sidebar-icons/mentee-icon.svg';
 import { MentorMenteeRoute } from 'common/enums/enums';
 import { Link } from 'components/common/common';
 import './styles.scss';
 import { useAppSelector, useEffect, useState } from 'hooks/hooks';
-import { RoleType } from 'growup-shared';
+// import { RoleType } from 'growup-shared';
 import { ChevronLeft } from 'react-bootstrap-icons';
 
 const Sidebar: React.FC = () => {
@@ -224,7 +224,7 @@ const Sidebar: React.FC = () => {
                 </span>
               </Link>
             </li>
-            {user?.role === RoleType.MENTOR && (
+            {/* {user?.role === RoleType.MENTOR && (
               <li
                 className={`navigation-list__item navigation-item mb-4 ${
                   isBlockedButton ? '' : 'navigation-list-item--blocked'
@@ -254,7 +254,7 @@ const Sidebar: React.FC = () => {
                   </span>
                 </Link>
               </li>
-            )}
+            )} */}
           </ul>
         </nav>
       </div>

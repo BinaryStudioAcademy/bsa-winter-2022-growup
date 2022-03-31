@@ -1,5 +1,5 @@
 import { Navigate } from 'hooks/hooks';
-import { RoleType } from 'growup-shared';
+// import { RoleType } from 'growup-shared';
 import {
   AppRoute,
   MentorMenteeRoute,
@@ -44,11 +44,11 @@ export const mentorMenteeRoutes: IRoute[] = [
     path: MentorMenteeRoute.OPPORTUNITIES,
     element: <Opportunities />,
   },
-  {
-    path: MentorMenteeRoute.MENTEE_PROFILES,
-    element: <div>Mentee Profiles</div>,
-    role: RoleType.MENTOR,
-  },
+  // {
+  //   path: MentorMenteeRoute.MENTEE_PROFILES,
+  //   element: <div>Mentee Profiles</div>,
+  //   role: RoleType.MENTOR,
+  // },
   {
     path: MentorMenteeRoute.ANY,
     element: <NotFound />,
