@@ -143,7 +143,6 @@ class SkillsApi {
           hasAuth: true,
           payload: JSON.stringify([
             {
-              name: skillsPayload[0].name,
               type: skillsPayload[0].type,
             },
             {
