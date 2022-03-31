@@ -1,5 +1,5 @@
-import { useAppSelector, useAppDispatch } from 'hooks/store/store.hooks';
-import { ArrowLeft, Calendar } from 'react-bootstrap-icons';
+import { useAppDispatch, useAppSelector } from 'hooks/store/store.hooks';
+import { ArrowLeft, Calendar, Trash, XLg } from 'react-bootstrap-icons';
 import dayjs from 'dayjs';
 import Objective from '../objective/objective';
 import { useState } from 'react';
@@ -12,10 +12,10 @@ import { IOkr } from 'common/interfaces/okr';
 
 interface IOkrInfoProps {
   id: string;
-  goBackHanlder: () => void;
+  goBackHandler: () => void;
 }
 
-const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHanlder }) => {
+const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHandler }) => {
   const okrItems = useAppSelector((store) => store.okr.okrs);
   const dispatch = useAppDispatch();
   const currentOkr = okrItems.find((item) => item.id == id) as IOkr;
@@ -31,9 +31,9 @@ const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHanlder }) => {
   const closeUpdateModal = (): void => setIsShowUpdateObjectiveModal(false);
   const closeOkrHandler = (): void => {
     dispatch(okrActions.closeOkr({ okrId: id }));
-    goBackHanlder();
+    goBackHandler();
   };
-  const deteOkrHandler = (): void => {
+  const deleteOkrHandler = (): void => {
     dispatch(okrActions.deleteOkr({ okrId: id }))
       .unwrap()
       .then(() => {
@@ -42,7 +42,7 @@ const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHanlder }) => {
       .catch(() => {
         NotificationManager.error('Can`t delete OKR');
       });
-    goBackHanlder();
+    goBackHandler();
   };
   const setObjective = (id: string): void => setObjectiveId(id);
 
@@ -52,23 +52,23 @@ const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHanlder }) => {
         <div className="d-flex justify-content-between mb-4">
           <span
             className="fs-6 cursor-pointer d-flex align-items-center hover-black"
-            onClick={goBackHanlder}
+            onClick={goBackHandler}
           >
             <ArrowLeft className="me-2" />
             back
           </span>
           <div className="d-flex flex-column justify-content-end text-end">
             <span
-              className="cursor-pointer text-gu-blue hover-blue"
+              className="cursor-pointer text-gu-purple hover-pink"
               onClick={closeOkrHandler}
             >
-              close OKR
+              <XLg />
             </span>
             <span
-              className="cursor-pointer text-gu-pink mt-2"
-              onClick={deteOkrHandler}
+              className="cursor-pointer text-gu-purple hover-pink mt-2"
+              onClick={deleteOkrHandler}
             >
-              delete OKR
+              <Trash />
             </span>
           </div>
         </div>
