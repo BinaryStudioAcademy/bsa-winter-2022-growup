@@ -50,7 +50,7 @@ const CareerPath: React.FC = () => {
   }, [levelData]);
 
   return (
-    <div className="career-path d-flex">
+    <div className="career-path">
       <div className="w-100 h-100">
         <LevelFlow nodes={nodes} edges={edges} />
       </div>
