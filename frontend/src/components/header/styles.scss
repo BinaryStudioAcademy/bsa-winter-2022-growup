@@ -76,3 +76,15 @@ $white-blue: #f0f3f9;
 #user-menu::after {
   display: none;
 }
+header.header-section--burger-active {
+  height: 78px;
+  div.header-container {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+  .form-section {
+    &__search-icon {
+      top: 40%;
+    }
+  }
+}

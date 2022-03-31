@@ -24,6 +24,7 @@ interface IInterests {
 interface ISkill {
   id: string;
   name: string;
+  rating: string[];
 }
 
 interface ILevel {

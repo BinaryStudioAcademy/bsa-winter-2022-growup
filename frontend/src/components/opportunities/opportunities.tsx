@@ -87,7 +87,7 @@ const Opportunities: React.FC = () => {
       <Dropdown>
         <Dropdown.Toggle
           as="button"
-          className="btn btn-outline-gu-pink btn-responsive btn-hover-gu-white fw-bold fs-5 border-2"
+          className="btn btn-outline-gu-pink btn-responsive btn-hover-gu-white fw-bold fs-5 border-2 mb-2"
         >
           {sort ? sort : 'Sort'}
         </Dropdown.Toggle>

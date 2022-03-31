@@ -49,6 +49,7 @@
   top: 50%;
   transform: translateY(-50%);
   display: none;
+  z-index: 1;
 
   .node-actions {
     display: flex;
@@ -60,6 +61,5 @@
 .tree-node:hover {
   .node-actions-wrapper {
     display: block;
-    z-index: 1;
   }
 }
