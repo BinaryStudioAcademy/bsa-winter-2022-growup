@@ -2,7 +2,20 @@ import { ActionReducerMapBuilder } from '@reduxjs/toolkit';
 import { State } from './common';
 import * as actions from './actions';
 
-const ProfileReducer = (builder: ActionReducerMapBuilder<State>): void => {
+const CareerPathReducer = (builder: ActionReducerMapBuilder<State>): void => {
+  builder.addCase(actions.fetchAllLevels.pending, (state, _) => {
+    state.isLoading = true;
+  });
+
+  builder.addCase(actions.fetchAllLevels.rejected, (state, _) => {
+    state.isLoading = false;
+  });
+
+  builder.addCase(actions.fetchAllLevels.fulfilled, (state, action) => {
+    state.isLoading = false;
+    state.levels = action.payload;
+  });
+
   builder.addCase(actions.fetchDomains.pending, (state, _) => {
     state.isLoading = true;
   });
@@ -258,4 +271,4 @@ const ProfileReducer = (builder: ActionReducerMapBuilder<State>): void => {
   // });
 };
 
-export default ProfileReducer;
+export default CareerPathReducer;
