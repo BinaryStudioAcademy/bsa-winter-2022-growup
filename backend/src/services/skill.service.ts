@@ -16,7 +16,6 @@ import { SkillType } from '~/common/enums/skill-type';
 import { UserSkill } from '~/data/entities/user-skill';
 import { getUserSkillCategories } from './user-skill-category.service';
 import { getCategoryById } from './skill-category.service';
-// import { getCategoryById } from './skill-category.service';
 
 interface ISkill {
   rating: (string | number)[];
