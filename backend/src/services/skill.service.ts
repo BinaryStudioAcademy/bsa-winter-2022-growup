@@ -294,7 +294,6 @@ export const updateCareerPathSkill = async (
         }
       }
     }, userSkillCategories);
-    console.warn(userSkillCategories);
 
     if (skillInstance) {
       const newSkill = Object.assign(skillInstance, data[0]);
