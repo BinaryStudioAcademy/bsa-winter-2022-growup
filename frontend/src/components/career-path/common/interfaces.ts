@@ -48,6 +48,8 @@ export interface IEdge {
 export interface IInitialSkill {
   name: string;
   skills: IAllTechnicalSkills[];
+  acquiredSkills: number;
+  totalSkills: number;
 }
 
 export interface IFlowData {
@@ -76,6 +78,10 @@ export interface ILevelSkill extends IBase {
   id: string;
   name: string;
   type: string;
+  isStarred: boolean;
+  selfRating: number;
+  mentorRating: number;
+  reviewRating: number;
   objectives: IObjective[];
 }
 
