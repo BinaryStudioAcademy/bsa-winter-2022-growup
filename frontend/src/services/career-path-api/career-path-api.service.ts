@@ -97,22 +97,9 @@ class CareerPath {
     }
   }
 
-  async fetchLevels(id: string): Promise<ICareerPathLevel[]> {
-    const result = await this.http.load(
-      `${this.apiPath}/career-path/domain/${id}/level`,
-      {
-        contentType: ContentType.JSON,
-        method: HttpMethod.GET,
-        payload: null,
-      },
-    );
-
-    return result as ICareerPathLevel[];
-  }
-
   async fetchLevel(id: string): Promise<ICareerPathLevel> {
     const result = await this.http.load(
-      `${this.apiPath}/career-path/level/${id}`,
+      `${this.apiPath}/career-path/user/level/${id}`,
       {
         contentType: ContentType.JSON,
         method: HttpMethod.GET,
