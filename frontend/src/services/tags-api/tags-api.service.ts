@@ -57,7 +57,6 @@ class TagsApi {
         hasAuth: true,
         payload: JSON.stringify(tagsPayload),
       });
-      console.warn(tagsPayload);
 
       return result as ITag[];
     } catch {

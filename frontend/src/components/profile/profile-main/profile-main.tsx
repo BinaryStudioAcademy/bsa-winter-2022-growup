@@ -12,6 +12,7 @@ import { RootState } from 'common/types/types';
 
 const ProfileMain: React.FC = () => {
   const tags = useAppSelector((state: RootState) => state.profile.user?.tags);
+  const userTags = useAppSelector((state: RootState) => state.tags.userTags);
   const allTags = useAppSelector((state: RootState) => state.tags.tags);
   const otherTags = allTags.filter(
     (tag) => !tags?.find((interTag) => interTag.id === tag.id),
@@ -51,7 +52,10 @@ const ProfileMain: React.FC = () => {
             ))}
           </div>
         </EditSection>
-        <Interests tagList={tags ? tags : []} otherTags={otherTags} />
+        <Interests
+          tagList={userTags ? userTags : tags ? tags : []}
+          otherTags={otherTags}
+        />
       </div>
     </main>
   );

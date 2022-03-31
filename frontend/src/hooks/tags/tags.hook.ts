@@ -11,7 +11,6 @@ const useTagList = (): UseTagList => {
 
   const addItem = useCallback(
     (tag: TagCreation) => {
-      console.warn(tag);
       if (tag.name === '') {
         NotificationManager.error('Tag name is empty');
         return;

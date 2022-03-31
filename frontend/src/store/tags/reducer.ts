@@ -7,11 +7,13 @@ const Reducer = (builder: ActionReducerMapBuilder<State>): void => {
   builder.addCase(actions.createTags.fulfilled, (state, action) => {
     state.isLoading = false;
     state.tags = [...state.tags, ...(action.payload?.tags as State['tags'])];
+    if (state.userTags !== null && action.payload)
+      state.userTags = [...state.userTags, ...action.payload.tags];
   });
 
   builder.addCase(actions.connectTags.fulfilled, (state, action) => {
-    console.warn(action.payload);
-    // state.tags = [...state.tags, ...(action.payload as State['tags'])];
+    if (state.userTags !== null && action.payload)
+      state.userTags = [...state.userTags, ...action.payload];
   });
 
   builder.addCase(actions.fetchTags.fulfilled, (state, action) => {

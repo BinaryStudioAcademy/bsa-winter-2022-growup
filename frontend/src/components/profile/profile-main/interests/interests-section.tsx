@@ -31,8 +31,6 @@ const Interests: React.FC<PropTypes> = ({ tagList, otherTags }) => {
     const newTags = otherTags.filter((tag) =>
       connectedTags.find((el) => el === tag.name),
     );
-    console.warn(newTags);
-    console.warn(connectedTags);
     dispatch(tagsActions.connectTags(newTags));
   }
 
@@ -42,6 +40,7 @@ const Interests: React.FC<PropTypes> = ({ tagList, otherTags }) => {
         show={isModalVisible}
         onClose={hideModal}
         otherTags={otherTags}
+        tagListed={tagList}
         setConnectedTags={setConnectedTags}
         connect={connect}
       />

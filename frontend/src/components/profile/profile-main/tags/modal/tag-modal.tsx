@@ -1,4 +1,4 @@
-import { FormEvent, useCallback } from 'react';
+import { FormEvent, useCallback, useEffect } from 'react';
 import { useAppDispatch, useTagList } from 'hooks/hooks';
 import { tagsActions } from 'store/actions';
 import { Button, Modal } from 'components/common/common';
@@ -6,11 +6,13 @@ import TagForm from './form';
 import TagList from './tag-list';
 import Multiselect from 'multiselect-react-dropdown';
 import { ITag } from 'common/interfaces/tag/tag';
+import { actions } from 'store/tags/slice';
 
 type PropTypes = {
   show: boolean;
   onClose: () => void;
   otherTags: ITag[];
+  tagListed: ITag[];
   setConnectedTags:
     | React.Dispatch<React.SetStateAction<string[]>>
     | React.Dispatch<React.SetStateAction<never[]>>;
@@ -21,12 +23,17 @@ const TagModal: React.FC<PropTypes> = ({
   show,
   onClose,
   otherTags,
+  tagListed,
   setConnectedTags,
   connect,
 }) => {
   const { list: tagList, addItem, deleteItem, clearItems } = useTagList();
   const dispatch = useAppDispatch();
   const tagsName = otherTags.map((tag) => tag.name);
+
+  useEffect(() => {
+    dispatch(actions.ADD_TAGS(tagListed));
+  }, [dispatch]);
 
   const clickHandler = useCallback(
     (e: FormEvent): void => {
