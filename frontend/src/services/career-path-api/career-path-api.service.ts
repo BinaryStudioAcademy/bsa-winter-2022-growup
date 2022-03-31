@@ -1,9 +1,8 @@
 import { ContentType, HttpMethod } from 'common/enums/enums';
 import { Http } from 'services/http/http.service';
 import { IAuthApi } from 'common/interfaces/api';
+import { ICareerPathLevel } from 'components/career-path/common/interfaces';
 import {
-  // ICareerPath,
-  // IConnectDomainsSetting,
   IConnectLevels,
   IDomain,
   IDomainSetting,
@@ -14,7 +13,6 @@ import {
   ISkill,
   ISkillSetting,
 } from 'common/interfaces/career-path';
-import { ILevelSkill } from '../../components/career-path/mock/common/interfaces';
 
 class CareerPath {
   private apiPath: string;
@@ -99,21 +97,30 @@ class CareerPath {
     }
   }
 
-  async fetchLevelSkills(id: string): Promise<ILevelSkill[] | null> {
-    try {
-      const result = await this.http.load(
-        `${this.apiPath}/career-path/level/${id}`,
-        {
-          contentType: ContentType.JSON,
-          method: HttpMethod.GET,
-          payload: null,
-        },
-      );
+  async fetchLevels(id: string): Promise<ICareerPathLevel[]> {
+    const result = await this.http.load(
+      `${this.apiPath}/career-path/domain/${id}/level`,
+      {
+        contentType: ContentType.JSON,
+        method: HttpMethod.GET,
+        payload: null,
+      },
+    );
 
-      return result as ILevelSkill[];
-    } catch {
-      return null;
-    }
+    return result as ICareerPathLevel[];
+  }
+
+  async fetchLevel(id: string): Promise<ICareerPathLevel> {
+    const result = await this.http.load(
+      `${this.apiPath}/career-path/level/${id}`,
+      {
+        contentType: ContentType.JSON,
+        method: HttpMethod.GET,
+        payload: null,
+      },
+    );
+
+    return result as ICareerPathLevel;
   }
 
   async createLevel(level: ILevelSetting): Promise<ILevel | null> {
