@@ -1,7 +1,9 @@
 import { IDomain } from 'common/interfaces/career-path';
+import { ICareerPathLevel } from 'components/career-path/common/interfaces';
 
 type State = {
   domains: IDomain[] | null;
+  levels: ICareerPathLevel[];
   isLoading: boolean;
 };
 
@@ -10,6 +12,8 @@ enum ActionType {
   ADD_DOMAIN = 'ADD_DOMAIN',
   UPDATE_DOMAIN = 'UPDATE_DOMAIN',
   DELETE_DOMAIN = 'DELETE_DOMAIN',
+  FETCH_ALL_LEVELS = 'FETCH_ALL_LEVELS',
+  FETCH_LEVEL = 'FETCH_LEVEL',
   ADD_LEVEL = 'ADD_LEVEL',
   UPDATE_LEVEL = 'UPDATE_LEVEL',
   DELETE_LEVEL = 'DELETE_LEVEL',

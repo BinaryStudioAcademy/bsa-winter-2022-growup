@@ -1,9 +1,8 @@
 import { ContentType, HttpMethod } from 'common/enums/enums';
 import { Http } from 'services/http/http.service';
 import { IAuthApi } from 'common/interfaces/api';
+import { ICareerPathLevel } from 'components/career-path/common/interfaces';
 import {
-  // ICareerPath,
-  // IConnectDomainsSetting,
   IConnectLevels,
   IDomain,
   IDomainSetting,
@@ -96,6 +95,19 @@ class CareerPath {
     } catch {
       return null;
     }
+  }
+
+  async fetchLevel(id: string): Promise<ICareerPathLevel> {
+    const result = await this.http.load(
+      `${this.apiPath}/career-path/user/level/${id}`,
+      {
+        contentType: ContentType.JSON,
+        method: HttpMethod.GET,
+        payload: null,
+      },
+    );
+
+    return result as ICareerPathLevel;
   }
 
   async createLevel(level: ILevelSetting): Promise<ILevel | null> {

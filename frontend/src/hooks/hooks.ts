@@ -13,3 +13,4 @@ export { useAppForm } from './app-form/app-form.hook';
 export { useAppSelector } from './app-selector/app-selector.hook';
 export { useTagList } from './tags/tags.hook';
 export { useUsers } from './admin/users.hook';
+export { useWindowSize } from './window-size/window-size';

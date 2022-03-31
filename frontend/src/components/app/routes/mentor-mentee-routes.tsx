@@ -10,6 +10,7 @@ import MainPage from '../../main-page/main-page';
 import { NotFound } from '../../not-found';
 import ProfileSettings from '../../profile-settings/profile-settings';
 import Okr from 'components/okr/okr';
+import CareerPath from '../../career-path/career-path';
 import SkillOverview from 'components/skills/skill-overview';
 import Opportunities from 'components/opportunities/opportunities';
 import { IRoute } from '../common/interfaces';
@@ -37,7 +38,7 @@ export const mentorMenteeRoutes: IRoute[] = [
   },
   {
     path: MentorMenteeRoute.CAREER_PATH,
-    element: <div>Mentee Profiles</div>,
+    element: <CareerPath />,
   },
   {
     path: MentorMenteeRoute.OPPORTUNITIES,
