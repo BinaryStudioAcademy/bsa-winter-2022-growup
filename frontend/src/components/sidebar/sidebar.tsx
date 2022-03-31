@@ -94,7 +94,7 @@ const Sidebar: React.FC = () => {
               <Link to={MentorMenteeRoute.HOME}>
                 <span
                   className={`navigation-item__link navigation-link d-flex
-                  ${isBurgerActive ? '' : ' ps-md-4'} 
+                  ${isBurgerActive ? '' : ' ps-md-4'}
                   p-2 align-items-center  fs-4 font-weight-normal
                   text-gu-white`}
                 >
