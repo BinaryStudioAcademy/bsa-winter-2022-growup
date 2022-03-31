@@ -7,8 +7,10 @@ const getTypeInfo = (currentType: string): DataOutPut => {
     (item) => item.type == currentType,
   ) as ITypeInfo;
   return {
-    description: currentTypeInfo.description,
     preDescription: currentTypeInfo.preDescription,
+    general: currentTypeInfo.general,
+    managing: currentTypeInfo.Managing,
+    relationship: currentTypeInfo.Relationship,
   };
 };
 export default getTypeInfo;
