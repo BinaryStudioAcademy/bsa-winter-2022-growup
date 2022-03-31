@@ -9,6 +9,11 @@ const Reducer = (builder: ActionReducerMapBuilder<State>): void => {
     state.tags = [...state.tags, ...(action.payload?.tags as State['tags'])];
   });
 
+  builder.addCase(actions.connectTags.fulfilled, (state, action) => {
+    console.warn(action.payload);
+    // state.tags = [...state.tags, ...(action.payload as State['tags'])];
+  });
+
   builder.addCase(actions.fetchTags.fulfilled, (state, action) => {
     state.isLoading = false;
     if (action.payload) {

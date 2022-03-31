@@ -7,6 +7,7 @@ export type State = {
 
 enum ActionType {
   CREATE_TAGS = 'create-tags',
+  CONNECT_TAGS = 'CONNECT_TAGS',
   FETCH_TAGS = 'fetch-tags',
   DELETE_TAG = 'delete-tag',
 }

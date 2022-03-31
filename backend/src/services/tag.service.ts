@@ -9,6 +9,8 @@ import { Company } from '~/data/entities/company';
 
 import type { TagsCreationResponse } from '~/common/models/tags/tags';
 import type { SuccessResponse } from '~/common/models/responses/success';
+import { User } from '~/data/entities/user';
+import { asyncForEach } from '~/common/helpers/array.helper';
 
 export const getTags = async (userId: string): Promise<Tags[]> => {
   const userRepository = getCustomRepository(UserRepository);
@@ -26,8 +28,10 @@ export const getTags = async (userId: string): Promise<Tags[]> => {
 export const createTags = async (
   data: Tags['name'][],
   company: Company,
+  userId: string,
 ): Promise<TagsCreationResponse> => {
   const tagsRepository = getCustomRepository(TagsRepository);
+  const userRepository = getCustomRepository(UserRepository);
 
   const tags = Array.from(new Set(data));
 
@@ -65,10 +69,46 @@ export const createTags = async (
     )
     .map((tag) => tag.name);
 
+  const userInstance = await userRepository.findOne({
+    where: {
+      id: userId,
+    },
+    relations: ['tags'],
+  });
+
+  userInstance.tags.push(...createdTags);
+  console.log(userInstance);
+  await userInstance.save();
+
   return {
     tags: createdTags,
     existingTags,
   };
+};
+
+export const connectTags = async (
+  data: Tags[],
+  userId: string,
+): Promise<User> => {
+  const userRepository = getCustomRepository(UserRepository);
+  const tagsRepository = getCustomRepository(TagsRepository);
+
+  console.log('asas');
+  console.log(data);
+  const userInstance = await userRepository.findOne({
+    where: {
+      id: userId,
+    },
+    relations: ['tags'],
+  });
+
+  await asyncForEach(async ({ id }: Tags) => {
+    const tag = await tagsRepository.findOne(id);
+    userInstance.tags.push(tag);
+    await userInstance.save();
+  }, data);
+
+  return userInstance;
 };
 
 export const deleteTag = async (id: Tags['id']): Promise<SuccessResponse> => {

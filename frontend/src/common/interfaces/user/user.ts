@@ -6,6 +6,7 @@ import {
   ILevel,
 } from 'components/profile/common/interfaces';
 import type { ICompany } from 'common/interfaces/company/company';
+import { ITag } from '../tag/tag';
 
 interface IUser extends IUserDefault {
   firstName: string;
@@ -21,6 +22,7 @@ interface IUser extends IUserDefault {
   role: RoleType;
   careerJourneys: ICareerJourney[];
   educations: IEducation[];
+  tags: ITag[];
 }
 
 export type { IUser };

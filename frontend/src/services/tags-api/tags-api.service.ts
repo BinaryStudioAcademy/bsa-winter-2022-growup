@@ -49,6 +49,22 @@ class TagsApi {
     }
   }
 
+  public async connectTags(tagsPayload: ITag[]): Promise<ITag[] | null> {
+    try {
+      const result = await this.http.load(`${this.apiPath}/company/selfTags`, {
+        contentType: ContentType.JSON,
+        method: HttpMethod.POST,
+        hasAuth: true,
+        payload: JSON.stringify(tagsPayload),
+      });
+      console.warn(tagsPayload);
+
+      return result as ITag[];
+    } catch {
+      return null;
+    }
+  }
+
   public async deleteTag(tagId: ITag['id']): Promise<unknown> {
     try {
       const result = await this.http.load(

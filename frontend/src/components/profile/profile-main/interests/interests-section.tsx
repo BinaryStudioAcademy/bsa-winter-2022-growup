@@ -9,10 +9,12 @@ import { Button } from 'components/common/common';
 
 type PropTypes = {
   tagList: ITag[];
+  otherTags: ITag[];
 };
 
-const Interests: React.FC<PropTypes> = ({ tagList }) => {
+const Interests: React.FC<PropTypes> = ({ tagList, otherTags }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [connectedTags, setConnectedTags] = useState([]);
   const dispatch = useAppDispatch();
 
   const hideModal = useCallback(() => {
@@ -25,9 +27,24 @@ const Interests: React.FC<PropTypes> = ({ tagList }) => {
     dispatch(tagsActions.fetchTags());
   }, [dispatch]);
 
+  function connect(): void {
+    const newTags = otherTags.filter((tag) =>
+      connectedTags.find((el) => el === tag.name),
+    );
+    console.warn(newTags);
+    console.warn(connectedTags);
+    dispatch(tagsActions.connectTags(newTags));
+  }
+
   return (
     <>
-      <TagModal show={isModalVisible} onClose={hideModal} />
+      <TagModal
+        show={isModalVisible}
+        onClose={hideModal}
+        otherTags={otherTags}
+        setConnectedTags={setConnectedTags}
+        connect={connect}
+      />
       <div className="edit-section bg-white">
         <div className="edit-section-header d-flex justify-content-between align-items-center">
           <h3 className="edit-section-header__title m-0 fw-bold fs-4">

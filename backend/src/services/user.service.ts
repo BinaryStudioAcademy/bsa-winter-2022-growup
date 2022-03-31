@@ -195,7 +195,7 @@ export const getCommonUserList = async (id: string): Promise<IListUser[]> => {
 export const fetchUser = async (id: User['id']): Promise<User> => {
   const userRepository = getCustomRepository(UserRepository);
   const user = await userRepository.findOne({
-    relations: ['company', 'careerJourneys', 'educations'],
+    relations: ['company', 'careerJourneys', 'educations', 'tags'],
     where: { id },
   });
   return user;
