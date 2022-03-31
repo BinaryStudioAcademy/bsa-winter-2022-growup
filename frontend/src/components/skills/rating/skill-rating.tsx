@@ -44,41 +44,27 @@ const SkillElement = (props: Props): React.ReactElement => {
     }
   }
   function saveEdits(id: string): void {
+    const updateData = [
+      {
+        id,
+        name: nameSkill,
+        type: 'Soft skills',
+      },
+      {
+        id,
+        name: nameSkill,
+        rating: ratingValues,
+        isStarred: isStar,
+      },
+    ];
+
     if (props.isFromCareerPath) {
       if (isEdit && user) {
-        dispatch(
-          skillActions.updateCareerPathSkill([
-            {
-              id,
-              name: nameSkill,
-              type: 'Soft skills',
-            },
-            {
-              id,
-              name: nameSkill,
-              rating: ratingValues,
-              isStarred: isStar,
-            },
-          ]),
-        );
+        dispatch(skillActions.updateCareerPathSkill(updateData));
       }
     } else {
       if (isEdit && user) {
-        dispatch(
-          skillActions.updateSkill([
-            {
-              id,
-              name: nameSkill,
-              type: 'Soft skills',
-            },
-            {
-              id,
-              name: nameSkill,
-              rating: ratingValues,
-              isStarred: isStar,
-            },
-          ]),
-        );
+        dispatch(skillActions.updateSkill(updateData));
       }
     }
     setIsEdit(!isEdit);
