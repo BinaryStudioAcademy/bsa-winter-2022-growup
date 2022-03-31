@@ -136,7 +136,7 @@ router.put(
 
 router.get(
   '/level/:id',
-  validatePermissions([RoleType.ADMIN]),
+  validatePermissions([RoleType.ADMIN, RoleType.MENTEE, RoleType.MENTOR]),
   run(async (req: Request) => {
     const { id } = req.params;
 
