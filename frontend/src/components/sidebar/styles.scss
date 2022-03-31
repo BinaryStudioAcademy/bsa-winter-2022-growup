@@ -54,6 +54,8 @@
 .logo-title {
   line-height: 1.38em;
   font-weight: bold;
+  transition: width 0.7s ease-in-out;
+  animation: textShowTitle 0.7s ease-in-out 1 normal forwards;
 }
 .navigation-section__list {
   @include media-breakpoint-down(md) {
@@ -115,10 +117,7 @@
   transition: width 0.7s ease-in-out;
   animation: textShowTitle 0.7s ease-in-out 1 normal forwards;
 }
-.logo-title {
-  transition: width 0.7s ease-in-out;
-  animation: textShowTitle 0.7s ease-in-out 1 normal forwards;
-}
+
 .sidebar-container--small-version {
   width: 65px;
   .navigation-link {
