@@ -3,18 +3,18 @@ import { getEdge } from './get-edge';
 import { getSkills } from './get-skills';
 import { getUserNode } from './get-user-node';
 import { getLevelNode } from './get-level-node';
-import { IAllTechnicalSkills } from '../../common/interfaces';
 import {
+  IAllTechnicalSkills,
+  ICareerPathLevel,
   IEdge,
   IFlowData,
   IInitialSkill,
-  ILevel,
   ILevelMap,
   INode,
 } from '../common/interfaces';
 
 export const getFlowData = (
-  data: ILevel[],
+  data: ICareerPathLevel[],
   levelId: string,
   onClick: (e: IAllTechnicalSkills[], id: string, level: string) => void,
 ): IFlowData => {
@@ -22,7 +22,18 @@ export const getFlowData = (
   const edges: IEdge[] = [];
 
   const levelMap: ILevelMap = levelMapper(data);
-  const currentLevel: ILevel = levelMap[levelId];
+  const currentLevel: ICareerPathLevel = levelMap[levelId];
+
+  if (!currentLevel) {
+    return {
+      nodes: [],
+      edges: [],
+      initialSkill: {
+        name: '',
+        skills: [],
+      },
+    };
+  }
 
   const userNode: INode = getUserNode(
     currentLevel.domainName,
@@ -32,9 +43,15 @@ export const getFlowData = (
 
   const nextLevels = currentLevel.nextLevels.map((id) => levelMap[id]);
   nextLevels.forEach((item) => {
-    const levelNode: INode = getLevelNode(item.name, 0, 23, 35, () => {
-      onClick(getSkills(item), item.id, item.name);
-    });
+    const levelNode: INode = getLevelNode(
+      item.name,
+      0,
+      0,
+      item.skills.length,
+      () => {
+        onClick(getSkills(item), item.id, item.name);
+      },
+    );
     nodes.push(levelNode);
   });
 

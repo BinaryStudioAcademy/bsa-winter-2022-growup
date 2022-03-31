@@ -1,5 +1,4 @@
-import { ILevelSkill } from '../common/interfaces';
-import { ITechnicalSkill } from '../../common/interfaces';
+import { ILevelSkill, ITechnicalSkill } from '../common/interfaces';
 
 export const getTechnicalSkill = (skill: ILevelSkill): ITechnicalSkill => {
   return {
