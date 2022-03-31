@@ -42,10 +42,12 @@ const SkillOverview = (): React.ReactElement => {
     dispatch(skillActions.fetchUserSkills());
     dispatch(skillActions.fetchSkills());
     dispatch(skillActions.fetchUserCareerPathSkills());
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
-    if (careerPathSkills.length) {
+    const isAlreadyMerged = userSkill?.some((skill) => skill.isFromCareerPath);
+
+    if (careerPathSkills.length && !isAlreadyMerged) {
       dispatch(actions.MERGE_SKILLS(careerPathSkills));
     }
   }, [careerPathSkills]);
