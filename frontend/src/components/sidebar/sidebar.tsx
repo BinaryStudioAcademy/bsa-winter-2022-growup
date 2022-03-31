@@ -16,8 +16,10 @@ const Sidebar: React.FC = () => {
   const { user } = useAppSelector((state) => state.auth);
   const isBlockedButton = user?.firstName && user?.isCompleteTest;
   const [isBurgerActive, setIsBurgerActive] = useState(false);
+  const [isFirstTime, setIsFirstTime] = useState(true);
 
   const burgerClickHandler = (): void => {
+    setIsFirstTime(false);
     isBurgerActive ? setIsBurgerActive(false) : setIsBurgerActive(true);
   };
 
@@ -46,12 +48,14 @@ const Sidebar: React.FC = () => {
           }`}
         >
           <div
-            className={` sidebar__burger d-none d-md-block cursor-pointer  ${
+            className={` sidebar__burger d-none d-md-block cursor-pointer  rounded-circle position-absolute bg-gu-purple ${
               isBurgerActive ? 'sidebar__burger--active' : ''
             }`}
-            onClick={burgerClickHandler}
+            onClick={(): void => {
+              burgerClickHandler();
+            }}
           >
-            <ChevronLeft className="isBurgerActive" />
+            <ChevronLeft className="isBurgerActive text-gu-white position-absolute top-50 start-50 translate-middle" />
           </div>
 
           <Link to={MentorMenteeRoute.HOME}>
@@ -61,7 +65,11 @@ const Sidebar: React.FC = () => {
                 src={logo}
                 alt="logo"
               />
-              <span className="logo-section__title logo-title fs-1 text-gu-white m-0">
+              <span
+                className={`logo-section__title logo-title fs-1 text-gu-white m-0 ${
+                  isFirstTime ? '' : 'title-anim'
+                }`}
+              >
                 Grow Up
               </span>
             </div>
@@ -86,9 +94,8 @@ const Sidebar: React.FC = () => {
               <Link to={MentorMenteeRoute.HOME}>
                 <span
                   className={`navigation-item__link navigation-link d-flex
-                  ${
-                    isBurgerActive ? '' : ' ps-md-4'
-                  } p-2 align-items-center  fs-4 font-weight-normal
+                  ${isBurgerActive ? '' : ' ps-md-4'}
+                  p-2 align-items-center  fs-4 font-weight-normal
                   text-gu-white`}
                 >
                   <HomeIcon
@@ -96,7 +103,13 @@ const Sidebar: React.FC = () => {
                       isBurgerActive ? '' : 'me-md-3'
                     }`}
                   />
-                  <span className="navigation-link__title ">Home</span>
+                  <span
+                    className={`navigation-link__title ${
+                      isFirstTime ? '' : 'title-anim'
+                    }`}
+                  >
+                    Home
+                  </span>
                 </span>
               </Link>
             </li>
@@ -119,7 +132,13 @@ const Sidebar: React.FC = () => {
                       isBurgerActive ? '' : 'me-md-3'
                     }`}
                   />
-                  <span className="navigation-link__title">Opportunities</span>
+                  <span
+                    className={`navigation-link__title ${
+                      isFirstTime ? '' : 'title-anim'
+                    }`}
+                  >
+                    Opportunities
+                  </span>
                 </span>
               </Link>
             </li>
@@ -137,7 +156,13 @@ const Sidebar: React.FC = () => {
                       isBurgerActive ? '' : 'me-md-3'
                     }`}
                   />
-                  <span className="navigation-link__title">Profile</span>
+                  <span
+                    className={`navigation-link__title ${
+                      isFirstTime ? '' : 'title-anim'
+                    }`}
+                  >
+                    Profile
+                  </span>
                 </span>
               </Link>
             </li>
@@ -160,7 +185,13 @@ const Sidebar: React.FC = () => {
                       isBurgerActive ? '' : 'me-md-3'
                     }`}
                   />
-                  <span className="navigation-link__title">OKR</span>
+                  <span
+                    className={`navigation-link__title ${
+                      isFirstTime ? '' : 'title-anim'
+                    }`}
+                  >
+                    OKR
+                  </span>
                 </span>
               </Link>
             </li>
@@ -184,8 +215,8 @@ const Sidebar: React.FC = () => {
                     }`}
                   />
                   <span
-                    className={`navigation-link__title d-none  ${
-                      isBurgerActive ? '' : 'd-md-block'
+                    className={`navigation-link__title ${
+                      isFirstTime ? '' : 'title-anim'
                     }`}
                   >
                     Career Path
@@ -213,7 +244,11 @@ const Sidebar: React.FC = () => {
                         isBurgerActive ? '' : 'me-md-3'
                       }`}
                     />
-                    <span className="navigation-link__title">
+                    <span
+                      className={`navigation-link__title ${
+                        isFirstTime ? '' : 'title-anim'
+                      }`}
+                    >
                       Mentee Profiles
                     </span>
                   </span>
