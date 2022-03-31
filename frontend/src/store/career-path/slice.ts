@@ -4,6 +4,7 @@ import { State } from './common';
 import domainReducer from './reducer';
 
 const initialState: State = {
+  levels: [],
   domains: null,
   isLoading: false,
 };
