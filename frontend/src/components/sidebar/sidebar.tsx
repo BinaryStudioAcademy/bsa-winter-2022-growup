@@ -10,7 +10,7 @@ import { Link } from 'components/common/common';
 import './styles.scss';
 import { useAppSelector, useEffect, useState } from 'hooks/hooks';
 import { RoleType } from 'growup-shared';
-import { List } from 'react-bootstrap-icons';
+import { ChevronLeft } from 'react-bootstrap-icons';
 
 const Sidebar: React.FC = () => {
   const { user } = useAppSelector((state) => state.auth);
@@ -23,9 +23,14 @@ const Sidebar: React.FC = () => {
 
   useEffect(() => {
     const rootElement = document.querySelector('.wrapper') as Element;
-    isBurgerActive
-      ? rootElement.classList.add('wrapper__burger-active')
-      : rootElement.classList.remove('wrapper__burger-active');
+    const headerElement = document.querySelector('.header-section') as Element;
+    if (isBurgerActive) {
+      rootElement.classList.add('wrapper__burger-active');
+      headerElement.classList.add('header-section--burger-active');
+    } else {
+      rootElement.classList.remove('wrapper__burger-active');
+      headerElement.classList.remove('header-section--burger-active');
+    }
   }, [isBurgerActive]);
 
   return (
@@ -36,19 +41,17 @@ const Sidebar: React.FC = () => {
       `}
       >
         <div
-          className={`d-flex justify-content-center  ${
+          className={`d-flex   ${
             isBurgerActive ? 'flex-column-reverse align-items-center' : ''
           }`}
         >
           <div
             className={` sidebar__burger d-none d-md-block cursor-pointer  ${
-              isBurgerActive
-                ? 'sidebar__burger--active position-absolute'
-                : 'mt-2'
+              isBurgerActive ? 'sidebar__burger--active' : ''
             }`}
             onClick={burgerClickHandler}
           >
-            <List className="isBurgerActive" />
+            <ChevronLeft className="isBurgerActive" />
           </div>
 
           <Link to={MentorMenteeRoute.HOME}>
@@ -58,11 +61,7 @@ const Sidebar: React.FC = () => {
                 src={logo}
                 alt="logo"
               />
-              <span
-                className={`logo-section__title logo-title fs-1 text-gu-white m-0 d-none  ${
-                  isBurgerActive ? '' : 'd-md-block'
-                }`}
-              >
+              <span className="logo-section__title logo-title fs-1 text-gu-white m-0">
                 Grow Up
               </span>
             </div>
@@ -97,13 +96,7 @@ const Sidebar: React.FC = () => {
                       isBurgerActive ? '' : 'me-md-3'
                     }`}
                   />
-                  <span
-                    className={`navigation-link__title d-none  ${
-                      isBurgerActive ? '' : 'd-md-block'
-                    }`}
-                  >
-                    Home
-                  </span>
+                  <span className="navigation-link__title ">Home</span>
                 </span>
               </Link>
             </li>
@@ -126,13 +119,7 @@ const Sidebar: React.FC = () => {
                       isBurgerActive ? '' : 'me-md-3'
                     }`}
                   />
-                  <span
-                    className={`navigation-link__title d-none  ${
-                      isBurgerActive ? '' : 'd-md-block'
-                    }`}
-                  >
-                    Opportunities
-                  </span>
+                  <span className="navigation-link__title">Opportunities</span>
                 </span>
               </Link>
             </li>
@@ -150,13 +137,7 @@ const Sidebar: React.FC = () => {
                       isBurgerActive ? '' : 'me-md-3'
                     }`}
                   />
-                  <span
-                    className={`navigation-link__title d-none ${
-                      isBurgerActive ? '' : 'd-md-block'
-                    }`}
-                  >
-                    Profile
-                  </span>
+                  <span className="navigation-link__title">Profile</span>
                 </span>
               </Link>
             </li>
@@ -179,13 +160,7 @@ const Sidebar: React.FC = () => {
                       isBurgerActive ? '' : 'me-md-3'
                     }`}
                   />
-                  <span
-                    className={`navigation-link__title d-none  ${
-                      isBurgerActive ? '' : 'd-md-block'
-                    }`}
-                  >
-                    OKR
-                  </span>
+                  <span className="navigation-link__title">OKR</span>
                 </span>
               </Link>
             </li>
@@ -238,11 +213,7 @@ const Sidebar: React.FC = () => {
                         isBurgerActive ? '' : 'me-md-3'
                       }`}
                     />
-                    <span
-                      className={`navigation-link__title d-none  ${
-                        isBurgerActive ? '' : 'd-md-block'
-                      }`}
-                    >
+                    <span className="navigation-link__title">
                       Mentee Profiles
                     </span>
                   </span>
