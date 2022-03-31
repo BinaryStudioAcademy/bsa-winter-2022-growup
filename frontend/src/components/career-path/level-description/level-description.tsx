@@ -1,20 +1,27 @@
 import './level-description.scss';
 import { v4 as uuidv4 } from 'uuid';
-import { IAllTechnicalSkills } from '../common/interfaces';
 import TechnicalSkills from './technical-skills';
+import { IAllTechnicalSkills } from '../common/interfaces';
 
 interface Props {
   level: string;
+  acquiredSkills: number;
+  totalSkills: number;
   technicalSkills: IAllTechnicalSkills[];
 }
 
-const LevelDescription: React.FC<Props> = ({ level, technicalSkills }) => {
+const LevelDescription: React.FC<Props> = ({
+  level,
+  acquiredSkills,
+  totalSkills,
+  technicalSkills,
+}) => {
   return (
     <div className="level-description bg-white ms-3">
       <div className="level-description__title d-grid bg-gu-blue">
         <span className="fs-5 fw-bold text-white">{level}</span>
         <span className="level-description__subtitle fs-6">
-          33 / 35 skills archived
+          {acquiredSkills} / {totalSkills} skills archived
         </span>
       </div>
       <div className="level-description__content bg-white position-relative overflow-auto">
