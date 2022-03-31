@@ -5,7 +5,7 @@ export interface ISkill {
   company?: string | undefined;
   rating?: (string | number)[];
   isStarred?: boolean;
-
+  isFromCareerPath?: boolean;
   createdAt?: string;
   updatedAt?: string;
   deletedAt?: string;

@@ -26,6 +26,36 @@ export const createUserSkillCategories = async (
   return userSkillCategories;
 };
 
+export const getUserSkillCategory = async (
+  user: User,
+): Promise<UserSkillCategory> => {
+  const userSkillCategoryRepository = getCustomRepository(
+    UserSkillCategoryRepository,
+  );
+  const userSkillCategory = await userSkillCategoryRepository
+    .createQueryBuilder('userSkillCategory')
+    .innerJoinAndSelect('userSkillCategory.skillCategory', 'skillCategory')
+    .where('userSkillCategory.userId = :userId', { userId: user.id })
+    .getOne();
+
+  return userSkillCategory;
+};
+
+export const getUserSkillCategories = async (
+  user: User,
+): Promise<UserSkillCategory[]> => {
+  const userSkillCategoryRepository = getCustomRepository(
+    UserSkillCategoryRepository,
+  );
+  const userSkillCategories = await userSkillCategoryRepository
+    .createQueryBuilder('userSkillCategory')
+    .innerJoinAndSelect('userSkillCategory.skillCategory', 'skillCategory')
+    .where('userSkillCategory.userId = :userId', { userId: user.id })
+    .getMany();
+
+  return userSkillCategories;
+};
+
 export const deleteUserSkillCategories = async (
   user: User,
 ): Promise<UserSkillCategory[]> => {

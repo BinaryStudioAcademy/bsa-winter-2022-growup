@@ -35,6 +35,18 @@ export const getCategoriesByLevel = async (
   return categories;
 };
 
+export const getCategoryById = async (
+  id: SkillCategory['id'],
+): Promise<SkillCategory> => {
+  const skillCategoryRepository = getCustomRepository(SkillCategoryRepository);
+  const category = await skillCategoryRepository.findOne({
+    where: { id },
+    relations: ['skill', 'level'],
+  });
+
+  return category;
+};
+
 export const getUserCategoriesByLevel = async (
   userId: string,
   level: SkillCategory['level'],

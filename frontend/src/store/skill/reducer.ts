@@ -16,6 +16,15 @@ const SkillReducer = (builder: ActionReducerMapBuilder<State>): void => {
     }
   });
 
+  builder.addCase(
+    actions.fetchUserCareerPathSkills.fulfilled,
+    (state, action) => {
+      if (action.payload) {
+        state.careerPathSkills = action.payload;
+      }
+    },
+  );
+
   builder.addCase(actions.createSkill.fulfilled, (state, action) => {
     if (action.payload) {
       const newAction: ISkill = {
@@ -51,6 +60,17 @@ const SkillReducer = (builder: ActionReducerMapBuilder<State>): void => {
       return skill;
     });
     state.userSkill = newAction;
+  });
+
+  builder.addCase(actions.updateCareerPathSkill.fulfilled, (state, action) => {
+    const newAction: ISkill[] = state.careerPathSkills.map((skill: ISkill) => {
+      if (action.payload)
+        if (skill.id === action.payload.id) {
+          return action.payload;
+        }
+      return skill;
+    });
+    state.careerPathSkills = newAction;
   });
 };
 

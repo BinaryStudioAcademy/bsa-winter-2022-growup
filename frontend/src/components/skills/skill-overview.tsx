@@ -22,8 +22,22 @@ import { NotificationManager } from 'react-notifications';
 import './styles.scss';
 
 const SkillOverview = (): React.ReactElement => {
-  const skills = useAppSelector((state: RootState) => state.skill.userSkill);
+  const skills = useAppSelector((state: RootState) => {
+    const careerPathMarkedSkills = state.skill.careerPathSkills?.map(
+      (skill) => {
+        return { ...skill, isFromCareerPath: true };
+      },
+    );
+
+    return careerPathMarkedSkills
+      ? state.skill.userSkill.concat(careerPathMarkedSkills)
+      : state.skill.userSkill;
+  });
   const allSkills = useAppSelector((state: RootState) => state.skill.allSkills);
+  const careerPathSkills = useAppSelector(
+    (state: RootState) => state.skill.careerPathSkills,
+  );
+
   const { user } = useAppSelector((state: RootState) => state.profile);
   const [textFind, setTextFind] = useState('');
   const [selectSkills, setSelectSkills] = useState('all');
@@ -40,6 +54,7 @@ const SkillOverview = (): React.ReactElement => {
   useEffect(() => {
     dispatch(skillActions.fetchUserSkills());
     dispatch(skillActions.fetchSkills());
+    dispatch(skillActions.fetchUserCareerPathSkills());
   }, []);
 
   const { control, errors, handleSubmit, reset } = useAppForm<SkillFormType>({
@@ -58,7 +73,10 @@ const SkillOverview = (): React.ReactElement => {
   const handleAdd = (payload: ISkill): void => {
     const isName = allSkills.find((skill) => skill.name === payload.name);
     const isUserName = skills.find((skill) => skill.name === payload.name);
-    if (!isUserName)
+    const isCareerPathName = careerPathSkills.find(
+      (skill) => skill.name === payload.name,
+    );
+    if (!isUserName && !isCareerPathName)
       if (!isName)
         dispatch(skillActions.createSkill([payload]))
           .unwrap()
@@ -257,6 +275,7 @@ const SkillOverview = (): React.ReactElement => {
                           rating={skill.rating}
                           id={skill.id}
                           isStarred={skill.isStarred}
+                          isFromCareerPath={skill.isFromCareerPath}
                         />
                       );
                 })
@@ -272,6 +291,7 @@ const SkillOverview = (): React.ReactElement => {
                           rating={skill.rating}
                           id={skill.id}
                           isStarred={skill.isStarred}
+                          isFromCareerPath={skill.isFromCareerPath}
                         />
                       );
                 })

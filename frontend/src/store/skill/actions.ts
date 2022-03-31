@@ -27,6 +27,18 @@ const fetchUserSkills = createAsyncThunk(
   },
 );
 
+const fetchUserCareerPathSkills = createAsyncThunk(
+  ActionType.FETCH_CAREER_PATH_USER_SKILL,
+  async (_, { rejectWithValue }) => {
+    try {
+      const result = await skills.fetchUserCareerPathSkills();
+      return result;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
 const createSkill = createAsyncThunk(
   ActionType.CREATE_SKILLS,
   async (data: ISkill[], { rejectWithValue }) => {
@@ -75,6 +87,18 @@ const updateSkill = createAsyncThunk(
   },
 );
 
+const updateCareerPathSkill = createAsyncThunk(
+  ActionType.UPDATE_CAREER_PATH_USER_SKILL,
+  async (data: ISkill[], { rejectWithValue }) => {
+    try {
+      const result = await skills.updateCareerPathSkill(data);
+      return result;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
 export {
   fetchSkills,
   createSkill,
@@ -82,4 +106,6 @@ export {
   updateSkill,
   fetchUserSkills,
   connectSkill,
+  fetchUserCareerPathSkills,
+  updateCareerPathSkill,
 };
