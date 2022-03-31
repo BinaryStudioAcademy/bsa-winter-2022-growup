@@ -86,6 +86,7 @@ const UserItem: React.FC<Props> = memo(({ user }) => {
       <Modal
         show={isShowPositionModal}
         onClose={closePositionModal}
+        closeButton={true}
         title="Change position"
         className="d-flex flex-column gap-4"
       >
