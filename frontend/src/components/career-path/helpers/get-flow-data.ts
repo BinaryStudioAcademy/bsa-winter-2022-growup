@@ -1,8 +1,9 @@
 import { levelMapper } from './level-mapper';
 import { getEdge } from './get-edge';
-import { getSkills } from './get-skills';
+import { getLevelSkills } from './get-level-skills';
 import { getUserNode } from './get-user-node';
 import { getLevelNode } from './get-level-node';
+import { getAcquiredSkills } from './get-acquired-skills';
 import {
   IAllTechnicalSkills,
   ICareerPathLevel,
@@ -31,6 +32,8 @@ export const getFlowData = (
       initialSkill: {
         name: '',
         skills: [],
+        acquiredSkills: 0,
+        totalSkills: 0,
       },
     };
   }
@@ -46,10 +49,10 @@ export const getFlowData = (
     const levelNode: INode = getLevelNode(
       item.name,
       0,
-      0,
+      getAcquiredSkills(item.skills),
       item.skills.length,
       () => {
-        onClick(getSkills(item), item.id, item.name);
+        onClick(getLevelSkills(item), item.id, item.name);
       },
     );
     nodes.push(levelNode);
@@ -61,8 +64,10 @@ export const getFlowData = (
   }
 
   const initialSkill: IInitialSkill = {
-    name: levelMap[levelId].name,
-    skills: getSkills(levelMap[levelId]),
+    name: currentLevel.name,
+    skills: getLevelSkills(currentLevel),
+    acquiredSkills: getAcquiredSkills(currentLevel.skills),
+    totalSkills: currentLevel.skills.length,
   };
 
   return { nodes, edges, initialSkill };

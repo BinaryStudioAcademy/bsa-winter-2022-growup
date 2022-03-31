@@ -21,6 +21,9 @@ const CareerPath: React.FC = () => {
   const [levelName, setLevelName] = useState<string>('');
   const [skills, setSkills] = useState<IAllTechnicalSkills[]>([]);
 
+  const [acquiredSkills, setAcquiredSkills] = useState<number>(0);
+  const [totalSkills, setTotalSkills] = useState<number>(0);
+
   const { nodes, edges, initialSkill } = getFlowData(
     levelData,
     levelId,
@@ -42,6 +45,8 @@ const CareerPath: React.FC = () => {
   useEffect(() => {
     setLevelName(initialSkill.name);
     setSkills(initialSkill.skills);
+    setAcquiredSkills(initialSkill.acquiredSkills);
+    setTotalSkills(initialSkill.totalSkills);
   }, [levelData]);
 
   return (
@@ -49,7 +54,12 @@ const CareerPath: React.FC = () => {
       <div className="w-100 h-100">
         <LevelFlow nodes={nodes} edges={edges} />
       </div>
-      <LevelDescription level={levelName} technicalSkills={skills} />
+      <LevelDescription
+        level={levelName}
+        acquiredSkills={acquiredSkills}
+        totalSkills={totalSkills}
+        technicalSkills={skills}
+      />
     </div>
   );
 };
