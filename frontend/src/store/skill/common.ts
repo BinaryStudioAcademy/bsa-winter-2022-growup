@@ -12,11 +12,15 @@ enum ActionType {
   CONNECT_SKILLS = 'CONNECT_SKILLS',
   DELETE_SKILL = 'DELETE_SKILL',
   UPDATE_SKILL = 'UPDATE_SKILL',
+  FETCH_CAREER_PATH_USER_SKILL = 'FETCH_CAREER_PATH_USER_SKILL',
+  UPDATE_CAREER_PATH_USER_SKILL = 'UPDATE_CAREER_PATH_USER_SKILL',
+  MERGE_SKILLS = 'MERGE_SKILLS',
 }
 
 export type State = {
   allSkills: ISkill[];
   userSkill: ISkill[];
+  careerPathSkills: ISkill[];
 };
 
 export { ActionType };

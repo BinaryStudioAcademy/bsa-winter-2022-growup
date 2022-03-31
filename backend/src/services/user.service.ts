@@ -159,7 +159,7 @@ export const authenticateUser = async (data: UserLoginForm): Promise<User> => {
       message: 'User with this email does not exist',
     });
 
-  // Copmares hashed password and entered by user
+  // Compares hashed password and entered by user
   // If they do not match, return null
   const isPasswordMatch = await comparePasswords(data.password, user.password);
   if (!isPasswordMatch)
@@ -195,7 +195,7 @@ export const getCommonUserList = async (id: string): Promise<IListUser[]> => {
 export const fetchUser = async (id: User['id']): Promise<User> => {
   const userRepository = getCustomRepository(UserRepository);
   const user = await userRepository.findOne({
-    relations: ['company', 'careerJourneys', 'educations', 'tags'],
+    relations: ['company', 'careerJourneys', 'educations', 'level', 'tags'],
     where: { id },
   });
   return user;

@@ -16,6 +16,7 @@ interface Props {
   name: string;
   rating: Array<string | number>;
   isStarred: boolean | undefined;
+  isFromCareerPath?: boolean;
 }
 
 const column = [0, 1, 2];
@@ -43,22 +44,28 @@ const SkillElement = (props: Props): React.ReactElement => {
     }
   }
   function saveEdits(id: string): void {
-    if (isEdit && user) {
-      dispatch(
-        skillActions.updateSkill([
-          {
-            id,
-            name: nameSkill,
-            type: 'Soft skills',
-          },
-          {
-            id,
-            name: nameSkill,
-            rating: ratingValues,
-            isStarred: isStar,
-          },
-        ]),
-      );
+    const updateData = [
+      {
+        id,
+        name: nameSkill,
+        type: 'Soft skills',
+      },
+      {
+        id,
+        name: nameSkill,
+        rating: ratingValues,
+        isStarred: isStar,
+      },
+    ];
+
+    if (props.isFromCareerPath) {
+      if (isEdit && user) {
+        dispatch(skillActions.updateCareerPathSkill(updateData));
+      }
+    } else {
+      if (isEdit && user) {
+        dispatch(skillActions.updateSkill(updateData));
+      }
     }
     setIsEdit(!isEdit);
   }

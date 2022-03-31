@@ -3,4 +3,5 @@ export interface ISkill {
   name: string;
   userId: string;
   rating: Array<string>;
+  isFromCareerPath?: boolean;
 }

@@ -2,7 +2,20 @@ import { ActionReducerMapBuilder } from '@reduxjs/toolkit';
 import { State } from './common';
 import * as actions from './actions';
 
-const ProfileReducer = (builder: ActionReducerMapBuilder<State>): void => {
+const CareerPathReducer = (builder: ActionReducerMapBuilder<State>): void => {
+  builder.addCase(actions.fetchAllLevels.pending, (state, _) => {
+    state.isLoading = true;
+  });
+
+  builder.addCase(actions.fetchAllLevels.rejected, (state, _) => {
+    state.isLoading = false;
+  });
+
+  builder.addCase(actions.fetchAllLevels.fulfilled, (state, action) => {
+    state.isLoading = false;
+    state.levels = action.payload;
+  });
+
   builder.addCase(actions.fetchDomains.pending, (state, _) => {
     state.isLoading = true;
   });
@@ -161,13 +174,13 @@ const ProfileReducer = (builder: ActionReducerMapBuilder<State>): void => {
       const domain = state.domains?.find(
         (domain) => domain.domain.id === action.payload?.domainId,
       );
-      const level = domain?.levels.find(
+      const level = domain?.levels?.find(
         (level) => level.id === action.payload?.levelId,
       );
-      const skill = level?.skills.find(
+      const skill = level?.skills?.find(
         (skill) => skill.id === action.payload?.skillId,
       );
-      const objective = skill?.objectives.find(
+      const objective = skill?.objectives?.find(
         (objective) => objective.id === action.payload?.id,
       );
 
@@ -258,4 +271,4 @@ const ProfileReducer = (builder: ActionReducerMapBuilder<State>): void => {
   // });
 };
 
-export default ProfileReducer;
+export default CareerPathReducer;

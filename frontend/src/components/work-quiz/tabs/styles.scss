@@ -1,0 +1,15 @@
+@import 'assets/scss/utils';
+
+.tab__active {
+  position: relative;
+  &::after {
+    display: block;
+    position: absolute;
+    height: 2px;
+    background-color: $gu-blue;
+    width: 100%;
+    content: '';
+    top: 22px;
+    left: 0;
+  }
+}

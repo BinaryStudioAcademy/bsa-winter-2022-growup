@@ -9,6 +9,7 @@ enum ReducerName {
   TAGS = 'tags',
   OPPORTUNITY = 'opportunity',
   HOME_PAGE = 'home_page',
+  CAREER_PATH = 'career-path',
   CAREER_JOURNEY = 'career-journey',
   EDUCATION = 'education',
 }

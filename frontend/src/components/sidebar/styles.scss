@@ -1,11 +1,30 @@
 @import '~assets/scss/utils';
 
-.sidebar__burger {
-  svg {
-    width: 30px;
-    height: 30px;
-    color: $white;
+@keyframes textShowTitle {
+  0% {
+    width: 0%;
+    display: none;
+    overflow: hidden;
   }
+
+  100% {
+    width: 100%;
+    display: block;
+    overflow: visible;
+  }
+}
+
+.sidebar__burger {
+  width: 30px;
+  height: 30px;
+
+  svg {
+    transition: all 0.7s ease-in-out;
+    width: 15px;
+    height: 15px;
+  }
+  top: 3.5%;
+  left: 93%;
 }
 .sidebar-section {
   z-index: 3;
@@ -13,6 +32,7 @@
 
 .sidebar-container {
   width: 273px;
+  transition: all 0.7s ease-in-out;
   @include media-breakpoint-down(md) {
     width: 65px;
   }
@@ -26,8 +46,8 @@
 .logo-title {
   line-height: 1.38em;
   font-weight: bold;
+  white-space: nowrap;
 }
-
 .navigation-section__list {
   @include media-breakpoint-down(md) {
     align-items: center;
@@ -83,6 +103,10 @@
 .navigation-section__burger-active {
   margin-top: 4rem;
 }
+.title-anim {
+  transition: width 0.7s ease-in-out;
+  animation: textShowTitle 0.7s ease-in-out 1 normal forwards;
+}
 
 .sidebar-container--small-version {
   width: 65px;
@@ -92,6 +116,10 @@
       max-height: none !important;
     }
   }
+  .title-anim {
+    width: 0%;
+    display: none;
+  }
   .navigation-item .active {
     display: flex;
     align-items: center;
@@ -100,9 +128,19 @@
     background-color: #fff;
     border-radius: 33%;
   }
+  .sidebar__burger svg {
+    transform: translate(-50%, -50%) rotate(-180deg) !important;
+  }
 }
 
-.sidebar__burger--active {
-  top: 73px;
-  left: 18px;
+@include media-breakpoint-down(md) {
+  .logo-title {
+    display: none;
+  }
+  .navigation-link__title {
+    display: none;
+  }
+  .active .navigation-link .navigation-link__title {
+    display: none;
+  }
 }
