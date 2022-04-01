@@ -1,17 +1,9 @@
 @import '~assets/scss/utils';
 
 .okr-container {
-  width: 285px;
-  height: 175px;
   border: 2px solid $gu-pink;
   border-radius: 10px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 30px;
-  grid-template-rows: 1fr 1fr 100px;
-  grid-template-areas:
-    'name name reached'
-    'obj key .'
-    'time time time';
+  height: 145px;
 }
 
 .okr-container:hover {

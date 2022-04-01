@@ -17,13 +17,18 @@
 .sidebar__burger {
   width: 30px;
   height: 30px;
+  transition: all 0.7s ease-in-out;
+  &:hover {
+    background-color: rgba(41, 25, 101, 0.9) !important;
+  }
+  border: 1px solid white;
 
   svg {
     transition: all 0.7s ease-in-out;
     width: 15px;
     height: 15px;
   }
-  top: 3.5%;
+  top: 10.5%;
   left: 93%;
 }
 .sidebar-section {
@@ -128,6 +133,10 @@
     background-color: #fff;
     border-radius: 33%;
   }
+  .sidebar__burger {
+    left: 79%;
+  }
+
   .sidebar__burger svg {
     transform: translate(-50%, -50%) rotate(-180deg) !important;
   }

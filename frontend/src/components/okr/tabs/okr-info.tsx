@@ -72,7 +72,7 @@ const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHandler }) => {
 
   return (
     <>
-      <div className="okr__header">
+      <div className="okr__header mt-4 pe-4">
         <div className="d-flex justify-content-between mb-4">
           <span
             className="fs-6 cursor-pointer d-flex align-items-center hover-black"
@@ -141,7 +141,7 @@ const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHandler }) => {
           <span className="fs-4 text-gu-black fw-bold">{score}</span>
         </div>
       </div>
-      <div className="okr__main d-flex flex-column">
+      <div className="okr__main d-flex flex-column pe-4">
         {currentOkr?.objectives?.map((item, index) => {
           return (
             <Objective

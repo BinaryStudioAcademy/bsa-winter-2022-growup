@@ -51,7 +51,7 @@ const ProfileInfo: React.FC = (): JSX.Element => {
               activeId={activeComponentId}
             />
           </div>
-          <div className="profile-container profile-container_main">
+          <div className="profile-container profile-container_main position-relative">
             {tabsElements[activeComponentId].component}
           </div>
         </>

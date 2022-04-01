@@ -16,5 +16,5 @@ export const createTagsController = async (
   }
 
   const company = await getCompany(req.companyId);
-  return createTags(req.body.tags, company);
+  return createTags(req.body.tags, company, req.userId);
 };

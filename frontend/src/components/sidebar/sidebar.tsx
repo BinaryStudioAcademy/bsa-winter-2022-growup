@@ -4,22 +4,22 @@ import { ReactComponent as OpportunitiesIcon } from 'assets/img/icons/sidebar-ic
 import { ReactComponent as ProfileIcon } from 'assets/img/icons/sidebar-icons/profile-icon.svg';
 import { ReactComponent as OkrIcon } from 'assets/img/icons/sidebar-icons/okr-icon.svg';
 import { ReactComponent as CareerPathIcon } from 'assets/img/icons/sidebar-icons/career-path-icon.svg';
-import { ReactComponent as MenteeProfileIcon } from 'assets/img/icons/sidebar-icons/mentee-icon.svg';
+// Functionality not currently in use (mentee profile)
+// import { ReactComponent as MenteeProfileIcon } from 'assets/img/icons/sidebar-icons/mentee-icon.svg';
 import { MentorMenteeRoute } from 'common/enums/enums';
 import { Link } from 'components/common/common';
 import './styles.scss';
 import { useAppSelector, useEffect, useState } from 'hooks/hooks';
-import { RoleType } from 'growup-shared';
+// Functionality not currently in use (mentee profile)
+// import { RoleType } from 'growup-shared';
 import { ChevronLeft } from 'react-bootstrap-icons';
 
 const Sidebar: React.FC = () => {
   const { user } = useAppSelector((state) => state.auth);
   const isBlockedButton = user?.firstName && user?.isCompleteTest;
-  const [isBurgerActive, setIsBurgerActive] = useState(false);
-  const [isFirstTime, setIsFirstTime] = useState(true);
+  const [isBurgerActive, setIsBurgerActive] = useState(true);
 
   const burgerClickHandler = (): void => {
-    setIsFirstTime(false);
     isBurgerActive ? setIsBurgerActive(false) : setIsBurgerActive(true);
   };
 
@@ -48,7 +48,7 @@ const Sidebar: React.FC = () => {
           }`}
         >
           <div
-            className={` sidebar__burger d-none d-md-block cursor-pointer  rounded-circle position-absolute bg-gu-purple ${
+            className={` sidebar__burger d-none d-md-block cursor-pointer rounded-circle position-absolute bg-gu-blue ${
               isBurgerActive ? 'sidebar__burger--active' : ''
             }`}
             onClick={(): void => {
@@ -65,11 +65,7 @@ const Sidebar: React.FC = () => {
                 src={logo}
                 alt="logo"
               />
-              <span
-                className={`logo-section__title logo-title fs-1 text-gu-white m-0 ${
-                  isFirstTime ? '' : 'title-anim'
-                }`}
-              >
+              <span className="logo-section__title logo-title fs-1 text-gu-white m-0 title-anim">
                 Grow Up
               </span>
             </div>
@@ -103,11 +99,7 @@ const Sidebar: React.FC = () => {
                       isBurgerActive ? '' : 'me-md-3'
                     }`}
                   />
-                  <span
-                    className={`navigation-link__title ${
-                      isFirstTime ? '' : 'title-anim'
-                    }`}
-                  >
+                  <span className="navigation-link__title title-anim">
                     Home
                   </span>
                 </span>
@@ -132,11 +124,7 @@ const Sidebar: React.FC = () => {
                       isBurgerActive ? '' : 'me-md-3'
                     }`}
                   />
-                  <span
-                    className={`navigation-link__title ${
-                      isFirstTime ? '' : 'title-anim'
-                    }`}
-                  >
+                  <span className="navigation-link__title title-anim">
                     Opportunities
                   </span>
                 </span>
@@ -156,11 +144,7 @@ const Sidebar: React.FC = () => {
                       isBurgerActive ? '' : 'me-md-3'
                     }`}
                   />
-                  <span
-                    className={`navigation-link__title ${
-                      isFirstTime ? '' : 'title-anim'
-                    }`}
-                  >
+                  <span className="navigation-link__title title-anim">
                     Profile
                   </span>
                 </span>
@@ -185,13 +169,7 @@ const Sidebar: React.FC = () => {
                       isBurgerActive ? '' : 'me-md-3'
                     }`}
                   />
-                  <span
-                    className={`navigation-link__title ${
-                      isFirstTime ? '' : 'title-anim'
-                    }`}
-                  >
-                    OKR
-                  </span>
+                  <span className="navigation-link__title title-anim">OKR</span>
                 </span>
               </Link>
             </li>
@@ -214,17 +192,14 @@ const Sidebar: React.FC = () => {
                       isBurgerActive ? '' : 'me-md-3'
                     }`}
                   />
-                  <span
-                    className={`navigation-link__title ${
-                      isFirstTime ? '' : 'title-anim'
-                    }`}
-                  >
+                  <span className="navigation-link__title title-anim">
                     Career Path
                   </span>
                 </span>
               </Link>
             </li>
-            {user?.role === RoleType.MENTOR && (
+            {/* Functionality not currently in use (mentee profile)*/}
+            {/* {user?.role === RoleType.MENTOR && (
               <li
                 className={`navigation-list__item navigation-item mb-4 ${
                   isBlockedButton ? '' : 'navigation-list-item--blocked'
@@ -244,17 +219,13 @@ const Sidebar: React.FC = () => {
                         isBurgerActive ? '' : 'me-md-3'
                       }`}
                     />
-                    <span
-                      className={`navigation-link__title ${
-                        isFirstTime ? '' : 'title-anim'
-                      }`}
-                    >
+                    <span className="navigation-link__title title-anim">
                       Mentee Profiles
                     </span>
                   </span>
                 </Link>
               </li>
-            )}
+            )} */}
           </ul>
         </nav>
       </div>

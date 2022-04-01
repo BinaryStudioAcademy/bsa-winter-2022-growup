@@ -8,9 +8,16 @@ import './styles.scss';
 import { skillActions, tagsActions } from 'store/actions';
 import EducationSection from './education-section';
 import { ISkill } from '../common/interfaces';
+import { RootState } from 'common/types/types';
 
 const ProfileMain: React.FC = () => {
-  const { tags } = useAppSelector((state) => state.tags);
+  const tags = useAppSelector((state: RootState) => state.profile.user?.tags);
+  const userTags = useAppSelector((state: RootState) => state.tags.userTags);
+  const allTags = useAppSelector((state: RootState) => state.tags.tags);
+  const otherTags = allTags.filter(
+    (tag) => !tags?.find((interTag) => interTag.id === tag.id),
+  );
+
   const skillData = useAppSelector((state) => state.skill.userSkill);
   const dispatch = useAppDispatch();
 
@@ -45,7 +52,10 @@ const ProfileMain: React.FC = () => {
             ))}
           </div>
         </EditSection>
-        <Interests tagList={tags} />
+        <Interests
+          tagList={userTags ? userTags : tags ? tags : []}
+          otherTags={otherTags}
+        />
       </div>
     </main>
   );

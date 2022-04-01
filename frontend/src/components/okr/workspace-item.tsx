@@ -34,32 +34,36 @@ const OrkItem: React.FC<Props> = ({
         ${okr.status == StatusType.close && 'okr-disable'}`}
         onClick={(): void => onClickInfo(okr.id)}
       >
-        <div className="OKR-name fs-2 mt-2 fw-bold">{okr.name}</div>
-        <div className="reached fs-5 fw-bold align-bottom text-end">
-          {score}
+        <div className="d-flex justify-content-between">
+          <div className="OKR-name fs-2  fw-bold mb-2">{okr.name}</div>
+          <div className="reached fs-5 fw-bold">{score}</div>
         </div>
-        <div className="objectives fs-6 mb-4 fw-bold">
-          Objectives: {objectivesCounter},
+
+        <div className="d-flex mb-auto">
+          <span className="objectives fs-6 mb-4 fw-bold me-2">
+            Objectives: {objectivesCounter}
+          </span>
+          <span className="key-result fs-6 fw-bold">
+            KeyResults: {resultsCounter}
+          </span>
         </div>
-        <div className="key-result fs-6 fw-bold">
-          KeyResults: {resultsCounter}
-        </div>
-        <div className="timestamp fs-6 mt-3 d-flex justify-content-evenly text-secondary">
-          <div>
-            <Calendar className="mb-1" />
+
+        <div className="timestamp fs-6  d-flex text-secondary  align-items-center justify-content-between">
+          <div className="d-flex align-items-center">
+            <div className="me-2">
+              <Calendar className="mb-1" />
+            </div>
+            <div>
+              {dayjs(okr?.startDate).format('DD/MM/YYYY')}
+              <span className="ms-1">
+                <span>- </span>
+                {okr?.endDate ? dayjs(okr?.endDate).format('DD/MM/YYYY') : null}
+              </span>
+            </div>
           </div>
+
           <div>
-            {dayjs(okr?.startDate).format('DD/MM/YYYY')}
-            <span className="ms-1">
-              <span>- </span>
-              {okr?.endDate ? dayjs(okr?.endDate).format('DD/MM/YYYY') : null}
-            </span>
-          </div>
-          <div>
-            <PencilFill
-              className="mb-1 ms-1 text-gu-purple"
-              onClick={openModal}
-            />
+            <PencilFill className="me-1 text-gu-purple" onClick={openModal} />
           </div>
         </div>
       </div>
