@@ -1,4 +1,4 @@
-import { Navbar, Container, Nav } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
 import { AdminRoute } from 'common/enums/enums';
 
 import Companies from './companies/companies';
@@ -33,7 +33,7 @@ const Admin: React.FC<Props> = ({ variant }) => {
         className="growup-navigation mb-5"
         bg="growup-navigation"
       >
-        <Container>
+        <div className="container-md">
           <Navbar.Brand>
             <Link
               to={AdminRoute.ADMIN}
@@ -56,9 +56,9 @@ const Admin: React.FC<Props> = ({ variant }) => {
               />
             </Nav.Item>
           </Nav>
-        </Container>
+        </div>
       </Navbar>
-      <Container className="d-grid gap-2">
+      <div className="d-grid gap-2 container-md">
         <div className="row">
           <div className="col-12">
             <Nav variant="tabs" defaultActiveKey="/">
@@ -111,7 +111,7 @@ const Admin: React.FC<Props> = ({ variant }) => {
           {variant === Variants.career && <CareerPath />}
           {variant === Variants.connect && <PathConnection />}
         </div>
-      </Container>
+      </div>
     </>
   );
 };
