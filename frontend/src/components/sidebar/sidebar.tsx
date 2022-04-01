@@ -16,10 +16,8 @@ const Sidebar: React.FC = () => {
   const { user } = useAppSelector((state) => state.auth);
   const isBlockedButton = user?.firstName && user?.isCompleteTest;
   const [isBurgerActive, setIsBurgerActive] = useState(true);
-  // const [isFirstTime, setIsFirstTime] = useState(true);
 
   const burgerClickHandler = (): void => {
-    // setIsFirstTime(false);
     isBurgerActive ? setIsBurgerActive(false) : setIsBurgerActive(true);
   };
 
