@@ -53,10 +53,10 @@ const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHandler }) => {
     dispatch(okrActions.updateOkrById_async({ ...currentOkr, ...values }))
       .unwrap()
       .then(() => {
-        NotificationManager.success('OKR was deleted successfully');
+        NotificationManager.success('OKR was updated successfully');
       })
       .catch(() => {
-        NotificationManager.error('Can`t delete OKR');
+        NotificationManager.error('Can`t update OKR');
       });
     goBackHandler();
   };
