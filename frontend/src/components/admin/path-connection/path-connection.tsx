@@ -100,6 +100,22 @@ const PathConnection: React.FC = () => {
     }
   };
 
+  const levels = (): number => {
+    const arrayLevel = domains.map((el) => el.levels);
+    const numLevel = arrayLevel.map((el) => el.length);
+    const startValue = 0;
+    const sumWithInitial = numLevel.reduce(
+      (previousValue, currentValue) => previousValue + currentValue,
+      startValue,
+    );
+    return sumWithInitial;
+  };
+
+  const isActivePairSkills = (): boolean => {
+    if (levels() < 2) return false;
+    return true;
+  };
+
   // const connectDomains = (): void => {
   //      if (nextDomainId && prevDomainId) {
   //        dispatch(
@@ -158,7 +174,13 @@ const PathConnection: React.FC = () => {
                   </div>
                 </div>
                 <div className="d-flex gap-2">
-                  <Button variant="primary" onClick={connectLevels}>
+                  <Button
+                    className={
+                      'btn bg-gu-blue border-0 ' +
+                      (isActivePairSkills() ? '' : 'disabled')
+                    }
+                    onClick={connectLevels}
+                  >
                     Pair levels
                   </Button>
                   {/* <Button variant="primary" onClick={connectDomains}>
