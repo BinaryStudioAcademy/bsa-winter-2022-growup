@@ -10,7 +10,7 @@ interface Props {
   show: boolean;
   handleClose: () => void;
   typeTitle: string;
-  general: string;
+  general: string[];
   managing: IManaging;
   relationShip: IRelations;
 }
