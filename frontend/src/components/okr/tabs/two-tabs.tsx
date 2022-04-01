@@ -39,12 +39,12 @@ function ControlledTabs(): React.ReactElement {
         id="controlled-tab-example"
         activeKey={key}
         onSelect={(k): void => setKey(k as string)}
-        className="mb-3"
+        className="mb-3 tabs"
       >
-        <Tab eventKey="my-OKR" title="My OKR">
+        <Tab eventKey="my-OKR" title="My OKR" className="tabs__tab me-3">
           <OkrList collection={ownOkr} />
         </Tab>
-        <Tab eventKey="all-OKR" title="All OKRs">
+        <Tab eventKey="all-OKR" title="All OKRs" className="tabs__tab">
           <OkrList collection={okrs} />
         </Tab>
       </Tabs>

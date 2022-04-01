@@ -48,7 +48,7 @@ const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHanlder }) => {
 
   return (
     <>
-      <div className="okr__header">
+      <div className="okr__header px-1">
         <div className="d-flex justify-content-between mb-4">
           <span
             className="fs-6 cursor-pointer d-flex align-items-center hover-black"
