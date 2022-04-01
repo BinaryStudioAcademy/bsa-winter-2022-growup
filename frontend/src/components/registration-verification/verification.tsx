@@ -1,5 +1,4 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { Spinner } from 'react-bootstrap';
 import { NotificationManager } from 'react-notifications';
 
 import { useEffect, useAppDispatch } from 'hooks/hooks';
@@ -24,11 +23,7 @@ const Verification: React.FC = () => {
       });
   }, []);
 
-  return (
-    <div className="position-absolute top-50 start-50 translate-50-50">
-      <Spinner animation="grow" variant="gu-pink" />
-    </div>
-  );
+  return <></>;
 };
 
 export default Verification;
