@@ -65,8 +65,12 @@ const fetchAllLevels = createAsyncThunk<
   string,
   ThunkApiType
 >(ActionType.FETCH_ALL_LEVELS, async (initialId, { extra: { services } }) => {
-  const levels = [];
-  const levelIds = [initialId];
+  const levels: ICareerPathLevel[] = [];
+  const levelIds: string[] = [];
+
+  const currentLevel = await services.careerPath.fetchUserLevel(initialId);
+  levelIds.push(...currentLevel.nextLevels);
+  levels.push(currentLevel);
 
   while (levelIds.length) {
     const currentId = levelIds.shift();

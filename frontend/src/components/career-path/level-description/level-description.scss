@@ -2,6 +2,7 @@
 
 .level-description {
   min-width: 450px;
+  width: 550px;
   max-width: 550px;
   margin-left: 20px;
 }
@@ -27,6 +28,7 @@
 
 @media (max-width: 1500px) {
   .level-description {
+    width: inherit;
     max-width: inherit;
     margin: 20px 0;
     height: 100%;
