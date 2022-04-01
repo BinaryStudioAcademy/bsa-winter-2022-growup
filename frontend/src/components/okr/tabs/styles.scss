@@ -4,6 +4,7 @@
   display: flex !important;
   flex-direction: column;
 }
+
 .hover-blue {
   transition: all 0.3s ease-in-out;
   &:hover {
@@ -22,5 +23,25 @@
   transition: all 0.3s ease-in-out;
   &:hover {
     color: $gu-pink !important;
+  }
+}
+.OKR-page {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 285px);
+  row-gap: 20px;
+  column-gap: 20px;
+}
+
+.okr-tab__active {
+  position: relative;
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 23px;
+    left: 0;
+    width: 100%;
+    background-color: $gu-blue;
+    height: 2px;
   }
 }
