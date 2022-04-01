@@ -19,6 +19,7 @@ import { actions } from 'store/skill/slice';
 import { skill as skillValidationSchema } from 'validation-schemas/validation-schemas';
 import { skillActions } from 'store/skill';
 import { NotificationManager } from 'react-notifications';
+import { fetchAllLevels } from 'store/career-path/actions';
 import './styles.scss';
 
 const SkillOverview = (): React.ReactElement => {
@@ -26,6 +27,9 @@ const SkillOverview = (): React.ReactElement => {
     (state: RootState) => state.skill,
   );
   const { user } = useAppSelector((state: RootState) => state.profile);
+  const { levels } = useAppSelector((state) => state.careerPath);
+  const level = levels.find((el) => el.id === user?.level?.id);
+  const currentLevel = useAppSelector((state) => state.auth.user?.level);
   const [textFind, setTextFind] = useState('');
   const [selectSkills, setSelectSkills] = useState('all');
   const [isManager, setIsManager] = useState(true);
@@ -39,10 +43,11 @@ const SkillOverview = (): React.ReactElement => {
   const skillNotStarred = userSkill.filter((skill: ISkill) => !skill.isStarred);
 
   useEffect(() => {
+    dispatch(fetchAllLevels(currentLevel?.id || ''));
     dispatch(skillActions.fetchUserSkills());
     dispatch(skillActions.fetchSkills());
     dispatch(skillActions.fetchUserCareerPathSkills());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     const isAlreadyMerged = userSkill?.some((skill) => skill.isFromCareerPath);
@@ -168,7 +173,8 @@ const SkillOverview = (): React.ReactElement => {
             avatar={user.avatar}
             firstName={user.firstName}
             lastName={user.lastName}
-            position={user.position}
+            domainName={level ? level.domainName : ''}
+            name={level ? level.name : ''}
           />
         </div>
       ) : (
