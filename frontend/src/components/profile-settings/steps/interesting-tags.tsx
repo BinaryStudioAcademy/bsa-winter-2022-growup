@@ -2,7 +2,7 @@ import InterestsBlock from './interests-block';
 
 const InterestingTags: React.FC = () => (
   <InterestsBlock>
-    <div className="group">No Data</div>
+    <div className="group text-center">No Data</div>
   </InterestsBlock>
 );
 

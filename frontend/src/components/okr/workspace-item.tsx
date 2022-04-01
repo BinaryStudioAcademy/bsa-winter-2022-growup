@@ -30,7 +30,7 @@ const OrkItem: React.FC<Props> = ({
   return (
     <>
       <div
-        className={`okr-container bg-white ms-3 mb-3 py-2 px-3 cursor-pointer
+        className={`okr-container bg-white  py-2 px-3 cursor-pointer
         ${okr.status == StatusType.close && 'okr-disable'}`}
         onClick={(): void => onClickInfo(okr.id)}
       >
