@@ -17,6 +17,13 @@ const okrValidationSchema = (isEdit: boolean): Joi.ObjectSchema<IOkr> => {
   const message = OkrValidationMessage(isEdit);
 
   return Joi.object({
+    id: Joi.optional(),
+    createdAt: Joi.optional(),
+    deletedAt: Joi.optional(),
+    updatedAt: Joi.optional(),
+    type: Joi.optional(),
+    status: Joi.optional(),
+    objectives: Joi.optional(),
     [OkrPayloadKey.NAME]: Joi.string()
       .trim()
       .min(SkillValidationRule.NAME_MIN_LENGTH)

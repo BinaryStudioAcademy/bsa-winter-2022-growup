@@ -51,15 +51,21 @@ const CareerPath: React.FC = () => {
 
   return (
     <div className="career-path">
-      <div className="w-100 h-100">
-        <LevelFlow nodes={nodes} edges={edges} />
-      </div>
-      <LevelDescription
-        level={levelName}
-        acquiredSkills={acquiredSkills}
-        totalSkills={totalSkills}
-        technicalSkills={skills}
-      />
+      {initialSkill.skills.length ? (
+        <>
+          <div className="w-100 h-100">
+            <LevelFlow nodes={nodes} edges={edges} />
+          </div>
+          <LevelDescription
+            level={levelName}
+            acquiredSkills={acquiredSkills}
+            totalSkills={totalSkills}
+            technicalSkills={skills}
+          />
+        </>
+      ) : (
+        <div>Not career path yet</div>
+      )}
     </div>
   );
 };

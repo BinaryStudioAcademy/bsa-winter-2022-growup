@@ -9,7 +9,7 @@ import {
   resendActivationMailController,
 } from '../controllers/user-managment.controller';
 
-import { deleteTag, getTags } from '~/services/tag.service';
+import { deleteTag, getTags, connectTags } from '~/services/tag.service';
 import {
   getCommonUserList,
   deleteUser,
@@ -29,6 +29,10 @@ router
     run((req) => getTags(req.userId)),
   )
   .post('/tags', run(createTagsController))
+  .post(
+    '/selfTags',
+    run((req) => connectTags(req.body, req.userId)),
+  )
   .delete(
     '/tags/:id',
     validatePermissions([RoleType.ADMIN]),
