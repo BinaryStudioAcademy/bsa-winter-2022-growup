@@ -36,6 +36,7 @@ const NewObjectiveModal: React.FC<Props> = ({
 
   function validResult(el: number): boolean {
     if (Math.floor(el) != el) return false;
+    if (el < 0 || el > 100) return false;
     return true;
   }
 
@@ -122,7 +123,7 @@ const NewObjectiveModal: React.FC<Props> = ({
         {fields.map((field, index) => {
           return (
             <Form.Group
-              className="d-flex align-items-center mt-3 ms-3"
+              className="d-flex align-items-start mt-3 ms-3"
               key={index}
             >
               <div className="me-4">
@@ -164,7 +165,7 @@ const NewObjectiveModal: React.FC<Props> = ({
               </div>
               <Button
                 onClick={(): void => remove(index)}
-                className="border-0 bg-transparent text-gu-black hover-pink"
+                className="border-0 bg-transparent text-gu-black hover-pink align-self-center mb-3"
               >
                 <XLg />
               </Button>

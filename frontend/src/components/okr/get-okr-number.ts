@@ -10,7 +10,7 @@ const getOkrNumber = (okr: IOkr): number => {
       : 0;
 
     const score = objectives.length
-      ? +(sum / objectives.length / 100).toFixed(2)
+      ? Math.round(+(sum / objectives.length))
       : 0;
 
     return score;

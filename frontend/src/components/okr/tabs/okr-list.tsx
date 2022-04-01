@@ -25,7 +25,7 @@ const OkrList: React.FC<Props> = ({ collection }) => {
         <OkrInfo id={currentShowOkr} goBackHanlder={okrGoBackHandler} />
       ) : (
         <>
-          <div className="OKR-page d-flex flex-row flex-wrap">
+          <div className="OKR-page mt-4">
             {collection.map((okr: IOkr, index) => {
               const objectives = okr.objectives;
               let objectivesCounter = 0;
