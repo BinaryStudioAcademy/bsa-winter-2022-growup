@@ -24,6 +24,7 @@ interface IUser extends IUserDefault {
   educations: IEducation[];
   tags: ITag[];
   domainName?: string;
+  domain?: string;
   name?: string;
 }
 

@@ -75,10 +75,12 @@ const UserItem: React.FC<Props> = memo(({ user }) => {
             className="btn bg-gu-blue border-0 text-white"
             onClick={openPositionModal}
           >
-            {user?.position || 'Set position'}
+            {user?.position && user?.domain
+              ? `${user?.position || ''}  ${user?.domain || ''}`
+              : 'Set position'}
           </button>
         ) : (
-          user?.position || ''
+          `${user?.position || ''}  ${user?.domain || ''}`
         )}
       </td>
       <td style={{ width: '1%', whiteSpace: 'nowrap' }}>
