@@ -17,7 +17,7 @@ import { authActions } from 'store/auth';
 const ProfileInfo: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const { user, isLoading } = useAppSelector((state) => state.profile);
-  const [activeComponentId, setActiveComponentId] = useState(0);
+  const [activeComponentId, setActiveComponentId] = useState(1);
   const navigate = useNavigate();
 
   useEffect(() => {

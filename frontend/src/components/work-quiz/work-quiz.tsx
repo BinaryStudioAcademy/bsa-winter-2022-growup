@@ -4,6 +4,7 @@ import {
   useAppDispatch,
   useAppSelector,
   useEffect,
+  useNavigate,
   useState,
 } from 'hooks/hooks';
 import { workStyleQuizActions } from 'store/actions';
