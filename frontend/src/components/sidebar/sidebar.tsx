@@ -10,22 +10,29 @@ import { Link } from 'components/common/common';
 import './styles.scss';
 import { useAppSelector, useEffect, useState } from 'hooks/hooks';
 import { RoleType } from 'growup-shared';
-import { List } from 'react-bootstrap-icons';
+import { ChevronLeft } from 'react-bootstrap-icons';
 
 const Sidebar: React.FC = () => {
   const { user } = useAppSelector((state) => state.auth);
   const isBlockedButton = user?.firstName && user?.isCompleteTest;
   const [isBurgerActive, setIsBurgerActive] = useState(false);
+  const [isFirstTime, setIsFirstTime] = useState(true);
 
   const burgerClickHandler = (): void => {
+    setIsFirstTime(false);
     isBurgerActive ? setIsBurgerActive(false) : setIsBurgerActive(true);
   };
 
   useEffect(() => {
     const rootElement = document.querySelector('.wrapper') as Element;
-    isBurgerActive
-      ? rootElement.classList.add('wrapper__burger-active')
-      : rootElement.classList.remove('wrapper__burger-active');
+    const headerElement = document.querySelector('.header-section') as Element;
+    if (isBurgerActive) {
+      rootElement.classList.add('wrapper__burger-active');
+      headerElement.classList.add('header-section--burger-active');
+    } else {
+      rootElement.classList.remove('wrapper__burger-active');
+      headerElement.classList.remove('header-section--burger-active');
+    }
   }, [isBurgerActive]);
 
   return (
@@ -36,19 +43,19 @@ const Sidebar: React.FC = () => {
       `}
       >
         <div
-          className={`d-flex justify-content-center  ${
+          className={`d-flex   ${
             isBurgerActive ? 'flex-column-reverse align-items-center' : ''
           }`}
         >
           <div
-            className={` sidebar__burger d-none d-md-block cursor-pointer  ${
-              isBurgerActive
-                ? 'sidebar__burger--active position-absolute'
-                : 'mt-2'
+            className={` sidebar__burger d-none d-md-block cursor-pointer  rounded-circle position-absolute bg-gu-purple ${
+              isBurgerActive ? 'sidebar__burger--active' : ''
             }`}
-            onClick={burgerClickHandler}
+            onClick={(): void => {
+              burgerClickHandler();
+            }}
           >
-            <List className="isBurgerActive" />
+            <ChevronLeft className="isBurgerActive text-gu-white position-absolute top-50 start-50 translate-middle" />
           </div>
 
           <Link to={MentorMenteeRoute.HOME}>
@@ -59,8 +66,8 @@ const Sidebar: React.FC = () => {
                 alt="logo"
               />
               <span
-                className={`logo-section__title logo-title fs-1 text-gu-white m-0 d-none  ${
-                  isBurgerActive ? '' : 'd-md-block'
+                className={`logo-section__title logo-title fs-1 text-gu-white m-0 ${
+                  isFirstTime ? '' : 'title-anim'
                 }`}
               >
                 Grow Up
@@ -87,9 +94,8 @@ const Sidebar: React.FC = () => {
               <Link to={MentorMenteeRoute.HOME}>
                 <span
                   className={`navigation-item__link navigation-link d-flex
-                  ${
-                    isBurgerActive ? '' : ' ps-md-4'
-                  } p-2 align-items-center  fs-4 font-weight-normal
+                  ${isBurgerActive ? '' : ' ps-md-4'}
+                  p-2 align-items-center  fs-4 font-weight-normal
                   text-gu-white`}
                 >
                   <HomeIcon
@@ -98,8 +104,8 @@ const Sidebar: React.FC = () => {
                     }`}
                   />
                   <span
-                    className={`navigation-link__title d-none  ${
-                      isBurgerActive ? '' : 'd-md-block'
+                    className={`navigation-link__title ${
+                      isFirstTime ? '' : 'title-anim'
                     }`}
                   >
                     Home
@@ -127,8 +133,8 @@ const Sidebar: React.FC = () => {
                     }`}
                   />
                   <span
-                    className={`navigation-link__title d-none  ${
-                      isBurgerActive ? '' : 'd-md-block'
+                    className={`navigation-link__title ${
+                      isFirstTime ? '' : 'title-anim'
                     }`}
                   >
                     Opportunities
@@ -151,8 +157,8 @@ const Sidebar: React.FC = () => {
                     }`}
                   />
                   <span
-                    className={`navigation-link__title d-none ${
-                      isBurgerActive ? '' : 'd-md-block'
+                    className={`navigation-link__title ${
+                      isFirstTime ? '' : 'title-anim'
                     }`}
                   >
                     Profile
@@ -180,8 +186,8 @@ const Sidebar: React.FC = () => {
                     }`}
                   />
                   <span
-                    className={`navigation-link__title d-none  ${
-                      isBurgerActive ? '' : 'd-md-block'
+                    className={`navigation-link__title ${
+                      isFirstTime ? '' : 'title-anim'
                     }`}
                   >
                     OKR
@@ -209,8 +215,8 @@ const Sidebar: React.FC = () => {
                     }`}
                   />
                   <span
-                    className={`navigation-link__title d-none  ${
-                      isBurgerActive ? '' : 'd-md-block'
+                    className={`navigation-link__title ${
+                      isFirstTime ? '' : 'title-anim'
                     }`}
                   >
                     Career Path
@@ -239,8 +245,8 @@ const Sidebar: React.FC = () => {
                       }`}
                     />
                     <span
-                      className={`navigation-link__title d-none  ${
-                        isBurgerActive ? '' : 'd-md-block'
+                      className={`navigation-link__title ${
+                        isFirstTime ? '' : 'title-anim'
                       }`}
                     >
                       Mentee Profiles

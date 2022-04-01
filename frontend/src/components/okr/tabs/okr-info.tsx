@@ -1,5 +1,5 @@
-import { useAppSelector, useAppDispatch } from 'hooks/store/store.hooks';
-import { ArrowLeft, Calendar } from 'react-bootstrap-icons';
+import { useAppDispatch, useAppSelector } from 'hooks/store/store.hooks';
+import { ArrowLeft, Calendar, Trash, XLg } from 'react-bootstrap-icons';
 import dayjs from 'dayjs';
 import Objective from '../objective/objective';
 import { useState } from 'react';
@@ -62,13 +62,13 @@ const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHanlder }) => {
               className="cursor-pointer text-gu-blue hover-blue"
               onClick={closeOkrHandler}
             >
-              close OKR
+              <XLg />
             </span>
             <span
               className="cursor-pointer text-gu-pink mt-2"
               onClick={deteOkrHandler}
             >
-              delete OKR
+              <Trash />
             </span>
           </div>
         </div>
@@ -91,7 +91,7 @@ const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHanlder }) => {
               className="text-gu-blue ms-3 fs-6 cursor-pointer fw-bold d-flex align-items-center hover-blue"
               onClick={openModal}
             >
-              <span className="me-1">+</span>Add objectives
+              <span className="me-1">+</span>Add objective
             </span>
           </div>
 

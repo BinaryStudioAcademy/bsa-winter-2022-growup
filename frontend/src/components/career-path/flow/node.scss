@@ -1,0 +1,12 @@
+@import '~assets/scss/utils';
+
+.node__handle {
+  visibility: hidden;
+}
+
+.node__arrow-button {
+  background: $pink-100;
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+}

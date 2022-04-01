@@ -1,0 +1,26 @@
+@import '~assets/scss/utils';
+
+.career-path {
+  display: flex;
+}
+
+@media (max-width: 1500px) {
+  .career-path {
+    flex-flow: column;
+  }
+}
+
+::-webkit-scrollbar-track {
+  position: absolute;
+  width: 3px;
+  height: 15px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $purple-gray;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $purple;
+}

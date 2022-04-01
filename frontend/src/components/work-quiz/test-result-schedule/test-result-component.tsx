@@ -29,7 +29,9 @@ const TestResultComponent: React.FC = (): JSX.Element => {
   const theBestTestType = testData.find(
     (item) => item.value == maxPoints,
   ) as ITestTypeData;
-  const { preDescription, description } = getTypeInfo(theBestTestType.name);
+  const { preDescription, general, managing, relationship } = getTypeInfo(
+    theBestTestType.name,
+  );
 
   return (
     <>
@@ -50,7 +52,9 @@ const TestResultComponent: React.FC = (): JSX.Element => {
         show={show}
         handleClose={handleClose}
         typeTitle={theBestTestType.name}
-        description={description}
+        general={general}
+        managing={managing}
+        relationShip={relationship}
       />
     </>
   );

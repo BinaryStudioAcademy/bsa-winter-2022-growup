@@ -82,7 +82,7 @@ export const EditAvatar: React.FC<Props> = ({
         accept="image/*"
         ref={fileInputRef}
       />
-      {avatar && (
+      {avatar && !image && (
         <Card.Img
           src={avatar ? avatar : 'holder.js/100px180'}
           alt={company ? company.name : 'image'}
@@ -92,8 +92,6 @@ export const EditAvatar: React.FC<Props> = ({
       {image && (
         <>
           <ReactCropper
-            className="w-100"
-            style={{ height: 100 }}
             zoomTo={0.5}
             initialAspectRatio={1}
             aspectRatio={1}
@@ -105,9 +103,9 @@ export const EditAvatar: React.FC<Props> = ({
             background
             autoCropArea={1}
             checkOrientation={false}
+            onInitialized={(instance: Cropper): void => setCropper(instance)}
             responsive
             guides
-            onInitialized={(instance: Cropper): void => setCropper(instance)}
           />
           <div className="d-flex gap-2">
             <Button

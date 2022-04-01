@@ -1,18 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ReducerName } from 'common/enums/app/reducer-name.enum';
 import { State } from './common';
-import domainReducer from './reducer';
+import CareerPathReducer from './reducer';
 
 const initialState: State = {
+  levels: [],
   domains: null,
   isLoading: false,
 };
 
 const { reducer, actions } = createSlice({
-  name: ReducerName.PROFILE,
+  name: ReducerName.CAREER_PATH,
   initialState,
   reducers: {},
-  extraReducers: domainReducer,
+  extraReducers: CareerPathReducer,
 });
 
 export { reducer, actions };

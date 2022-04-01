@@ -20,7 +20,7 @@ const NotFound: FC = () => {
         <Card.Text className="mb-2 mt-1 text-center fs-3">
           The page you are looking for might have been removed.
         </Card.Text>
-        <Button className="text-gu-white mt-3" onClick={onClick}>
+        <Button className="text-gu-white mt-3 border-0" onClick={onClick}>
           Return to website
         </Button>
       </Card.Body>
