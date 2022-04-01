@@ -27,7 +27,7 @@
     width: 15px;
     height: 15px;
   }
-  top: 3.5%;
+  top: 7.5%;
   left: 93%;
 }
 .sidebar-section {
@@ -132,6 +132,10 @@
     background-color: #fff;
     border-radius: 33%;
   }
+  .sidebar__burger {
+    left: 79%;
+  }
+
   .sidebar__burger svg {
     transform: translate(-50%, -50%) rotate(-180deg) !important;
   }

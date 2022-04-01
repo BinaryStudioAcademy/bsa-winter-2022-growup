@@ -8,7 +8,6 @@ import './styles.scss';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
-
   useEffect(() => {
     dispatch(getCurrentUser());
   }, []);
