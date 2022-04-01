@@ -1,10 +1,10 @@
 import OpportunityItem from './opportunity-item';
 import './styles.scss';
 import {
+  useAppDispatch,
   useAppSelector,
   useEffect,
   useState,
-  useAppDispatch,
 } from 'hooks/hooks';
 import { IOpportunity, ITagsData } from 'store/opportunities/common';
 import * as opportunityActions from 'store/opportunities/actions';
@@ -35,7 +35,10 @@ const OpportunityList: React.FC = () => {
 
   return (
     <section className="opportunities text-start d-flex flex-column">
-      <div className="d-flex align-items-center  bg-gu-blue text-gu-white add-section-header justify-content-between">
+      <div
+        style={{ height: 92 }}
+        className="d-flex align-items-center bg-gu-blue text-gu-white add-section-header justify-content-between"
+      >
         <p className="add-section-header__title m-0 fw-bold fs-4">
           Recommended opportunities
         </p>

@@ -4,6 +4,7 @@ import { getLevelSkills } from './get-level-skills';
 import { getUserNode } from './get-user-node';
 import { getLevelNode } from './get-level-node';
 import { getAcquiredSkills } from './get-acquired-skills';
+import { IUser } from 'common/interfaces/user';
 import {
   IAllTechnicalSkills,
   ICareerPathLevel,
@@ -17,6 +18,7 @@ import {
 export const getFlowData = (
   data: ICareerPathLevel[],
   levelId: string,
+  currentUser: IUser | null,
   onClick: (e: IAllTechnicalSkills[], id: string, level: string) => void,
 ): IFlowData => {
   const nodes: INode[] = [];
@@ -41,14 +43,15 @@ export const getFlowData = (
   const userNode: INode = getUserNode(
     currentLevel.domainName,
     currentLevel.name,
+    currentUser,
   );
   nodes.push(userNode);
 
   const nextLevels = currentLevel.nextLevels.map((id) => levelMap[id]);
-  nextLevels.forEach((item) => {
+  nextLevels.forEach((item, index) => {
     const levelNode: INode = getLevelNode(
       item.name,
-      0,
+      index * 120,
       getAcquiredSkills(item.skills),
       item.skills.length,
       () => {
