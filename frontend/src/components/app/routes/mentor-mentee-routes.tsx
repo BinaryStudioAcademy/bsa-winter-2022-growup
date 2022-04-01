@@ -1,4 +1,5 @@
 import { Navigate } from 'hooks/hooks';
+// Functionality not currently in use (mentee profile)
 // import { RoleType } from 'growup-shared';
 import {
   AppRoute,
@@ -44,6 +45,7 @@ export const mentorMenteeRoutes: IRoute[] = [
     path: MentorMenteeRoute.OPPORTUNITIES,
     element: <Opportunities />,
   },
+  // Functionality not currently in use (mentee profile)
   // {
   //   path: MentorMenteeRoute.MENTEE_PROFILES,
   //   element: <div>Mentee Profiles</div>,
