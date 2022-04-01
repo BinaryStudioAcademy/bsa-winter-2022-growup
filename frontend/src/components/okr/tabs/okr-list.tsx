@@ -12,7 +12,7 @@ const OkrList: React.FC<Props> = ({ collection }) => {
   const [isShowCurrentOkr, setIsShowCurrentOkr] = useState(false);
   const [currentShowOkr, setCurrentOkr] = useState('');
 
-  const okrItemHanlder = (id: string): void => {
+  const okrItemHandler = (id: string): void => {
     setIsShowCurrentOkr(true);
     setCurrentOkr(id);
   };
@@ -22,7 +22,7 @@ const OkrList: React.FC<Props> = ({ collection }) => {
   return (
     <>
       {isShowCurrentOkr ? (
-        <OkrInfo id={currentShowOkr} goBackHanlder={okrGoBackHandler} />
+        <OkrInfo id={currentShowOkr} goBackHandler={okrGoBackHandler} />
       ) : (
         <>
           <div className="OKR-page mt-4">
@@ -46,7 +46,7 @@ const OkrList: React.FC<Props> = ({ collection }) => {
                   okr={okr}
                   objectivesCounter={objectivesCounter}
                   resultsCounter={resultsCounter}
-                  onClickInfo={okrItemHanlder}
+                  onClickInfo={okrItemHandler}
                 />
               );
             })}

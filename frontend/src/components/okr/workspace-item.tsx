@@ -30,13 +30,8 @@ const OrkItem: React.FC<Props> = ({
   return (
     <>
       <div
-        className={`okr-container d-flex flex-column bg-white py-3 px-3 w-100
-        ${
-          okr.status == StatusType.close
-            ? 'border-0 okr-disable pe-none'
-            : 'cursor-pointer'
-        }
-        `}
+        className={`okr-container bg-white ms-3 mb-3 py-2 px-3 cursor-pointer
+        ${okr.status == StatusType.close && 'okr-disable'}`}
         onClick={(): void => onClickInfo(okr.id)}
       >
         <div className="d-flex justify-content-between">
