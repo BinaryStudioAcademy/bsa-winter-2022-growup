@@ -62,7 +62,7 @@ const Interests: React.FC<PropTypes> = ({ tagList, otherTags }) => {
           {tagList.length ? (
             tagList.map((tag) => <Tag key={tag.id} tag={tag} />)
           ) : (
-            <p className="m-0 text-center">No tags here...</p>
+            <p className="m-0 text-center">No tags here</p>
           )}
         </div>
       </div>
