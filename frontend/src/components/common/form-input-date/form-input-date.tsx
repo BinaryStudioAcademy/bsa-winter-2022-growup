@@ -11,10 +11,7 @@ import {
   UseControllerReturn,
 } from 'react-hook-form';
 import CustomInput from './custom-input';
-import {
-  MAX_DATE,
-  MIN_DATE,
-} from '../../profile/components/profile-edit/common/constants';
+import { MIN_DATE } from '../../profile/components/profile-edit/common/constants';
 import './styles.scss';
 
 interface Props<T> {
@@ -45,7 +42,7 @@ function FormInputDate<T>({
       dateFormat="dd.MM.yyyy"
       customInputRef="dateRef"
       minDate={minDate || MIN_DATE}
-      maxDate={maxDate || MAX_DATE}
+      maxDate={maxDate}
       selected={
         typeof value === 'string' && value !== ''
           ? new Date(value)
