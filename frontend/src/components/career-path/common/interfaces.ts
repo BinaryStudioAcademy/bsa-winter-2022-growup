@@ -45,7 +45,7 @@ export interface IEdge {
   markerEnd: IMarkedEnd;
 }
 
-export interface IInitialSkill {
+export interface ICurrentSkill {
   name: string;
   skills: IAllTechnicalSkills[];
   acquiredSkills: number;
@@ -55,7 +55,7 @@ export interface IInitialSkill {
 export interface IFlowData {
   nodes: INode[];
   edges: IEdge[];
-  initialSkill: IInitialSkill;
+  currentSkill: ICurrentSkill;
 }
 
 export interface IBase {
