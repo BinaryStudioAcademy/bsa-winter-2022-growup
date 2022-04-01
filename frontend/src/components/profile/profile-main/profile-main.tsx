@@ -50,6 +50,11 @@ const ProfileMain: React.FC = () => {
             {skillNotApproved.map((item, i) => (
               <NotApprovedTag key={i}>{item.name}</NotApprovedTag>
             ))}
+            {skillApproved.length === 0 && skillNotApproved.length === 0 ? (
+              <p className="m-0">No skills here</p>
+            ) : (
+              true
+            )}
           </div>
         </EditSection>
         <Interests
