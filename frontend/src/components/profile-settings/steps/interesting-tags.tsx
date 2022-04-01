@@ -8,7 +8,6 @@ const InterestingTags: React.FC = () => {
   const { userTags, isLoading } = useAppSelector((state) => state.tags);
   const [tagList, setTagList] = useState<ITag[] | undefined>([]);
   useEffect(() => {
-    console.warn('a');
     setTagList(userTags && tags ? [...userTags, ...tags] : []);
   }, [isLoading]);
 
