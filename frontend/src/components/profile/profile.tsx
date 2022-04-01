@@ -13,11 +13,15 @@ import './styles.scss';
 import { tabsElements } from './tabs/tabsElements';
 import isFirstLogged from 'helpers/check-is-first-logged';
 import { authActions } from 'store/auth';
+import { fetchAllLevels } from 'store/career-path/actions';
 
 const ProfileInfo: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const { user, isLoading } = useAppSelector((state) => state.profile);
   const [activeComponentId, setActiveComponentId] = useState(1);
+  const { levels } = useAppSelector((state) => state.careerPath);
+  const level = levels.find((el) => el.id === user?.level?.id);
+  const currentLevel = useAppSelector((state) => state.auth.user?.level);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,6 +29,7 @@ const ProfileInfo: React.FC = (): JSX.Element => {
   }, [user]);
 
   useEffect(() => {
+    dispatch(fetchAllLevels(currentLevel?.id || ''));
     dispatch(profileActions.fetchProfile());
     dispatch(authActions.getCurrentUser());
   }, [dispatch]);
@@ -42,7 +47,8 @@ const ProfileInfo: React.FC = (): JSX.Element => {
               avatar={user.avatar}
               firstName={user.firstName}
               lastName={user.lastName}
-              position={user.position}
+              domainName={level ? level.domainName : ''}
+              name={level ? level.name : ''}
             />
           </div>
           <div className="profile-container profile-container_tabs">

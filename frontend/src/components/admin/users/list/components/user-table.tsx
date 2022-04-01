@@ -46,7 +46,7 @@ const UserTable: React.FC<Props> = memo(({ list }) => {
   };
 
   return (
-    <Table responsive="sm">
+    <Table className="table-sm">
       <thead>
         <tr>
           <th onClick={(): void => sortList(['lastName', !sort.lastName])}>

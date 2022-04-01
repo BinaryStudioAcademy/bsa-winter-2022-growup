@@ -14,6 +14,7 @@ import ControllerDropdown from './components/dropdowns/controller-dropdown';
 
 import UserControls from './components/user-controller/controller-buttons';
 import DropdownControlls from './components/user-controller/dropdown-controller';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 type Props = {
   user: IUser;
@@ -44,9 +45,23 @@ const UserItem: React.FC<Props> = memo(({ user }) => {
 
   return (
     <tr className="align-middle">
-      <td>{user.lastName}</td>
-      <td>{user.firstName}</td>
-      <td>{user.email}</td>
+      <OverlayTrigger
+        overlay={<Tooltip id="tooltip-disabled">{user.lastName}</Tooltip>}
+      >
+        <td className="email-text cursor-pointer">{user.lastName}</td>
+      </OverlayTrigger>
+      <OverlayTrigger
+        overlay={<Tooltip id="tooltip-disabled">{user.firstName}</Tooltip>}
+      >
+        <td className="email-text cursor-pointer">{user.firstName}</td>
+      </OverlayTrigger>
+
+      <OverlayTrigger
+        overlay={<Tooltip id="tooltip-disabled">{user.email}</Tooltip>}
+      >
+        <td className="email-text cursor-pointer">{user.email}</td>
+      </OverlayTrigger>
+
       <td>
         {isShowDropDown ? (
           <RoleDropdown currentRole={user.role} onChange={changeUserRole} />
@@ -67,7 +82,7 @@ const UserItem: React.FC<Props> = memo(({ user }) => {
         )}
       </td>
       <td style={{ width: '1%', whiteSpace: 'nowrap' }}>
-        <div className="d-xs-block d-md-none">
+        <div className="d-xs-block d-lg-none">
           <ControllerDropdown
             id={user.id}
             show={isShowDropDown}
@@ -75,7 +90,7 @@ const UserItem: React.FC<Props> = memo(({ user }) => {
             as={DropdownControlls}
           />
         </div>
-        <div className="d-none d-md-block">
+        <div className="d-none d-lg-block">
           <UserControls
             id={user.id}
             show={isShowDropDown}

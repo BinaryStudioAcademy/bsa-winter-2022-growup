@@ -138,7 +138,10 @@ const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHandler }) => {
             </Button>
           </div>
 
-          <span className="fs-4 text-gu-black fw-bold">{score}</span>
+          <span className="fs-4 text-gu-black fw-bold">
+            {score}
+            {'%'}
+          </span>
         </div>
       </div>
       <div className="okr__main d-flex flex-column pe-4">
