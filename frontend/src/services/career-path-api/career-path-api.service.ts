@@ -229,20 +229,16 @@ class CareerPath {
   ): Promise<IObjective | null> {
     const { levelId, skillId, name } = objective;
 
-    try {
-      const result = await this.http.load(
-        `${this.apiPath}/career-path/level/${levelId}/skill/${skillId}/objective`,
-        {
-          contentType: ContentType.JSON,
-          method: HttpMethod.POST,
-          payload: JSON.stringify({ name }),
-        },
-      );
+    const result = await this.http.load(
+      `${this.apiPath}/career-path/level/${levelId}/skill/${skillId}/objective`,
+      {
+        contentType: ContentType.JSON,
+        method: HttpMethod.POST,
+        payload: JSON.stringify({ name }),
+      },
+    );
 
-      return result as IObjective;
-    } catch {
-      return null;
-    }
+    return result as IObjective;
   }
 
   async updateObjective(
@@ -250,20 +246,16 @@ class CareerPath {
   ): Promise<(IObjectiveSetting & { id: string }) | null> {
     const { id, domainId, levelId, skillId, name } = objective;
 
-    try {
-      const result: ISkill = await this.http.load(
-        `${this.apiPath}/career-path/objective/${id}`,
-        {
-          contentType: ContentType.JSON,
-          method: HttpMethod.PUT,
-          payload: JSON.stringify({ name }),
-        },
-      );
-      const objectiveResult = { ...result, domainId, levelId, skillId };
-      return objectiveResult as IObjectiveSetting & { id: string };
-    } catch {
-      return null;
-    }
+    const result: ISkill = await this.http.load(
+      `${this.apiPath}/career-path/objective/${id}`,
+      {
+        contentType: ContentType.JSON,
+        method: HttpMethod.PUT,
+        payload: JSON.stringify({ name }),
+      },
+    );
+    const objectiveResult = { ...result, domainId, levelId, skillId };
+    return objectiveResult as IObjectiveSetting & { id: string };
   }
 
   async deleteObjective(id: string): Promise<IObjective | null> {

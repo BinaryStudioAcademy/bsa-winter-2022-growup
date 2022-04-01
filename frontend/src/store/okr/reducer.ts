@@ -19,6 +19,11 @@ const okrReducer = (builder: ActionReducerMapBuilder<State>): void => {
         });
       }
     })
+    .addCase(actions.createOkr_async.fulfilled, (state, action) => {
+      if (action.payload) {
+        state.okrs.push(action.payload);
+      }
+    })
     .addCase(actions.updateObjective_async.fulfilled, (state, action) => {
       if (action.payload) {
         const index = state.okrs.findIndex(

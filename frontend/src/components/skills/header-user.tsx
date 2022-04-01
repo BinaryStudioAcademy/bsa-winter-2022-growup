@@ -5,13 +5,17 @@ import { UserAvatar } from 'components/common/common';
 
 import './styles.scss';
 
-type Props = Pick<IUser, 'avatar' | 'firstName' | 'lastName' | 'position'>;
+type Props = Pick<
+  IUser,
+  'avatar' | 'firstName' | 'lastName' | 'domainName' | 'name'
+>;
 
 const ProfileHeader: React.FC<Props> = ({
   avatar,
   firstName,
   lastName,
-  position,
+  domainName,
+  name,
 }) => {
   return (
     <>
@@ -28,10 +32,10 @@ const ProfileHeader: React.FC<Props> = ({
           <p className="profile-description__name fs-2 text-gu-black fw-bold">
             {firstName} {lastName}
           </p>
-          <p className="profile-description__position fs-4">{position}</p>
+          <p className="profile-description__position fs-4">{domainName}</p>
           <div className="level d-flex align-items-center">
             <ShieldFillCheck className="level__icon" />
-            <p className="level__text fs-6">Level 2</p>
+            <p className="level__text fs-6">{name}</p>
           </div>
         </div>
       </div>

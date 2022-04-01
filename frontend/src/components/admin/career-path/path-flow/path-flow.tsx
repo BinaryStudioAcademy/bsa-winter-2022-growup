@@ -124,7 +124,9 @@ const PathFlow: React.FC = () => {
         domainId: domainItemId,
         name: Placeholder.OBJECTIVE,
       }),
-    );
+    )
+      .unwrap()
+      .catch((err) => NotificationManager.error(err.message));
   };
 
   const editObjective = (name: string): void => {
@@ -136,7 +138,9 @@ const PathFlow: React.FC = () => {
         domainId: domainItemId,
         name,
       }),
-    );
+    )
+      .unwrap()
+      .catch((err) => NotificationManager.error(err.message));
   };
 
   const deleteObjective = (objectiveId: string): void => {

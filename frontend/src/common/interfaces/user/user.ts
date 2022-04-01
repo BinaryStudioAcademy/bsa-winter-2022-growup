@@ -23,6 +23,9 @@ interface IUser extends IUserDefault {
   careerJourneys: ICareerJourney[];
   educations: IEducation[];
   tags: ITag[];
+  domainName?: string;
+  domain?: string;
+  name?: string;
 }
 
 export type { IUser };

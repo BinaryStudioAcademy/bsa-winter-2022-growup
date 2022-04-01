@@ -15,7 +15,7 @@ const ProfileSettings: React.FC = () => {
 
   const onNext = (): void => {
     if (activeStep === steps.length) {
-      navigate(ProfileSettingsRoute.PROFILE_SETTINGS_ROOT);
+      navigate(MentorMenteeRoute.PROFILE, { state: true });
       return;
     }
     navigate(`${MentorMenteeRoute.SETTINGS_PROFILE}/${activeStep + 1}`);
