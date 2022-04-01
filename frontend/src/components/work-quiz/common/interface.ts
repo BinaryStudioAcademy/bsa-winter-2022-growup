@@ -18,14 +18,14 @@ export interface IManaging {
 export interface ITypeInfo {
   type: string;
   preDescription: string;
-  general: string;
+  general: string[];
   Relationship: IRelations;
   Managing: IManaging;
 }
 
 export interface DataOutPut {
   preDescription: string;
-  general: string;
+  general: string[];
   managing: IManaging;
   relationship: IRelations;
 }
