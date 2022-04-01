@@ -18,7 +18,7 @@ export const getUserNode = (position: string, level: string): INode => {
         </>
       ),
     },
-    position: { x: 0, y: 0 },
+    position: { x: 50, y: 0 },
     sourcePosition: Position.Right,
   };
 };

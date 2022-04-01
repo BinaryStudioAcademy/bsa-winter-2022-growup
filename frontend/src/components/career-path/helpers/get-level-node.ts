@@ -18,7 +18,7 @@ export const getLevelNode = (
       onClick,
     },
     position: {
-      x: 500,
+      x: 550,
       y,
     },
   };

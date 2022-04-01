@@ -45,10 +45,10 @@ export const getFlowData = (
   nodes.push(userNode);
 
   const nextLevels = currentLevel.nextLevels.map((id) => levelMap[id]);
-  nextLevels.forEach((item) => {
+  nextLevels.forEach((item, index) => {
     const levelNode: INode = getLevelNode(
       item.name,
-      0,
+      index * 120,
       getAcquiredSkills(item.skills),
       item.skills.length,
       () => {

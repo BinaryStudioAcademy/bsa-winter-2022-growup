@@ -29,7 +29,7 @@ const LevelFlow: React.FC<Props> = ({ nodes, edges }) => {
     levelFlow && (levelFlow.style.height = `${levelFlowHeight * prefZoom}px`);
     instance.fitView();
     const { x, zoom } = instance.getViewport();
-    instance.setViewport({ x, y: 25, zoom });
+    instance.setViewport({ x, y: 20, zoom });
   }
 
   return (
