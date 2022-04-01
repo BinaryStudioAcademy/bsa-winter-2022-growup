@@ -14,6 +14,7 @@ import './styles.scss';
 const CareerPath: React.FC = () => {
   const dispatch = useAppDispatch();
 
+  const currentUser = useAppSelector((state) => state.auth.user);
   const currentLevel = useAppSelector((state) => state.auth.user?.level);
   const levelData = useAppSelector((state) => state.careerPath.levels);
 
@@ -27,6 +28,7 @@ const CareerPath: React.FC = () => {
   const { nodes, edges, initialSkill } = getFlowData(
     levelData,
     levelId,
+    currentUser || null,
     (
       technicalSkills: IAllTechnicalSkills[],
       id: string,
