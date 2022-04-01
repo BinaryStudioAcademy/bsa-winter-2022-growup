@@ -29,6 +29,18 @@ const createTags = createAsyncThunk(
   },
 );
 
+const connectTags = createAsyncThunk(
+  ActionType.CONNECT_TAGS,
+  async (data: ITag[], { rejectWithValue }) => {
+    try {
+      const result = await tags.connectTags(data);
+      return result;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
 const deleteTag = createAsyncThunk(
   ActionType.DELETE_TAG,
   async (data: ITag['id'], { rejectWithValue }) => {
@@ -41,4 +53,4 @@ const deleteTag = createAsyncThunk(
   },
 );
 
-export { fetchTags, createTags, deleteTag };
+export { fetchTags, createTags, deleteTag, connectTags };

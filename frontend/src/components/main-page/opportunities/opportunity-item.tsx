@@ -46,7 +46,7 @@ const OpportunityItem: React.FC<Props> = ({
         </span>
       </div>
       <div
-        className={`d-flex fs-7 flex-shrink-0 ${
+        className={`d-flex fs-7 flex-shrink-0 flex-wrap ${
           isOpportunitiesPage ? 'mt-1 ' : 'align-self-end'
         } opacity-75`}
       >
