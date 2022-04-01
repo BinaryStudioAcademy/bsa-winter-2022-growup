@@ -5,6 +5,7 @@ import Avatar from 'react-avatar';
 
 import { useAppDispatch, useNavigate } from 'hooks/hooks';
 import { actions } from 'store/auth/slice';
+import { actions as actionsTag } from 'store/tags/slice';
 
 import { IUser } from 'common/interfaces/user';
 
@@ -25,6 +26,7 @@ const UserAvatar: React.FC<Props> = memo(
 
     const onClick = (): void => {
       dispatch(actions.LOGOUT_USER());
+      dispatch(actionsTag.ADD_TAGS(null));
       navigate(AppRoute.LOGIN);
     };
 
