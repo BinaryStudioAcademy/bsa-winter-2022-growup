@@ -4,6 +4,7 @@ import {
   useAppSelector,
   useNavigate,
   useState,
+  useLocation,
 } from 'hooks/hooks';
 import { profileActions } from 'store/actions';
 
@@ -17,8 +18,10 @@ import { fetchAllLevels } from 'store/career-path/actions';
 
 const ProfileInfo: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
+  const locations = useLocation();
   const { user, isLoading } = useAppSelector((state) => state.profile);
-  const [activeComponentId, setActiveComponentId] = useState(1);
+
+  const [activeComponentId, setActiveComponentId] = useState(0);
   const { levels } = useAppSelector((state) => state.careerPath);
   const level = levels.find((el) => el.id === user?.level?.id);
   const currentLevel = useAppSelector((state) => state.auth.user?.level);
@@ -27,6 +30,10 @@ const ProfileInfo: React.FC = (): JSX.Element => {
   useEffect(() => {
     isFirstLogged({ user, navigate });
   }, [user]);
+
+  useEffect(() => {
+    if (locations.state) setActiveComponentId(1);
+  }, []);
 
   useEffect(() => {
     dispatch(fetchAllLevels(currentLevel?.id || ''));

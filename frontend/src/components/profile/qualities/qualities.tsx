@@ -14,7 +14,7 @@ const Qualities: React.FC = () => {
 
   return (
     <div className="pt-4 position-relative w-100">
-      {results ? (
+      {results?.length ? (
         <TestResultComponent />
       ) : (
         <div className="position-absolute start-50 translate-middle loader">
