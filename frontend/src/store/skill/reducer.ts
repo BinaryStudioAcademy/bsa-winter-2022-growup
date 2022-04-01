@@ -69,7 +69,7 @@ const SkillReducer = (builder: ActionReducerMapBuilder<State>): void => {
     const newAction: ISkill[] = state.userSkill.map((skill: ISkill) => {
       if (action.payload)
         if (skill.id === action.payload.id) {
-          return action.payload;
+          return { ...action.payload, isFromCareerPath: true };
         }
       return skill;
     });

@@ -187,6 +187,7 @@ export const getCommonUserList = async (id: string): Promise<IListUser[]> => {
     ...user,
     company: user.company.id,
     level: user.level?.id || null,
+    domain: user.level?.domain?.name || null,
   }));
 
   return users;
@@ -195,7 +196,14 @@ export const getCommonUserList = async (id: string): Promise<IListUser[]> => {
 export const fetchUser = async (id: User['id']): Promise<User> => {
   const userRepository = getCustomRepository(UserRepository);
   const user = await userRepository.findOne({
-    relations: ['company', 'careerJourneys', 'educations', 'level', 'tags'],
+    relations: [
+      'company',
+      'careerJourneys',
+      'educations',
+      'level',
+      'tags',
+      'level.domain',
+    ],
     where: { id },
   });
   return user;
