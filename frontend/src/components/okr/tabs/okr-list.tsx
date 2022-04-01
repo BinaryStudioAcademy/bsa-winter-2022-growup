@@ -2,7 +2,9 @@ import OrkItem from '../workspace-item';
 import OkrInfo from './okr-info';
 import './styles.scss';
 import { IOkr } from 'common/interfaces/okr';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import * as okrActions from '../../../store/okr/actions';
+import { useAppDispatch, useAppSelector } from 'hooks/store/store.hooks';
 
 interface Props {
   collection: IOkr[];
@@ -11,6 +13,8 @@ interface Props {
 const OkrList: React.FC<Props> = ({ collection }) => {
   const [isShowCurrentOkr, setIsShowCurrentOkr] = useState(false);
   const [currentShowOkr, setCurrentOkr] = useState('');
+  const dispatch = useAppDispatch();
+  const okrItems = useAppSelector((store) => store.okr.okrs);
 
   const okrItemHandler = (id: string): void => {
     setIsShowCurrentOkr(true);
@@ -18,6 +22,16 @@ const OkrList: React.FC<Props> = ({ collection }) => {
   };
 
   const okrGoBackHandler = (): void => setIsShowCurrentOkr(false);
+
+  useEffect(() => {
+    const today = new Date();
+    okrItems.forEach((okr) => {
+      if (okr.status === 'open')
+        if (new Date(okr.endDate) < today || new Date(okr.startDate) > today) {
+          dispatch(okrActions.closeOkr({ okrId: okr.id }));
+        }
+    });
+  }, [okrItems]);
 
   return (
     <>

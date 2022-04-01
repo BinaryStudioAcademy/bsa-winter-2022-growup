@@ -40,7 +40,7 @@ const getOkrById_async = createAsyncThunk(
 );
 
 const createOkr_async = createAsyncThunk(
-  ActionType.UPDATE_OKR_BY_ID,
+  ActionType.CREATE_OKR,
   async (okrBody: IOkr, { rejectWithValue }) => {
     try {
       const result = await okrApi.createOkr(okrBody);
