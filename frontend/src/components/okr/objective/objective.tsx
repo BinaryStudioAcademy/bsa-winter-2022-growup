@@ -6,9 +6,11 @@ import './style.scss';
 import * as okrActions from '../../../store/okr/actions';
 import { useAppDispatch } from 'hooks/hooks';
 import { NotificationManager } from 'react-notifications';
+
 interface Props {
   objective: IObjective;
   okrId: string;
+  isClosedOkr: boolean;
   setObjective: (id: string) => void;
   openUpdateModal: () => void;
 }
@@ -16,6 +18,7 @@ interface Props {
 const Objective: React.FC<Props> = ({
   objective,
   okrId,
+  isClosedOkr,
   setObjective,
   openUpdateModal,
 }) => {
@@ -44,15 +47,17 @@ const Objective: React.FC<Props> = ({
           </span>
           <Button
             className="border-0 bg-transparent text-gu-black hover-pink p-1"
+            disabled={isClosedOkr}
             onClick={editObject}
           >
-            <Pencil></Pencil>
+            <Pencil />
           </Button>
           <Button
             className="border-0 bg-transparent text-gu-black hover-pink p-1"
+            disabled={isClosedOkr}
             onClick={deleteObjectiveHandler}
           >
-            <Trash></Trash>
+            <Trash />
           </Button>
         </div>
       </div>

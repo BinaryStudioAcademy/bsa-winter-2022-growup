@@ -1,11 +1,5 @@
 import { useAppDispatch, useAppSelector } from 'hooks/store/store.hooks';
-import {
-  ArrowLeft,
-  Calendar,
-  PencilFill,
-  Trash,
-  XLg,
-} from 'react-bootstrap-icons';
+import { ArrowLeft, Calendar, Pencil, Trash, XLg } from 'react-bootstrap-icons';
 import dayjs from 'dayjs';
 import Objective from '../objective/objective';
 import React, { useState } from 'react';
@@ -16,6 +10,8 @@ import { NotificationManager } from 'react-notifications';
 import getOkrNumber from '../get-okr-number';
 import OkrForm from './okr-form/okr-form';
 import { IOkr } from 'common/interfaces/okr';
+import { Button } from '../../common/common';
+import { StatusType } from 'store/okr/common';
 
 interface IOkrInfoProps {
   id: string;
@@ -34,6 +30,7 @@ const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHandler }) => {
   const [objectiveId, setObjectiveId] = useState('');
 
   const currentOkr = okrItems.find((item) => item.id == id) as IOkr;
+  const isClosedOkr = currentOkr.status === StatusType.close;
   const score = getOkrNumber(currentOkr);
   const setObjective = (id: string): void => setObjectiveId(id);
 
@@ -85,31 +82,33 @@ const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHandler }) => {
             back
           </span>
           <div className="d-flex flex-column justify-content-end text-end">
-            <span
-              className="cursor-pointer text-gu-purple hover-pink"
+            <Button
+              className="border-0 p-0 bg-transparent text-gu-purple hover-pink"
+              disabled={isClosedOkr}
               onClick={closeOkrHandler}
             >
               <XLg />
-            </span>
-            <span
-              className="cursor-pointer text-gu-purple hover-pink mt-2"
+            </Button>
+            <Button
+              className="border-0 bg-transparent text-gu-purple hover-pink p-0 mt-2"
+              disabled={isClosedOkr}
               onClick={deleteOkrHandler}
             >
               <Trash />
-            </span>
+            </Button>
           </div>
         </div>
         <>
           <span className="fs-2 text-gu-black fw-bold mb-2">
             {currentOkr?.name}
           </span>
-          <button
-            className="mb-2 ms-2 cursor-pointer border-0 bg-transparent"
+          <Button
+            className="border-0 bg-transparent text-gu-purple hover-pink mb-2 ms-1"
+            disabled={isClosedOkr}
             onClick={openEditOkrModal}
           >
-            {isShowEditOkrModal}
-            <PencilFill className="mb-1 text-gu-purple hover-pink" />
-          </button>
+            <Pencil />
+          </Button>
           {isShowEditOkrModal && (
             <OkrForm
               okr={currentOkr}
@@ -130,12 +129,13 @@ const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHandler }) => {
                   : null}
               </span>
             </span>
-            <span
-              className="text-gu-blue ms-3 fs-6 cursor-pointer fw-bold d-flex align-items-center hover-blue"
+            <Button
+              className="border-0 ms-3 fs-6 fw-bold d-flex align-items-center bg-transparent text-gu-blue hover-pink"
+              disabled={isClosedOkr}
               onClick={openModal}
             >
               <span className="me-1">+</span>Add objective
-            </span>
+            </Button>
           </div>
 
           <span className="fs-4 text-gu-black fw-bold">{score}</span>
@@ -148,6 +148,7 @@ const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHandler }) => {
               objective={item}
               key={index}
               okrId={id}
+              isClosedOkr={isClosedOkr}
               openUpdateModal={openUpdateModal}
               setObjective={setObjective}
             />
