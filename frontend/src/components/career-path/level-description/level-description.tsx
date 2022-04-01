@@ -17,7 +17,7 @@ const LevelDescription: React.FC<Props> = ({
   technicalSkills,
 }) => {
   return (
-    <div className="level-description bg-white ms-3">
+    <div className="level-description bg-white">
       <div className="level-description__title d-grid bg-gu-blue">
         <span className="fs-5 fw-bold text-white">{level}</span>
         <span className="level-description__subtitle fs-6">
