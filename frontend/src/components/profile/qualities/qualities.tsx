@@ -18,7 +18,7 @@ const Qualities: React.FC = () => {
           <TestResultComponent />
         </div>
       ) : (
-        <div>There is no result of your test.Or wait a moment...</div>
+        <p>Loading...</p>
       )}
     </>
   );

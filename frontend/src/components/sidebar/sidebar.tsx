@@ -48,7 +48,7 @@ const Sidebar: React.FC = () => {
           }`}
         >
           <div
-            className={` sidebar__burger d-none d-md-block cursor-pointer  rounded-circle position-absolute bg-gu-blue ${
+            className={` sidebar__burger d-none d-md-block cursor-pointer rounded-circle position-absolute bg-gu-blue ${
               isBurgerActive ? 'sidebar__burger--active' : ''
             }`}
             onClick={(): void => {
