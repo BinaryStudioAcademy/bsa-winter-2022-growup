@@ -23,7 +23,7 @@ type State = {
 
 const initialState: State = {
   user: null,
-  isLoading: false,
+  isLoading: true,
   isAuthenticated: false,
   isReject: false,
 };
@@ -82,7 +82,6 @@ const { reducer, actions } = createSlice({
         (state, action) => {
           state.isAuthenticated = true;
           state.isLoading = false;
-
           const { user } = action.payload;
           state.user = user;
         },

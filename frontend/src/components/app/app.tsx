@@ -14,7 +14,7 @@ import Loader from 'components/loader/loader';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isOurLoading, setIsOurLoading] = useState(true);
   useEffect(() => {
     dispatch(getCurrentUser());
   }, []);
@@ -22,11 +22,24 @@ const App: React.FC = () => {
   const isAdmin = useAppSelector(
     (state) => state.auth.user?.role === RoleType.ADMIN,
   );
-  const { isAuthenticated, user } = useAppSelector((state) => state.auth);
+  const { isAuthenticated, user, isLoading } = useAppSelector(
+    (state) => state.auth,
+  );
 
   useEffect(() => {
-    if (user) setIsLoading(false);
-  }, [user]);
+    if (user) {
+      setIsOurLoading(false);
+      return;
+    }
+    if (user == null && !isLoading) {
+      setIsOurLoading(false);
+      return;
+    }
+    if (user == null && isLoading) {
+      setIsOurLoading(true);
+      return;
+    }
+  }, [user, isLoading]);
 
   useEffect(() => {
     dispatch(tagsActions.fetchTags());
@@ -34,7 +47,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      {isLoading ? (
+      {isOurLoading ? (
         <div className="position-absolute top-50 start-50 translate-50-50">
           <Loader />
         </div>
