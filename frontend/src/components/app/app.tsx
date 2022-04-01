@@ -29,15 +29,12 @@ const App: React.FC = () => {
   useEffect(() => {
     if (user) {
       setIsOurLoading(false);
-      return;
     }
     if (user == null && !isLoading) {
       setIsOurLoading(false);
-      return;
     }
     if (user == null && isLoading) {
       setIsOurLoading(true);
-      return;
     }
   }, [user, isLoading]);
 
