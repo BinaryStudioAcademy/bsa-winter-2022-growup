@@ -2,6 +2,8 @@ import { getCustomRepository, In } from 'typeorm';
 import SkillObjectiveRepository from '~/data/repositories/skill-objective.repository';
 
 import { SkillObjective } from '~/data/entities/skill-objective';
+import { HttpCode, HttpError } from 'growup-shared';
+import { asyncForEach } from '~/common/helpers/array.helper';
 
 type SkillObjectiveProps = Pick<SkillObjective, 'category' | 'name'>;
 
@@ -12,6 +14,19 @@ export const upsertObjectives = async (
   const skillObjectiveRepository = getCustomRepository(
     SkillObjectiveRepository,
   );
+  await asyncForEach(async (objective) => {
+    if (objective.name) {
+      const target = await skillObjectiveRepository.findOne({
+        name: objective.name,
+      });
+      if (target)
+        throw new HttpError({
+          status: HttpCode.BAD_REQUEST,
+          message: 'Objective with this name already exists',
+        });
+    }
+  }, data);
+
   await skillObjectiveRepository.bulkCreate(data);
 
   const objectives = await skillObjectiveRepository.find({
@@ -42,6 +57,14 @@ export const updateObjectiveById = async (
     SkillObjectiveRepository,
   );
 
+  if (name) {
+    const target = await skillObjectiveRepository.findOne({ name });
+    if (target)
+      throw new HttpError({
+        status: HttpCode.BAD_REQUEST,
+        message: 'Objective with this name already exists',
+      });
+  }
   await skillObjectiveRepository.update({ id }, { name });
 
   const objective = skillObjectiveRepository.findOne({ id });
