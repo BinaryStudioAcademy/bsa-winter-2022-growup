@@ -36,14 +36,6 @@ const { reducer, actions } = createSlice({
         return skill;
       });
     },
-    [ActionType.EDIT_SKILL]: (state, action: PayloadAction<ISkill>) => {
-      state.userSkill = state.userSkill.map((skill) => {
-        if (skill.id === action.payload.id) {
-          return action.payload;
-        }
-        return skill;
-      });
-    },
     [ActionType.SORT_NAME]: (state, action: PayloadAction<ISkill[]>) => {
       state.userSkill = action.payload;
     },
