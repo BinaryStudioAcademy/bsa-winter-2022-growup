@@ -10,9 +10,9 @@ import {
 } from './common';
 import { IOkr } from 'common/interfaces/okr';
 import {
-  okr as okrApi,
-  objective as objectiveApi,
   keyResult as keyResultApi,
+  objective as objectiveApi,
+  okr as okrApi,
 } from 'services';
 
 const getAllOkrsByUser_async = createAsyncThunk(
@@ -53,13 +53,9 @@ const createOkr_async = createAsyncThunk(
 
 const updateOkrById_async = createAsyncThunk(
   ActionType.UPDATE_OKR_BY_ID,
-  async (okr: IOkr, { rejectWithValue }) => {
-    try {
-      const result = await okrApi.updateOkr(okr);
-      return result;
-    } catch (err) {
-      return rejectWithValue(err);
-    }
+  async (okr: IOkr, { dispatch }) => {
+    await okrApi.updateOkr(okr);
+    dispatch(getAllOkrsByUser_async());
   },
 );
 

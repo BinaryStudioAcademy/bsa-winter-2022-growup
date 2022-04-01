@@ -1,13 +1,20 @@
 import { useAppDispatch, useAppSelector } from 'hooks/store/store.hooks';
-import { ArrowLeft, Calendar, Trash, XLg } from 'react-bootstrap-icons';
+import {
+  ArrowLeft,
+  Calendar,
+  PencilFill,
+  Trash,
+  XLg,
+} from 'react-bootstrap-icons';
 import dayjs from 'dayjs';
 import Objective from '../objective/objective';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import NewObjectiveModal from '../modal/new-objective-modal';
 import * as okrActions from '../../../store/okr/actions';
 import UpdateObjectiveModal from '../modal/update-objective-modal';
 import { NotificationManager } from 'react-notifications';
 import getOkrNumber from '../get-okr-number';
+import OkrForm from './okr-form/okr-form';
 import { IOkr } from 'common/interfaces/okr';
 
 interface IOkrInfoProps {
@@ -16,23 +23,44 @@ interface IOkrInfoProps {
 }
 
 const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHandler }) => {
-  const okrItems = useAppSelector((store) => store.okr.okrs);
   const dispatch = useAppDispatch();
-  const currentOkr = okrItems.find((item) => item.id == id) as IOkr;
+  const okrItems = useAppSelector((store) => store.okr.okrs);
+
   const [isShowCreateObjectiveModal, setIsShowCreateObjectiveModal] =
     useState(false);
   const [isShowUpdateObjectiveModal, setIsShowUpdateObjectiveModal] =
     useState(false);
+  const [isShowEditOkrModal, setIsShowEditOkrModal] = useState(false);
   const [objectiveId, setObjectiveId] = useState('');
+
+  const currentOkr = okrItems.find((item) => item.id == id) as IOkr;
   const score = getOkrNumber(currentOkr);
+  const setObjective = (id: string): void => setObjectiveId(id);
+
   const openModal = (): void => setIsShowCreateObjectiveModal(true);
   const closeModal = (): void => setIsShowCreateObjectiveModal(false);
   const openUpdateModal = (): void => setIsShowUpdateObjectiveModal(true);
   const closeUpdateModal = (): void => setIsShowUpdateObjectiveModal(false);
+  const openEditOkrModal = (): void => setIsShowEditOkrModal(true);
+  const closeEditOkrModal = (): void => setIsShowEditOkrModal(false);
+
   const closeOkrHandler = (): void => {
     dispatch(okrActions.closeOkr({ okrId: id }));
     goBackHandler();
   };
+
+  const handleSubmit = (values: object): void => {
+    dispatch(okrActions.updateOkrById_async({ ...currentOkr, ...values }))
+      .unwrap()
+      .then(() => {
+        NotificationManager.success('OKR was deleted successfully');
+      })
+      .catch(() => {
+        NotificationManager.error('Can`t delete OKR');
+      });
+    goBackHandler();
+  };
+
   const deleteOkrHandler = (): void => {
     dispatch(okrActions.deleteOkr({ okrId: id }))
       .unwrap()
@@ -44,7 +72,6 @@ const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHandler }) => {
       });
     goBackHandler();
   };
-  const setObjective = (id: string): void => setObjectiveId(id);
 
   return (
     <>
@@ -72,9 +99,25 @@ const OkrInfo: React.FC<IOkrInfoProps> = ({ id, goBackHandler }) => {
             </span>
           </div>
         </div>
-        <div className="fs-2 text-gu-black fw-bold mb-2">
-          {currentOkr?.name}
-        </div>
+        <>
+          <span className="fs-2 text-gu-black fw-bold mb-2">
+            {currentOkr?.name}
+          </span>
+          <button
+            className="mb-2 ms-2 cursor-pointer border-0 bg-transparent"
+            onClick={openEditOkrModal}
+          >
+            {isShowEditOkrModal}
+            <PencilFill className="mb-1 text-gu-purple hover-pink" />
+          </button>
+          {isShowEditOkrModal && (
+            <OkrForm
+              okr={currentOkr}
+              onClose={closeEditOkrModal}
+              onSubmit={handleSubmit}
+            />
+          )}
+        </>
         <div className="d-flex justify-content-between align-items-center">
           <div className="d-flex align-items-center">
             <span className="text-gu-blue fs-6 d-flex align-items-center">
