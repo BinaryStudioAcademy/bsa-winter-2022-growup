@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { INode } from '../common/interfaces';
 
 export const getLevelNode = (
+  position: string,
   level: string,
   y: number,
   acquiredSkills: number,
@@ -14,7 +15,7 @@ export const getLevelNode = (
     data: {
       acquiredSkills,
       totalSkills,
-      level,
+      level: `${level} ${position}`,
       onClick,
     },
     position: {
