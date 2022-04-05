@@ -1,6 +1,5 @@
 import * as Joi from 'joi';
 import { OkrPayloadKey } from 'common/enums/enums';
-import { SkillValidationRule } from 'common/enums/validation/skill-validation-rule.enum';
 import { OkrValidationMessage } from 'common/enums/validation/okr-validation.enum';
 import {
   MAX_DATE,
@@ -11,6 +10,7 @@ import { IOkr } from 'common/interfaces/okr';
 // import { ObjectivePayloadKey } from 'common/enums/user/objective-payload-ket.enum';
 // import { ObjectiveValidationMessage } from 'common/enums/validation/objective-validation.enum';
 import { ObjectiveValues } from 'components/okr/common/interfaces';
+import { OkrValidationRule } from 'common/enums/validation/okr-validation-rule.enum';
 
 const okrValidationSchema = (isEdit: boolean): Joi.ObjectSchema<IOkr> => {
   const minDate = isEdit ? MIN_EDIT_DATE : MIN_CREATE_DATE;
@@ -26,8 +26,8 @@ const okrValidationSchema = (isEdit: boolean): Joi.ObjectSchema<IOkr> => {
     objectives: Joi.optional(),
     [OkrPayloadKey.NAME]: Joi.string()
       .trim()
-      .min(SkillValidationRule.NAME_MIN_LENGTH)
-      .max(SkillValidationRule.NAME_MAX_LENGTH)
+      .min(OkrValidationRule.OKR_NAME_MIN_LENGTH)
+      .max(OkrValidationRule.OKR_NAME_MAX_LENGTH)
       .required()
       .messages({
         'string.empty': message.NAME_REQUIRE,

@@ -30,12 +30,12 @@ const OrkItem: React.FC<Props> = ({
   return (
     <>
       <div
-        className={`okr-container bg-white  py-2 px-3 cursor-pointer
+        className={`okr-container bg-white py-2 px-3 cursor-pointer
         ${okr.status == StatusType.close && 'okr-disable'}`}
         onClick={(): void => onClickInfo(okr.id)}
       >
         <div className="d-flex justify-content-between">
-          <div className="OKR-name fs-2  fw-bold mb-2">{okr.name}</div>
+          <div className="OKR-name fs-4 fw-bold mt-2 mb-2">{okr.name}</div>
           <div className="reached fs-5 fw-bold">{score}</div>
         </div>
 
